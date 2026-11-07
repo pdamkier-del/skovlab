@@ -434,3 +434,72 @@ Den samlede energifejl var numerisk 0 i disse scenarier; summen af artsvise indr
 **Ikke påvist:** Ingen test af autokorrelation, spektraltoppe, karakteristisk oscillationsperiode, konvergens til stationær fordeling eller skalalov er endnu udført. Korte op-og-ned-udsving alene dokumenterer ikke periodiske svingninger.
 
 **Anbefalet næste metode:** (1) langtidstest og lag-/autokorrelationsanalyse for lagerenergi og population, (2) justér soloptagsreglen, så lageret ikke systematisk tømmes (eller undersøg netop denne faseovergang), (3) paired-seed- og matched-energy-forsøg over varierende død og tilbageførsel, (4) særskil dynamisk entropiproduktion fra definitionen af tilstandsentropi og prøv lokal detaljeret balance.
+
+
+## 7. november 2026 — Langtidsundersøgelse af fluktuationer og entropimængder
+
+**Formål:** Test om fluktuationerne i skovens energier, population, artsentropi og idealiseret mikroentropi er stationære, periodiske eller påvirket af langsigtet selektionsdrift.
+
+**Metode:** 36 uafhængige runs: 12 seeds × 3 parameteropsætninger, hver med 1.000 sweeps, 20×20 gitter, 5 arter, samme startenergi E_total=8.000 i alle tre kredsløbsopsætninger. Målinger efter hvert sweep. Langtidsvindue sweeps 500–1.000. Autokorrelation for lag 1, 10 og 50, tidslig standardafvigelse i vinduet samt middelværdi i halvdelene 500–750 versus 750–1.000. Analysen bruger faktisk JavaScript fra GitHub `index.html` med mocket DOM/canvas (ikke en browser-visuel test).
+
+**Opsætninger:**
+- A: standardkredsløb: soloptag I=1,5; retur R=0,5; p_død=0,01 pr. sweep (i beregning, ikke λ).
+- B: balanceret I=0,5; R=0,5; p_død=0,01.
+- C: høj død I=1,5; R=0,5; p_død=0,08.
+
+### A: Standardkredsløb — entropiens størrelse i tidsforløbet
+
+| Mål | Sweep 0 | 500 | 1.000 |
+|---|---:|---:|---:|
+| Artsentropi H_art (nat) | 1,605 | 0,790 | 0,466 |
+| Lokal artsentropi H_lokal (nat) | 1,534 | 0,362 | 0,207 |
+| Energiandel-entropi H_E (nat) | 1,605 | 0,857 | 0,427 |
+| Rumlig forskel H_art − H_lokal (nat) | 0,071 | 0,428 | 0,259 |
+| Indre træ-mikroentropi S_træ/kB | 1.676 | 1.467 | 1.518 |
+| Lager-mikroentropi S_lager/kB | 2.803 | 281 | 199 |
+| Sum-mikroentropi S_total/kB | 4.479 | 1.748 | 1.718 |
+
+Alle værdier er gennemsnit på tværs af 12 seeds; første fire mål er Shannon i **nat**, de sidste tre i den antagne Einstein-oscillator-model i **kB**-enheder. Tallene har forskellige skalaer og kan ikke summeres på tværs af definitioner.
+
+Ved sweep 1.000 var der i snit 379,6 træer, 2,33 arter, E_træ≈7.940 og E_lager≈59,8. E_total=8.000 i alle runs med nul opgjort numerisk energifejl.
+
+### Autokorrelation i vindue 500–1.000 (middel over seeds)
+
+| Mål | Lag 1 | Lag 10 | Lag 50 |
+|---|---:|---:|---:|
+| E_træ | 0,131 | −0,010 | 0,005 |
+| Antal træer | 0,790 | 0,270 | 0,131 |
+| H_art | 0,985 | 0,925 | 0,808 |
+| S_mikro | 0,255 | 0,106 | 0,017 |
+
+Energi- og mikrostørrelserne har meget kort autokorrelationshukommelse, hvorimod artsdiversitet er stærkt persistent, til dels fordi den driver nedad. Der er ikke påvist en robust periodisk oscillation. En fuld frekvens-/spektralanalyse mangler stadig.
+
+### Tidslige standardafvigelser i sidste halvdel (gennemsnit på tværs af seeds)
+
+| Mål | A: standard p=0,01 | B: I=R=0,5 | C: høj død p=0,08 |
+|---|---:|---:|---:|
+| E_træ | 94,6 | 25,6 | 211,9 |
+| Antal træer | 5,55 | 39,67 | 7,47 |
+| H_art (nat) | 0,107 | 0,226 | 0,052 |
+| H_E (nat) | 0,138 | 0,230 | 0,056 |
+| S_mikro/kB | 224,0 | 42,1 | 30,2 |
+
+**Vigtigt om standardafvigelse:** Disse tal kan inkludere *drift*; især setup B er ikke stationært. De er ikke alle rene ligevægtsfluktuationer.
+
+### B: I=R=0,5 — sammenbrud trods konstant energi
+
+Start E_træ=4.000, E_lager=4.000; ved sweep 1.000 var E_træ≈4,04 og E_lager≈7.995,96; der var kun ca. 7,5 levende træer i gennemsnit. Et af 12 runs havde nul levende træer. Dødelighed returnerer al træenergi til lageret; lige store tilførsels- og returrater er ikke tilstrækkelige til at kompensere dødelighed. \(E_{total}\) er stadig nøjagtigt konstant.
+
+Dette betyder, at sol-/energikredsløbet i denne udgave ikke automatisk giver en robust livsbærende ligevægt.
+
+### C: p=0,08 — stærk selektion og større energifluktuationer
+
+Ved sweep 1.000 var E_træ≈3.902,9, E_lager≈4.097,1 og der var i gennemsnit 353,4 træer, men kun ca. 1,17 arter. Kun to af 12 runs havde mere end én art tilbage. I den sene periode var tidslig energi-SD omkring 211,9 mod 94,6 i standardforsøget. H_art≈0,047 nat og H_E≈0,046 nat: artsmæssig dominans trods fortsatte population- og energifluktuationer.
+
+### Entropifluktuationer og anden hovedsætning
+
+I setup A havde den *konstruerede* mikrotilstandsproxy negativ ændring i 52,3 % af sweep-overgangene, gennemsnit på tværs af 12 runs. I setup B 42,6 %, C 50,5 %. Dette er ikke et termodynamisk brud; modellen mangler dynamisk konsistente overgangsrater, mikroskopiske udvekslingsmekanismer og produktion af miljøentropi. Det viser forskel mellem en valgt tilstandsentropi \(k_B\ln\Omega\) og den totale stokastisk-termodynamiske entropiproduktion.
+
+**Status:** Delvis korttidstilpasning af E_træ og S_mikro i A/C, men vedvarende artsselektion, så der er ingen påvist fuld stationær ligevægt. Robust periode ikke påvist; længere runs og spektraltests er stadig ønskelige.
+
+**Anbefaling:** En paret, matched-energy analyse over f.eks. \(I/R\)-rater og dødelighed, samt kvantificering af entropiflux/produktion med lokalt detaljeret balance, ville være næste fysiske udvikling. Separér stationære udsving fra irreversibel udryddelsesdrift i plottet.
