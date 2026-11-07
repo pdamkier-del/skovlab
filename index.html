@@ -195,19 +195,26 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <div class="legend"><span><i style="background:#298b78"></i> Artsentropi</span><span><i style="background:#d18b47"></i> Lokal entropi</span><span><i style="background:#568ac6"></i> Energiandel-entropi (kun med energi)</span></div>
         <canvas id="entropyChart" aria-label="Tre informationsentropier over tid"></canvas>
         <section class="thermo-panel">
-          <div class="thermo-heading"><h3>Termodynamisk entropi i varmereservoiret</h3><span class="science-tag">IDEALISERET MODEL</span></div>
+          <div class="thermo-heading"><h3>Termisk entropi i hele den modellerede skov</h3><span class="science-tag">IDEALISERET MODEL</span></div>
           <div class="metric-grid">
-            <div class="metric"><small>Entropiændring ΔS<sub>bad</sub></small><b id="thEntropy">–</b></div>
-            <div class="metric"><small>Temperatur T</small><b id="thTemp">–</b></div>
-            <div class="metric"><small>Afgivet varme Q</small><b id="thHeat">–</b></div>
-            <div class="metric"><small>ΔS<sub>bad</sub> / C</small><b id="thReduced">–</b></div>
+            <div class="metric"><small>Samlet ΔS<sub>termisk</sub></small><b id="thTotal">–</b></div>
+            <div class="metric"><small>ΔS<sub>træsteder</sub></small><b id="thLiving">–</b></div>
+            <div class="metric"><small>ΔS<sub>tomme steder</sub></small><b id="thEmpty">–</b></div>
+            <div class="metric"><small>ΔS<sub>bad</sub></small><b id="thEntropy">–</b></div>
+            <div class="metric"><small>Reservoirets temperatur T</small><b id="thTemp">–</b></div>
+            <div class="metric"><small>Varme Q<sub>lokal</sub> + Q<sub>bad</sub></small><b id="thHeat">–</b></div>
+            <div class="metric"><small>ΔS<sub>termisk</sub> siden sidste sweep</small><b id="thProduction">–</b></div>
+            <div class="metric"><small>Anden hovedsætning i delmodellen</small><b id="thCheck">–</b></div>
           </div>
-          <canvas id="thermalChart" aria-label="Varmereservoirets termodynamiske entropiændring over tid"></canvas>
+          <div class="legend"><span><i style="background:#a86643"></i> Samlet termisk ΔS</span><span><i style="background:#298b78"></i> Lokalt ved træer</span><span><i style="background:#b3974f"></i> Lokalt uden træer</span><span><i style="background:#568ac6"></i> Fælles varmebad</span></div>
+          <canvas id="thermalChart" aria-label="Termisk entropi i lokale varmebeholdere og varmebad over tid"></canvas>
           <div id="entropyComparison" class="explain">Slå energimodellen til for at sammenligne entropier.</div>
           <details class="formula-more"><summary>Se den termodynamiske udledning og antagelserne</summary>
-            <p>Reservoiret antages at have konstant varmekapacitet C og starttemperatur T₀ = 1 (modeltemperatur). Frigivet disponibel energi Q antages at blive til varme og fordeles i reservoiret.</p>
-            <div class="entropy-formula">T = T₀ + Q/C &nbsp; · &nbsp; ΔS<sub>bad</sub> = ∫ dQ/T = C ln(T/T₀)</div>
-            <p>Det er en <b>fysisk termodynamisk model for reservoirets entropiændring</b>, målt i modelenergi/modeltemperatur. Det er <b>ikke hele systemets entropi</b>: træernes mikroskopiske termodynamiske entropi modelleres ikke. Et fald i artsentropi modsiger ikke anden hovedsætning.</p>
+            <p>Vi giver <b>hvert gittersted en lokal varmebeholder</b> med fast varmekapacitet c, uanset om stedet aktuelt har et levende træ. Varmen ved levende træer er et idealiseret bidrag til deres indre termiske energi. Når træet dør, forbliver den lokale varme på stedet og tælles som varme i omgivelserne. Derudover findes et fælles reservoir med varmekapacitet C.</p>
+            <div class="entropy-formula">Tᵢ = T₀ + Qᵢ/c &nbsp; · &nbsp; ΔSᵢ = c ln(Tᵢ/T₀)</div>
+            <div class="entropy-formula">ΔS<sub>termisk</sub> = Σ<sub>alle steder</sub> ΔSᵢ + C ln(1 + Q<sub>bad</sub>/(C T₀))</div>
+            <p>Starttemperaturen er T₀ = 1. Ved vækst, konkurrence og død overføres disponibel energi til varme: en valgt andel lokalt, resten til det fælles reservoir. Alle temperaturer stiger eller forbliver konstante; <b>i denne idealiserede varmeproces</b> er den samlede beregnede termiske entropi derfor ikke-faldende.</p>
+            <p><b>Begrænsning:</b> Dette er entropien for modellens <em>termiske beholdere</em>, ikke alle biologiske, kemiske og konfigurationelle mikrostadier i træerne. Artsentropi, lokal artsentropi og energiandel-entropi er forskellige informationsmål og skal ikke lægges til ΔS<sub>termisk</sub>. Den indbyggede positive entropiproduktion er en følge af vores dissipative regel, <b>ikke</b> et uafhængigt bevis for anden hovedsætning.</p>
           </details>
         </section>
         <details><summary>Hvad beregner vi?</summary>
@@ -219,20 +226,21 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       </div>
       <div class="chart-box" id="energyDashboard">
         <h2>Energi i skoven · eksperimentel model</h2>
-        <p class="hint" style="margin-top:0">Disponibel energi hos træerne kan flyttes til reservoiret og blive til varme. Den samlede energi bevares. Værdierne er model-enheder, ikke joule.</p>
+        <p class="hint" style="margin-top:0">Disponibel energi bliver ved dissipation fordelt som lokal varme ved gitterstederne og varme i det fælles reservoir. Den samlede modelenergi bevares. Værdierne er model-enheder, ikke joule.</p>
         <div class="metric-grid">
           <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
-          <div class="metric"><small>Afgivet varme Q</small><b id="enBath">–</b></div>
-          <div class="metric"><small>Disponibel energi + afgivet varme</small><b id="enTotal">–</b></div>
+          <div class="metric"><small>Lokal varme Q<sub>lokal</sub></small><b id="enLocal">–</b></div>
+          <div class="metric"><small>Varme i fælles bad Q<sub>bad</sub></small><b id="enBath">–</b></div>
+          <div class="metric"><small>Samlet energi: disponibel + varme</small><b id="enTotal">–</b></div>
           <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
         <h3 style="font-size:18px;margin:15px 0 7px">Disponibel energi lige nu · hver art</h3>
         <div id="speciesEnergyOverview" class="species-energy-overview">Aktivér energimodellen for at se energi pr. art.</div>
         <details class="formula-more"><summary>Vis den fulde energihistorik pr. art</summary><h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
-        <p class="hint" style="margin:0 0 8px">Disponibel energi er en <b>beholdning lige nu</b>. Erobringsgevinst og til reservoir er <b>akkumulerede hændelser</b> siden start, ikke ekstra energi der skal lægges til beholdningen. Den sidste kolonne viser, hvilken art energien kom fra, før den blev flyttet til det fælles reservoir.</p>
-        <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel</th><th class="num">Pr. træ</th><th class="num">Andel af træenergi</th><th class="num">Modtaget ved sejr</th><th class="num">Til reservoir fra art</th></tr></thead><tbody id="energySpeciesRows"></tbody></table></div>
-        <p class="hint">Energi i reservoiret tilhører ikke længere en art; oprindelsen spores kun til bogføring.</p></details>
+        <p class="hint" style="margin:0 0 8px">Disponibel energi er en <b>beholdning lige nu</b>. Erobringsgevinst og til reservoir er <b>akkumulerede hændelser</b> siden start, ikke ekstra energi der skal lægges til beholdningen. Den sidste kolonne viser, hvilken art energien kom fra, før den blev omdannet til lokal varme eller reservoirvarme.</p>
+        <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel</th><th class="num">Pr. træ</th><th class="num">Andel af træenergi</th><th class="num">Modtaget ved sejr</th><th class="num">Til varme fra art</th></tr></thead><tbody id="energySpeciesRows"></tbody></table></div>
+        <p class="hint">Varme registreres på et gittersted eller i reservoiret og tilhører ikke længere en art. Artsopdelingen er alene en bogføring over, hvem der afgav energien.</p></details>
       </div>
       <details class="chart-box secondary-detail" id="logbook"><summary>Logbog og forskningsmetode</summary>
         <h2>Projektlogbog · overvejelser og metoder</h2>
@@ -308,15 +316,18 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       <section class="panel">
         <h2>Energi og varme</h2>
         <label class="check"><input type="checkbox" id="tgEnergy" checked> Aktivér energipakker</label>
-        <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Totalen hos træer + reservoir bevares ved alle hændelser.</p>
+        <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Totalen hos træer + lokal varme + reservoir bevares ved alle hændelser.</p>
         <div class="field two"><label for="enInitial">Energi pr. træ ved start</label><input type="number" id="enInitial" value="10" min="1" max="10000" step="1"></div>
         <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="0.8"></div>
-        <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi flyttes til reservoiret – energien forsvinder ikke.</p>
+        <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi omdannes til varme – energien forsvinder ikke.</p>
         <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0.5" min="0" max="1000" step="0.5"></div>
         <div class="field two"><label for="enBirth">Minimum til formering</label><input type="number" id="enBirth" value="2" min="0.01" max="1000" step="0.5"></div>
         <p class="hint">Ved spredning flyttes et energibeløb fra forælder til den nye celle. Uden tilstrækkelig energi kan træet ikke sprede sig. Ved vækst betales en omkostning til reservoiret.</p>
+        <div class="field two"><label for="enLocalFrac">Varmeandel lokalt α</label><input type="range" id="enLocalFrac" min="0" max="1" step="0.05" value="0.5"></div>
+        <p class="hint">Andel af dissipationen, som opvarmer gitterstedet: <b id="enLocalLabel">50 %</b>. Resten går til varmebadet.</p>
+        <div class="field two"><label for="enLocalCap">Lokal varmekapacitet c</label><input type="number" id="enLocalCap" value="10" min="0.1" max="100000" step="1"></div>
         <div class="field two"><label for="enCapacity">Reservoirets varmekapacitet C</label><input type="number" id="enCapacity" value="100000" min="0.1" max="100000000" step="100"></div>
-        <p class="hint">Varmekapaciteten C bestemmer, hvor meget reservoiret opvarmes. T₀ = 1. η &lt; 1 giver varme ved konkurrence. Ændring af C genstarter forsøget.</p>
+        <p class="hint">Varmekapaciteterne c og C bestemmer, hvor meget temperaturen ændrer sig. T₀ = 1. η &lt; 1 giver varme ved konkurrence. Ændring af varmeregler genstarter forsøget.</p>
       </section>
       <details class="panel accordion-panel" id="batchPanel"><summary>Gentagne forsøg og CSV</summary>
         <h2>Gentag forsøget</h2>
@@ -368,8 +379,8 @@ function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508
 function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:100000};
-let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[];
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:100000,localCapacity:10,localFrac:.5};
+let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[],localHeat=null,localHeatSum=0;
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
 const cv=$("lattice"),ctx=cv.getContext("2d"),ch=$("chart"),cctx=ch.getContext("2d");
@@ -384,7 +395,7 @@ function init(){
   species.sort((a,b)=>a.s-b.s);
   sp=new Int16Array(N);h=new Int32Array(N);stamp=new Int32Array(N);order=new Int32Array(N);
   for(let i=0;i<N;i++){if(rand()<S.fill){sp[i]=(rand()*S.K)|0;h[i]=1}else{sp[i]=-1;h[i]=0}}
-  energy=new Float64Array(N);energyBath=0;energyInitial=0;energyBathBySpecies=Array(S.K).fill(0);energyCapturedBySpecies=Array(S.K).fill(0);
+  energy=new Float64Array(N);localHeat=new Float64Array(N);localHeatSum=0;energyBath=0;energyInitial=0;energyBathBySpecies=Array(S.K).fill(0);energyCapturedBySpecies=Array(S.K).fill(0);
   if(S.energyOn){for(let i=0;i<N;i++)if(sp[i]>=0){energy[i]=S.e0;energyInitial+=S.e0}}
   sweep=0;history=[];metricHistory=[];histStride=1;histTick=0;
   off.width=S.L;off.height=S.L;offCtx=off.getContext("2d");img=offCtx.createImageData(S.L,S.L);
@@ -401,6 +412,14 @@ function neighbour(i){
   return ny*L+nx;
 }
 
+// Conversion of available resources into heat. The local thermal compartment
+// belongs to the lattice site, not to the transient organism occupying it.
+function dissipate(site,amount,originSpecies){
+  if(!S.energyOn||amount<=0)return;
+  const local=amount*S.localFrac,bath=amount-local;
+  localHeat[site]+=local;localHeatSum+=local;energyBath+=bath;
+  energyBathBySpecies[originSpecies]+=amount; // cumulative dissipated energy by species
+}
 function doSweep(){
   sweep++;
   const N=S.L*S.L;let n=0;
@@ -409,12 +428,12 @@ function doSweep(){
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];
     if(a<0||stamp[i]===sweep)continue;
-    if(S.death>0&&rand()<S.death){if(S.energyOn){energyBath+=energy[i];energyBathBySpecies[a]+=energy[i];energy[i]=0}sp[i]=-1;h[i]=0;continue}
+    if(S.death>0&&rand()<S.death){if(S.energyOn){dissipate(i,energy[i],a);energy[i]=0}sp[i]=-1;h[i]=0;continue}
     const s=species[a].s;
     if(rand()<1-s){
       if(!S.hmax||h[i]<S.hmax){
         if(!S.energyOn){h[i]++}
-        else if(energy[i]>=S.growCost){energy[i]-=S.growCost;energyBath+=S.growCost;energyBathBySpecies[a]+=S.growCost;h[i]++}
+        else if(energy[i]>=S.growCost){energy[i]-=S.growCost;dissipate(i,S.growCost,a);h[i]++}
       }
     }else{
       const j=neighbour(i);if(j<0)continue;
@@ -429,9 +448,9 @@ function doSweep(){
       if(rand()<h[i]/(h[i]+h[j])){
         const hd=h[j];sp[j]=a;stamp[j]=sweep;
         h[j]=S.newH==="sapling"?1:S.newH==="attacker"?h[i]:hd;
-        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyCapturedBySpecies[a]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energyBathBySpecies[b]+=(1-S.eta)*captured}
+        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyCapturedBySpecies[a]+=S.eta*captured;dissipate(j,(1-S.eta)*captured,b)}
       }else{
-        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyCapturedBySpecies[b]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energyBathBySpecies[a]+=(1-S.eta)*captured;energy[i]=0}
+        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyCapturedBySpecies[b]+=S.eta*captured;dissipate(i,(1-S.eta)*captured,a);energy[i]=0}
         sp[i]=-1;h[i]=0
       }
     }
@@ -526,14 +545,15 @@ function updateReadout(){
   $("rTall").textContent=st.tall.toLocaleString("en");
   if(S.energyOn){
     let treeE=0;for(let i=0;i<energy.length;i++)treeE+=energy[i];
-    const totalE=treeE+energyBath;
+    const totalE=treeE+energyBath+localHeatSum;
     $("enTrees").textContent=treeE.toFixed(2);
     $("enBath").textContent=energyBath.toFixed(2);
+    $("enLocal").textContent=localHeatSum.toFixed(2);
     $("enTotal").textContent=totalE.toFixed(2);
     $("enError").textContent=(totalE-energyInitial).toExponential(2);
-    $("energyInterpret").textContent=`Disponibel energi: ${treeE.toFixed(2)}. Afgivet varme: ${energyBath.toFixed(2)}. Sum = ${totalE.toFixed(2)} (samme som ved start). Dertil indeholder varmebadet en uændret referenceenergi C · T₀ = ${S.capacity.toFixed(1)}, som ikke indgår i dette energi-regnskab.`;
+    $("energyInterpret").textContent=`Bevaret energisum: ${treeE.toFixed(2)} disponibel + ${localHeatSum.toFixed(2)} lokal varme + ${energyBath.toFixed(2)} i fælles bad = ${totalE.toFixed(2)}. Referencevarmen C·T₀ + antal celler·c·T₀ er udeladt, fordi den er konstant.`;
   }else{
-    for(const id of ["enTrees","enBath","enTotal","enError"])$(id).textContent="–";
+    for(const id of ["enTrees","enLocal","enBath","enTotal","enError"])$(id).textContent="–";
     $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
   }
   updateSpeciesEnergyTable();
@@ -643,6 +663,9 @@ function updateEnergyControls(reinit){
   S.growCost=Math.max(0,Number($("enCost").value)||0);
   S.birth=Math.max(.01,Number($("enBirth").value)||2);
   S.capacity=Math.max(.1,Number($("enCapacity").value)||100000);
+  S.localCapacity=Math.max(.1,Number($("enLocalCap").value)||10);
+  S.localFrac=Math.max(0,Math.min(1,Number($("enLocalFrac").value)));
+  $("enLocalLabel").textContent=Math.round(S.localFrac*100)+" %";
   $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
   $("btnBatch").disabled=S.energyOn;
   $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
@@ -654,6 +677,8 @@ $("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
 $("enCost").addEventListener("change",()=>updateEnergyControls(false));
 $("enBirth").addEventListener("change",()=>updateEnergyControls(false));
 $("enCapacity").addEventListener("change",()=>updateEnergyControls(true));
+$("enLocalCap").addEventListener("change",()=>updateEnergyControls(true));
+$("enLocalFrac").addEventListener("change",()=>updateEnergyControls(true));
 updateEnergyControls(false);
 $("inSeed").addEventListener("change",e=>{const v=parseInt(e.target.value,10);S.seed=isNaN(v)||v<1?1:v;e.target.value=S.seed;init()});
 $("inNew").addEventListener("change",e=>S.newH=e.target.value);
