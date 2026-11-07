@@ -562,15 +562,21 @@ function updateReadout(){
     $("exLocal").textContent=lastMetric.localRaw.toFixed(4);
     $("exEnergy").textContent=lastMetric.energyRaw===null?"–":lastMetric.energyRaw.toFixed(4);
     $("exSpatial").textContent=Math.max(0,lastMetric.artRaw-lastMetric.localRaw).toFixed(4);
-    $("thEntropy").textContent=lastMetric.bathEntropy===null?"–":lastMetric.bathEntropy.toFixed(3);
-    $("thTemp").textContent=lastMetric.bathTemp===null?"–":lastMetric.bathTemp.toFixed(3);
-    $("thHeat").textContent=S.energyOn?energyBath.toFixed(2):"–";
-    $("thReduced").textContent=lastMetric.bathReduced===null?"–":lastMetric.bathReduced.toFixed(5);
-    const m0=metricHistory.length?metricHistory[0]:lastMetric;
-    const dH=lastMetric.artRaw-m0.artRaw,dE=lastMetric.energyRaw===null||m0.energyRaw===null?null:lastMetric.energyRaw-m0.energyRaw;
+    const t=lastMetric,prior=metricHistory.length>1?metricHistory[metricHistory.length-2]:null;
+    const fmt=v=>v===null||!Number.isFinite(v)?"–":v.toFixed(3);
+    $("thEntropy").textContent=fmt(t.bathEntropy);
+    $("thTemp").textContent=fmt(t.bathTemp);
+    $("thHeat").textContent=S.energyOn?(energyBath+localHeatSum).toFixed(2):"–";
+    $("thTotal").textContent=fmt(t.thermalTotal);
+    $("thLiving").textContent=fmt(t.livingEntropy);
+    $("thEmpty").textContent=fmt(t.emptyEntropy);
+    $("thProduction").textContent=fmt(t.thermalProduction);
+    $("thCheck").textContent=S.energyOn?(t.thermalProduction>=-1e-7?"Ikke-faldende":"Tjek model!"):"–";
+    const m0=metricHistory.length?metricHistory[0]:t;
+    const dH=t.artRaw-m0.artRaw;
     $("entropyComparison").textContent=S.energyOn?
-      `Siden starten: ΔH_art = ${dH>=0?"+":""}${dH.toFixed(3)} nat; ${dE===null?"ingen energiandel-entropi":`ΔH_E = ${dE>=0?"+":""}${dE.toFixed(3)} nat`}. Samtidig er ΔS_bad = +${lastMetric.bathEntropy.toFixed(3)} modelenergi/temperatur. Entropierne har forskellige definitioner, enheder og fysisk betydning; de kan ikke lægges sammen som én samlet entropi.`:
-      "Slå energimodellen til for at beregne varmereservoirets entropi. Informationsentropierne kan også måles uden energi.";
+      `Arternes informationsentropi har ændret sig med ${dH>=0?"+":""}${dH.toFixed(3)} nat. Samtidig er den beregnede termiske entropi ændret med +${t.thermalTotal.toFixed(3)} modelenergi/modeltemperatur. Termiske bidrag kan summeres med hinanden; Shannon-målene kan ikke lægges til. Dette tester vores valgte dissipative modelregler, ikke hele biologiske skovens anden hovedsætning.`:
+      "Aktivér energimodellen for at beregne den termiske entropi i lokale beholdere og varmebad.";
     $("mEntropy").textContent=lastMetric.entropy.toFixed(3);
     const N=last.trees;
     let Hraw=0,sumP=0,example=null;
@@ -723,28 +729,49 @@ function measureForest(arr,types,L,K,periodic,already){
   return {entropy,edges:pairs?unlike/pairs:0,meanS:trees?meanS:0,leader:trees?leader/trees:0,alive,leaderId,trees};
 }
 function thermalObservables(){
-  if(!S.energyOn)return {bathEntropy:null,bathTemp:null,bathReduced:null};
-  // Calorimetric idealization: constant heat capacity C > 0, T0 = 1;
-  // Q=energyBath is the nonnegative cumulative energy converted into heat.
-  const c=S.capacity, t0=1, q=Math.max(0,energyBath);
-  const reduced=Math.log1p(q/(c*t0));
-  return {bathEntropy:c*reduced,bathTemp:t0+q/c,bathReduced:reduced};
+  if(!S.energyOn)return {bathEntropy:null,bathTemp:null,localEntropy:null,livingEntropy:null,emptyEntropy:null,thermalTotal:null,thermalProduction:null};
+  const c=S.capacity,siteC=S.localCapacity,t0=1;
+  const bathEntropy=c*Math.log1p(energyBath/(c*t0));
+  let livingEntropy=0,emptyEntropy=0;
+  for(let i=0;i<localHeat.length;i++){
+    if(localHeat[i]<=0)continue;
+    const si=siteC*Math.log1p(localHeat[i]/(siteC*t0));
+    if(sp[i]>=0)livingEntropy+=si;
+    else emptyEntropy+=si;
+  }
+  const localEntropy=livingEntropy+emptyEntropy,thermalTotal=localEntropy+bathEntropy;
+  const prev=metricHistory.length?metricHistory[metricHistory.length-1]:null;
+  return {bathEntropy,bathTemp:t0+energyBath/c,localEntropy,livingEntropy,emptyEntropy,thermalTotal,
+          thermalProduction:prev&&prev.thermalTotal!==null?thermalTotal-prev.thermalTotal:0};
 }
 function drawThermalChart(){
   const c=$("thermalChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
   const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
-  const left=58*d,right=9*d,top=12*d,bottom=23*d;g.clearRect(0,0,w,h);
-  g.strokeStyle=css("--grid");g.fillStyle=css("--muted");g.font=`${10*d}px system-ui`;g.textBaseline="middle";g.textAlign="right";
-  const vals=metricHistory.filter(p=>Number.isFinite(p.bathEntropy));
-  let maxY=Math.max(1,...vals.map(p=>p.bathEntropy));maxY=maxY<=10?Math.ceil(maxY*10)/10:Math.ceil(maxY/10)*10;
-  for(let i=0;i<=4;i++){const y=top+(h-top-bottom)*(1-i/4);g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((maxY*i/4).toFixed(maxY<10?1:0),left-6*d,y)}
+  const left=62*d,right=9*d,top=12*d,bottom=23*d;
+  g.clearRect(0,0,w,h);g.strokeStyle=css("--grid");g.fillStyle=css("--muted");
+  g.font=`${10*d}px system-ui`;g.textBaseline="middle";g.textAlign="right";
+  const vals=metricHistory.filter(p=>Number.isFinite(p.thermalTotal));
+  const ymax=Math.max(1,...vals.map(p=>p.thermalTotal));
+  for(let i=0;i<=4;i++){
+    const y=top+(h-top-bottom)*(1-i/4);
+    g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();
+    g.fillText((ymax*i/4).toFixed(ymax<10?1:0),left-6*d,y);
+  }
   if(vals.length>1){
-    const a=vals[0].t,b=vals[vals.length-1].t,xx=t=>left+(w-left-right)*(t-a)/Math.max(1,b-a),yy=v=>top+(h-top-bottom)*(1-v/maxY);
-    g.strokeStyle="#a86643";g.lineWidth=2*d;g.beginPath();
-    vals.forEach((p,i)=>{i?g.lineTo(xx(p.t),yy(p.bathEntropy)):g.moveTo(xx(p.t),yy(p.bathEntropy))});g.stroke();
-    g.fillStyle=css("--muted");g.textBaseline="bottom";g.textAlign="left";g.fillText(`sweep ${a}`,left,h-1*d);g.textAlign="right";g.fillText(`sweep ${b}`,w-right,h-1*d);
+    const a=vals[0].t,b=vals[vals.length-1].t;
+    const xx=t=>left+(w-left-right)*(t-a)/Math.max(1,b-a),
+          yy=v=>top+(h-top-bottom)*(1-Math.max(0,v/ymax));
+    for(const [key,color] of [["thermalTotal","#a86643"],["livingEntropy","#298b78"],["emptyEntropy","#b3974f"],["bathEntropy","#568ac6"]]){
+      g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
+      vals.forEach((p,i)=>{if(i)g.lineTo(xx(p.t),yy(p[key]));else g.moveTo(xx(p.t),yy(p[key]))});
+      g.stroke();
+    }
+    g.fillStyle=css("--muted");g.textBaseline="bottom";g.textAlign="left";
+    g.fillText(`sweep ${a}`,left,h-1*d);
+    g.textAlign="right";g.fillText(`sweep ${b}`,w-right,h-1*d);
   }else{
-    g.fillStyle=css("--muted");g.textAlign="left";g.fillText(S.energyOn?"Start simulationen for at se varmens entropibidrag.":"Slå energimodellen til for at se varmereservoirets entropi.",left+7*d,h/2);
+    g.fillStyle=css("--muted");g.textAlign="left";
+    g.fillText(S.energyOn?"Kør simulationen for at se entropifordelingen.":"Aktivér energimodellen for at se termisk entropi.",left+5*d,h/2);
   }
 }
 function moreEntropyMeasures(){
