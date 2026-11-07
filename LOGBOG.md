@@ -287,3 +287,68 @@ for den konservative tilstand, uden varme eller eksterne kilder.
 - Dissipativ tilstand med solinput 1,5: åbent energiregnskab testet, maksimal afvigelse \(2,62\times10^{-10}\) modelenergienheder.
 
 **Åbent forskningsspørgsmål:** Om vi bør indføre realistisk energibehov ved vækst, metabolisme og død, og hvordan energi i så fald kan skifte fra kemisk til termisk form. Et fuldt fysisk studie af anden hovedsætning vil kræve flere modellerede frihedsgrader.
+
+
+## 7. november 2026 — Sollys, død og konstant samlet energi; mikrotilstands-entropi
+
+**Problem:** Brugeren ønsker at undersøge både solenergi og naturlig død, men stadig bevare energien, samt få en fysisk begrundet entropi ved træerne.
+
+### Nyt valg: internt energikredsløb (standard)
+
+Vi indfører et *endeligt* fælles energilager med energi \(E_L\), initialt \(E_{L,0}=N_{træer,0} E_{lager\ per\ træ}\), og levende træer med energier \(E_i\).
+
+- **Soloptag:** Hvert træ får ved sweepets start højst \(I\) energienheder **fra lageret**, dvs. faktisk optag \(\min(I,E_L)\). Dette er ikke en ekstern, uudtømmelig sol og må snarere forstås som en idealiseret ressource- eller lysenergi-beholder.
+- **Tilbageførsel:** Ved samme sweep returneres op til \(R\) af træets disponible energi til lageret.
+- **Naturlig død:** Med dødsrate \(p=1-\exp(-\lambda)\) flyttes hele træets restenergi tilbage til lageret. Cellen bliver tom. Træer, som er døde, kan ikke uden videre vende tilbage som samme individ.
+- **Konkurrence:** Vinderen modtager taberens energi fuldt ud, uden omdannelse til varme.
+- **Formering:** Energien til et nyt træ flyttes fra dets forælder; ingen energi skabes.
+- **Vækst:** Højden kan vokse uden energiforbrug i denne simplificerede, konservative modus.
+
+Det lukkede regnskab er
+
+\[
+\boxed{E_{total}=E_L+\sum_{i\in levende}E_i=\mathrm{konstant}.}
+\]
+
+Træernes energi **alene** er ikke konstant: den flytter mellem træerne og lageret. Dette valg er eksplicit, og det er vigtigt ikke at forveksle bevaret \(E_{total}\) med et krav om konstant \(E_{træer}\).
+
+### Boltzmann-entropi fra en defineret mikromodel
+
+Energibevarelse alene fastlægger ikke temperatur eller entropi. Som første kvantitativ model antager vi **to grupper af idealiserede Einstein-oscillatorer**, én for energien i træ-puljen og én for energien i lageret. Hver gruppe har et fast antal oscillatorer \(n=L^2\) (modelkonvention) og fordeler et helt antal energikvanta \(q\) med energikvant \(\varepsilon=1\) modellenhed.
+
+\[
+\Omega(q,n)=\binom{q+n-1}{q},
+\qquad
+S(q,n)=k_B\ln\Omega(q,n).
+\]
+
+Simulationens kontinuerte energi rundes til nærmeste hele kvant i **målingen**, ikke i den underliggende trædynamik. Den viste entropi er
+
+\[
+S_{mikro}=S(E_{træer}/\varepsilon,n)+S(E_L/\varepsilon,n),
+\]
+
+med separate kurver for træ- og lagerbidrag samt deres sum. Temperatur eller virkelige kemiske mikrostadier er ikke introduceret i denne kvantiserede proxy. Gruppens oscillatorantal er fast og repræsenterer **ikke antallet af aktuelle træindivider**. Træernes fordeling *inden for* træ-puljen og hver enkelt arts biologiske indre entropi er heller ikke beregnet.
+
+**Helt afgørende:** Fordi træernes tilfældige op-eller-ud-/konkurrence- og dødsregler ikke er afledt fra mikroskopisk reversible hastigheder eller lokal detaljeret balance, behøver dette \(S_{mikro}\) **ikke være ikke-faldende**. En negativ ændring er derfor ikke en empirisk overtrædelse af anden hovedsætning. Et fysisk konsistent stokastisk-termodynamisk studie ville inkludere systemets og omgivelsernes entropi samt overgangsrater og deres baglæns sandsynligheder.
+
+Kilder:
+- [Gould og Tobochnik: Einstein Solid Entropy (ComPADRE)](https://www.compadre.org/STPBook/statistical-mechanics-1/ex4_2.cfm)
+- [Udo Seifert, *From Stochastic Thermodynamics to Thermodynamic Inference* (2019)](https://doi.org/10.1146/annurev-conmatphys-031218-013554)
+- [Seifert, Entropy Production along a Stochastic Trajectory (2005)](https://doi.org/10.1103/PhysRevLett.95.040602)
+
+### Metode og funktionstest
+
+Fem tests à 150 sweeps, hver på 20×20-gitter med fem arter, kontrollerede energiregnskabet.
+
+| Opsætning | Startenergi inkl. lager | Træenergi slut | Lager slut | Maks. fejl |
+|---|---:|---:|---:|---:|
+| Kredsløb, I=1,5; R=0,5; død=0,01 | 8000 | 7941 | 59 | 0 |
+| Kredsløb, høj død=0,08 | 8000 | 1493,5 | 6506,5 | 0 |
+| Kredsløb, ingen sol | 8000 | 0 | 8000 | 0 |
+| Konservativ uden lager | 4000 | 4000 | 0 | 0 |
+| Dissipativ med ekstern sol | 4000 + soltilførsel | ca. 33431,1 | 0 (særskilt varmeregnskab) | under 3×10⁻¹⁰ |
+
+Mikromodellens entropi faldt i 81 af 150 kredsløbssweeps i standardtestopsætningen (målt for hele systemets modeldefinerede mikroentropi), og ændringen fra start blev negativ. Dette er en konsekvens af overgangsreglerne og den valgte makrotilstandsopdeling, og må ikke udlægges som et brud på anden hovedsætning.
+
+**Åbne spørgsmål:** Skal sollys tilføres fra en virkelig ekstern sol-reservoir med særskilt udgående varme og entropiflux? Skal træernes egen termiske/kemiske entropi behandles med stokastisk termodynamik, hvor overgangsrater respekterer lokal detaljeret balance? Skal vi sammenligne energikonservering i total-puljen med en regulator, der holder træpuljens energi konstant ved at overføre overskud tilbage til lageret?
