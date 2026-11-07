@@ -127,6 +127,17 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
 .species-energy-line b{font-size:11px;font-weight:500;white-space:nowrap}.species-energy-line strong{font-size:12px;text-align:right}
 .species-energy-bar{height:9px;background:var(--grid);border-radius:5px;overflow:hidden}.species-energy-bar i{display:block;height:100%}
 @media(max-width:680px){.species-energy-overview{grid-template-columns:1fr}}
+
+.arrow-lab{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--panel)}
+.arrow-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin:13px 0}
+.arrow-controls label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
+.arrow-controls select{min-width:100px}
+.arrow-controls button:disabled{opacity:.5;cursor:not-allowed}
+#arrowCanvas{display:block;width:100%;max-width:390px;aspect-ratio:1/1;margin:12px auto;background:var(--empty);image-rendering:pixelated;border:1px solid var(--line);border-radius:8px}
+#arrowSlider{width:100%;margin:4px 0}
+.arrow-lab .rowline{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}
+#arrowPlot{width:100%;height:155px;display:block;margin:10px 0}
+@media(max-width:600px){.arrow-lab{padding:10px}.arrow-controls button{flex:1;min-width:100px}}
 </style>
 </head>
 <body>
@@ -249,6 +260,35 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <p class="hint"><b>Rumlig forskel:</b> H<sub>art</sub> − H<sub>lokal</sub> angiver, hvor meget af artsusikkerheden der forklares ved at kende blokken. Det er ikke en termodynamisk entropi.</p>
         </details>
       </div>
+      <section class="chart-box arrow-lab" id="arrowLab">
+        <div class="thermo-heading"><h2>Tidens pil · eksperiment</h2><span class="science-tag">FORLÆNS / BAGLÆNS</span></div>
+        <p class="hint">Optag den eksisterende model fra dens starttilstand. Afspil nøjagtig samme forløb baglæns og undersøg, hvilke ændringer der afslører tidens retning. Baglæns afspilning er <b>ikke</b> en ny fysisk simulation.</p>
+        <div class="arrow-controls">
+          <label>Forløb <select id="arrowLength"><option value="200">200 sweeps</option><option value="500" selected>500 sweeps</option><option value="1000">1000 sweeps</option></select></label>
+          <button class="primary" id="arrowRecord">Optag forløb</button>
+          <button id="arrowPlay" disabled>Afspil</button>
+          <button id="arrowReverse" disabled>Retning: fremad</button>
+        </div>
+        <canvas id="arrowCanvas" aria-label="Afspilning af skoven forlæns eller baglæns"></canvas>
+        <input type="range" id="arrowSlider" min="0" max="1" value="0" step="1" disabled aria-label="Vælg tidspunkt i optagelsen">
+        <div class="rowline"><span id="arrowFrame">Ingen optagelse endnu</span><span id="arrowPlaybackDirection">Fremad →</span></div>
+        <div class="metric-grid">
+          <div class="metric"><small>Artsentropi H i aktuel frame (nat)</small><b id="arrowH">–</b></div>
+          <div class="metric"><small>Energi i træer i aktuel frame</small><b id="arrowE">–</b></div>
+          <div class="metric"><small>Tidsasymmetri JSD (nat)</small><b id="arrowJSD">–</b></div>
+          <div class="metric"><small>Arter uddøde i optagelsen</small><b id="arrowExtinct">–</b></div>
+        </div>
+        <div class="field two"><label for="arrowMetric">Måling for tidsasymmetri</label><select id="arrowMetric">
+          <option value="energy">Træernes energi</option><option value="trees">Antal træer</option><option value="art">Artsentropi</option><option value="micro">Indre mikroentropi (model)</option>
+        </select></div>
+        <canvas id="arrowPlot" aria-label="Tidsserie af valgt mål i forløbet"></canvas>
+        <div class="explain" id="arrowInterpret">Optag et forløb for at beregne tidsasymmetri.</div>
+        <details class="formula-more"><summary>Hvordan måles tidens retning?</summary>
+          <p>Vi inddeler den valgte tidsserie i fire datadrevne intervaller og tæller <b>tre på hinanden følgende tilstande</b>. Derpå sammenligner vi fordelingen af de observerede mønstre <i>a→b→c</i> med de omvendte mønstre <i>c→b→a</i> ved Jensen–Shannon-divergens (JSD). JSD = 0 betyder, at mønsterfordelingerne ikke kan skelnes med denne måling; større værdier betyder større observeret asymmetri. Maksimum er ln(2) ≈ 0,693 nat.</p>
+          <p>Det er en <b>beskrivende statistik</b> fra ét forløb, påvirket af tidslig drift, binning og begrænset datamængde. Ingen formel for termodynamisk entropiproduktion udledes herfra. Artsudryddelser er allerede irreversible i Oskars regler, fordi der hverken er mutation eller immigration.</p>
+          <p>For en fysisk identifikation med entropiproduktion kræves fremad- og tidsomvendte banesandsynligheder fra en dynamik med passende detaljeret-balancebetingelser. Vi bør senere validere målet på en separat reversibel kontrolmodel.</p>
+        </details>
+      </section>
       <div class="chart-box" id="energyDashboard">
         <h2>Energi i skoven · eksperimentel model</h2>
         <p class="hint" style="margin-top:0">I kredsløbsmodellen fordeles en konstant samlet energi mellem levende træer og et fælles lager. Ved soloptag, tilbageførsel og død flyttes energi uden tab. Tidligere varmemodel er stadig et valgfrit forsøg.</p>
