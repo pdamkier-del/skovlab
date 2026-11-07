@@ -203,12 +203,16 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
             <div class="metric"><small>ΔS<sub>bad</sub></small><b id="thEntropy">–</b></div>
             <div class="metric"><small>Reservoirets temperatur T</small><b id="thTemp">–</b></div>
             <div class="metric"><small>Varme Q<sub>lokal</sub> + Q<sub>bad</sub></small><b id="thHeat">–</b></div>
-            <div class="metric"><small>ΔS<sub>termisk</sub> siden sidste sweep</small><b id="thProduction">–</b></div>
+            <div class="metric"><small>ΔS<sub>termisk</sub> siden sidste måling</small><b id="thProduction">–</b></div>
             <div class="metric"><small>Anden hovedsætning i delmodellen</small><b id="thCheck">–</b></div>
           </div>
           <div class="legend"><span><i style="background:#a86643"></i> Samlet termisk ΔS</span><span><i style="background:#298b78"></i> Lokalt ved træer</span><span><i style="background:#b3974f"></i> Lokalt uden træer</span><span><i style="background:#568ac6"></i> Fælles varmebad</span></div>
           <canvas id="thermalChart" aria-label="Termisk entropi i lokale varmebeholdere og varmebad over tid"></canvas>
           <div id="entropyComparison" class="explain">Slå energimodellen til for at sammenligne entropier.</div>
+          <details class="formula-more"><summary>Indre termisk entropi efter aktuel træart</summary>
+            <p>Gitterstedets termiske entropi tilskrives den art, som <b>aktuelt</b> står på stedet. En besejret arts tidligere afsatte varme følger stedet, ikke arten.</p>
+            <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Lokal varme</th><th class="num">Middeltemperatur</th><th class="num">Lokal ΔS</th></tr></thead><tbody id="thermalSpeciesRows"></tbody></table></div>
+          </details>
           <details class="formula-more"><summary>Se den termodynamiske udledning og antagelserne</summary>
             <p>Vi giver <b>hvert gittersted en lokal varmebeholder</b> med fast varmekapacitet c, uanset om stedet aktuelt har et levende træ. Varmen ved levende træer er et idealiseret bidrag til deres indre termiske energi. Når træet dør, forbliver den lokale varme på stedet og tælles som varme i omgivelserne. Derudover findes et fælles reservoir med varmekapacitet C.</p>
             <div class="entropy-formula">Tᵢ = T₀ + Qᵢ/c &nbsp; · &nbsp; ΔSᵢ = c ln(Tᵢ/T₀)</div>
@@ -572,6 +576,7 @@ function updateReadout(){
     $("thEmpty").textContent=fmt(t.emptyEntropy);
     $("thProduction").textContent=fmt(t.thermalProduction);
     $("thCheck").textContent=S.energyOn?(t.thermalProduction>=-1e-7?"Ikke-faldende":"Tjek model!"):"–";
+    updateSpeciesThermalTable();
     const m0=metricHistory.length?metricHistory[0]:t;
     const dH=t.artRaw-m0.artRaw;
     $("entropyComparison").textContent=S.energyOn?
@@ -800,6 +805,20 @@ function moreEntropyMeasures(){
     energyNorm=K>1?energyRaw/Math.log(K):0;
   }
   return {artRaw,localRaw,localNorm:K>1?localRaw/Math.log(K):0,energyRaw,energyNorm};
+}
+function updateSpeciesThermalTable(){
+  const tbody=$("thermalSpeciesRows");
+  if(!S.energyOn){tbody.innerHTML='<tr><td colspan="5">Slå energitilvalget til.</td></tr>';return}
+  const heat=Array(S.K).fill(0),count=Array(S.K).fill(0),entropy=Array(S.K).fill(0),cap=S.localCapacity;
+  for(let i=0;i<sp.length;i++){
+    const k=sp[i];if(k<0)continue;
+    count[k]++;heat[k]+=localHeat[i];
+    entropy[k]+=cap*Math.log1p(localHeat[i]/cap);
+  }
+  tbody.innerHTML=heat.map((q,k)=>{
+    const rgb=colorOf(k).join(","),t=count[k]?1+q/(count[k]*cap):null;
+    return `<tr class="${count[k]===0?"extinct":""}"><td><span class="sw" style="background:rgb(${rgb})"></span> ${k+1}</td><td class="num">${count[k]}</td><td class="num">${q.toFixed(2)}</td><td class="num">${t===null?"–":t.toFixed(3)}</td><td class="num">${entropy[k].toFixed(3)}</td></tr>`;
+  }).join("");
 }
 function updateSpeciesEnergyTable(){
   const tbody=$("energySpeciesRows"),overview=$("speciesEnergyOverview");
