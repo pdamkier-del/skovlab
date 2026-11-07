@@ -382,3 +382,55 @@ Der vises også \(S_{art}=\sum_{i\in art} k_B \ln\Omega(q_i,3)\) for hver art. \
 Den samlede energifejl var numerisk 0 i disse scenarier; summen af artsvise indre entropier afveg højst \(5,3\times10^{-12}\) fra \(S_{træer}/k_B\). Kodens syntaks og referencer til HTML-elementer bestod også funktionstesten med simuleret DOM/canvas.
 
 **Forskningsfortolkning:** Antallet af negative ændringer viser, at disse ad hoc-evolutionære overgangsregler **ikke er termodynamisk konsistente bare fordi de bevarer energi**. Vi kan bruge resultatet til at stille næste forskningsspørgsmål om at konstruere overgangsrater med lokal detaljeret balance, ikke til at påstå at anden hovedsætning er falsk.
+
+
+## 7. november 2026 — Fluktuationsaudit af energikredsløbet (10 seeds × 4 scenarier)
+
+**Formål:** Undersøge hvilke mål i den eksisterende model der fluktuerer, om der er et langsigtet driftssignal, og hvordan energibevarelse relaterer sig til entropi og selektion.
+
+**Metode:** Der er kørt 40 egentlige skovforløb med 320 sweeps hver (12.800 sweeps i alt), gitter 20×20, fem arter, fuld startdækning og seeds 1–10. Det er den eksisterende JavaScript-dynamik fra `index.html`, eksekveret i et mocket DOM/canvas-miljø. Udvalgte tilstande er registreret for hver sweep, og både middelværdi over seeds, standardafvigelse mellem seeds og tidslig standardafvigelse i det sidste vindue på 100 sweeps er undersøgt. Tidslig standardafvigelse betyder ikke nødvendigvis en stationær fluktuation: der kan stadig være drift.
+
+**Forsøg** (I=soloptag pr. træ/sweep; R=tilbageførsel; p=dødsandsynlighed):
+
+1. Energikredsløb: I=1,5, R=0,5, p=0,01.
+2. Energikredsløb uden død: I=1,5, R=0,5, p=0.
+3. Konservativ energi kun i træerne: ingen sol, p=0.
+4. Energikredsløb med høj død: I=1,5, R=0,5, p=0,08.
+
+### Målinger (middel ± standardafvigelse på tværs af 10 seeds ved sweep 320)
+
+| Måling | Kredsløb p=0,01 | Kredsløb p=0 | Konservativ | Kredsløb p=0,08 |
+|---|---:|---:|---:|---:|
+| Levende træer | 364,5 ± 13,1 | 370,4 ± 9,4 | 368,3 ± 8,2 | 344,7 ± 23,2 |
+| Antal arter | 3,7 ± 0,8 | 4,0 ± 0,5 | 3,8 ± 0,8 | 2,0 ± 0,9 |
+| Energi hos træer | 7974,0 ± 29,7 | 8000,0 ± 0 | 4000,0 ± 0 | 3906,8 ± 357,2 |
+| Energi i lageret | 26,1 ± 29,7 | 0 ± 0 | 0 ± 0 | 4093,3 ± 357,2 |
+| Artsentropi H (nat) | 0,970 ± 0,248 | 1,092 ± 0,266 | 1,057 ± 0,237 | 0,403 ± 0,407 |
+| Lokal artsentropi (nat) | 0,465 ± 0,153 | 0,590 ± 0,137 | 0,570 ± 0,139 | 0,177 ± 0,183 |
+| Energiandel-entropi (nat) | 0,982 ± 0,361 | 1,088 ± 0,248 | 0,993 ± 0,209 | 0,423 ± 0,398 |
+| Mikrotilstandsproxy S/kB | 1511,3 ± 137,5 | 1192,4 ± 71,7 | 948,9 ± 36,2 | 4149,1 ± 60,3 |
+| Dominerende arts andel | 0,612 ± 0,140 | 0,467 ± 0,128 | 0,530 ± 0,129 | 0,802 ± 0,225 |
+
+*Bemærk:* De fire scenarier har ikke samme totalenergi. Kredsløb har startenergi 8000 fordelt ligeligt mellem træer og lager; konservativ har 4000 alene hos træer. Mikro-S kan derfor **ikke** sammenlignes direkte på tværs af scenarier som en kontrolleret effekt af dødelighed eller energioverførsel. En parret kontrol med identisk E_total og matched initialbetingelser kræves.
+
+### Tidslige udsving i sidste 100 sweeps (gennemsnitlig tidslig SD inden for hvert run)
+
+| Måling | Kredsløb p=0,01 | Kredsløb p=0,08 |
+|---|---:|---:|
+| Antal træer | 5,55 | 7,09 |
+| E_træer = −E_lager i ændringer | 90,15 | 199,27 |
+| Artsentropi H (nat) | 0,037 | 0,038 |
+| Energiandel-entropi (nat) | 0,048 | 0,042 |
+| Mikrotilstandsproxy S/kB | 217,08 | 29,47 |
+
+**Energi:** E_total var eksakt konstant på simulationsprecision i alle disse forløb (maksimal rapporteret afvigelse 0). Energien i træer og lager er fuldstændigt antikorrelateret i niveau og ændringer, da \(E_L=E_{total}-E_{træer}\).
+
+**Entropiens fluktuationer:** I det almindelige kredsløb var \(\Delta S_{mikro}<0\) for gennemsnitligt 54,1 % af de 320 sweep-overgange (spænd 50,9–59,1 % over seeds). Det viser **ikke** en verificeret termodynamisk entropiproduktion, men en proxy, der fluktuerer og også har stærk langsigtet drift. I konservativ model var andelen 52,2 %. Den målte tidslige SD af mikro-S i almindeligt kredsløb er stor, fordi lageret er næsten tømt og kraftigt følsomt over for relativt små energioverførsler.
+
+**Artsselektionsdrift:** Antal arter kan kun falde eller forblive konstant, fordi modellen ikke har mutation, immigration eller spontan artsopståen. Derfor er artsentropiens fald ikke blot fluktuation omkring en fast værdi. Høj dødelighed (p=0,08) gav kun gennemsnitligt 2 arter tilbage ved sweep 320; der er stadig væsentlig seed-variation.
+
+**Potentiel modellåsning:** Uden død blev det endelige energilager helt tømt i alle 10 seeds, fordi hver tree hvert sweep returnerer højst 0,5 og derefter modtager op til 1,5. Med p=0,01 var gennemsnitslageret ca. 26 ud af 8000 ved sweep 320. Dette kan skabe kunstig lagermangel og er en vigtig mangel ved den valgte energicyklus, **ikke evidens for termodynamisk ligevægt**.
+
+**Ikke påvist:** Ingen test af autokorrelation, spektraltoppe, karakteristisk oscillationsperiode, konvergens til stationær fordeling eller skalalov er endnu udført. Korte op-og-ned-udsving alene dokumenterer ikke periodiske svingninger.
+
+**Anbefalet næste metode:** (1) langtidstest og lag-/autokorrelationsanalyse for lagerenergi og population, (2) justér soloptagsreglen, så lageret ikke systematisk tømmes (eller undersøg netop denne faseovergang), (3) paired-seed- og matched-energy-forsøg over varierende død og tilbageførsel, (4) særskil dynamisk entropiproduktion fra definitionen af tilstandsentropi og prøv lokal detaljeret balance.
