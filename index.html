@@ -203,6 +203,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
             <div class="metric"><small>ΔS<sub>samlet</sub> / k<sub>B</sub></small><b id="miTotal">–</b></div>
             <div class="metric"><small>ΔS<sub>samlet</sub> sidst</small><b id="miStep">–</b></div>
           </div>
+          <p class="hint"><b>Bemærk:</b> Energikvanta er bevaret på tværs af træ- og lagerdelene (bortset fra afrunding). Dette mikrotilstandsmål behøver ikke stige, fordi konkurrencereglerne ikke er defineret ud fra detaljeret balance.</p>
           <div class="legend"><span><i style="background:#298b78"></i> Træenergien</span><span><i style="background:#568ac6"></i> Lageret</span><span><i style="background:#a86643"></i> Summen</span></div>
           <canvas id="microChart" aria-label="Boltzmann entropi i træenergi og fælles lager over tid"></canvas>
           <div id="microExplain" class="explain">Mikrotilstandsberegningen vises, når energimodellen er aktiv.</div>
@@ -254,7 +255,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
           <div class="metric"><small>Lokal varme Q<sub>lokal</sub></small><b id="enLocal">–</b></div>
           <div class="metric"><small>Fælles lager / varmebad</small><b id="enBath">–</b></div>
-          <div class="metric"><small>Samlet energi: disponibel + varme</small><b id="enTotal">–</b></div>
+          <div class="metric"><small>Samlet energi inkl. lager</small><b id="enTotal">–</b></div>
           <div class="metric"><small>Solenergi flyttet til træer (kumulativt)</small><b id="enSun">–</b></div>
           <div class="metric"><small>Fejl i energibalancen</small><b id="enError">–</b></div>
         </div>
@@ -431,7 +432,7 @@ function init(){
   sweep=0;history=[];metricHistory=[];histStride=1;histTick=0;
   off.width=S.L;off.height=S.L;offCtx=off.getContext("2d");img=offCtx.createImageData(S.L,S.L);
   if(S.hmax)for(let i=0;i<N;i++)if(h[i]>S.hmax)h[i]=S.hmax;
-  microInitial=microObservables().total||0;
+  microInitial=microObservables().microTotal||0;
   buildTable();record();draw();
 }
 
