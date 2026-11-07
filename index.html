@@ -85,7 +85,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
 .metric{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .metric small{color:var(--muted);font-size:11.5px}.metric b{font-size:22px;font-variant-numeric:tabular-nums}
 .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:4px 0 6px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:3px}
-#metricChart{width:100%;height:190px;display:block}#batchChart{width:100%;height:155px;display:block;margin-top:10px}
+#metricChart{width:100%;height:190px;display:block}#entropyChart{width:100%;height:210px;display:block}.data-scroll{overflow-x:auto}.energy-bars{display:flex;gap:4px;min-width:100px;height:10px;background:var(--grid);overflow:hidden;border-radius:3px}.energy-bars i{height:100%;display:block}.ent-note{font-size:12px;color:var(--muted)}#batchChart{width:100%;height:155px;display:block;margin-top:10px}
 .explain{font-size:13px;line-height:1.6;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--ink)}
 .preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}.preset-grid button{font-size:12px;padding:8px}
 .preset-grid button.active{border-color:var(--accent);background:var(--bg);box-shadow:inset 3px 0 var(--accent)}
@@ -158,6 +158,24 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <p class="hint"><strong>Vigtigt:</strong> H måler artsdiversitet, ikke fysisk termodynamisk entropi. Et fald i H er derfor ikke et brud på termodynamikkens anden hovedsætning.</p>
         </div>
       </div>
+      <div class="chart-box" id="entropyDashboard">
+        <h2>Tre forskellige entropier</h2>
+        <p class="hint" style="margin-top:0">Alle tre er <strong>Shannon-entropier</strong> af forskellige fordelinger, ikke termodynamisk entropi. Den rå værdi måles i nat; grafen viser H / ln(K), hvor K er det oprindelige artsantal.</p>
+        <div class="metric-grid">
+          <div class="metric"><small>Artsentropi H<sub>art</sub> (nat)</small><b id="exArt">–</b></div>
+          <div class="metric"><small>Lokal rumlig entropi H<sub>lokal</sub> (nat)</small><b id="exLocal">–</b></div>
+          <div class="metric"><small>Energiandel- entropi H<sub>E</sub> (nat)</small><b id="exEnergy">–</b></div>
+          <div class="metric"><small>Rumlig forskel H<sub>art</sub> − H<sub>lokal</sub></small><b id="exSpatial">–</b></div>
+        </div>
+        <div class="legend"><span><i style="background:#298b78"></i> Artsentropi</span><span><i style="background:#d18b47"></i> Lokal entropi</span><span><i style="background:#568ac6"></i> Energiandel-entropi (kun med energi)</span></div>
+        <canvas id="entropyChart" aria-label="Tre informationsentropier over tid"></canvas>
+        <details><summary>Hvad beregner vi?</summary>
+          <p class="hint"><b>Artsentropi:</b> H<sub>art</sub> = −Σ pᵢ ln(pᵢ), med pᵢ = antal levende træer af art i / alle levende træer.</p>
+          <p class="hint"><b>Lokal rumlig entropi:</b> skoven opdeles i op til 4 × 4 blokke. For hver blok beregnes samme artsentropi, og værdierne vægtes med antal levende træer i blokken. Små værdier betyder, at hver blok er relativt ensartet. Tomme celler ignoreres.</p>
+          <p class="hint"><b>Energiandel-entropi:</b> H<sub>E</sub> = −Σ qᵢ ln(qᵢ), hvor qᵢ er artens andel af <em>disponibel energi hos alle træer</em>. Reservoirets energi tæller ikke med.</p>
+          <p class="hint"><b>Rumlig forskel:</b> H<sub>art</sub> − H<sub>lokal</sub> angiver, hvor meget af artsusikkerheden der forklares ved at kende blokken. Det er ikke en termodynamisk entropi.</p>
+        </details>
+      </div>
       <div class="chart-box" id="energyDashboard">
         <h2>Energi i skoven · eksperimentel model</h2>
         <p class="hint" style="margin-top:0">Energiregnskabet aktiveres under <b>Energi-regler</b> i højre side. Enhederne er model-enheder, ikke joule. Energi kan flyttes fra træer til et samlet reservoir, men totalen bevares.</p>
@@ -168,6 +186,10 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
+        <h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
+        <p class="hint" style="margin:0 0 8px">Disponibel energi er en <b>beholdning lige nu</b>. Erobringsgevinst og til reservoir er <b>akkumulerede hændelser</b> siden start, ikke ekstra energi der skal lægges til beholdningen. Den sidste kolonne viser, hvilken art energien kom fra, før den blev flyttet til det fælles reservoir.</p>
+        <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel</th><th class="num">Pr. træ</th><th class="num">Andel af træenergi</th><th class="num">Modtaget ved sejr</th><th class="num">Til reservoir fra art</th></tr></thead><tbody id="energySpeciesRows"></tbody></table></div>
+        <p class="hint">Uden energitilvalg findes disse størrelser ikke. Energi i reservoiret tilhører ikke længere en art; oprindelsen spores kun til bogføring.</p>
       </div>
       <div class="chart-box" id="logbook">
         <h2>Projektlogbog · overvejelser og metoder</h2>
@@ -308,7 +330,7 @@ function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
 const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:false,e0:10,eta:1,growCost:0,birth:2};
-let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0;
+let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[];
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
 const cv=$("lattice"),ctx=cv.getContext("2d"),ch=$("chart"),cctx=ch.getContext("2d");
@@ -323,7 +345,7 @@ function init(){
   species.sort((a,b)=>a.s-b.s);
   sp=new Int16Array(N);h=new Int32Array(N);stamp=new Int32Array(N);order=new Int32Array(N);
   for(let i=0;i<N;i++){if(rand()<S.fill){sp[i]=(rand()*S.K)|0;h[i]=1}else{sp[i]=-1;h[i]=0}}
-  energy=new Float64Array(N);energyBath=0;energyInitial=0;
+  energy=new Float64Array(N);energyBath=0;energyInitial=0;energyBathBySpecies=Array(S.K).fill(0);energyCapturedBySpecies=Array(S.K).fill(0);
   if(S.energyOn){for(let i=0;i<N;i++)if(sp[i]>=0){energy[i]=S.e0;energyInitial+=S.e0}}
   sweep=0;history=[];metricHistory=[];histStride=1;histTick=0;
   off.width=S.L;off.height=S.L;offCtx=off.getContext("2d");img=offCtx.createImageData(S.L,S.L);
@@ -348,12 +370,12 @@ function doSweep(){
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];
     if(a<0||stamp[i]===sweep)continue;
-    if(S.death>0&&rand()<S.death){if(S.energyOn){energyBath+=energy[i];energy[i]=0}sp[i]=-1;h[i]=0;continue}
+    if(S.death>0&&rand()<S.death){if(S.energyOn){energyBath+=energy[i];energyBathBySpecies[a]+=energy[i];energy[i]=0}sp[i]=-1;h[i]=0;continue}
     const s=species[a].s;
     if(rand()<1-s){
       if(!S.hmax||h[i]<S.hmax){
         if(!S.energyOn){h[i]++}
-        else if(energy[i]>=S.growCost){energy[i]-=S.growCost;energyBath+=S.growCost;h[i]++}
+        else if(energy[i]>=S.growCost){energy[i]-=S.growCost;energyBath+=S.growCost;energyBathBySpecies[a]+=S.growCost;h[i]++}
       }
     }else{
       const j=neighbour(i);if(j<0)continue;
@@ -368,9 +390,9 @@ function doSweep(){
       if(rand()<h[i]/(h[i]+h[j])){
         const hd=h[j];sp[j]=a;stamp[j]=sweep;
         h[j]=S.newH==="sapling"?1:S.newH==="attacker"?h[i]:hd;
-        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyBath+=(1-S.eta)*captured}
+        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyCapturedBySpecies[a]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energyBathBySpecies[b]+=(1-S.eta)*captured}
       }else{
-        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energy[i]=0}
+        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyCapturedBySpecies[b]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energyBathBySpecies[a]+=(1-S.eta)*captured;energy[i]=0}
         sp[i]=-1;h[i]=0
       }
     }
@@ -391,6 +413,7 @@ function record(){
   if(histTick%histStride!==0&&sweep>0)return;
   history.push({t:sweep,f:last.cnt.map(c=>c/last.N)});
   lastMetric=measureForest(sp,species,S.L,S.K,S.per,last);
+  Object.assign(lastMetric,moreEntropyMeasures());
   metricHistory.push({t:sweep,...lastMetric});
   if(history.length>1200){history=history.filter((_,i)=>i%2===0);metricHistory=metricHistory.filter((_,i)=>i%2===0);histStride*=2}
 }
@@ -416,7 +439,7 @@ function draw(){
   offCtx.putImageData(img,0,0);
   const r=cv.getBoundingClientRect();fitCanvas(cv,r.width,r.height);
   ctx.imageSmoothingEnabled=false;ctx.drawImage(off,0,0,cv.width,cv.height);
-  drawChart();updateReadout();drawMetricChart();
+  drawChart();updateReadout();drawMetricChart();drawEntropyChart();
 }
 
 function toHex(c){if(c.startsWith("#"))return c.length===4?"#"+[...c.slice(1)].map(x=>x+x).join(""):c;return "#888888"}
@@ -473,7 +496,12 @@ function updateReadout(){
     for(const id of ["enTrees","enBath","enTotal","enError"])$(id).textContent="–";
     $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
   }
+  updateSpeciesEnergyTable();
   if(lastMetric){
+    $("exArt").textContent=lastMetric.artRaw.toFixed(4);
+    $("exLocal").textContent=lastMetric.localRaw.toFixed(4);
+    $("exEnergy").textContent=lastMetric.energyRaw===null?"–":lastMetric.energyRaw.toFixed(4);
+    $("exSpatial").textContent=Math.max(0,lastMetric.artRaw-lastMetric.localRaw).toFixed(4);
     $("mEntropy").textContent=lastMetric.entropy.toFixed(3);
     const N=last.trees;
     let Hraw=0,sumP=0,example=null;
@@ -616,6 +644,60 @@ function measureForest(arr,types,L,K,periodic,already){
     if(y+1<L||periodic){const b=arr[((y+1)%L)*L+x];if(b>=0){pairs++;if(a!==b)unlike++}}
   }
   return {entropy,edges:pairs?unlike/pairs:0,meanS:trees?meanS:0,leader:trees?leader/trees:0,alive,leaderId,trees};
+}
+function moreEntropyMeasures(){
+  const K=S.K,L=S.L,N=sp.length;
+  const cnt=last.cnt,trees=last.trees;
+  let artRaw=0;for(const n of cnt)if(n>0){const p=n/trees;artRaw-=p*Math.log(p)}
+  // Conditional entropy H(species | block), weighted by number of living trees.
+  const B=Math.min(4,L), blockCounts=Array.from({length:B*B},()=>new Float64Array(K));
+  const blockN=new Float64Array(B*B),totE=new Float64Array(K);
+  for(let i=0;i<N;i++){
+    const a=sp[i];if(a<0)continue;
+    const x=i%L,y=(i/L)|0,bx=Math.min(B-1,Math.floor(x*B/L)),by=Math.min(B-1,Math.floor(y*B/L)),bi=by*B+bx;
+    blockCounts[bi][a]++;blockN[bi]++;
+    if(S.energyOn)totE[a]+=energy[i];
+  }
+  let localRaw=0;
+  for(let b=0;b<blockN.length;b++)if(blockN[b]>0){
+    let hb=0;for(const c of blockCounts[b])if(c>0){const p=c/blockN[b];hb-=p*Math.log(p)}
+    localRaw+=blockN[b]/trees*hb;
+  }
+  let energyRaw=null,energyNorm=null;
+  if(S.energyOn){
+    const sum=totE.reduce((a,b)=>a+b,0);
+    if(sum>0){energyRaw=0;for(const e of totE)if(e>0){const p=e/sum;energyRaw-=p*Math.log(p)}}
+    else energyRaw=0; // Degenerate/no available energy: convention displayed below.
+    energyNorm=K>1?energyRaw/Math.log(K):0;
+  }
+  return {artRaw,localRaw,localNorm:K>1?localRaw/Math.log(K):0,energyRaw,energyNorm};
+}
+function updateSpeciesEnergyTable(){
+  const tbody=$("energySpeciesRows");
+  if(!S.energyOn){tbody.innerHTML='<tr><td colspan="7">Aktivér energipakker for at se energien for hver art.</td></tr>';return}
+  const sums=Array(S.K).fill(0),counts=last.cnt,total=energy.reduce((a,b)=>a+b,0);
+  for(let i=0;i<sp.length;i++)if(sp[i]>=0)sums[sp[i]]+=energy[i];
+  tbody.innerHTML=sums.map((e,k)=>{
+    const c=colorOf(k).join(","),q=total>0?e/total:0;
+    return `<tr class="${counts[k]===0?"extinct":""}"><td><span class="sw" style="background:rgb(${c})"></span> ${k+1}</td><td class="num">${counts[k]}</td><td class="num">${e.toFixed(2)}</td><td class="num">${counts[k]?(e/counts[k]).toFixed(2):"–"}</td><td class="num">${(100*q).toFixed(1)} %</td><td class="num">${energyCapturedBySpecies[k].toFixed(2)}</td><td class="num">${energyBathBySpecies[k].toFixed(2)}</td></tr>`;
+  }).join("");
+}
+function drawEntropyChart(){
+  const c=$("entropyChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
+  const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
+  const left=35*d,right=8*d,top=12*d,bottom=25*d;g.clearRect(0,0,w,h);
+  g.strokeStyle=css("--grid");g.fillStyle=css("--muted");g.font=`${11*d}px system-ui`;
+  g.textAlign="right";g.textBaseline="middle";
+  for(let j=0;j<=4;j++){const y=top+(h-top-bottom)*(1-j/4);g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((j/4).toFixed(2),left-5*d,y)}
+  if(metricHistory.length<2)return;
+  const a=metricHistory[0].t,b=metricHistory[metricHistory.length-1].t;
+  const xx=t=>left+(w-left-right)*(t-a)/Math.max(1,b-a),yy=v=>top+(h-top-bottom)*(1-Math.max(0,Math.min(1,v)));
+  for(const [key,color] of [["entropy","#298b78"],["localNorm","#d18b47"],["energyNorm","#568ac6"]]){
+    g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();let started=false;
+    for(const p of metricHistory){const v=p[key];if(v===null||!Number.isFinite(v)){started=false;continue}if(!started){g.moveTo(xx(p.t),yy(v));started=true}else g.lineTo(xx(p.t),yy(v))}
+    g.stroke();
+  }
+  g.fillStyle=css("--muted");g.textBaseline="bottom";g.textAlign="left";g.fillText(`sweep ${a}`,left,h-1*d);g.textAlign="right";g.fillText(`sweep ${b}`,w-right,h-1*d);
 }
 function drawMetricChart(){
   const c=$("metricChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
