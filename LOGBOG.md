@@ -540,3 +540,29 @@ Den konkrete JavaScript-kode blev eksekveret i et mocket DOM/canvas-miljø (ikke
 - JavaScript-syntaksen bestod, og der var ingen dublerede eller manglende direkte DOM-id'er.
 
 **Næste metodiske trin:** Sammenlign med kontrolleret, tidsreversibel Markov-dynamik med kendt detaljeret balance; anvend flere uafhængige forløb og bootstrap/blokbootstrap eller passende nulmodel; undersøge stationaritet, spektralanalyse og skelnen mellem irreversibel selektion og fysisk termodynamisk entropiproduktion. Først efter en sådan validering kan forhold mellem observeret tidsasymmetri og entropiproduktion studeres kvantitativt.
+
+
+### Tidens pil — reversibel kontrol versus drevet Markovkæde
+
+For at give JSD-målet en fysisk kalibrering blev en **separat, analytisk håndterbar kontrolmodel** tilføjet til Tidens pil-panelet.
+
+**Fire tilstande på en ring**, med overgangssandsynligheder \(p_+\) (med uret), \(p_-\) (mod uret) og \(p_0=1-p_+-p_-\) (uændret). Systemet startes i en uniform tilstand, og dets stationære fordeling er uniform for begge parameteropsætninger.
+
+- **Reversibel ligevægt:** \(p_+=p_-=0,45\), \(p_0=0,1\). Detaljeret balance er opfyldt. Teoretisk middel-entropiproduktion er 0.
+- **Drevet ikke-ligevægt:** \(p_+=0,8\), \(p_-=0,1\), \(p_0=0,1\). Den stationære sandsynlighedsstrøm er ikke nul. Under en fortolkning med lokal detaljeret balance er den gennemsnitlige entropiproduktion i \(k_B\)-enheder pr. trin:
+\[
+\sigma=(p_+-p_-)\ln(p_+/p_-)=0,7\ln8\approx1,455609.
+\]
+
+For en konkret bane optælles \(+\ln(p_+/p_-)\) for hvert fremadgående spring og det negative beløb for hvert tilbagespring; uændret tilstand bidrager nul.
+
+**Funktionstest** af 12.000 trin med seed 234:
+
+| Model | JSD for 3-trinsmønstre (nat) | Målt middel \(\Sigma/k_B\) pr. trin | Teoretisk |
+|---|---:|---:|---:|
+| Reversibel ring | 0,000104 | 0 | 0 |
+| Drevet ring | 0,456073 | 1,447118 | 1,455609 |
+
+Den tidsreversible kontrol har statistisk JSD tæt ved nul, mens den drevne ring viser klar asymmetri. Denne kontrol er **ikke samme dynamik som skoven**; skovens JSD kan stadig skyldes selektionsdrift eller regelbaserede irreversible udryddelser. Målet er kun at illustrere og teste metodeforskellen mellem reversibel og drevet dynamik.
+
+**Yderligere kontrol:** Den eksisterende skovoptagelse på 100 sweeps med 21 snapshots gav JSD=0,109444 nat; HTML-elementer og JS-funktioner havde ingen manglende eller dublerede referencer, og den testede konservative energibalance var konstant. Der er endnu ingen browserbaseret billed- eller iPhone-test, kun JS-eksekvering med simuleret DOM/canvas.
