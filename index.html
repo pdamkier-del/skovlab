@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Skovlaboratoriet · evolution, diversitet og rumlig orden</title>
+<title>Skovlaboratoriet · evolution, energi og entropi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -101,13 +101,33 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
 .entropy-detail .totals b{font-size:20px}
 .entropy-detail summary{cursor:pointer;font-weight:600;margin:6px 0}
 
+
+.wrap{max-width:1440px}.layout{grid-template-columns:minmax(0,1fr) 330px;gap:18px}
+.stage{padding:18px}.stage>.chart-box{margin-top:18px}header{max-width:90ch}
+.stage .hero-panel{border:1px solid var(--line);border-radius:12px;padding:16px}
+.hero-panel h2{font-size:24px}.secondary-detail{border:1px solid var(--line);border-radius:10px;padding:12px}
+.secondary-detail>summary,.accordion-panel>summary,.formula-more>summary{cursor:pointer;list-style:none;font-weight:600}
+.secondary-detail>summary::-webkit-details-marker,.accordion-panel>summary::-webkit-details-marker,.formula-more>summary::-webkit-details-marker{display:none}
+.secondary-detail>summary::before,.accordion-panel>summary::before,.formula-more>summary::before{content:"＋";color:var(--accent);margin-right:7px}
+.secondary-detail[open]>summary::before,.accordion-panel[open]>summary::before,.formula-more[open]>summary::before{content:"−"}
+.accordion-panel[open] summary{margin-bottom:10px}.thermo-panel{margin-top:18px;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:11px}
+.thermo-heading{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.thermo-heading h3{font-family:"Newsreader",Georgia,serif;font-size:20px;font-weight:500;margin:0}
+.science-tag{font-size:10px;letter-spacing:.08em;border:1px solid var(--line);padding:3px 7px;border-radius:5px;color:var(--muted)}
+#thermalChart{width:100%;height:175px;display:block;margin:7px 0 12px}
+.formula-more{margin-top:12px;font-size:13px}.formula-more p{line-height:1.6}
+.controls-main{position:sticky;top:10px;z-index:1}.metric b{font-size:19px}
+#energySpeciesRows td{white-space:nowrap}.data-scroll table{min-width:660px}
+@media(max-width:940px){.layout{grid-template-columns:1fr}.controls-main{position:static}.wrap{padding:15px 10px 30px}}
+@media(max-width:600px){.stage{padding:10px}.stage .hero-panel{padding:10px}.metric-grid{gap:6px}.metric{padding:8px}.metric b{font-size:17px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>Skovlaboratoriet</h1>
-    <p>Oskars <strong>Up or out</strong>-model, udvidet med evolution, statistisk orden og et valgfrit energi-eksperiment. Hvert træ har en artsstrategi <i>s</i>: sandsynlighed <i>1 − s</i> for at vokse opad, <i>s</i> for at sprede sig. Ved konflikt vinder træet med sandsynlighed proportional med dets højde. <strong>Originaltilstandens regler er uændrede; energimodellen er et separat tilvalg.</strong></p>
+    <p>Oskars <strong>Up or out</strong>-model, udvidet med evolution, statistisk orden og et valgfrit energi-eksperiment. Hvert træ har en artsstrategi <i>s</i>: sandsynlighed <i>1 − s</i> for at vokse opad, <i>s</i> for at sprede sig. Ved konflikt vinder træet med sandsynlighed proportional med dets højde. <strong>Skift mellem originalmodel og energiforsøg i kontrolpanelet.</strong></p>
   </header>
 
   <div class="layout">
@@ -121,11 +141,11 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <span>Højeste træ <b id="rTall">0</b></span>
       </div>
       <div id="probe">Hover over the lattice to inspect a cell.</div>
-      <div class="chart-box">
+      <details class="chart-box secondary-detail"><summary>Populationskurver for hver art</summary>
         <h2>Arternes andel af gitteret</h2>
         <canvas id="chart" aria-label="Population share of each species over time"></canvas>
-      </div>
-      <div class="chart-box">
+      </details>
+      <details class="chart-box secondary-detail"><summary>Flere evolutionære målinger og beregninger</summary>
         <h2>Evolution, diversitet og rumlig orden</h2>
         <div class="metric-grid">
           <div class="metric"><small>Artsdiversitet H / ln(K)</small><b id="mEntropy">–</b></div>
@@ -146,8 +166,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
             <div><small>Ændring siden start, ΔH</small><b id="entDelta">–</b></div>
             <div><small>Effektivt antal arter exp(H)</small><b id="entEffective">–</b></div>
           </div>
-          <details open>
-            <summary>Vis udregningen for hver art</summary>
+          <details><summary>Vis udregningen for hver art</summary>
             <div style="overflow-x:auto">
               <table><thead><tr><th>Art</th><th class="num">Træer nᵢ</th><th class="num">pᵢ = nᵢ/N</th><th class="num">−pᵢ ln(pᵢ)</th></tr></thead>
                 <tbody id="entRows"></tbody><tfoot><tr><th>Sum</th><th class="num" id="entCount">–</th><th class="num" id="entSumP">–</th><th class="num" id="entSumH">–</th></tr></tfoot></table>
@@ -157,10 +176,10 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <p class="hint">Rumlig blanding er en <strong>anden</strong> måling: Antal nabopar med to forskellige arter / antal undersøgte nabopar med to træer. Den indgår ikke i H ovenfor.</p>
           <p class="hint"><strong>Vigtigt:</strong> H måler artsdiversitet, ikke fysisk termodynamisk entropi. Et fald i H er derfor ikke et brud på termodynamikkens anden hovedsætning.</p>
         </div>
-      </div>
-      <div class="chart-box" id="entropyDashboard">
-        <h2>Tre forskellige entropier</h2>
-        <p class="hint" style="margin-top:0">Alle tre er <strong>Shannon-entropier</strong> af forskellige fordelinger, ikke termodynamisk entropi. Den rå værdi måles i nat; grafen viser H / ln(K), hvor K er det oprindelige artsantal.</p>
+      </details>
+      <div class="chart-box hero-panel" id="entropyDashboard">
+        <h2>Evolution, information og entropi</h2>
+        <p class="hint" style="margin-top:0">De tre farvede kurver er informationsentropier med fælles skala 0–1 (normaliseret med ln(K)). Den <strong>termodynamiske entropi</strong> vises separat nedenunder, fordi dens fysiske betydning og enhed er en anden.</p>
         <div class="metric-grid">
           <div class="metric"><small>Artsentropi H<sub>art</sub> (nat)</small><b id="exArt">–</b></div>
           <div class="metric"><small>Lokal rumlig entropi H<sub>lokal</sub> (nat)</small><b id="exLocal">–</b></div>
@@ -169,6 +188,22 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         </div>
         <div class="legend"><span><i style="background:#298b78"></i> Artsentropi</span><span><i style="background:#d18b47"></i> Lokal entropi</span><span><i style="background:#568ac6"></i> Energiandel-entropi (kun med energi)</span></div>
         <canvas id="entropyChart" aria-label="Tre informationsentropier over tid"></canvas>
+        <section class="thermo-panel">
+          <div class="thermo-heading"><h3>Termodynamisk entropi i varmereservoiret</h3><span class="science-tag">IDEALISERET MODEL</span></div>
+          <div class="metric-grid">
+            <div class="metric"><small>Entropiændring ΔS<sub>bad</sub></small><b id="thEntropy">–</b></div>
+            <div class="metric"><small>Temperatur T</small><b id="thTemp">–</b></div>
+            <div class="metric"><small>Afgivet varme Q</small><b id="thHeat">–</b></div>
+            <div class="metric"><small>ΔS<sub>bad</sub> / C</small><b id="thReduced">–</b></div>
+          </div>
+          <canvas id="thermalChart" aria-label="Varmereservoirets termodynamiske entropiændring over tid"></canvas>
+          <div id="entropyComparison" class="explain">Slå energimodellen til for at sammenligne entropier.</div>
+          <details class="formula-more"><summary>Se den termodynamiske udledning og antagelserne</summary>
+            <p>Reservoiret antages at have konstant varmekapacitet C og starttemperatur T₀ = 1 (modeltemperatur). Frigivet disponibel energi Q antages at blive til varme og fordeles i reservoiret.</p>
+            <div class="entropy-formula">T = T₀ + Q/C &nbsp; · &nbsp; ΔS<sub>bad</sub> = ∫ dQ/T = C ln(T/T₀)</div>
+            <p>Det er en <b>fysisk termodynamisk model for reservoirets entropiændring</b>, målt i modelenergi/modeltemperatur. Det er <b>ikke hele systemets entropi</b>: træernes mikroskopiske termodynamiske entropi modelleres ikke. Et fald i artsentropi modsiger ikke anden hovedsætning.</p>
+          </details>
+        </section>
         <details><summary>Hvad beregner vi?</summary>
           <p class="hint"><b>Artsentropi:</b> H<sub>art</sub> = −Σ pᵢ ln(pᵢ), med pᵢ = antal levende træer af art i / alle levende træer.</p>
           <p class="hint"><b>Lokal rumlig entropi:</b> skoven opdeles i op til 4 × 4 blokke. For hver blok beregnes samme artsentropi, og værdierne vægtes med antal levende træer i blokken. Små værdier betyder, at hver blok er relativt ensartet. Tomme celler ignoreres.</p>
@@ -186,12 +221,12 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
-        <h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
+        <details class="formula-more"><summary>Detaljeret energiregnskab for hver art</summary><h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
         <p class="hint" style="margin:0 0 8px">Disponibel energi er en <b>beholdning lige nu</b>. Erobringsgevinst og til reservoir er <b>akkumulerede hændelser</b> siden start, ikke ekstra energi der skal lægges til beholdningen. Den sidste kolonne viser, hvilken art energien kom fra, før den blev flyttet til det fælles reservoir.</p>
         <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel</th><th class="num">Pr. træ</th><th class="num">Andel af træenergi</th><th class="num">Modtaget ved sejr</th><th class="num">Til reservoir fra art</th></tr></thead><tbody id="energySpeciesRows"></tbody></table></div>
-        <p class="hint">Uden energitilvalg findes disse størrelser ikke. Energi i reservoiret tilhører ikke længere en art; oprindelsen spores kun til bogføring.</p>
+        <p class="hint">Energi i reservoiret tilhører ikke længere en art; oprindelsen spores kun til bogføring.</p></details>
       </div>
-      <div class="chart-box" id="logbook">
+      <details class="chart-box secondary-detail" id="logbook"><summary>Logbog og forskningsmetode</summary>
         <h2>Projektlogbog · overvejelser og metoder</h2>
         <div class="explain">
           <b>7. november 2026 — status</b><br>
@@ -203,17 +238,15 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <b>Afgrænsning:</b> Dette er en legetøjsmodel for energiressourcer, ikke en mikrofysisk model for termodynamisk entropiproduktion. Der er ingen temperatur eller varmebadets mikrotilstande.<br>
           <b>Åbent:</b> Skal energi i fremtidige forsøg også tilføres som sollys, eller skal systemet forblive lukket?
         </div>
-        <p class="hint">Den fulde logbog findes desuden i projektfilen <code>LOGBOG.md</code> ved siden af HTML’en. I en GitHub-version kan begge filer opdateres uden at hente en ny HTML.</p>
-      </div>
-      <div class="chart-box">
-        <h2>Hvad viser modellen?</h2>
+        <p class="hint"><a href="LOGBOG.md" target="_blank" rel="noopener noreferrer">Åbn den fulde forskningslogbog ↗</a></p>
+      </details>
+      <details class="chart-box secondary-detail"><summary>Fortolkning af evolutionen</summary><h2>Hvad viser modellen?</h2>
         <div id="interpret" class="explain">Start simulationen for at se, hvordan selektion og statistisk orden udvikler sig.</div>
-      </div>
+      </details>
     </main>
 
     <aside>
-      <section class="panel">
-        <h2>Eksperimenter</h2>
+      <details class="panel accordion-panel"><summary>Færdige forsøg</summary><h2>Eksperimenter</h2>
         <p class="hint" style="margin-top:0">Vælg en opsætning, kør skoven og sammenlign. Du kan altid ændre alt manuelt bagefter.</p>
         <div class="preset-grid">
           <button data-preset="original">Original skov</button>
@@ -222,8 +255,8 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <button data-preset="height">Højdegrænse</button>
         </div>
         <div class="explain" id="presetQuestion">Undersøg: Hvilke strategier vinder, og hvordan ændres diversitet og rumlig orden?</div>
-      </section>
-      <section class="panel">
+      </details>
+      <section class="panel controls-main"><h2>Kør simulationen</h2>
         <div class="buttons">
           <button class="primary" id="btnRun">Start</button>
           <button id="btnStep">Ét sweep</button>
@@ -238,8 +271,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <p class="hint">Ændring af størrelse, arter, dækning eller seed planter en ny skov. Genstart gentager samme begyndelsestilstand.</p>
       </section>
 
-      <section class="panel">
-        <h2>Oskars regler</h2>
+      <details class="panel accordion-panel"><summary>Avancerede skovregler</summary><h2>Oskars regler</h2>
         <div class="field two"><label for="inNew">Højde ved overtagelse</label>
           <select id="inNew">
             <option value="sapling">Nyt træ (højde 1)</option>
@@ -263,21 +295,22 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <p class="hint sub" id="oRate"></p>
         </div>
         <p class="hint">Begge tilvalg er slået fra som standard. De oprindelige spilleregler bevares.</p>
-      </section>
+      </details>
 
       <section class="panel">
-        <h2>Energi-regler · valgfrit forsøg</h2>
-        <label class="check"><input type="checkbox" id="tgEnergy"> Aktivér energipakker</label>
+        <h2>Energi og varme</h2>
+        <label class="check"><input type="checkbox" id="tgEnergy" checked> Aktivér energipakker</label>
         <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Totalen hos træer + reservoir bevares ved alle hændelser.</p>
         <div class="field two"><label for="enInitial">Energi pr. træ ved start</label><input type="number" id="enInitial" value="10" min="1" max="10000" step="1"></div>
-        <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="1"></div>
+        <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="0.8"></div>
         <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi flyttes til reservoiret – energien forsvinder ikke.</p>
-        <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0" min="0" max="1000" step="0.5"></div>
+        <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0.5" min="0" max="1000" step="0.5"></div>
         <div class="field two"><label for="enBirth">Minimum til formering</label><input type="number" id="enBirth" value="2" min="0.01" max="1000" step="0.5"></div>
         <p class="hint">Ved spredning flyttes et energibeløb fra forælder til den nye celle. Uden tilstrækkelig energi kan træet ikke sprede sig. Ved vækst betales en omkostning til reservoiret.</p>
-        <p class="hint"><b>Fortolkning:</b> η = 1 betyder fuld overførsel af disponibel energi ved kamp, ikke et fysisk elastisk stød. η &lt; 1 beskriver omdannelse til utilgængelig energi, ikke tab af total energi.</p>
+        <div class="field two"><label for="enCapacity">Reservoirets varmekapacitet C</label><input type="number" id="enCapacity" value="1000" min="0.1" max="100000000" step="100"></div>
+        <p class="hint">Varmekapaciteten C bestemmer, hvor meget reservoiret opvarmes. T₀ = 1. η &lt; 1 giver varme ved konkurrence. Ændring af C genstarter forsøget.</p>
       </section>
-      <section class="panel" id="batchPanel">
+      <details class="panel accordion-panel" id="batchPanel"><summary>Gentagne forsøg og CSV</summary>
         <h2>Gentag forsøget</h2>
         <p class="hint" style="margin-top:0">Én skov kan give et tilfældigt udfald. Kør flere <em>uafhængige</em> skove med samme artsstrategier og regler, men med forskellige tilfældige starttilstande.</p>
         <div class="field two"><label for="batchRuns">Antal forsøg</label><select id="batchRuns"><option value="10">10</option><option value="30" selected>30</option><option value="100">100</option></select></div>
@@ -287,25 +320,23 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <canvas id="batchChart" aria-label="Resultater fra gentagne skove"></canvas>
         <div id="batchResult" class="explain">Efter gentagelserne viser vi bl.a. antal arter tilbage, strategier hos den største art og variation i diversitet.</div>
         <button id="btnCsv" disabled style="margin-top:10px">Eksportér resultater som CSV</button>
-      </section>
-      <section class="panel">
-        <h2>Visning</h2>
+      </details>
+      <details class="panel accordion-panel"><summary>Gitterets visning</summary><h2>Visning</h2>
         <div class="seg" role="group" aria-label="Colour mode">
           <button data-mode="species" aria-pressed="true">Species</button>
           <button data-mode="shade" aria-pressed="false">Art × højde</button>
           <button data-mode="height" aria-pressed="false">Højde</button>
         </div>
         <label class="check"><input type="checkbox" id="inByS" checked> Farv arter efter <i>s</i> (blå = op, gul = ud)</label>
-      </section>
+      </details>
 
-      <section class="panel">
-        <h2>Arter</h2>
+      <details class="panel accordion-panel"><summary>Arternes strategier og højder</summary><h2>Arter</h2>
         <table>
           <thead><tr><th></th><th><i>s</i></th><th>Andel</th><th class="num">Gns. h</th><th class="num">Max h</th></tr></thead>
           <tbody id="tbody"></tbody>
         </table>
         <p class="hint">Ændr en arts <i>s</i>-værdi, også mens simulationen kører.</p>
-      </section>
+      </details>
     </aside>
   </div>
 </div>
