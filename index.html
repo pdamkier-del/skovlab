@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skovlaboratoriet · evolution, diversitet og rumlig orden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1ec; --panel:#ffffff; --ink:#1c2620; --muted:#5a685e; --line:#d3dbd0;
+  --accent:#2f6b4f; --on-accent:#ffffff; --empty:#e2e7df; --chart-bg:#ffffff; --grid:#e6ebe3;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111713; --panel:#18201b; --ink:#e3eae4; --muted:#93a398; --line:#2b362f;
+    --accent:#86c7a2; --on-accent:#0f1a14; --empty:#1d2520; --chart-bg:#18201b; --grid:#243029;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111713; --panel:#18201b; --ink:#e3eae4; --muted:#93a398; --line:#2b362f;
+  --accent:#86c7a2; --on-accent:#0f1a14; --empty:#1d2520; --chart-bg:#18201b; --grid:#243029;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 20px 48px}
+header{margin-bottom:22px;max-width:70ch}
+h1{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(34px,5vw,52px);line-height:1.02;margin:0 0 10px;letter-spacing:-0.01em}
+header p{margin:0;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+@media (max-width:940px){.layout{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.lattice-box{position:relative;width:100%;aspect-ratio:1/1;border-radius:6px;overflow:hidden;background:var(--empty)}
+#lattice{width:100%;height:100%;display:block;image-rendering:pixelated;cursor:crosshair}
+.readout{display:flex;flex-wrap:wrap;gap:6px 22px;margin:12px 2px 2px;font-size:13.5px;color:var(--muted)}
+.readout b{color:var(--ink);font-weight:600}
+#probe{margin:6px 2px 0;font-size:13px;color:var(--muted);min-height:1.5em}
+.chart-box{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.chart-box h2,.panel h2{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:20px;margin:0 0 8px}
+#chart{width:100%;height:180px;display:block}
+aside{display:flex;flex-direction:column;gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+button{font:inherit;font-size:14px;font-weight:500;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:8px 14px;cursor:pointer}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);min-width:92px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.field{display:grid;grid-template-columns:128px minmax(0,1fr) 52px;align-items:center;gap:10px;margin:9px 0;font-size:14px}
+.field label{color:var(--muted)}
+.field output{text-align:right;font-size:13.5px}
+.field.two{grid-template-columns:128px minmax(0,1fr)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=number],select{font:inherit;font-size:14px;width:100%;padding:5px 8px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin:10px 0 2px}
+.check input{accent-color:var(--accent)}
+.opt{border:1px solid var(--line);border-radius:10px;padding:4px 12px 10px;margin:12px 0}
+.opt .check{color:var(--ink);font-weight:500}
+.opt.off .sub{opacity:.45}
+.sub{margin-left:24px}
+.field.sub{grid-template-columns:104px minmax(0,1fr) 60px}
+.field.sub.two{grid-template-columns:104px minmax(0,1fr)}
+.hint{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-weight:500;color:var(--muted);text-align:left;padding:4px 4px 6px;border-bottom:1px solid var(--line)}
+td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.extinct td{opacity:.42}
+.sw{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:-2px}
+td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
+.bar{height:6px;border-radius:3px;background:var(--grid);overflow:hidden;margin-top:3px}
+.bar i{display:block;height:100%}
+.num{text-align:right}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:none;border-radius:0;flex:1;padding:6px 8px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+.metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.metric{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.metric small{color:var(--muted);font-size:11.5px}.metric b{font-size:22px;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:4px 0 6px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:3px}
+#metricChart{width:100%;height:190px;display:block}#batchChart{width:100%;height:155px;display:block;margin-top:10px}
+.explain{font-size:13px;line-height:1.6;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--ink)}
+.preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}.preset-grid button{font-size:12px;padding:8px}
+.preset-grid button.active{border-color:var(--accent);background:var(--bg);box-shadow:inset 3px 0 var(--accent)}
+#batchPanel button:disabled{opacity:.5;cursor:not-allowed}
+.entropy-detail{margin:14px 0 0;padding:14px;border:1px solid var(--line);border-radius:11px;background:var(--bg)}
+.entropy-detail h3{font-size:17px;margin:0 0 7px;font-family:"Newsreader",Georgia,serif;font-weight:500}
+.entropy-formula{padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);font-size:17px;text-align:center;margin:8px 0 12px}
+.entropy-detail table{font-variant-numeric:tabular-nums;font-size:12px}
+.entropy-detail td,.entropy-detail th{padding:5px}
+.entropy-detail .totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.entropy-detail .totals>div{background:var(--panel);padding:9px;border-radius:8px;border:1px solid var(--line)}
+.entropy-detail .totals small{color:var(--muted);display:block;font-size:11px}
+.entropy-detail .totals b{font-size:20px}
+.entropy-detail summary{cursor:pointer;font-weight:600;margin:6px 0}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Skovlaboratoriet</h1>
+    <p>Oskars <strong>Up or out</strong>-model, udvidet med evolution, statistisk orden og et valgfrit energi-eksperiment. Hvert træ har en artsstrategi <i>s</i>: sandsynlighed <i>1 − s</i> for at vokse opad, <i>s</i> for at sprede sig. Ved konflikt vinder træet med sandsynlighed proportional med dets højde. <strong>Originaltilstandens regler er uændrede; energimodellen er et separat tilvalg.</strong></p>
+  </header>
+
+  <div class="layout">
+    <main class="stage">
+      <div class="lattice-box"><canvas id="lattice" aria-label="Lattice of trees coloured by species"></canvas></div>
+      <div class="readout">
+        <span>Sweep <b id="rSweep">0</b></span>
+        <span>Træer <b id="rTrees">0</b></span>
+        <span>Arter tilbage <b id="rAlive">0</b></span>
+        <span>Gns. strategi <i>s</i> <b id="rMeanS">–</b></span>
+        <span>Højeste træ <b id="rTall">0</b></span>
+      </div>
+      <div id="probe">Hover over the lattice to inspect a cell.</div>
+      <div class="chart-box">
+        <h2>Arternes andel af gitteret</h2>
+        <canvas id="chart" aria-label="Population share of each species over time"></canvas>
+      </div>
+      <div class="chart-box">
+        <h2>Evolution, diversitet og rumlig orden</h2>
+        <div class="metric-grid">
+          <div class="metric"><small>Artsdiversitet H / ln(K)</small><b id="mEntropy">–</b></div>
+          <div class="metric"><small>Uens nabopar</small><b id="mEdges">–</b></div>
+          <div class="metric"><small>Gns. strategi s</small><b id="mStrategy">–</b></div>
+          <div class="metric"><small>Dominerende artsandel</small><b id="mLeader">–</b></div>
+        </div>
+        <div class="legend"><span><i style="background:#298b78"></i> Artsdiversitet</span><span><i style="background:#d18b47"></i> Uens nabopar</span><span><i style="background:#568ac6"></i> Gns. s</span></div>
+        <canvas id="metricChart" aria-label="Tidskurver for diversitet rumlig orden og strategi"></canvas>
+        <p class="hint">Entropien er <strong>Shannons artsdiversitet</strong>, ikke termodynamisk entropi. Kurven for uens nabopar er en enkel måling af rumlig blanding (0 = ingen nabopar med forskellige arter).</p>
+        <div class="entropy-detail" aria-live="off">
+          <h3>Sådan beregnes entropien lige nu</h3>
+          <p class="hint" style="margin-top:0">Her er de faktiske tal fra skoven, ikke et tænkt eksempel. Kun levende træer tæller i artsandelene.</p>
+          <div class="entropy-formula">H = −Σ pᵢ ln(pᵢ) &nbsp; · &nbsp; pᵢ = nᵢ / N<sub>træer</sub></div>
+          <div class="totals">
+            <div><small>Rå Shannon-entropi H (nat)</small><b id="entRaw">–</b></div>
+            <div><small>Normaliseret H / ln(K)</small><b id="entNorm">–</b></div>
+            <div><small>Ændring siden start, ΔH</small><b id="entDelta">–</b></div>
+            <div><small>Effektivt antal arter exp(H)</small><b id="entEffective">–</b></div>
+          </div>
+          <details open>
+            <summary>Vis udregningen for hver art</summary>
+            <div style="overflow-x:auto">
+              <table><thead><tr><th>Art</th><th class="num">Træer nᵢ</th><th class="num">pᵢ = nᵢ/N</th><th class="num">−pᵢ ln(pᵢ)</th></tr></thead>
+                <tbody id="entRows"></tbody><tfoot><tr><th>Sum</th><th class="num" id="entCount">–</th><th class="num" id="entSumP">–</th><th class="num" id="entSumH">–</th></tr></tfoot></table>
+            </div>
+          </details>
+          <p class="hint" id="entExample">Eksempelberegning vises, når skoven er indlæst.</p>
+          <p class="hint">Rumlig blanding er en <strong>anden</strong> måling: Antal nabopar med to forskellige arter / antal undersøgte nabopar med to træer. Den indgår ikke i H ovenfor.</p>
+          <p class="hint"><strong>Vigtigt:</strong> H måler artsdiversitet, ikke fysisk termodynamisk entropi. Et fald i H er derfor ikke et brud på termodynamikkens anden hovedsætning.</p>
+        </div>
+      </div>
+      <div class="chart-box" id="energyDashboard">
+        <h2>Energi i skoven · eksperimentel model</h2>
+        <p class="hint" style="margin-top:0">Energiregnskabet aktiveres under <b>Energi-regler</b> i højre side. Enhederne er model-enheder, ikke joule. Energi kan flyttes fra træer til et samlet reservoir, men totalen bevares.</p>
+        <div class="metric-grid">
+          <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
+          <div class="metric"><small>Energi i reservoir</small><b id="enBath">–</b></div>
+          <div class="metric"><small>Total energi (inkl. reservoir)</small><b id="enTotal">–</b></div>
+          <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
+        </div>
+        <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
+      </div>
+      <div class="chart-box" id="logbook">
+        <h2>Projektlogbog · overvejelser og metoder</h2>
+        <div class="explain">
+          <b>7. november 2026 — status</b><br>
+          <b>Udgangspunkt:</b> Oskars Up or out-gittermodel med artsstrategi s, højde og højdeafhængig konkurrence.<br>
+          <b>Observeret størrelse:</b> Artsdiversitet måles ved Shannon-entropien H = −Σ pᵢ ln(pᵢ). Det er ikke termodynamisk entropi.<br>
+          <b>Hypotese:</b> Energibegrænsninger og effektiviteten af energiudveksling kan ændre, hvilke strategier der dominerer, og hvor meget artsdiversiteten falder.<br>
+          <b>Metode:</b> Sammenlign identiske seeds i originaltilstand og energitilstand; hold andre parametre faste; mål strategier, H og energi; gentag over flere seeds.<br>
+          <b>Modelvalg:</b> Ved sejr overføres en andel η af den tabende celles disponible energi til vinderens afkom eller den sejrende nabo. Resten går til et reservoir. Vækstomkostninger går også til reservoir.<br>
+          <b>Afgrænsning:</b> Dette er en legetøjsmodel for energiressourcer, ikke en mikrofysisk model for termodynamisk entropiproduktion. Der er ingen temperatur eller varmebadets mikrotilstande.<br>
+          <b>Åbent:</b> Skal energi i fremtidige forsøg også tilføres som sollys, eller skal systemet forblive lukket?
+        </div>
+        <p class="hint">Den fulde logbog findes desuden i projektfilen <code>LOGBOG.md</code> ved siden af HTML’en. I en GitHub-version kan begge filer opdateres uden at hente en ny HTML.</p>
+      </div>
+      <div class="chart-box">
+        <h2>Hvad viser modellen?</h2>
+        <div id="interpret" class="explain">Start simulationen for at se, hvordan selektion og statistisk orden udvikler sig.</div>
+      </div>
+    </main>
+
+    <aside>
+      <section class="panel">
+        <h2>Eksperimenter</h2>
+        <p class="hint" style="margin-top:0">Vælg en opsætning, kør skoven og sammenlign. Du kan altid ændre alt manuelt bagefter.</p>
+        <div class="preset-grid">
+          <button data-preset="original">Original skov</button>
+          <button data-preset="two">To strategier</button>
+          <button data-preset="death">Med dødelighed</button>
+          <button data-preset="height">Højdegrænse</button>
+        </div>
+        <div class="explain" id="presetQuestion">Undersøg: Hvilke strategier vinder, og hvordan ændres diversitet og rumlig orden?</div>
+      </section>
+      <section class="panel">
+        <div class="buttons">
+          <button class="primary" id="btnRun">Start</button>
+          <button id="btnStep">Ét sweep</button>
+          <button id="btnRestart">Genstart</button>
+          <button id="btnNew">Ny skov</button>
+        </div>
+        <div class="field"><label for="inL">Gitterstørrelse L</label><input type="range" id="inL" min="10" max="300" step="5" value="100"><output id="oL">100</output></div>
+        <div class="field"><label for="inK">Antal arter</label><input type="range" id="inK" min="2" max="30" step="1" value="10"><output id="oK">10</output></div>
+        <div class="field"><label for="inFill">Startdækning</label><input type="range" id="inFill" min="0.05" max="1" step="0.05" value="1"><output id="oFill">100%</output></div>
+        <div class="field"><label for="inSpeed">Sweeps pr. billede</label><input type="range" id="inSpeed" min="1" max="40" step="1" value="1"><output id="oSpeed">1</output></div>
+        <div class="field two"><label for="inSeed">Tilfældigheds-seed</label><input type="number" id="inSeed" min="1" step="1" value="1"></div>
+        <p class="hint">Ændring af størrelse, arter, dækning eller seed planter en ny skov. Genstart gentager samme begyndelsestilstand.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Oskars regler</h2>
+        <div class="field two"><label for="inNew">Højde ved overtagelse</label>
+          <select id="inNew">
+            <option value="sapling">Nyt træ (højde 1)</option>
+            <option value="attacker">Angriberens højde</option>
+            <option value="defender">Forsvarerens højde</option>
+          </select></div>
+        <div class="field two"><label for="inNb">Naboer</label>
+          <select id="inNb"><option value="4">4 (von Neumann)</option><option value="8">8 (Moore)</option></select></div>
+        <label class="check"><input type="checkbox" id="inPer" checked> Periodiske kanter</label>
+
+        <div class="opt off" id="optH">
+          <label class="check"><input type="checkbox" id="tgHmax"> Maksimal træhøjde</label>
+          <div class="field sub two"><label for="inHmax">Maks. højde</label><input type="number" id="inHmax" min="1" step="1" value="50"></div>
+          <p class="hint sub">A tree at the cap that chooses to grow up does nothing that turn. Taller trees are cut down to the cap when you turn this on.</p>
+        </div>
+
+        <div class="opt off" id="optD">
+          <label class="check"><input type="checkbox" id="tgDeath"> Tilfældig død</label>
+          <div class="field sub"><label for="inTau">Levetid τ</label><input type="range" id="inTau" min="0" max="4" step="0.05" value="2"><output id="oTau">100</output></div>
+          <div class="field sub two"><label for="inRate">Rate λ / sweep</label><input type="number" id="inRate" min="0.0001" max="10" step="0.001" value="0.01"></div>
+          <p class="hint sub" id="oRate"></p>
+        </div>
+        <p class="hint">Begge tilvalg er slået fra som standard. De oprindelige spilleregler bevares.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Energi-regler · valgfrit forsøg</h2>
+        <label class="check"><input type="checkbox" id="tgEnergy"> Aktivér energipakker</label>
+        <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Totalen hos træer + reservoir bevares ved alle hændelser.</p>
+        <div class="field two"><label for="enInitial">Energi pr. træ ved start</label><input type="number" id="enInitial" value="10" min="1" max="10000" step="1"></div>
+        <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="1"></div>
+        <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi flyttes til reservoiret – energien forsvinder ikke.</p>
+        <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0" min="0" max="1000" step="0.5"></div>
+        <div class="field two"><label for="enBirth">Minimum til formering</label><input type="number" id="enBirth" value="2" min="0.01" max="1000" step="0.5"></div>
+        <p class="hint">Ved spredning flyttes et energibeløb fra forælder til den nye celle. Uden tilstrækkelig energi kan træet ikke sprede sig. Ved vækst betales en omkostning til reservoiret.</p>
+        <p class="hint"><b>Fortolkning:</b> η = 1 betyder fuld overførsel af disponibel energi ved kamp, ikke et fysisk elastisk stød. η &lt; 1 beskriver omdannelse til utilgængelig energi, ikke tab af total energi.</p>
+      </section>
+      <section class="panel" id="batchPanel">
+        <h2>Gentag forsøget</h2>
+        <p class="hint" style="margin-top:0">Én skov kan give et tilfældigt udfald. Kør flere <em>uafhængige</em> skove med samme artsstrategier og regler, men med forskellige tilfældige starttilstande.</p>
+        <div class="field two"><label for="batchRuns">Antal forsøg</label><select id="batchRuns"><option value="10">10</option><option value="30" selected>30</option><option value="100">100</option></select></div>
+        <div class="field two"><label for="batchSweeps">Sweeps pr. forsøg</label><select id="batchSweeps"><option value="100">100</option><option value="300" selected>300</option><option value="800">800</option></select></div>
+        <div class="buttons" style="margin-top:12px"><button class="primary" id="btnBatch">Kør gentagelser</button><button id="btnCancelBatch" disabled>Afbryd</button></div>
+        <div id="batchStatus" class="hint" aria-live="polite">Klar til gentagelser. Brug først gerne et lille gitter.</div>
+        <canvas id="batchChart" aria-label="Resultater fra gentagne skove"></canvas>
+        <div id="batchResult" class="explain">Efter gentagelserne viser vi bl.a. antal arter tilbage, strategier hos den største art og variation i diversitet.</div>
+        <button id="btnCsv" disabled style="margin-top:10px">Eksportér resultater som CSV</button>
+      </section>
+      <section class="panel">
+        <h2>Visning</h2>
+        <div class="seg" role="group" aria-label="Colour mode">
+          <button data-mode="species" aria-pressed="true">Species</button>
+          <button data-mode="shade" aria-pressed="false">Art × højde</button>
+          <button data-mode="height" aria-pressed="false">Højde</button>
+        </div>
+        <label class="check"><input type="checkbox" id="inByS" checked> Farv arter efter <i>s</i> (blå = op, gul = ud)</label>
+      </section>
+
+      <section class="panel">
+        <h2>Arter</h2>
+        <table>
+          <thead><tr><th></th><th><i>s</i></th><th>Andel</th><th class="num">Gns. h</th><th class="num">Max h</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <p class="hint">Ændr en arts <i>s</i>-værdi, også mens simulationen kører.</p>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const CAT=["#3a8a4c","#d58a1f","#3d72c2","#c94a3c","#8c5cc0","#2a9d8f","#b9a12a","#d2649a","#7a5a32","#5d8399","#93bd34","#e0703a"];
+let rand;
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function viridis(t){
+  t=Math.max(0,Math.min(1,t));
+  const r=0.2777+t*(0.1050+t*(-0.3308+t*(-4.6342+t*(6.2283+t*(4.7763+t*-5.4354)))));
+  const g=0.0054+t*(1.4046+t*(0.2148+t*(-5.7991+t*(14.1799+t*(-13.7451+t*4.6459)))));
+  const b=0.3341+t*(1.3849+t*(0.0951+t*(-19.3324+t*(56.6906+t*(-65.3530+t*26.3124)))));
+  return [r,g,b].map(v=>Math.round(255*Math.max(0,Math.min(1,v))));
+}
+function hex2rgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508)%360;const c=hslToRgb(hue/360,.55,.5);return c}
+function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:false,e0:10,eta:1,growCost:0,birth:2};
+let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0;
+let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
+let off=document.createElement("canvas"),offCtx,img;
+const cv=$("lattice"),ctx=cv.getContext("2d"),ch=$("chart"),cctx=ch.getContext("2d");
+
+function colorOf(k){return S.byS?viridis(species[k].s):catColor(k)}
+
+function init(){
+  rand=mulberry32(S.seed*2654435761>>>0);
+  const N=S.L*S.L;
+  species=[];
+  for(let k=0;k<S.K;k++)species.push({s:Math.round(rand()*1000)/1000});
+  species.sort((a,b)=>a.s-b.s);
+  sp=new Int16Array(N);h=new Int32Array(N);stamp=new Int32Array(N);order=new Int32Array(N);
+  for(let i=0;i<N;i++){if(rand()<S.fill){sp[i]=(rand()*S.K)|0;h[i]=1}else{sp[i]=-1;h[i]=0}}
+  energy=new Float64Array(N);energyBath=0;energyInitial=0;
+  if(S.energyOn){for(let i=0;i<N;i++)if(sp[i]>=0){energy[i]=S.e0;energyInitial+=S.e0}}
+  sweep=0;history=[];metricHistory=[];histStride=1;histTick=0;
+  off.width=S.L;off.height=S.L;offCtx=off.getContext("2d");img=offCtx.createImageData(S.L,S.L);
+  if(S.hmax)for(let i=0;i<N;i++)if(h[i]>S.hmax)h[i]=S.hmax;
+  buildTable();record();draw();
+}
+
+function neighbour(i){
+  const L=S.L,x=i%L,y=(i/L)|0;let dx,dy;
+  if(S.nb===4){const r=(rand()*4)|0;dx=[1,-1,0,0][r];dy=[0,0,1,-1][r]}
+  else{let r=(rand()*8)|0;if(r>=4)r++;dx=(r%3)-1;dy=((r/3)|0)-1}
+  let nx=x+dx,ny=y+dy;
+  if(S.per){nx=(nx+L)%L;ny=(ny+L)%L}else if(nx<0||ny<0||nx>=L||ny>=L)return -1;
+  return ny*L+nx;
+}
+
+function doSweep(){
+  sweep++;
+  const N=S.L*S.L;let n=0;
+  for(let i=0;i<N;i++)if(sp[i]>=0)order[n++]=i;
+  for(let k=n-1;k>0;k--){const j=(rand()*(k+1))|0,t=order[k];order[k]=order[j];order[j]=t}
+  for(let k=0;k<n;k++){
+    const i=order[k],a=sp[i];
+    if(a<0||stamp[i]===sweep)continue;
+    if(S.death>0&&rand()<S.death){if(S.energyOn){energyBath+=energy[i];energy[i]=0}sp[i]=-1;h[i]=0;continue}
+    const s=species[a].s;
+    if(rand()<1-s){
+      if(!S.hmax||h[i]<S.hmax){
+        if(!S.energyOn){h[i]++}
+        else if(energy[i]>=S.growCost){energy[i]-=S.growCost;energyBath+=S.growCost;h[i]++}
+      }
+    }else{
+      const j=neighbour(i);if(j<0)continue;
+      const b=sp[j];
+      if(b===a)continue;
+      if(S.energyOn&&energy[i]<S.birth)continue;
+      if(b<0){
+        sp[j]=a;h[j]=S.newH==="attacker"?h[i]:1;stamp[j]=sweep;
+        if(S.energyOn){energy[i]-=S.birth;energy[j]=S.birth}
+        continue
+      }
+      if(rand()<h[i]/(h[i]+h[j])){
+        const hd=h[j];sp[j]=a;stamp[j]=sweep;
+        h[j]=S.newH==="sapling"?1:S.newH==="attacker"?h[i]:hd;
+        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyBath+=(1-S.eta)*captured}
+      }else{
+        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyBath+=(1-S.eta)*captured;energy[i]=0}
+        sp[i]=-1;h[i]=0
+      }
+    }
+  }
+  record();
+}
+
+function stats(){
+  const N=S.L*S.L,cnt=new Array(S.K).fill(0),sumH=new Array(S.K).fill(0),maxH=new Array(S.K).fill(0);
+  let trees=0,sumS=0,tall=0;
+  for(let i=0;i<N;i++){const a=sp[i];if(a<0)continue;trees++;cnt[a]++;sumH[a]+=h[i];if(h[i]>maxH[a])maxH[a]=h[i];sumS+=species[a].s;if(h[i]>tall)tall=h[i]}
+  return {N,cnt,sumH,maxH,trees,meanS:trees?sumS/trees:NaN,tall};
+}
+let last=null;
+function record(){
+  last=stats();
+  histTick++;
+  if(histTick%histStride!==0&&sweep>0)return;
+  history.push({t:sweep,f:last.cnt.map(c=>c/last.N)});
+  lastMetric=measureForest(sp,species,S.L,S.K,S.per,last);
+  metricHistory.push({t:sweep,...lastMetric});
+  if(history.length>1200){history=history.filter((_,i)=>i%2===0);metricHistory=metricHistory.filter((_,i)=>i%2===0);histStride*=2}
+}
+
+function fitCanvas(c,cssW,cssH){const d=window.devicePixelRatio||1;const w=Math.round(cssW*d),hh=Math.round(cssH*d);if(c.width!==w||c.height!==hh){c.width=w;c.height=hh}return d}
+
+function draw(){
+  const N=S.L*S.L,data=img.data;
+  const emp=hex2rgb(toHex(css("--empty")));
+  const cols=species.map((_,k)=>colorOf(k));
+  const lmax=Math.log(1+(last?last.tall:1))||1;
+  for(let i=0;i<N;i++){
+    const a=sp[i],o=i*4;let c;
+    if(a<0)c=emp;
+    else if(S.mode==="species")c=cols[a];
+    else{
+      const t=Math.log(1+h[i])/lmax;
+      if(S.mode==="height")c=viridis(t);
+      else{const base=cols[a],f=0.3+0.7*t;c=[base[0]*f,base[1]*f,base[2]*f]}
+    }
+    data[o]=c[0];data[o+1]=c[1];data[o+2]=c[2];data[o+3]=255;
+  }
+  offCtx.putImageData(img,0,0);
+  const r=cv.getBoundingClientRect();fitCanvas(cv,r.width,r.height);
+  ctx.imageSmoothingEnabled=false;ctx.drawImage(off,0,0,cv.width,cv.height);
+  drawChart();updateReadout();drawMetricChart();
+}
+
+function toHex(c){if(c.startsWith("#"))return c.length===4?"#"+[...c.slice(1)].map(x=>x+x).join(""):c;return "#888888"}
+
+function drawChart(){
+  const r=ch.getBoundingClientRect(),d=fitCanvas(ch,r.width,r.height);
+  const W=ch.width,H=ch.height,pl=34*d,pb=18*d,pt=6*d,pr=6*d;
+  cctx.clearRect(0,0,W,H);
+  const grid=css("--grid"),muted=css("--muted");
+  cctx.font=`${11*d}px "Public Sans",system-ui,sans-serif`;cctx.fillStyle=muted;cctx.strokeStyle=grid;cctx.lineWidth=1*d;
+  let ymax=0;for(const p of history)for(const v of p.f)if(v>ymax)ymax=v;
+  ymax=Math.min(1,Math.max(0.1,Math.ceil(ymax*10)/10));
+  for(let g=0;g<=4;g++){const y=pt+(H-pt-pb)*(1-g/4);cctx.beginPath();cctx.moveTo(pl,y);cctx.lineTo(W-pr,y);cctx.stroke();cctx.textAlign="right";cctx.textBaseline="middle";cctx.fillText(Math.round(ymax*g/4*100)+"%",pl-6*d,y)}
+  if(history.length<2)return;
+  const t0=history[0].t,t1=history[history.length-1].t||1;
+  cctx.textAlign="left";cctx.textBaseline="alphabetic";cctx.fillText("sweep "+t0,pl,H-3*d);cctx.textAlign="right";cctx.fillText("sweep "+t1,W-pr,H-3*d);
+  const X=t=>pl+(W-pl-pr)*(t-t0)/Math.max(1,t1-t0),Y=v=>pt+(H-pt-pb)*(1-v/ymax);
+  cctx.lineWidth=1.6*d;cctx.lineJoin="round";
+  for(let k=0;k<S.K;k++){
+    const c=colorOf(k);cctx.strokeStyle=`rgb(${c[0]},${c[1]},${c[2]})`;cctx.beginPath();
+    history.forEach((p,i)=>{const x=X(p.t),y=Y(p.f[k]);i?cctx.lineTo(x,y):cctx.moveTo(x,y)});cctx.stroke();
+  }
+}
+
+let rows=[];
+function buildTable(){
+  const tb=$("tbody");tb.innerHTML="";rows=[];
+  species.forEach((spc,k)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><span class="sw"></span></td><td><input type="number" min="0" max="1" step="0.01" aria-label="s for species ${k+1}"></td><td><span class="pct"></span><div class="bar"><i></i></div></td><td class="num mh"></td><td class="num xh"></td>`;
+    const inp=tr.querySelector("input");inp.value=spc.s;
+    inp.addEventListener("change",()=>{let v=parseFloat(inp.value);if(isNaN(v))v=spc.s;v=Math.max(0,Math.min(1,v));spc.s=v;inp.value=v;paintSwatches();if(!S.running)draw()});
+    tb.appendChild(tr);rows.push(tr);
+  });
+  paintSwatches();
+}
+function paintSwatches(){rows.forEach((tr,k)=>{const c=colorOf(k),col=`rgb(${c[0]},${c[1]},${c[2]})`;tr.querySelector(".sw").style.background=col;tr.querySelector(".bar i").style.background=col})}
+function updateReadout(){
+  const st=last;if(!st)return;
+  $("rSweep").textContent=sweep.toLocaleString("en");
+  $("rTrees").textContent=st.trees.toLocaleString("en");
+  $("rAlive").textContent=st.cnt.filter(c=>c>0).length;
+  $("rMeanS").textContent=isNaN(st.meanS)?"–":st.meanS.toFixed(3);
+  $("rTall").textContent=st.tall.toLocaleString("en");
+  if(S.energyOn){
+    let treeE=0;for(let i=0;i<energy.length;i++)treeE+=energy[i];
+    const totalE=treeE+energyBath;
+    $("enTrees").textContent=treeE.toFixed(2);
+    $("enBath").textContent=energyBath.toFixed(2);
+    $("enTotal").textContent=totalE.toFixed(2);
+    $("enError").textContent=(totalE-energyInitial).toExponential(2);
+    $("energyInterpret").textContent=`Modelenergi: ${treeE.toFixed(2)} hos træerne og ${energyBath.toFixed(2)} i reservoiret. η = ${S.eta.toFixed(2)}. En ændring i artsentropi er ikke det samme som termodynamisk entropiproduktion.`;
+  }else{
+    for(const id of ["enTrees","enBath","enTotal","enError"])$(id).textContent="–";
+    $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
+  }
+  if(lastMetric){
+    $("mEntropy").textContent=lastMetric.entropy.toFixed(3);
+    const N=last.trees;
+    let Hraw=0,sumP=0,example=null;
+    const tbody=$("entRows");
+    const parts=[];
+    for(let i=0;i<S.K;i++){
+      const count=last.cnt[i],prob=N?count/N:0;
+      const term=prob>0?-prob*Math.log(prob):0;
+      Hraw+=term;sumP+=prob;
+      if(!example&&prob>0&&prob<1)example={i,count,prob,term};
+      parts.push(`<tr><td><span class="sw" style="background:rgb(${colorOf(i).join(',')})"></span> ${i+1}</td><td class="num">${count}</td><td class="num">${prob.toFixed(5)}</td><td class="num">${term.toFixed(5)}</td></tr>`);
+    }
+    tbody.innerHTML=parts.join('');
+    const base=metricHistory.length?metricHistory[0].entropy*Math.log(S.K):Hraw;
+    $("entRaw").textContent=Hraw.toFixed(5);
+    $("entNorm").textContent=lastMetric.entropy.toFixed(5);
+    $("entDelta").textContent=(Hraw-base>=0?'+':'')+(Hraw-base).toFixed(5);
+    $("entEffective").textContent=N?Math.exp(Hraw).toFixed(3):'0';
+    $("entCount").textContent=N;
+    $("entSumP").textContent=sumP.toFixed(5);
+    $("entSumH").textContent=Hraw.toFixed(5);
+    $("entExample").textContent=example?`Eksempel art ${example.i+1}: nᵢ = ${example.count}, N = ${N}, pᵢ = ${example.count}/${N} = ${example.prob.toFixed(5)}. Bidraget er −${example.prob.toFixed(5)} · ln(${example.prob.toFixed(5)}) = ${example.term.toFixed(5)}. Læg alle arternes bidrag sammen for at få H.`:(N?'Kun én art er tilbage: H = −1 · ln(1) = 0.':'Ingen træer tilbage: artsentropi er her sat til 0 efter konvention.');
+    $("mEdges").textContent=(lastMetric.edges*100).toFixed(1)+"%";
+    $("mStrategy").textContent=lastMetric.meanS.toFixed(3);
+    $("mLeader").textContent=(lastMetric.leader*100).toFixed(1)+"%";
+    $("interpret").textContent=`${lastMetric.alive} af ${S.K} arter er tilbage. Artsdiversiteten er ${lastMetric.entropy.toFixed(2)} (0 = én art; 1 = alle arter lige store, når alle ${S.K} er til stede). ${(lastMetric.edges*100).toFixed(0)}% af de undersøgte nabopar rummer forskellige arter. Et fald i artsdiversitet er ikke et brud på termodynamikkens 2. hovedsætning: ${S.energyOn?"Energi-tilvalget har et bevaret modelregnskab, men ingen termodynamisk entropidefinition.":"Skoven har ingen fysisk energibalance."}`;
+  }
+  rows.forEach((tr,k)=>{
+    const f=st.cnt[k]/st.N;
+    tr.classList.toggle("extinct",st.cnt[k]===0);
+    tr.querySelector(".pct").textContent=(f*100).toFixed(1)+"%";
+    tr.querySelector(".bar i").style.width=(f*100)+"%";
+    tr.querySelector(".mh").textContent=st.cnt[k]?(st.sumH[k]/st.cnt[k]).toFixed(1):"–";
+    tr.querySelector(".xh").textContent=st.cnt[k]?st.maxH[k]:"–";
+  });
+}
+
+function loop(){
+  if(!S.running)return;
+  for(let k=0;k<S.speed;k++)doSweep();
+  draw();requestAnimationFrame(loop);
+}
+function setRunning(v){S.running=v;$("btnRun").textContent=v?"Pause":"Start";if(v)requestAnimationFrame(loop)}
+
+$("btnRun").onclick=()=>setRunning(!S.running);
+$("btnStep").onclick=()=>{setRunning(false);doSweep();draw()};
+$("btnRestart").onclick=()=>init();
+$("btnNew").onclick=()=>{S.seed=1+Math.floor(Math.random()*1e6);$("inSeed").value=S.seed;init()};
+document.addEventListener("keydown",e=>{if(e.code==="Space"&&!/INPUT|SELECT|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();setRunning(!S.running)}});
+
+function bindRange(id,out,key,fmt,reinit){
+  const el=$(id),o=$(out);
+  const upd=()=>{S[key]=parseFloat(el.value);o.textContent=fmt(S[key])};
+  el.addEventListener("input",()=>{upd();if(!reinit&&!S.running)draw()});
+  if(reinit)el.addEventListener("change",init);
+  upd();
+}
+bindRange("inL","oL","L",v=>v,true);
+bindRange("inK","oK","K",v=>v,true);
+bindRange("inFill","oFill","fill",v=>Math.round(v*100)+"%",true);
+bindRange("inSpeed","oSpeed","speed",v=>v,false);
+function applyCap(){
+  const on=$("tgHmax").checked;let v=parseInt($("inHmax").value,10);
+  if(isNaN(v)||v<1)v=1;$("inHmax").value=v;
+  $("optH").classList.toggle("off",!on);
+  S.hmax=on?v:0;
+  if(on){for(let i=0;i<h.length;i++)if(h[i]>v)h[i]=v;record();if(!S.running)draw()}
+}
+$("tgHmax").addEventListener("change",applyCap);
+$("inHmax").addEventListener("change",applyCap);
+
+let lambda=0.01;
+function applyDeath(){
+  const on=$("tgDeath").checked;
+  $("optD").classList.toggle("off",!on);
+  const p=1-Math.exp(-lambda);
+  S.death=on?p:0;
+  const tau=1/lambda;
+  $("oTau").textContent=tau>=100?Math.round(tau).toLocaleString("en"):tau.toFixed(1);
+  $("oRate").textContent=`Each sweep a tree dies with probability p = 1 − e^(−λ) = ${p.toPrecision(3)}, so lifetimes are exponential with mean ${tau>=100?Math.round(tau):tau.toFixed(1)} sweeps. Half of a cohort is gone after ${(Math.LN2/lambda).toPrecision(3)} sweeps.`;
+}
+$("tgDeath").addEventListener("change",applyDeath);
+$("inTau").addEventListener("input",()=>{lambda=1/Math.pow(10,parseFloat($("inTau").value));$("inRate").value=+lambda.toPrecision(3);applyDeath()});
+$("inRate").addEventListener("change",()=>{let v=parseFloat($("inRate").value);if(isNaN(v)||v<=0)v=0.01;v=Math.min(10,v);lambda=v;$("inRate").value=v;$("inTau").value=Math.max(0,Math.min(4,Math.log10(1/v)));applyDeath()});
+applyDeath();
+function updateEnergyControls(reinit){
+  S.energyOn=$("tgEnergy").checked;
+  S.e0=Math.max(1,Number($("enInitial").value)||10);
+  S.eta=Number($("enTransfer").value);
+  S.growCost=Math.max(0,Number($("enCost").value)||0);
+  S.birth=Math.max(.01,Number($("enBirth").value)||2);
+  $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
+  $("btnBatch").disabled=S.energyOn;
+  $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
+  if(reinit){setRunning(false);init()}
+}
+$("tgEnergy").addEventListener("change",()=>updateEnergyControls(true));
+$("enInitial").addEventListener("change",()=>updateEnergyControls(true));
+$("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
+$("enCost").addEventListener("change",()=>updateEnergyControls(false));
+$("enBirth").addEventListener("change",()=>updateEnergyControls(false));
+updateEnergyControls(false);
+$("inSeed").addEventListener("change",e=>{const v=parseInt(e.target.value,10);S.seed=isNaN(v)||v<1?1:v;e.target.value=S.seed;init()});
+$("inNew").addEventListener("change",e=>S.newH=e.target.value);
+$("inNb").addEventListener("change",e=>S.nb=parseInt(e.target.value,10));
+$("inPer").addEventListener("change",e=>S.per=e.target.checked);
+$("inByS").addEventListener("change",e=>{S.byS=e.target.checked;paintSwatches();draw()});
+document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{
+  S.mode=b.dataset.mode;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));draw();
+}));
+
+cv.addEventListener("mousemove",e=>{
+  const r=cv.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*S.L),y=Math.floor((e.clientY-r.top)/r.height*S.L);
+  if(x<0||y<0||x>=S.L||y>=S.L)return;
+  const i=y*S.L+x,a=sp[i];
+  $("probe").textContent=a<0?`Cell (${x}, ${y}): empty`:`Cell (${x}, ${y}): species ${a+1}, s = ${species[a].s.toFixed(3)}, height ${h[i]}`;
+});
+cv.addEventListener("mouseleave",()=>$("probe").textContent="Hover over the lattice to inspect a cell.");
+window.addEventListener("resize",()=>draw());
+if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>draw());
+
+
+// ----- Ekstra analyser. Original dynamik ovenfor er uændret. -----
+function measureForest(arr,types,L,K,periodic,already){
+  const counts=already?already.cnt.slice():Array(K).fill(0);
+  if(!already)for(let i=0;i<arr.length;i++)if(arr[i]>=0)counts[arr[i]]++;
+  const alive=counts.filter(v=>v>0).length;
+  const trees=counts.reduce((a,b)=>a+b,0);
+  let entropy=0,meanS=0,leader=0,leaderId=-1;
+  for(let k=0;k<K;k++)if(counts[k]>0){
+    const q=counts[k]/trees;entropy-=q*Math.log(q);meanS+=q*types[k].s;
+    if(counts[k]>leader){leader=counts[k];leaderId=k}
+  }
+  entropy=K>1?entropy/Math.log(K):0;
+  let unlike=0,pairs=0;
+  for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+    const i=y*L+x,a=arr[i];
+    if(a<0)continue;
+    if(x+1<L||periodic){const b=arr[y*L+((x+1)%L)];if(b>=0){pairs++;if(a!==b)unlike++}}
+    if(y+1<L||periodic){const b=arr[((y+1)%L)*L+x];if(b>=0){pairs++;if(a!==b)unlike++}}
+  }
+  return {entropy,edges:pairs?unlike/pairs:0,meanS:trees?meanS:0,leader:trees?leader/trees:0,alive,leaderId,trees};
+}
+function drawMetricChart(){
+  const c=$("metricChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
+  const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
+  const left=35*d,right=8*d,top=12*d,bottom=25*d;g.clearRect(0,0,w,h);
+  g.strokeStyle=css("--grid");g.fillStyle=css("--muted");g.font=`${11*d}px system-ui`;
+  g.textAlign="right";g.textBaseline="middle";
+  for(let j=0;j<=4;j++){let y=top+(h-top-bottom)*(1-j/4);g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((j/4).toFixed(2),left-5*d,y)}
+  if(metricHistory.length<2)return;
+  let a=metricHistory[0].t,b=metricHistory[metricHistory.length-1].t;
+  const xx=t=>left+(w-left-right)*(t-a)/Math.max(1,b-a),yy=v=>top+(h-top-bottom)*(1-Math.min(1,Math.max(0,v)));
+  for(const [key,color] of [["entropy","#298b78"],["edges","#d18b47"],["meanS","#568ac6"]]){
+    g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();metricHistory.forEach((p,i)=>{if(i===0)g.moveTo(xx(p.t),yy(p[key]));else g.lineTo(xx(p.t),yy(p[key]))});g.stroke();
+  }
+  g.fillStyle=css("--muted");g.textBaseline="bottom";g.textAlign="left";g.fillText(`sweep ${a}`,left,h-1*d);g.textAlign="right";g.fillText(`sweep ${b}`,w-right,h-1*d);
+}
+function preset(kind){
+  setRunning(false);
+  const configs={
+    original:{K:10,fill:1,cap:0,death:0,q:"Hvilke strategier vinder, og ændres artsdiversiteten samtidig med skovens rumlige blanding?"},
+    two:{K:2,fill:1,cap:0,death:0,q:"Kan to strategier (s = 0,20 og s = 0,80) sameksistere, eller vinder den ene?"},
+    death:{K:10,fill:.7,cap:0,death:.02,q:"Gør tilfældig dødelighed det mere fordelagtigt at sprede sig hurtigt?"},
+    height:{K:10,fill:1,cap:10,death:0,q:"Hvad sker der med konkurrencen, når træerne ikke kan blive højere end 10?"}
+  };
+  const c=configs[kind];S.K=c.K;S.fill=c.fill;S.hmax=c.cap;S.death=c.death;S.seed=1;
+  $("inK").value=c.K;$("oK").textContent=c.K;
+  $("inFill").value=c.fill;$("oFill").textContent=Math.round(c.fill*100)+"%";
+  $("tgHmax").checked=!!c.cap;$("inHmax").value=c.cap||50;$("optH").classList.toggle("off",!c.cap);
+  $("tgDeath").checked=!!c.death;$("optD").classList.toggle("off",!c.death);
+  if(c.death){lambda=-Math.log(1-c.death);$("inRate").value=lambda.toFixed(4);$("inTau").value=Math.log10(1/lambda);applyDeath()}
+  $("inSeed").value=1;$("presetQuestion").textContent=c.q;
+  document.querySelectorAll("[data-preset]").forEach(el=>el.classList.toggle("active",el.dataset.preset===kind));
+  init();
+  if(kind==="two"){
+    species[0].s=.2;species[1].s=.8;rows[0].querySelector("input").value=.2;rows[1].querySelector("input").value=.8;
+    paintSwatches();record();draw();
+  }
+}
+document.querySelectorAll("[data-preset]").forEach(el=>el.addEventListener("click",()=>preset(el.dataset.preset)));
+// Uafhængig, deterministisk gentagelse af præcis doSweep-reglen uden at ændre den viste skov.
+function batchForest(seed,constants,values,sweepLimit){
+  const r=mulberry32(seed*2654435761>>>0),L=constants.L,K=values.length,N=L*L;
+  const types=values.map(s=>({s}));
+  const a=new Int16Array(N),ht=new Int32Array(N),stamp2=new Int32Array(N),order2=new Int32Array(N);
+  for(let i=0;i<N;i++){if(r()<constants.fill){a[i]=(r()*K)|0;ht[i]=1}else a[i]=-1}
+  const offsets=constants.nb===4?[[1,0],[-1,0],[0,1],[0,-1]]:[[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
+  const nextNeighbour=i=>{
+    const x=i%L,y=(i/L)|0,z=offsets[(r()*offsets.length)|0];let nx=x+z[0],ny=y+z[1];
+    if(constants.per){nx=(nx+L)%L;ny=(ny+L)%L}
+    else if(nx<0||ny<0||nx>=L||ny>=L)return -1;
+    return ny*L+nx;
+  };
+  for(let step=1;step<=sweepLimit;step++){
+    let n=0;for(let i=0;i<N;i++)if(a[i]>=0)order2[n++]=i;
+    for(let k=n-1;k>0;k--){const j=(r()*(k+1))|0,t=order2[k];order2[k]=order2[j];order2[j]=t}
+    for(let k=0;k<n;k++){
+      const i=order2[k],v=a[i];if(v<0||stamp2[i]===step)continue;
+      if(constants.death>0&&r()<constants.death){a[i]=-1;ht[i]=0;continue}
+      if(r()<1-types[v].s){if(!constants.hmax||ht[i]<constants.hmax)ht[i]++}
+      else{
+        const j=nextNeighbour(i);if(j<0)continue;
+        const b=a[j];if(b===v)continue;
+        if(b<0){a[j]=v;ht[j]=constants.newH==="attacker"?ht[i]:1;stamp2[j]=step;continue}
+        if(r()<ht[i]/(ht[i]+ht[j])){
+          const old=ht[j];a[j]=v;stamp2[j]=step;
+          ht[j]=constants.newH==="sapling"?1:constants.newH==="attacker"?ht[i]:old;
+        }else{a[i]=-1;ht[i]=0}
+      }
+    }
+  }
+  return measureForest(a,types,L,K,constants.per);
+}
+function drawBatch(){
+  const c=$("batchChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
+  const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
+  g.clearRect(0,0,w,h);g.fillStyle=css("--muted");g.font=`${11*d}px system-ui`;
+  if(!batchData.length)return;
+  const byWinner=new Map();batchData.forEach(p=>{const v=p.leaderId;byWinner.set(v,(byWinner.get(v)||0)+1)});
+  const list=[...byWinner].sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const max=Math.max(...list.map(p=>p[1])),barH=15*d,gap=5*d;
+  list.forEach(([k,n],i)=>{
+    let y=5*d+i*(barH+gap);g.fillStyle=css("--grid");g.fillRect(78*d,y,w-130*d,barH);
+    g.fillStyle=k>=0?`rgb(${colorOf(k).join(",")})`:"#aaa";
+    g.fillRect(78*d,y,(w-130*d)*n/max,barH);
+    g.fillStyle=css("--ink");g.textBaseline="middle";g.textAlign="left";g.fillText(k<0?"Ingen træer":`Art ${k+1}`,4*d,y+barH/2);
+    g.textAlign="right";g.fillText(`${n}/${batchData.length}`,w-4*d,y+barH/2);
+  });
+}
+$("btnBatch").addEventListener("click",async()=>{
+  if(batchBusy)return;
+  setRunning(false);batchBusy=true;batchAbort=false;batchData=[];
+  $("btnBatch").disabled=true;$("btnCancelBatch").disabled=false;$("btnCsv").disabled=true;
+  const runs=parseInt($("batchRuns").value),limit=parseInt($("batchSweeps").value);
+  const constants={L:S.L,fill:S.fill,nb:S.nb,per:S.per,hmax:S.hmax,death:S.death,newH:S.newH};
+  const values=species.map(t=>t.s),baseSeed=S.seed;
+  $("batchResult").textContent="Beregner uafhængige forløb med de aktuelle regler og samme strategier. Den viste skov bliver ikke ændret.";
+  for(let i=0;i<runs;i++){
+    if(batchAbort)break;
+    batchData.push({...batchForest(baseSeed+i+10001,constants,values,limit),run:i+1,seed:baseSeed+i+10001});
+    $("batchStatus").textContent=`${i+1} af ${runs} forsøg · ${limit} sweeps · ${constants.L}×${constants.L} celler`;
+    if(i%2===0)await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  batchBusy=false;$("btnBatch").disabled=false;$("btnCancelBatch").disabled=true;
+  if(batchData.length){
+    const avg=k=>batchData.reduce((s,p)=>s+p[k],0)/batchData.length;
+    const std=k=>Math.sqrt(batchData.reduce((s,p)=>s+(p[k]-avg(k))**2,0)/Math.max(1,batchData.length-1));
+    $("batchResult").textContent=`${batchData.length} uafhængige skove. Arter tilbage: ${avg("alive").toFixed(2)} i gennemsnit. Normaliseret artsdiversitet: ${avg("entropy").toFixed(3)} ± ${std("entropy").toFixed(3)} (standardafvigelse). Uens nabopar: ${(100*avg("edges")).toFixed(1)}%. Vindernes fordeling vises ovenfor. ± er spredningen mellem forløb, ikke usikkerheden på gennemsnittet.`;
+    $("btnCsv").disabled=false;
+  }
+  if(batchAbort)$("batchStatus").textContent+=" · afbrudt";
+  drawBatch();
+});
+$("btnCancelBatch").addEventListener("click",()=>batchAbort=true);
+$("btnCsv").addEventListener("click",()=>{
+  if(!batchData.length)return;
+  const cols=["run","seed","alive","leaderId","leader","entropy","edges","meanS","trees"];
+  const csv=[cols.join(","),...batchData.map(d=>cols.map(k=>d[k]).join(","))].join("\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="skovlaboratoriet_forsog.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+
+init();
+})();
+</script>
+</body>
+</html>
