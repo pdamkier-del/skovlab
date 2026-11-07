@@ -154,3 +154,65 @@ JavaScript-koden blev evalueret i en mocket DOM/canvas med de faktiske standardi
 - Reservoirets entropi steg fra nul til 4261,25 for den daværende C=1000; efter C-ændringen bliver det numeriske resultat anderledes efter samme hændelsesforløb.
 
 Testen kontrollerede også, at nye entropital og artsenergibjælker blev skrevet til brugerfladen. Det er en **funktionstest med simuleret DOM**, ikke en visuel test i en rigtig browser. De termodynamiske antagelser er fortsat idealiserede.
+
+
+## 7. november 2026 — Indre termisk entropi og entropibalancen
+
+**Nyt spørgsmål:** Brugeren ønsker ikke blot Shannon-artsentropi og reservoirets termodynamiske entropi, men de termiske bidrag *inde ved træerne* og summen, som kan bruges til at illustrere anden hovedsætning.
+
+### Nyt fysisk modelvalg (eksplicit idealisering)
+
+Hvert gittersted får en lokal termisk beholder med **fast** varmekapacitet \(c>0\), også hvis stedet er tomt. Den termiske energi på stedet kan fortolkes som varme i træ/umiddelbar jord og omgivelser. Et træ kan dø eller blive overtaget, mens varmen bliver på gitterstedet; derfor er denne termiske beholder **ikke et vedvarende træindivid**. Et fælles varmereservoir har varmekapacitet \(C>0\).
+
+Alle termiske beholdere starter ved \(T_0=1\) i modeltemperaturenheder. Varme er ikke en ny form for disponibel energi, men den energi, som efter vores regler omdannes fra træernes disponible energipakker. For hver dissipativ hændelse med energi \(q\ge0\):
+- \(q_{lokal}=\alpha q\) føres til varmebeholderen på hændelsens gittersted;
+- \(q_{bad}=(1-\alpha)q\) føres til det fælles reservoir.
+
+\(\alpha\) er den brugerbestemte lokale varmeandel (standard 0,5). Vi antager ingen varmeledning, tilbageførsel af varme til træernes disponible energi eller ændring i varmekapacitet. Den termiske del er derfor en **ensrettet dissipationsmodel**, ikke mikroskopisk reversibel dynamik.
+
+### Entropiformler
+
+For hvert sted \(i\), hvor \(Q_i\) er den akkumulerede varme over starttilstanden:
+
+\[
+T_i=T_0+\frac{Q_i}{c},\qquad \Delta S_i = c\ln\left(1+\frac{Q_i}{cT_0}\right).
+\]
+
+Fælles bad, akkumuleret varme \(Q_B\):
+
+\[
+T_B=T_0+\frac{Q_B}{C},\qquad \Delta S_B=C\ln\left(1+\frac{Q_B}{CT_0}\right).
+\]
+
+Summen for **alle modellerede termiske beholdere** er
+
+\[
+\Delta S_{termisk}=\sum_{i\in levende\ steder}\Delta S_i+
+\sum_{i\in tomme\ steder}\Delta S_i+\Delta S_B.
+\]
+
+Både den samlede lokale varme, varme ved aktuelle levende træsteder og varme i tomme områder vises. Den lokale termiske entropi grupperes også efter den art, som **aktuelt** optager stedet; dette er en klassifikation af steder, ikke artens hele historiske entropi.
+
+**Energibalance:**
+
+\[
+E_{disponibel}+\sum_i Q_i+Q_B=E_{disponibel,0}.
+\]
+
+De termiske beholderes referencenergi \((N c+C)T_0\) er konstant og udeladt på begge sider af dette forskydningsregnskab.
+
+### Hvad fortæller det om anden hovedsætning?
+
+Fordi \(q\ge0\) og alle termiske beholdere varmes op fra en positiv starttemperatur, bliver \(\Delta S_{termisk}\) ikke-faldende i denne model. Det er en kontrol af **vores eksplicitte dissipative regler**, ikke et uafhængigt eksperimentelt bevis for anden hovedsætning eller en fuld beregning af skovens fysiske entropi. Vi mangler bl.a. træernes kemiske/konfigurationelle mikrostadier, termiske frihedsgrader, kemiske potentialer og reversible energikanaler.
+
+De tre Shannon-mål (arts-, lokal arts- og energiandel-entropi) er fortsat særskilte statistiske størrelser. De er **ikke** termodynamiske bidrag, der skal lægges til \(\Delta S_{termisk}\).
+
+### Metode og mulige videre tests
+
+- Kontroller totalenergi numerisk efter hvert sweep.
+- Kontroller at summen af de termiske entropibidrag er lig den viste samlede termiske entropi.
+- Kontroller at beregnet \(\Delta S_{termisk}\) er ikke-faldende ved \(\alpha\in[0,1]\), forskellige \(\eta\) og ved dødelighed.
+- Undersøg om Shannon-artsentropi falder, mens den modellerede termiske entropi stiger.
+- Næste fysisk mere krævende skridt ville være at modellere virkelig varmeudveksling, temperaturafhængige overgange og lokal detaljeret balance; først derefter kan spørgsmål om reversibel mikrodynamik og stokastisk termodynamisk entropiproduktion adresseres ordentligt.
+
+**Kodekontrol:** Termiske bidrag efter aktuelle artsbesatte steder kan undersøges i fold-ud-tabellen i HTML. Der er endnu ingen særskilt model for kemisk entropi i et træ, og det skal ikke forveksles med en beregnet størrelse.
