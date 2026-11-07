@@ -121,6 +121,12 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
 @media(max-width:940px){.layout{grid-template-columns:1fr}.controls-main{position:static}.wrap{padding:15px 10px 30px}}
 @media(max-width:600px){.stage{padding:10px}.stage .hero-panel{padding:10px}.metric-grid{gap:6px}.metric{padding:8px}.metric b{font-size:17px}}
 
+
+.species-energy-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:17px;row-gap:9px}
+.species-energy-line{display:grid;grid-template-columns:14px 43px minmax(0,1fr) 55px;gap:6px;align-items:center;font-size:12px}
+.species-energy-line b{font-size:11px;font-weight:500;white-space:nowrap}.species-energy-line strong{font-size:12px;text-align:right}
+.species-energy-bar{height:9px;background:var(--grid);border-radius:5px;overflow:hidden}.species-energy-bar i{display:block;height:100%}
+@media(max-width:680px){.species-energy-overview{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -213,7 +219,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       </div>
       <div class="chart-box" id="energyDashboard">
         <h2>Energi i skoven · eksperimentel model</h2>
-        <p class="hint" style="margin-top:0">Energiregnskabet aktiveres under <b>Energi-regler</b> i højre side. Enhederne er model-enheder, ikke joule. Energi kan flyttes fra træer til et samlet reservoir, men totalen bevares.</p>
+        <p class="hint" style="margin-top:0">Disponibel energi hos træerne kan flyttes til reservoiret og blive til varme. Den samlede energi bevares. Værdierne er model-enheder, ikke joule.</p>
         <div class="metric-grid">
           <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
           <div class="metric"><small>Energi i reservoir</small><b id="enBath">–</b></div>
@@ -221,7 +227,9 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
-        <details class="formula-more"><summary>Detaljeret energiregnskab for hver art</summary><h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
+        <h3 style="font-size:18px;margin:15px 0 7px">Disponibel energi lige nu · hver art</h3>
+        <div id="speciesEnergyOverview" class="species-energy-overview">Aktivér energimodellen for at se energi pr. art.</div>
+        <details class="formula-more"><summary>Vis den fulde energihistorik pr. art</summary><h3 style="font-size:17px;margin:15px 0 5px">Energi fordelt på arter</h3>
         <p class="hint" style="margin:0 0 8px">Disponibel energi er en <b>beholdning lige nu</b>. Erobringsgevinst og til reservoir er <b>akkumulerede hændelser</b> siden start, ikke ekstra energi der skal lægges til beholdningen. Den sidste kolonne viser, hvilken art energien kom fra, før den blev flyttet til det fælles reservoir.</p>
         <div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel</th><th class="num">Pr. træ</th><th class="num">Andel af træenergi</th><th class="num">Modtaget ved sejr</th><th class="num">Til reservoir fra art</th></tr></thead><tbody id="energySpeciesRows"></tbody></table></div>
         <p class="hint">Energi i reservoiret tilhører ikke længere en art; oprindelsen spores kun til bogføring.</p></details>
@@ -235,7 +243,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <b>Hypotese:</b> Energibegrænsninger og effektiviteten af energiudveksling kan ændre, hvilke strategier der dominerer, og hvor meget artsdiversiteten falder.<br>
           <b>Metode:</b> Sammenlign identiske seeds i originaltilstand og energitilstand; hold andre parametre faste; mål strategier, H og energi; gentag over flere seeds.<br>
           <b>Modelvalg:</b> Ved sejr overføres en andel η af den tabende celles disponible energi til vinderens afkom eller den sejrende nabo. Resten går til et reservoir. Vækstomkostninger går også til reservoir.<br>
-          <b>Afgrænsning:</b> Dette er en legetøjsmodel for energiressourcer, ikke en mikrofysisk model for termodynamisk entropiproduktion. Der er ingen temperatur eller varmebadets mikrotilstande.<br>
+          <b>Ny kalorimetrisk udvidelse:</b> Idealiseret reservoir med konstant varmekapacitet C, T₀ = 1, T = 1 + Q/C og ΔS_bad = C ln(T/T₀). Det beregner reservoirets entropiændring, ikke hele skovens termodynamiske entropi.<br>
           <b>Åbent:</b> Skal energi i fremtidige forsøg også tilføres som sollys, eller skal systemet forblive lukket?
         </div>
         <p class="hint"><a href="LOGBOG.md" target="_blank" rel="noopener noreferrer">Åbn den fulde forskningslogbog ↗</a></p>
@@ -742,10 +750,15 @@ function moreEntropyMeasures(){
   return {artRaw,localRaw,localNorm:K>1?localRaw/Math.log(K):0,energyRaw,energyNorm};
 }
 function updateSpeciesEnergyTable(){
-  const tbody=$("energySpeciesRows");
-  if(!S.energyOn){tbody.innerHTML='<tr><td colspan="7">Aktivér energipakker for at se energien for hver art.</td></tr>';return}
+  const tbody=$("energySpeciesRows"),overview=$("speciesEnergyOverview");
+  if(!S.energyOn){overview.textContent="Energimodellen er slået fra.";tbody.innerHTML='<tr><td colspan="7">Aktivér energipakker for at se energien for hver art.</td></tr>';return}
   const sums=Array(S.K).fill(0),counts=last.cnt,total=energy.reduce((a,b)=>a+b,0);
   for(let i=0;i<sp.length;i++)if(sp[i]>=0)sums[sp[i]]+=energy[i];
+  const max=Math.max(1,...sums);
+  overview.innerHTML=sums.map((e,k)=>{
+    const rgb=colorOf(k).join(","),pct=100*e/max;
+    return `<div class="species-energy-line"><span class="sw" style="background:rgb(${rgb})"></span><b>Art ${k+1}</b><div class="species-energy-bar"><i style="width:${pct.toFixed(2)}%;background:rgb(${rgb})"></i></div><strong>${e.toFixed(1)}</strong></div>`;
+  }).join("");
   tbody.innerHTML=sums.map((e,k)=>{
     const c=colorOf(k).join(","),q=total>0?e/total:0;
     return `<tr class="${counts[k]===0?"extinct":""}"><td><span class="sw" style="background:rgb(${c})"></span> ${k+1}</td><td class="num">${counts[k]}</td><td class="num">${e.toFixed(2)}</td><td class="num">${counts[k]?(e/counts[k]).toFixed(2):"–"}</td><td class="num">${(100*q).toFixed(1)} %</td><td class="num">${energyCapturedBySpecies[k].toFixed(2)}</td><td class="num">${energyBathBySpecies[k].toFixed(2)}</td></tr>`;
