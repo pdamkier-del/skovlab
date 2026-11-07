@@ -255,3 +255,35 @@ Dermed skal den gamle lukkede balance modificeres; det er *ikke* korrekt længer
 **Numeriske funktionstests:** 20×20 gitter, 5 arter, 100 sweeps, seed=2. Med solinput 1,5 og ingen dødelighed endte 369 levende træer og 34.364,16 tilgængelige energienheder, med kumulativ soltilførsel 54.450. Maksimal fejl i åben energibalance <3×10⁻¹⁰. Uden sollys blev kun 167,10 disponibel energi tilbage; det demonstrerer hvorfor gammel model kan gå i stå. Med solinput og 2% tilfældig dødelighed var den maksimale energibalancefejl <4×10⁻¹⁰.
 
 **Vigtigt:** Sollys forhindrer energisult, men stopper ikke artsudryddelse gennem konkurrence. Uddøde arter kan ikke komme igen med modellens nuværende regler; mutation eller indvandring ville være et selvstændigt nyt modelvalg, ikke en bugrettelse.
+
+
+## 7. november 2026 — Konservativ energioverførsel som standard
+
+**Brugerobservation og hypotese:** Når træerne fortløbende mister disponibel energi til varme, bliver modellen afhængig af kontinuerlig solenergi. Brugeren foreslår i stedet at bruge overførsler, hvor energien forbliver blandt de levende træer, som ved en idealiseret elastisk proces.
+
+**Præcis terminologi:** Vi har implementeret *konservativ overførsel af disponibel energi*; det er **ikke** et mekanisk elastisk sammenstød. I elastiske sammenstød bevares kinetisk energi, mens vores træer ikke har en modelleret hastighed, impuls eller kinetisk energi.
+
+**Regler i ny standardtilstand:**
+1. Hvert levende træ starter med \(E_0=10\) energienheder.
+2. Ingen soltilførsel: \(E_{sol}=0\).
+3. Ingen energiomdannelse til varme ved kamp: \(\eta=1\).
+4. Vækst ændrer højden, men **koster ingen energi**. Dette er en bevidst forenkling — ikke biologisk realistisk.
+5. Ved reproduktion overføres \(E_{fødsel}\) fra forælder til afkom. Summen bevares.
+6. Ved konflikt tager vinderen hele taberens disponible energi. Hvis angriberen vinder, overføres den besejrede celles energi til angriberens afkom; hvis forsvareren vinder, absorberer den taberens energi.
+7. Tilfældig død er slået fra i denne tilstand. Ellers skulle energien hos et træ, der dør uden at blive besejret, omplaceres efter en særskilt regel. Artsudryddelse under konkurrence er fortsat mulig.
+8. Den tidligere dissipative model med varme, reservoir og solinput er bevaret som et **valgfrit sammenligningsforsøg**.
+
+**Energibalance:**
+\[
+\boxed{\sum_{i\in levende\ træer}E_i(t)=\sum_{i\in starttræer}E_i(0)}
+\]
+for den konservative tilstand, uden varme eller eksterne kilder.
+
+**Entropi og anden hovedsætning:** Artenes Shannon-entropi, lokal Shannon-entropi og energiandel-entropi kan stadig ændre sig. Derimod er det *ikke muligt* at beregne træernes fulde termodynamiske entropi ud fra energibevarelsen alene. Den termiske entropivisning skjules derfor i konservativ tilstand. Der må ikke vises en konstant \(\Delta S=0\) som om dette var et fysisk udledt resultat. I den dissipative tilstand kan den idealiserede varmeentropi fortsat undersøges.
+
+**Funktionstests:** 20×20 gitter, 5 arter, seed=2, 100 sweeps.
+- Konservativ: levende træers disponible energi: 4000,00 både før og efter; total energi-fejl 0. Slutantal levende træer 367.
+- Konservativ med dødsparameter forsøgt sat til 0,2: død er blokeret; samme energibevarelse og resultat.
+- Dissipativ tilstand med solinput 1,5: åbent energiregnskab testet, maksimal afvigelse \(2,62\times10^{-10}\) modelenergienheder.
+
+**Åbent forskningsspørgsmål:** Om vi bør indføre realistisk energibehov ved vækst, metabolisme og død, og hvordan energi i så fald kan skifte fra kemisk til termisk form. Et fuldt fysisk studie af anden hovedsætning vil kræve flere modellerede frihedsgrader.
