@@ -329,7 +329,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         </div>
 
         <div class="opt off" id="optD">
-          <label class="check"><input type="checkbox" id="tgDeath"> Tilfældig død</label>
+          <label class="check"><input type="checkbox" id="tgDeath" checked> Tilfældig død</label>
           <div class="field sub"><label for="inTau">Levetid τ</label><input type="range" id="inTau" min="0" max="4" step="0.05" value="2"><output id="oTau">100</output></div>
           <div class="field sub two"><label for="inRate">Rate λ / sweep</label><input type="number" id="inRate" min="0.0001" max="10" step="0.001" value="0.01"></div>
           <p class="hint sub" id="oRate"></p>
@@ -459,18 +459,34 @@ function doSweep(){
   // was already alive at the start of this sweep. No spontaneous regeneration.
   for(let i=0;i<N;i++)if(sp[i]>=0){
     order[n++]=i;
-    if(S.energyOn&&S.sunlight>0){energy[i]+=S.sunlight;solarInput+=S.sunlight}
+    if(S.energyOn&&S.energyMode==="circulation"){
+      // Idealised resource cycle: the tree returns energy to the source,
+      // then receives up to a fixed energy packet from the finite source.
+      const returned=Math.min(S.energyReturn,energy[i]);
+      energy[i]-=returned;externalEnergy+=returned;energyReturned+=returned;
+      const received=Math.min(S.sunlight,externalEnergy);
+      energy[i]+=received;externalEnergy-=received;solarInput+=received;
+    }else if(S.energyOn&&S.sunlight>0){
+      energy[i]+=S.sunlight;solarInput+=S.sunlight;
+    }
   }
   for(let k=n-1;k>0;k--){const j=(rand()*(k+1))|0,t=order[k];order[k]=order[j];order[j]=t}
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];
     if(a<0||stamp[i]===sweep)continue;
-    if(S.death>0&&!(S.energyOn&&S.energyMode==="conservative")&&rand()<S.death){if(S.energyOn){dissipate(i,energy[i],a);energy[i]=0}sp[i]=-1;h[i]=0;continue}
+    if(S.death>0&&!(S.energyOn&&S.energyMode==="conservative")&&rand()<S.death){
+      if(S.energyOn){
+        if(S.energyMode==="circulation"){externalEnergy+=energy[i];energyReturned+=energy[i]}
+        else dissipate(i,energy[i],a);
+        energy[i]=0;
+      }
+      sp[i]=-1;h[i]=0;continue
+    }
     const s=species[a].s;
     if(rand()<1-s){
       if(!S.hmax||h[i]<S.hmax){
         if(!S.energyOn){h[i]++}
-        else if(S.energyMode==="conservative"){h[i]++}
+        else if(S.energyMode==="conservative"||S.energyMode==="circulation"){h[i]++}
         else if(energy[i]>=S.growCost){energy[i]-=S.growCost;dissipate(i,S.growCost,a);h[i]++}
       }
     }else{
@@ -486,9 +502,9 @@ function doSweep(){
       if(rand()<h[i]/(h[i]+h[j])){
         const hd=h[j];sp[j]=a;stamp[j]=sweep;
         h[j]=S.newH==="sapling"?1:S.newH==="attacker"?h[i]:hd;
-        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;const kept=S.energyMode==="conservative"?captured:S.eta*captured;energy[j]=S.birth+kept;energyCapturedBySpecies[a]+=kept;if(S.energyMode!=="conservative")dissipate(j,(1-S.eta)*captured,b)}
+        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;const kept=S.energyMode!=="dissipative"?captured:S.eta*captured;energy[j]=S.birth+kept;energyCapturedBySpecies[a]+=kept;if(S.energyMode==="dissipative")dissipate(j,(1-S.eta)*captured,b)}
       }else{
-        if(S.energyOn){const captured=energy[i],kept=S.energyMode==="conservative"?captured:S.eta*captured;energy[j]+=kept;energyCapturedBySpecies[b]+=kept;if(S.energyMode!=="conservative")dissipate(i,(1-S.eta)*captured,a);energy[i]=0}
+        if(S.energyOn){const captured=energy[i],kept=S.energyMode!=="dissipative"?captured:S.eta*captured;energy[j]+=kept;energyCapturedBySpecies[b]+=kept;if(S.energyMode==="dissipative")dissipate(i,(1-S.eta)*captured,a);energy[i]=0}
         sp[i]=-1;h[i]=0
       }
     }
@@ -583,15 +599,17 @@ function updateReadout(){
   $("rTall").textContent=st.tall.toLocaleString("en");
   if(S.energyOn){
     let treeE=0;for(let i=0;i<energy.length;i++)treeE+=energy[i];
-    const totalE=treeE+energyBath+localHeatSum;
+    const totalE=treeE+energyBath+localHeatSum+externalEnergy;
     $("enTrees").textContent=treeE.toFixed(2);
-    $("enBath").textContent=energyBath.toFixed(2);
+    $("enBath").textContent=(energyBath+externalEnergy).toFixed(2);
     $("enLocal").textContent=localHeatSum.toFixed(2);
     $("enTotal").textContent=totalE.toFixed(2);
     $("enSun").textContent=solarInput.toFixed(2);
-    $("enError").textContent=(totalE-energyInitial-solarInput).toExponential(2);
-    $("energyInterpret").textContent=S.energyMode==="conservative"?
-      `Lukket træenergiregnskab: Start ${energyInitial.toFixed(2)} = energi hos levende træer ${treeE.toFixed(2)}. Energi flyttes mellem træer uden varmeomdannelse eller sollys. Energibevarelse alene afgør ikke entropiens udvikling.`:
+    $("enError").textContent=(totalE-energyInitial-(S.energyMode==="dissipative"?solarInput:0)).toExponential(2);
+    $("energyInterpret").textContent=S.energyMode==="circulation"?
+      `Lukket kredsløb: startenergi ${energyInitial.toFixed(2)} = ${treeE.toFixed(2)} hos træer + ${externalEnergy.toFixed(2)} i energilager. Kumulativt optaget fra lager: ${solarInput.toFixed(2)}; returneret inkl. død: ${energyReturned.toFixed(2)}. Sollys betyder her intern flytning fra lager, ikke ekstern energitilførsel.`:
+      S.energyMode==="conservative"?
+      `Lukket træenergiregnskab: Start ${energyInitial.toFixed(2)} = energi hos levende træer ${treeE.toFixed(2)}. Energi flyttes mellem træer uden varmeomdannelse eller sollys.`:
       `Åben energibalance: start ${energyInitial.toFixed(2)} + sollys ${solarInput.toFixed(2)} = træer ${treeE.toFixed(2)} + lokal varme ${localHeatSum.toFixed(2)} + bad ${energyBath.toFixed(2)}. Energi og entropi fra selve solkilden er endnu ikke modelleret.`;
   }else{
     for(const id of ["enTrees","enLocal","enBath","enTotal","enSun","enError"])$(id).textContent="–";
@@ -709,6 +727,8 @@ function updateEnergyControls(reinit){
   S.energyMode=$("enMode").value;
   S.e0=Math.max(1,Number($("enInitial").value)||10);
   S.sunlight=Math.max(0,Number($("enSunlight").value)||0);
+  S.energyReturn=Math.max(0,Number($("enReturn").value)||0);
+  S.reservoirPerTree=Math.max(0,Number($("enReservoir").value)||0);
   S.eta=Number($("enTransfer").value);
   S.growCost=Math.max(0,Number($("enCost").value)||0);
   S.birth=Math.max(.01,Number($("enBirth").value)||2);
@@ -719,17 +739,22 @@ function updateEnergyControls(reinit){
     S.sunlight=0;S.eta=1;S.growCost=0;
     $("enSunlight").value="0";$("enTransfer").value="1";$("enCost").value="0";
   }
-  for(const id of ["enSunlight","enTransfer","enCost","enLocalFrac","enLocalCap","enCapacity"]){
-    $(id).disabled=S.energyMode==="conservative";
-  }
-  $("enModeHelp").textContent=S.energyMode==="conservative"?
-    "Al disponibel energi forbliver hos levende træer og flyttes kun ved formering eller kamp. Ingen varme eller solenergi. Tilfældig død er deaktiveret i denne tilstand, da dens energioverførsel ikke er defineret.":
-    "Dissipativt sammenligningsforsøg: energi kan blive til varme, og skoven kan tilføres solenergi.";
-  $("thermalPanel").hidden=S.energyMode==="conservative" || !S.energyOn;
+  if(S.energyMode==="circulation"){S.eta=1;S.growCost=0;$("enTransfer").value="1";$("enCost").value="0"}
+  for(const id of ["enTransfer","enCost"]){$(id).disabled=S.energyMode!=="dissipative"}
+  $("enSunlight").disabled=S.energyMode==="conservative";
+  $("enReturn").disabled=S.energyMode!=="circulation";
+  $("enReservoir").disabled=S.energyMode!=="circulation";
+  for(const id of ["enLocalFrac","enLocalCap","enCapacity"])$(id).disabled=S.energyMode!=="dissipative";
+  $("enModeHelp").textContent=S.energyMode==="circulation"?
+    "Sollys overfører energi fra et endeligt fælles lager til træerne. Træerne returnerer energi til lageret; ved død flyttes hele træets energi tilbage. E_total er konstant.":
+    S.energyMode==="conservative"?
+    "Ingen solenergi, varme eller tilfældig død. Energi flyttes kun mellem levende træer.":
+    "Dissipativt kontrolforsøg: varme og ekstern solenergi, med åbent energiregnskab.";
+  $("thermalPanel").hidden=S.energyMode!=="dissipative" || !S.energyOn;
+  $("microPanel").hidden=!S.energyOn||S.energyMode==="dissipative";
   $("enLocalLabel").textContent=Math.round(S.localFrac*100)+" %";
   $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
-  if(S.energyMode==="conservative"&&S.energyOn)S.death=0;
-  else applyDeath();
+  applyDeath();
   $("btnBatch").disabled=S.energyOn;
   $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
   if(reinit){setRunning(false);init()}else if(last&&lastMetric)draw()
@@ -738,11 +763,16 @@ $("tgEnergy").addEventListener("change",()=>updateEnergyControls(true));
 $("enMode").addEventListener("change",()=>{
   if($("enMode").value==="dissipative"){
     $("enSunlight").value="1.5";$("enTransfer").value="0.8";$("enCost").value="0.5";
+  }else if($("enMode").value==="circulation"){
+    $("enSunlight").value="1.5";$("enTransfer").value="1";$("enCost").value="0";
+    $("tgDeath").checked=true;
   }
   updateEnergyControls(true);
 });
 $("enInitial").addEventListener("change",()=>updateEnergyControls(true));
 $("enSunlight").addEventListener("change",()=>updateEnergyControls(true));
+$("enReturn").addEventListener("change",()=>updateEnergyControls(true));
+$("enReservoir").addEventListener("change",()=>updateEnergyControls(true));
 $("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
 $("enCost").addEventListener("change",()=>updateEnergyControls(false));
 $("enBirth").addEventListener("change",()=>updateEnergyControls(false));
