@@ -196,7 +196,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <canvas id="entropyChart" aria-label="Tre informationsentropier over tid"></canvas>
         <section class="thermo-panel" id="microPanel">
           <div class="thermo-heading"><h3>Statistisk termodynamik · energikvanta</h3><span class="science-tag">MIKROTILSTANDSMODEL</span></div>
-          <p class="hint">Vi antager <b>faste grupper af energioscillatorer</b> for henholdsvis træenergi og fælles energilager. Entropien er Boltzmanns S = k<sub>B</sub> ln Ω, ikke arts-Shannon-entropi. Modellen definerer hypotetiske mikrostadier; uden dynamiske regler for detaljeret balance kan den samlede S godt falde.</p>
+          <p class="hint">Vi antager <b>tre indre energioscillatorer pr. gittersted</b> og et separat energilager med et fast antal oscillatorer. Entropien er Boltzmanns S = k<sub>B</sub> ln Ω, ikke arts-Shannon-entropi. Modellen definerer hypotetiske mikrostadier; uden dynamiske regler for detaljeret balance kan den samlede S godt falde.</p>
           <div class="metric-grid">
             <div class="metric"><small>Indre S<sub>træenergi</sub> / k<sub>B</sub></small><b id="miTrees">–</b></div>
             <div class="metric"><small>S<sub>fælles lager</sub> / k<sub>B</sub></small><b id="miStore">–</b></div>
@@ -207,9 +207,10 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="legend"><span><i style="background:#298b78"></i> Træenergien</span><span><i style="background:#568ac6"></i> Lageret</span><span><i style="background:#a86643"></i> Summen</span></div>
           <canvas id="microChart" aria-label="Boltzmann entropi i træenergi og fælles lager over tid"></canvas>
           <div id="microExplain" class="explain">Mikrotilstandsberegningen vises, når energimodellen er aktiv.</div>
+          <details class="formula-more"><summary>Se de indre entropibidrag for hver art</summary><p class="hint">Entropien summeres fra træerne, der <b>aktuelt</b> tilhører arten. Tomme steder bidrager med nul, fordi de ikke rummer nogen disponibel energi. Dette er en idealiseret intern kvantemodel, ikke målt biologisk entropi.</p><div class="data-scroll"><table><thead><tr><th>Art</th><th class="num">Træer</th><th class="num">Disponibel E</th><th class="num">Indre S/k<sub>B</sub></th></tr></thead><tbody id="microSpeciesRows"></tbody></table></div></details>
           <details class="formula-more"><summary>Se antagelser og formler for indre entropi</summary>
             <div class="entropy-formula">Ω(q,n) = (q+n−1)! / [q! (n−1)!] &nbsp; · &nbsp; S/k<sub>B</sub> = ln Ω</div>
-            <p><i>q</i> er antallet af diskrete energikvanta i en del, og <i>n</i> er dens antal antagne oscillatorer. Begge delsystemer har et fast n, selvom antallet af levende træer varierer. Vi bruger én energienhed pr. kvant og afrunder observeret energi til nærmeste heltal. Derfor er entropien en <b>kvantiseret diagnostik af en kontinuert simulator</b>, ikke en eksakt mikrofysisk udledning. n = antal gittersteder i hvert delsystem (valgt konvention).</p>
+            <p><i>q</i> er antal diskrete energikvanta, og <i>n</i> er antal hypotetiske oscillatorer. Ved hvert gittersted er n = 3 konstant, også når stedet er tomt (da er q = 0); fælles lager har n = 3L². Vi afrunder hver celles disponible energi og lagerenergien til hele kvanta, med ε = 1 modellenhed. Dermed er S<sub>træer</sub> = Σ<sub>celler</sub> k<sub>B</sub> ln Ω(qᵢ,3), og S<sub>lager</sub> = k<sub>B</sub> ln Ω(q<sub>lager</sub>,3L²). Den rigtige dynamik er stadig kontinuert; kvantiseringen er kun til måling, så samlet q kan afvige lidt fra den kontinuerte energisum.</p>
             <p>Ved en ægte anden-hovedsætningstest skal selve overgangsreglerne respektere passende mikroskopiske reversibilitets- eller lokale detaljeret-balancebetingelser. Det gør træernes konkurrence endnu ikke. Her kan vi <b>undersøge</b>, om den antagne S udvikler sig opad eller nedad, men den behøver ikke være monoton.</p>
             <p><a href="https://www.compadre.org/STPBook/statistical-mechanics-1/ex4_2.cfm" target="_blank" rel="noopener noreferrer">Baggrund: Einstein-solid og antal mikrostadier</a></p>
           </details>
@@ -625,6 +626,7 @@ function updateReadout(){
     $("miStore").textContent=micro.microStore===null?"–":micro.microStore.toFixed(2);
     $("miTotal").textContent=micro.microTotal===null?"–":(micro.microTotal-microInitial).toFixed(2);
     $("miStep").textContent=micro.microDelta===null?"–":(micro.microDelta>=0?"+":"")+micro.microDelta.toFixed(2);
+    updateMicroSpeciesTable(micro);
     $("microExplain").textContent=S.energyMode==="circulation"?
       `Mikrotilstandsmodel: energien er konstant inklusive lageret. ΔS/kB = ${(micro.microTotal-microInitial).toFixed(2)} siden start. ${micro.microDelta>=-1e-8?"Sidste ændring var ikke-negativ.":"Sidste ændring var NEGATIV."} Dette er ikke et brud på anden hovedsætning, fordi vores vækst-/dødsrater ikke er afledt af termodynamisk konsistente overgangsregler. Vi må ikke forveksle dette med artsdiversiteten.`:
       "I konservativ modus ændres fordelingen mellem træer, men de to faste energipuljer har samme energi. Derfor kan denne to-kompartmenters entropi ikke beskrive den interne træ-til-træ omfordeling.";
@@ -854,12 +856,28 @@ function einsteinLogMultiplicity(q,n){
 function microObservables(){
   if(!S.energyOn||S.energyMode==="dissipative")
     return {microTrees:null,microStore:null,microTotal:null,microDelta:null};
-  const eTree=energy.reduce((a,b)=>a+b,0),N=sp.length;
-  const qTree=Math.max(0,Math.round(eTree)),qStore=Math.max(0,Math.round(externalEnergy));
-  const st=einsteinLogMultiplicity(qTree,N),sb=einsteinLogMultiplicity(qStore,N);
+  const N=sp.length,oscPerSite=3,perSpecies=Array(S.K).fill(0);
+  const perSpeciesEnergy=Array(S.K).fill(0),perSpeciesCount=Array(S.K).fill(0);
+  let st=0;
+  for(let i=0;i<N;i++){
+    const k=sp[i];if(k<0)continue;
+    const q=Math.max(0,Math.round(energy[i]));
+    const si=einsteinLogMultiplicity(q,oscPerSite);
+    st+=si;perSpecies[k]+=si;perSpeciesEnergy[k]+=energy[i];perSpeciesCount[k]++;
+  }
+  const sb=einsteinLogMultiplicity(Math.max(0,Math.round(externalEnergy)),N*oscPerSite);
   const total=st+sb,prev=metricHistory.length?metricHistory[metricHistory.length-1]:null;
   return {microTrees:st,microStore:sb,microTotal:total,
+    microBySpecies:perSpecies,microEnergyBySpecies:perSpeciesEnergy,microCounts:perSpeciesCount,
     microDelta:prev&&prev.microTotal!==null?total-prev.microTotal:0};
+}
+function updateMicroSpeciesTable(m){
+  const tbody=$("microSpeciesRows");
+  if(!m.microBySpecies){tbody.innerHTML='<tr><td colspan="4">Aktivér den konservative energimodel.</td></tr>';return}
+  tbody.innerHTML=m.microBySpecies.map((v,k)=>{
+    const col=colorOf(k).join(",");
+    return `<tr class="${m.microCounts[k]?"":"extinct"}"><td><span class="sw" style="background:rgb(${col})"></span> ${k+1}</td><td class="num">${m.microCounts[k]}</td><td class="num">${m.microEnergyBySpecies[k].toFixed(2)}</td><td class="num">${v.toFixed(2)}</td></tr>`;
+  }).join("");
 }
 function drawMicroChart(){
   const c=$("microChart"),r=c.getBoundingClientRect();if(!r.width)return;
