@@ -105,3 +105,40 @@ Modellen har ikke mekanisk/kemisk/termisk energiform som særskilt mikroskopisk 
 - Hypotese: Selektion kan sænke artsentropien, mens lokale områder forbliver stærkt blandede, eller omvendt.
 - Hypotese: Energiandel-entropi kan udvikle sig anderledes end artsentropi, fordi energien fordeles forskelligt mellem træer.
 - Afgrænsning: Gentagne batchforsøg er stadig slået fra i energitilstand, da den særskilte batchmotor endnu kun er valideret for grundmodellen.
+
+
+## 7. november 2026 — Simplificeret layout og idealiseret termodynamisk entropi
+
+**Brugerønske:** Et mere forståeligt interface med færre sekundære paneler og en egentlig fysisk entropistørrelse, der kan holdes op imod artsdiversitet og energifordeling.
+
+### Design og implementering
+
+- Skov og to entropigrafer er nu hovedvisningen. Individuelle populationskurver, avancerede regler, artsvise bidrag til Shannon-entropi, batchforsøg og lange metodeafsnit findes under fold-ud-paneler.
+- Den aktuelle disponible energi for hver art vises som et sæt søjler; den fulde artsvise balance kan åbnes separat.
+- Energi er slået til i den foreslåede standardopsætning, mens den oprindelige Up or out-model fortsat kan køres med energiafbryderen slået fra.
+- Standardværdier i energi-eksperimentet: η = 0,8; vækstomkostning 0,5; startenergi pr. træ 10. Parametrene er illustrative, ikke empirisk kalibrerede.
+
+### Termodynamisk antagelse — begrænset varmereservoir
+
+Et homogent varmereservoir antages at være i intern ligevægt med konstant positiv varmekapacitet C. Starttemperaturen er T₀ = 1 i modeltemperaturenheder. Energi som tidligere flyttedes til 'reservoir' fortolkes nu eksplicit som akkumuleret tilført **varme** Q, med Q ≥ 0.
+
+Vi beregner
+
+\[
+T = T_0 + Q/C, \qquad
+\Delta S_{bad} = \int_0^Q \frac{dQ'}{T_0+Q'/C}
+= C\ln\!\left(1+\frac{Q}{CT_0}\right).
+\]
+
+Med T₀=1 og C=1000 i standardopsætningen.
+
+**Energibogføring:** Den eksisterende sum E_disponibel + Q er bevaret. Reservoirets initiale termiske energi er antaget U₀=C T₀, som er en uændret reference. Den fulde idealiserede energisum er E_disponibel + (U₀+Q) = E_initial + U₀. Numerisk vises den forskydningsfri sum E_disponibel+Q på skærmen.
+
+**Begrænsninger:** Vi har modelleret én termodynamisk entropistørrelse, nemlig reservoirets ΔS_bad, *ikke* træernes termodynamiske entropi eller hele det isolerede systems ΔS_total. Der er ingen detaljeret balance, eksplicit mekanisk energi, stokastisk termodynamisk log-ratio for baner, eller fysisk mikromodel for træernes indre tilstande. Modellen kan derfor endnu ikke bruges til en uafhængig test af anden hovedsætning. ΔS_bad er ikke sammenlignelig i numerisk størrelse med Shannon-entropier målt i nat og må ikke summeres med disse.
+
+**Opfølgende problemstilling:** Kan vi tilføje en mikrofysisk termodynamisk beskrivelse af træernes energi og ressourceomsætning, så hele systemets entropibalance bliver defineret? Det kræver større modelændringer, og bør ske først efter kontrolberegninger og test af de nuværende målinger.
+
+### Kvalitetskontrol
+
+- HTML/JavaScript er blevet kontrolleret for syntaktisk gyldig JavaScript, ingen dublerede DOM-id'er og ingen referencer til ikke-eksisterende element-id'er.
+- Fuld browserinteraktion og fysisk validering af modellen er endnu ikke gennemført i denne ændring.
