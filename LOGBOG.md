@@ -232,3 +232,26 @@ JavaScript blev eksekveret med simuleret DOM og canvas. Fire testscenarier blev 
 I alle fire scenarier var forskellen mellem den beregnede termiske total og summen af \(\Delta S_{levende\ steder}+\Delta S_{tomme\ steder}+\Delta S_{bad}\) nul ved den målte numeriske præcision. Der fandtes ingen referencer til manglende eller dublerede DOM-id'er.
 
 **Vigtig fortolkning:** Disse tests demonstrerer konsistens med de *valgte* dissipative antagelser, ikke en afledning af anden hovedsætning fra mikroskopisk reversible love. Visualiseringen er ikke afprøvet i en rigtig browser ved denne test.
+
+
+## 7. november 2026 — Skoven løber tør for energi: åben model med sollys
+
+**Observation:** Brugeren rapporterede "de uddør". I energiudgaven havde hvert træ kun en endelig startenergi, og vækst og kamp omdannede energi ensrettet til varme. Uden energitilførsel kunne den disponible energi derfor blive udtømt, så vækst og formering gik i stå. Dette er ikke nødvendigvis bogstavelig død af alle træer, da der ikke var indbygget sultedød, men det var en central biologisk og økonomisk modelbegrænsning.
+
+**Ændring:** Indfør brugerparameteren `enSunlight` (standard 1,5 modelenergienheder per levende træ per sweep, nul tilladt). Ved begyndelsen af hvert sweep får *eksisterende levende* træer `sunlight` ekstra disponibel energi. Træer, der fødes i dette sweep, får først solenergi fra næste sweep. Dette er en bevidst deterministisk energitilførsel; ingen ny artsmutation, spontan genoplivning eller genindvandring er indført.
+
+**Åbent energiregnskab:**
+
+\[
+E_{disponibel}(t)+Q_{lokal}(t)+Q_{bad}(t)
+=
+E_{start}+E_{sol,ind}(t).
+\]
+
+Dermed skal den gamle lukkede balance modificeres; det er *ikke* korrekt længere at forvente konstant energi inde i skoven uden at tælle solinput.
+
+**Entropi og anden hovedsætning:** De beregnede entropistørrelser for lokal varme og reservoiret beskriver stadig kun den idealiserede termiske del. Med solenergi er systemet åbent, og solkildens egen entropi er **ikke** inkluderet. En virkelig test af anden hovedsætning for det komplette system kræver, at energikilden, dens temperatur og den relevante entropistrøm også medtages.
+
+**Numeriske funktionstests:** 20×20 gitter, 5 arter, 100 sweeps, seed=2. Med solinput 1,5 og ingen dødelighed endte 369 levende træer og 34.364,16 tilgængelige energienheder, med kumulativ soltilførsel 54.450. Maksimal fejl i åben energibalance <3×10⁻¹⁰. Uden sollys blev kun 167,10 disponibel energi tilbage; det demonstrerer hvorfor gammel model kan gå i stå. Med solinput og 2% tilfældig dødelighed var den maksimale energibalancefejl <4×10⁻¹⁰.
+
+**Vigtigt:** Sollys forhindrer energisult, men stopper ikke artsudryddelse gennem konkurrence. Uddøde arter kan ikke komme igen med modellens nuværende regler; mutation eller indvandring ville være et selvstændigt nyt modelvalg, ikke en bugrettelse.
