@@ -283,6 +283,14 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         </select></div>
         <canvas id="arrowPlot" aria-label="Tidsserie af valgt mål i forløbet"></canvas>
         <div class="explain" id="arrowInterpret">Optag et forløb for at beregne tidsasymmetri.</div>
+        <details class="formula-more"><summary>Kontrolforsøg: reversibel vs. drevet dynamik</summary>
+          <p>Fire tilstande på en ring. I <b>ligevægt</b> er sandsynligheden for at gå med og mod uret lige stor. I et <b>drevet kredsløb</b> går systemet oftere med uret end imod. Begge starter med uniform fordeling og har en stationær uniform fordeling.</p>
+          <div class="buttons" style="margin-top:10px">
+            <button id="arrowControlRun">Sammenlign kontrolmodeller</button>
+          </div>
+          <div id="arrowControlResult" class="explain">Start kontrollen for at se forskellen på tidsasymmetri og fysisk entropiproduktion.</div>
+          <p class="hint">Med den stationære, tidsreverserede Markovkæde kan middel-entropiproduktionen beregnes ud fra forholdet mellem fremad- og baglæns overgangssandsynligheder. Dette kan ikke uden videre overføres til skovens regler.</p>
+        </details>
         <details class="formula-more"><summary>Hvordan måles tidens retning?</summary>
           <p>Vi inddeler den valgte tidsserie i fire datadrevne intervaller og tæller <b>tre på hinanden følgende tilstande</b>. Derpå sammenligner vi fordelingen af de observerede mønstre <i>a→b→c</i> med de omvendte mønstre <i>c→b→a</i> ved Jensen–Shannon-divergens (JSD). JSD = 0 betyder, at mønsterfordelingerne ikke kan skelnes med denne måling; større værdier betyder større observeret asymmetri. Maksimum er ln(2) ≈ 0,693 nat.</p>
           <p>Det er en <b>beskrivende statistik</b> fra ét forløb, påvirket af tidslig drift, binning og begrænset datamængde. Ingen formel for termodynamisk entropiproduktion udledes herfra. Artsudryddelser er allerede irreversible i Oskars regler, fordi der hverken er mutation eller immigration.</p>
@@ -849,7 +857,7 @@ cv.addEventListener("mousemove",e=>{
   $("probe").textContent=a<0?`Cell (${x}, ${y}): empty`:`Cell (${x}, ${y}): species ${a+1}, s = ${species[a].s.toFixed(3)}, height ${h[i]}`;
 });
 cv.addEventListener("mouseleave",()=>$("probe").textContent="Hover over the lattice to inspect a cell.");
-window.addEventListener("resize",()=>draw());
+window.addEventListener("resize",()=>{draw();if(arrow.frames.length)arrowDrawFrame()});
 document.querySelectorAll("details").forEach(el=>el.addEventListener("toggle",()=>{if(el.open)requestAnimationFrame(()=>draw())}));
 if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>draw());
 
@@ -1199,7 +1207,9 @@ function arrowAvailableSeries(key){
   return {frames:f,values:f.map(x=>x[key])};
 }
 function arrowJSD(key){
-  const {values}=arrowAvailableSeries(key);
+  return arrowJSDValues(arrowAvailableSeries(key).values);
+}
+function arrowJSDValues(values){
   if(values.length<12)return null;
   const lo=Math.min(...values),hi=Math.max(...values);
   if(hi-lo<1e-10)return 0;
@@ -1301,6 +1311,30 @@ $("arrowSlider").addEventListener("input",()=>{
   arrowDrawFrame();
 });
 $("arrowMetric").addEventListener("change",arrowRefresh);
+function arrowMarkovControl(cw,ccw,seed){
+  const randControl=mulberry32(seed>>>0);
+  let state=(randControl()*4)|0;
+  const n=12000,values=[state];let eproduction=0;
+  for(let i=0;i<n;i++){
+    const u=randControl();
+    if(u<cw){state=(state+1)%4;eproduction+=Math.log(cw/ccw)}
+    else if(u<cw+ccw){state=(state+3)%4;eproduction-=Math.log(cw/ccw)}
+    values.push(state);
+  }
+  const measured=eproduction/n;
+  return {jsd:arrowJSDValues(values),measured,expected:(cw-ccw)*Math.log(cw/ccw)};
+}
+$("arrowControlRun").addEventListener("click",()=>{
+  const seed=S.seed*1171+231;
+  const equilibrium=arrowMarkovControl(.45,.45,seed);
+  const driven=arrowMarkovControl(.8,.1,seed);
+  const fmt=x=>x.toFixed(4);
+  $("arrowControlResult").textContent=
+    `Ligevægt: JSD = ${fmt(equilibrium.jsd)} nat, gennemsnitlig Σ = ${fmt(equilibrium.measured)} kB/step (teoretisk 0). `+
+    `Drevet ring: JSD = ${fmt(driven.jsd)} nat, målt gennemsnitlig Σ = ${fmt(driven.measured)} kB/step; teoretisk ${fmt(driven.expected)}. `+
+    "Målt Σ er middelværdien af log(p_frem/p_bag) langs banen; små forskelle skyldes endeligt antal spring. JSD og Σ har begge information om tidsretning, men er forskellige størrelser.";
+});
+
 $("arrowRecord").addEventListener("click",async()=>{
   if(arrow.recording)return;
   arrowPause();setRunning(false);
