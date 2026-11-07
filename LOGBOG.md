@@ -216,3 +216,19 @@ De tre Shannon-mål (arts-, lokal arts- og energiandel-entropi) er fortsat særs
 - Næste fysisk mere krævende skridt ville være at modellere virkelig varmeudveksling, temperaturafhængige overgange og lokal detaljeret balance; først derefter kan spørgsmål om reversibel mikrodynamik og stokastisk termodynamisk entropiproduktion adresseres ordentligt.
 
 **Kodekontrol:** Termiske bidrag efter aktuelle artsbesatte steder kan undersøges i fold-ud-tabellen i HTML. Der er endnu ingen særskilt model for kemisk entropi i et træ, og det skal ikke forveksles med en beregnet størrelse.
+
+
+### Funktionstest af termisk delmodel — 7. november 2026
+
+JavaScript blev eksekveret med simuleret DOM og canvas. Fire testscenarier blev kørt, hver i 60 sweeps på et 20×20-gitter med 5 arter og samme seed:
+
+| Scenarie | α lokal | η erobring | Dødelighed/sweep | Fald i beregnet ΔS_total over tid | Maks. energifejl | Slut-ΔS_termisk |
+|---|---:|---:|---:|---:|---:|---:|
+| Standardvariation | 0,5 | 0,8 | 0 | 0 | <2×10⁻¹¹ | 3290,994 |
+| Al varme lokalt | 1 | 0 | 0 | 0 | 0 | 2683,662 |
+| Al varme til bad | 0 | 0 | 0,1 | 0 | 0 | 3922,071 |
+| Fuld erobringsoverførsel | 0,5 | 1 | 0,1 | 0 | 0 | 3404,943 |
+
+I alle fire scenarier var forskellen mellem den beregnede termiske total og summen af \(\Delta S_{levende\ steder}+\Delta S_{tomme\ steder}+\Delta S_{bad}\) nul ved den målte numeriske præcision. Der fandtes ingen referencer til manglende eller dublerede DOM-id'er.
+
+**Vigtig fortolkning:** Disse tests demonstrerer konsistens med de *valgte* dissipative antagelser, ikke en afledning af anden hovedsætning fra mikroskopisk reversible love. Visualiseringen er ikke afprøvet i en rigtig browser ved denne test.
