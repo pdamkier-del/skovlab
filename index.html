@@ -218,7 +218,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
             <div class="entropy-formula">Tᵢ = T₀ + Qᵢ/c &nbsp; · &nbsp; ΔSᵢ = c ln(Tᵢ/T₀)</div>
             <div class="entropy-formula">ΔS<sub>termisk</sub> = Σ<sub>alle steder</sub> ΔSᵢ + C ln(1 + Q<sub>bad</sub>/(C T₀))</div>
             <p>Starttemperaturen er T₀ = 1. Ved vækst, konkurrence og død overføres disponibel energi til varme: en valgt andel lokalt, resten til det fælles reservoir. Alle temperaturer stiger eller forbliver konstante; <b>i denne idealiserede varmeproces</b> er den samlede beregnede termiske entropi derfor ikke-faldende.</p>
-            <p><b>Begrænsning:</b> Dette er entropien for modellens <em>termiske beholdere</em>, ikke alle biologiske, kemiske og konfigurationelle mikrostadier i træerne. Artsentropi, lokal artsentropi og energiandel-entropi er forskellige informationsmål og skal ikke lægges til ΔS<sub>termisk</sub>. Den indbyggede positive entropiproduktion er en følge af vores dissipative regel, <b>ikke</b> et uafhængigt bevis for anden hovedsætning.</p>
+            <p><b>Begrænsning:</b> Dette er entropien for modellens <em>termiske beholdere</em>, ikke alle biologiske, kemiske og konfigurationelle mikrostadier i træerne. Artsentropi, lokal artsentropi og energiandel-entropi er forskellige informationsmål og skal ikke lægges til ΔS<sub>termisk</sub>. Den indbyggede positive entropiproduktion er en følge af vores dissipative regel, <b>ikke</b> et uafhængigt bevis for anden hovedsætning. Med solenergi er systemet åbent, og solkildens entropi er endnu ikke bogført.</p>
           </details>
         </section>
         <details><summary>Hvad beregner vi?</summary>
@@ -230,13 +230,14 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       </div>
       <div class="chart-box" id="energyDashboard">
         <h2>Energi i skoven · eksperimentel model</h2>
-        <p class="hint" style="margin-top:0">Disponibel energi bliver ved dissipation fordelt som lokal varme ved gitterstederne og varme i det fælles reservoir. Den samlede modelenergi bevares. Værdierne er model-enheder, ikke joule.</p>
+        <p class="hint" style="margin-top:0">Disponibel energi bliver ved dissipation fordelt som lokal varme ved gitterstederne og varme i det fælles reservoir. Det er et åbent system med tilført solenergi. Energien bogføres som startenergi + tilførsel = disponibel energi + varme. Enhederne er model-enheder, ikke joule.</p>
         <div class="metric-grid">
           <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
           <div class="metric"><small>Lokal varme Q<sub>lokal</sub></small><b id="enLocal">–</b></div>
           <div class="metric"><small>Varme i fælles bad Q<sub>bad</sub></small><b id="enBath">–</b></div>
           <div class="metric"><small>Samlet energi: disponibel + varme</small><b id="enTotal">–</b></div>
-          <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
+          <div class="metric"><small>Tilført solenergi siden start</small><b id="enSun">–</b></div>
+          <div class="metric"><small>Fejl i åben energibalance</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
         <h3 style="font-size:18px;margin:15px 0 7px">Disponibel energi lige nu · hver art</h3>
@@ -320,8 +321,10 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       <section class="panel">
         <h2>Energi og varme</h2>
         <label class="check"><input type="checkbox" id="tgEnergy" checked> Aktivér energipakker</label>
-        <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Totalen hos træer + lokal varme + reservoir bevares ved alle hændelser.</p>
+        <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Med sollys er skoven åben: startenergi + tilført solenergi = træenergi + lokal varme + reservoir. Slå sollys fra for at undersøge et lukket energiregnskab.</p>
         <div class="field two"><label for="enInitial">Energi pr. træ ved start</label><input type="number" id="enInitial" value="10" min="1" max="10000" step="1"></div>
+        <div class="field two"><label for="enSunlight">Solenergi pr. levende træ pr. sweep</label><input type="number" id="enSunlight" value="1.5" min="0" max="1000" step="0.25"></div>
+        <p class="hint">Ved hvert sweep får alle levende træer en energipakke fra omgivelserne. <b>0</b> betyder lukket model uden energitilførsel. Artsudryddelser kan stadig ske gennem konkurrencen.</p>
         <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="0.8"></div>
         <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi omdannes til varme – energien forsvinder ikke.</p>
         <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0.5" min="0" max="1000" step="0.5"></div>
@@ -383,8 +386,8 @@ function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508
 function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:100000,localCapacity:10,localFrac:.5};
-let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[],localHeat=null,localHeatSum=0;
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,sunlight:1.5,capacity:100000,localCapacity:10,localFrac:.5};
+let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[],localHeat=null,localHeatSum=0,solarInput=0;
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
 const cv=$("lattice"),ctx=cv.getContext("2d"),ch=$("chart"),cctx=ch.getContext("2d");
@@ -399,7 +402,7 @@ function init(){
   species.sort((a,b)=>a.s-b.s);
   sp=new Int16Array(N);h=new Int32Array(N);stamp=new Int32Array(N);order=new Int32Array(N);
   for(let i=0;i<N;i++){if(rand()<S.fill){sp[i]=(rand()*S.K)|0;h[i]=1}else{sp[i]=-1;h[i]=0}}
-  energy=new Float64Array(N);localHeat=new Float64Array(N);localHeatSum=0;energyBath=0;energyInitial=0;energyBathBySpecies=Array(S.K).fill(0);energyCapturedBySpecies=Array(S.K).fill(0);
+  energy=new Float64Array(N);localHeat=new Float64Array(N);localHeatSum=0;energyBath=0;energyInitial=0;solarInput=0;energyBathBySpecies=Array(S.K).fill(0);energyCapturedBySpecies=Array(S.K).fill(0);
   if(S.energyOn){for(let i=0;i<N;i++)if(sp[i]>=0){energy[i]=S.e0;energyInitial+=S.e0}}
   sweep=0;history=[];metricHistory=[];histStride=1;histTick=0;
   off.width=S.L;off.height=S.L;offCtx=off.getContext("2d");img=offCtx.createImageData(S.L,S.L);
@@ -427,7 +430,12 @@ function dissipate(site,amount,originSpecies){
 function doSweep(){
   sweep++;
   const N=S.L*S.L;let n=0;
-  for(let i=0;i<N;i++)if(sp[i]>=0)order[n++]=i;
+  // External energy influx: the boundary supplies sunlight to each tree that
+  // was already alive at the start of this sweep. No spontaneous regeneration.
+  for(let i=0;i<N;i++)if(sp[i]>=0){
+    order[n++]=i;
+    if(S.energyOn&&S.sunlight>0){energy[i]+=S.sunlight;solarInput+=S.sunlight}
+  }
   for(let k=n-1;k>0;k--){const j=(rand()*(k+1))|0,t=order[k];order[k]=order[j];order[j]=t}
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];
@@ -554,10 +562,11 @@ function updateReadout(){
     $("enBath").textContent=energyBath.toFixed(2);
     $("enLocal").textContent=localHeatSum.toFixed(2);
     $("enTotal").textContent=totalE.toFixed(2);
-    $("enError").textContent=(totalE-energyInitial).toExponential(2);
-    $("energyInterpret").textContent=`Bevaret energisum: ${treeE.toFixed(2)} disponibel + ${localHeatSum.toFixed(2)} lokal varme + ${energyBath.toFixed(2)} i fælles bad = ${totalE.toFixed(2)}. Referencevarmen C·T₀ + antal celler·c·T₀ er udeladt, fordi den er konstant.`;
+    $("enSun").textContent=solarInput.toFixed(2);
+    $("enError").textContent=(totalE-energyInitial-solarInput).toExponential(2);
+    $("energyInterpret").textContent=`Åben energibalance: start ${energyInitial.toFixed(2)} + sollys ${solarInput.toFixed(2)} = træer ${treeE.toFixed(2)} + lokal varme ${localHeatSum.toFixed(2)} + bad ${energyBath.toFixed(2)}. Energi og entropi fra selve solkilden er endnu ikke modelleret.`;
   }else{
-    for(const id of ["enTrees","enLocal","enBath","enTotal","enError"])$(id).textContent="–";
+    for(const id of ["enTrees","enLocal","enBath","enTotal","enSun","enError"])$(id).textContent="–";
     $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
   }
   updateSpeciesEnergyTable();
@@ -670,6 +679,7 @@ applyDeath();
 function updateEnergyControls(reinit){
   S.energyOn=$("tgEnergy").checked;
   S.e0=Math.max(1,Number($("enInitial").value)||10);
+  S.sunlight=Math.max(0,Number($("enSunlight").value)||0);
   S.eta=Number($("enTransfer").value);
   S.growCost=Math.max(0,Number($("enCost").value)||0);
   S.birth=Math.max(.01,Number($("enBirth").value)||2);
@@ -684,6 +694,7 @@ function updateEnergyControls(reinit){
 }
 $("tgEnergy").addEventListener("change",()=>updateEnergyControls(true));
 $("enInitial").addEventListener("change",()=>updateEnergyControls(true));
+$("enSunlight").addEventListener("change",()=>updateEnergyControls(true));
 $("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
 $("enCost").addEventListener("change",()=>updateEnergyControls(false));
 $("enBirth").addEventListener("change",()=>updateEnergyControls(false));
