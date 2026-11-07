@@ -185,7 +185,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       </details>
       <div class="chart-box hero-panel" id="entropyDashboard">
         <h2>Evolution, information og entropi</h2>
-        <p class="hint" style="margin-top:0">De tre farvede kurver er informationsentropier med fælles skala 0–1 (normaliseret med ln(K)). Den <strong>termodynamiske entropi</strong> vises separat nedenunder, fordi dens fysiske betydning og enhed er en anden.</p>
+        <p class="hint" style="margin-top:0">Informationsentropierne viser artsfordeling, rumlig blanding og energifordeling. Termisk entropi vises kun i det dissipative sammenligningsforsøg; i den konservative model er træernes termodynamiske entropi ikke defineret.</p>
         <div class="metric-grid">
           <div class="metric"><small>Artsentropi H<sub>art</sub> (nat)</small><b id="exArt">–</b></div>
           <div class="metric"><small>Lokal rumlig entropi H<sub>lokal</sub> (nat)</small><b id="exLocal">–</b></div>
@@ -194,7 +194,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         </div>
         <div class="legend"><span><i style="background:#298b78"></i> Artsentropi</span><span><i style="background:#d18b47"></i> Lokal entropi</span><span><i style="background:#568ac6"></i> Energiandel-entropi (kun med energi)</span></div>
         <canvas id="entropyChart" aria-label="Tre informationsentropier over tid"></canvas>
-        <section class="thermo-panel">
+        <section class="thermo-panel" id="thermalPanel" hidden>
           <div class="thermo-heading"><h3>Termisk entropi i hele den modellerede skov</h3><span class="science-tag">IDEALISERET MODEL</span></div>
           <div class="metric-grid">
             <div class="metric"><small>Samlet ΔS<sub>termisk</sub></small><b id="thTotal">–</b></div>
@@ -237,7 +237,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
           <div class="metric"><small>Varme i fælles bad Q<sub>bad</sub></small><b id="enBath">–</b></div>
           <div class="metric"><small>Samlet energi: disponibel + varme</small><b id="enTotal">–</b></div>
           <div class="metric"><small>Tilført solenergi siden start</small><b id="enSun">–</b></div>
-          <div class="metric"><small>Fejl i åben energibalance</small><b id="enError">–</b></div>
+          <div class="metric"><small>Fejl i energibalancen</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
         <h3 style="font-size:18px;margin:15px 0 7px">Disponibel energi lige nu · hver art</h3>
@@ -319,17 +319,19 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
       </details>
 
       <section class="panel">
-        <h2>Energi og varme</h2>
+        <h2>Energimodel</h2>
+        <div class="field two"><label for="enMode">Overførselstype</label><select id="enMode"><option value="conservative" selected>Konservativ · ingen energitab</option><option value="dissipative">Dissipativ · varme og sollys</option></select></div>
+        <p class="hint" id="enModeHelp">Kun overførsel mellem træer. Ingen sollys, varme eller energitab. Træer kan stadig uddø som art under konkurrence.</p>
         <label class="check"><input type="checkbox" id="tgEnergy" checked> Aktivér energipakker</label>
         <p class="hint">Uden tilvalg køres præcis Oskars oprindelige regler. Med tilvalg får hvert træ disponibel energi. Med sollys er skoven åben: startenergi + tilført solenergi = træenergi + lokal varme + reservoir. Slå sollys fra for at undersøge et lukket energiregnskab.</p>
         <div class="field two"><label for="enInitial">Energi pr. træ ved start</label><input type="number" id="enInitial" value="10" min="1" max="10000" step="1"></div>
-        <div class="field two"><label for="enSunlight">Solenergi pr. levende træ pr. sweep</label><input type="number" id="enSunlight" value="1.5" min="0" max="1000" step="0.25"></div>
+        <div class="field two"><label for="enSunlight">Solenergi pr. levende træ pr. sweep</label><input type="number" id="enSunlight" value="0" min="0" max="1000" step="0.25"></div>
         <p class="hint">Ved hvert sweep får alle levende træer en energipakke fra omgivelserne. <b>0</b> betyder lukket model uden energitilførsel. Artsudryddelser kan stadig ske gennem konkurrencen.</p>
-        <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="0.8"></div>
+        <div class="field two"><label for="enTransfer">Andel η ved kamp</label><input type="range" id="enTransfer" min="0" max="1" step="0.05" value="1"></div>
         <p class="hint">Overført andel: <b id="enTransferLabel">100 %</b>. Resten af den besejredes energi omdannes til varme – energien forsvinder ikke.</p>
-        <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0.5" min="0" max="1000" step="0.5"></div>
+        <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0" min="0" max="1000" step="0.5"></div>
         <div class="field two"><label for="enBirth">Minimum til formering</label><input type="number" id="enBirth" value="2" min="0.01" max="1000" step="0.5"></div>
-        <p class="hint">Ved spredning flyttes et energibeløb fra forælder til den nye celle. Uden tilstrækkelig energi kan træet ikke sprede sig. Ved vækst bliver energiforbruget til varme, fordelt mellem det lokale sted og reservoiret.</p>
+        <p class="hint">Ved formering overføres energi fra forælder til afkom. Ved kamp overtager vinderen hele taberens energi i den konservative tilstand. Vækst kræver ikke energi i denne tilstand.</p>
         <div class="field two"><label for="enLocalFrac">Varmeandel lokalt α</label><input type="range" id="enLocalFrac" min="0" max="1" step="0.05" value="0.5"></div>
         <p class="hint">Andel af dissipationen, som opvarmer gitterstedet: <b id="enLocalLabel">50 %</b>. Resten går til varmebadet.</p>
         <div class="field two"><label for="enLocalCap">Lokal varmekapacitet c</label><input type="number" id="enLocalCap" value="10" min="0.1" max="100000" step="1"></div>
@@ -386,7 +388,7 @@ function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508
 function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,sunlight:1.5,capacity:100000,localCapacity:10,localFrac:.5};
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,energyMode:"conservative",e0:10,eta:1,growCost:0,birth:2,sunlight:0,capacity:100000,localCapacity:10,localFrac:.5};
 let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[],localHeat=null,localHeatSum=0,solarInput=0;
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
@@ -440,11 +442,12 @@ function doSweep(){
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];
     if(a<0||stamp[i]===sweep)continue;
-    if(S.death>0&&rand()<S.death){if(S.energyOn){dissipate(i,energy[i],a);energy[i]=0}sp[i]=-1;h[i]=0;continue}
+    if(S.death>0&&!(S.energyOn&&S.energyMode==="conservative")&&rand()<S.death){if(S.energyOn){dissipate(i,energy[i],a);energy[i]=0}sp[i]=-1;h[i]=0;continue}
     const s=species[a].s;
     if(rand()<1-s){
       if(!S.hmax||h[i]<S.hmax){
         if(!S.energyOn){h[i]++}
+        else if(S.energyMode==="conservative"){h[i]++}
         else if(energy[i]>=S.growCost){energy[i]-=S.growCost;dissipate(i,S.growCost,a);h[i]++}
       }
     }else{
@@ -460,9 +463,9 @@ function doSweep(){
       if(rand()<h[i]/(h[i]+h[j])){
         const hd=h[j];sp[j]=a;stamp[j]=sweep;
         h[j]=S.newH==="sapling"?1:S.newH==="attacker"?h[i]:hd;
-        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;energy[j]=S.birth+S.eta*captured;energyCapturedBySpecies[a]+=S.eta*captured;dissipate(j,(1-S.eta)*captured,b)}
+        if(S.energyOn){const captured=energy[j];energy[i]-=S.birth;const kept=S.energyMode==="conservative"?captured:S.eta*captured;energy[j]=S.birth+kept;energyCapturedBySpecies[a]+=kept;if(S.energyMode!=="conservative")dissipate(j,(1-S.eta)*captured,b)}
       }else{
-        if(S.energyOn){const captured=energy[i];energy[j]+=S.eta*captured;energyCapturedBySpecies[b]+=S.eta*captured;dissipate(i,(1-S.eta)*captured,a);energy[i]=0}
+        if(S.energyOn){const captured=energy[i],kept=S.energyMode==="conservative"?captured:S.eta*captured;energy[j]+=kept;energyCapturedBySpecies[b]+=kept;if(S.energyMode!=="conservative")dissipate(i,(1-S.eta)*captured,a);energy[i]=0}
         sp[i]=-1;h[i]=0
       }
     }
@@ -564,7 +567,9 @@ function updateReadout(){
     $("enTotal").textContent=totalE.toFixed(2);
     $("enSun").textContent=solarInput.toFixed(2);
     $("enError").textContent=(totalE-energyInitial-solarInput).toExponential(2);
-    $("energyInterpret").textContent=`Åben energibalance: start ${energyInitial.toFixed(2)} + sollys ${solarInput.toFixed(2)} = træer ${treeE.toFixed(2)} + lokal varme ${localHeatSum.toFixed(2)} + bad ${energyBath.toFixed(2)}. Energi og entropi fra selve solkilden er endnu ikke modelleret.`;
+    $("energyInterpret").textContent=S.energyMode==="conservative"?
+      `Lukket træenergiregnskab: Start ${energyInitial.toFixed(2)} = energi hos levende træer ${treeE.toFixed(2)}. Energi flyttes mellem træer uden varmeomdannelse eller sollys. Energibevarelse alene afgør ikke entropiens udvikling.`:
+      `Åben energibalance: start ${energyInitial.toFixed(2)} + sollys ${solarInput.toFixed(2)} = træer ${treeE.toFixed(2)} + lokal varme ${localHeatSum.toFixed(2)} + bad ${energyBath.toFixed(2)}. Energi og entropi fra selve solkilden er endnu ikke modelleret.`;
   }else{
     for(const id of ["enTrees","enLocal","enBath","enTotal","enSun","enError"])$(id).textContent="–";
     $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
@@ -584,11 +589,11 @@ function updateReadout(){
     $("thLiving").textContent=fmt(t.livingEntropy);
     $("thEmpty").textContent=fmt(t.emptyEntropy);
     $("thProduction").textContent=fmt(t.thermalProduction);
-    $("thCheck").textContent=S.energyOn?(t.thermalProduction>=-1e-7?"Ikke-faldende":"Tjek model!"):"–";
+    $("thCheck").textContent=S.energyOn&&t.thermalProduction!==null?(t.thermalProduction>=-1e-7?"Ikke-faldende":"Tjek model!"):"–";
     updateSpeciesThermalTable();
     const m0=metricHistory.length?metricHistory[0]:t;
     const dH=t.artRaw-m0.artRaw;
-    $("entropyComparison").textContent=S.energyOn?
+    $("entropyComparison").textContent=S.energyOn&&S.energyMode==="dissipative"?
       `Arternes informationsentropi har ændret sig med ${dH>=0?"+":""}${dH.toFixed(3)} nat. Samtidig er den beregnede termiske entropi ændret med +${t.thermalTotal.toFixed(3)} modelenergi/modeltemperatur. Termiske bidrag kan summeres med hinanden; Shannon-målene kan ikke lægges til. Dette tester vores valgte dissipative modelregler, ikke hele biologiske skovens anden hovedsætning.`:
       "Aktivér energimodellen for at beregne den termiske entropi i lokale beholdere og varmebad.";
     $("mEntropy").textContent=lastMetric.entropy.toFixed(3);
@@ -667,7 +672,7 @@ function applyDeath(){
   const on=$("tgDeath").checked;
   $("optD").classList.toggle("off",!on);
   const p=1-Math.exp(-lambda);
-  S.death=on?p:0;
+  S.death=on&&!(S.energyOn&&S.energyMode==="conservative")?p:0;
   const tau=1/lambda;
   $("oTau").textContent=tau>=100?Math.round(tau).toLocaleString("en"):tau.toFixed(1);
   $("oRate").textContent=`Each sweep a tree dies with probability p = 1 − e^(−λ) = ${p.toPrecision(3)}, so lifetimes are exponential with mean ${tau>=100?Math.round(tau):tau.toFixed(1)} sweeps. Half of a cohort is gone after ${(Math.LN2/lambda).toPrecision(3)} sweeps.`;
@@ -678,6 +683,7 @@ $("inRate").addEventListener("change",()=>{let v=parseFloat($("inRate").value);i
 applyDeath();
 function updateEnergyControls(reinit){
   S.energyOn=$("tgEnergy").checked;
+  S.energyMode=$("enMode").value;
   S.e0=Math.max(1,Number($("enInitial").value)||10);
   S.sunlight=Math.max(0,Number($("enSunlight").value)||0);
   S.eta=Number($("enTransfer").value);
@@ -686,13 +692,32 @@ function updateEnergyControls(reinit){
   S.capacity=Math.max(.1,Number($("enCapacity").value)||100000);
   S.localCapacity=Math.max(.1,Number($("enLocalCap").value)||10);
   S.localFrac=Math.max(0,Math.min(1,Number($("enLocalFrac").value)));
+  if(S.energyMode==="conservative"){
+    S.sunlight=0;S.eta=1;S.growCost=0;
+    $("enSunlight").value="0";$("enTransfer").value="1";$("enCost").value="0";
+  }
+  for(const id of ["enSunlight","enTransfer","enCost","enLocalFrac","enLocalCap","enCapacity"]){
+    $(id).disabled=S.energyMode==="conservative";
+  }
+  $("enModeHelp").textContent=S.energyMode==="conservative"?
+    "Al disponibel energi forbliver hos levende træer og flyttes kun ved formering eller kamp. Ingen varme eller solenergi. Tilfældig død er deaktiveret i denne tilstand, da dens energioverførsel ikke er defineret.":
+    "Dissipativt sammenligningsforsøg: energi kan blive til varme, og skoven kan tilføres solenergi.";
+  $("thermalPanel").hidden=S.energyMode==="conservative" || !S.energyOn;
   $("enLocalLabel").textContent=Math.round(S.localFrac*100)+" %";
   $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
+  if(S.energyMode==="conservative"&&S.energyOn)S.death=0;
+  else applyDeath();
   $("btnBatch").disabled=S.energyOn;
   $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
-  if(reinit){setRunning(false);init()}
+  if(reinit){setRunning(false);init()}else if(last&&lastMetric)draw()
 }
 $("tgEnergy").addEventListener("change",()=>updateEnergyControls(true));
+$("enMode").addEventListener("change",()=>{
+  if($("enMode").value==="dissipative"){
+    $("enSunlight").value="1.5";$("enTransfer").value="0.8";$("enCost").value="0.5";
+  }
+  updateEnergyControls(true);
+});
 $("enInitial").addEventListener("change",()=>updateEnergyControls(true));
 $("enSunlight").addEventListener("change",()=>updateEnergyControls(true));
 $("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
@@ -745,7 +770,7 @@ function measureForest(arr,types,L,K,periodic,already){
   return {entropy,edges:pairs?unlike/pairs:0,meanS:trees?meanS:0,leader:trees?leader/trees:0,alive,leaderId,trees};
 }
 function thermalObservables(){
-  if(!S.energyOn)return {bathEntropy:null,bathTemp:null,localEntropy:null,livingEntropy:null,emptyEntropy:null,thermalTotal:null,thermalProduction:null};
+  if(!S.energyOn||S.energyMode==="conservative")return {bathEntropy:null,bathTemp:null,localEntropy:null,livingEntropy:null,emptyEntropy:null,thermalTotal:null,thermalProduction:null};
   const c=S.capacity,siteC=S.localCapacity,t0=1;
   const bathEntropy=c*Math.log1p(energyBath/(c*t0));
   let livingEntropy=0,emptyEntropy=0;
