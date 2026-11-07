@@ -75,3 +75,33 @@ Forsøgsmetode:
 ## Arbejdsgang
 
 Hver gang modellen ændres: 1) nedskriv antagelsen, 2) noter præcis ændring, 3) kontroller invarians/balancer, 4) sammenlign med en kontrolmodel, 5) registrer resultater og begrænsninger. Bevar en originaltilstand til sammenligning.
+
+## 7. november 2026 — Entropityper og artsopdelt energiregnskab
+
+**Formål:** Gøre forbindelsen mellem evolution, rumlig organisering og energi synlig, uden at sammenblande informationsentropier med fysisk termodynamisk entropi.
+
+### Definitioner (alle logaritmer naturlige)
+
+1. **Artsentropi** (H_{art}=-\sum_i p_i\ln p_i), hvor (p_i=n_i/N_{levende}). Måler diversitet blandt levende træer.
+2. **Lokal artsentropi** (H_{lokal}=\sum_b (N_b/N_{levende}) H_b), hvor gitteret opdeles i op til 4×4 blokke; (H_b) er Shannon-entropien i blok b, og tomme celler ignoreres. Måler variation **inden for** områder. Den afhænger af blokstørrelsen.
+3. **Energiandel-entropi** (H_E=-\sum_i q_i\ln q_i), hvor (q_i=E_{i,disponibel}/\sum_j E_{j,disponibel}). Den er kun defineret, når energitilvalget er aktivt og den samlede disponible energi er positiv; hvis alle træers disponible energi er nul, viser modellen 0 som en eksplicit konvention.
+4. **Rumlig forskel** (H_{art}-H_{lokal}\ge0): forskel mellem artsusikkerhed uden og med viden om en celles blok. Udtrykker rumlig organisering, men er **ikke** termodynamisk entropi.
+
+Kurver vises normaliseret med \(\ln K\), hvor K er det oprindelige antal arter; tallene ved siden af viser rå entropi i nat.
+
+### Artsopdelt energi
+
+Der vises pr. art (a) antal levende træer, (b) **aktuel** disponibel energi, (c) gennemsnitlig energi pr. træ, (d) artens andel af træernes samlede disponible energi, (e) kumuleret energi modtaget ved erobringer og (f) kumuleret energi overført fra arten til fælles reservoir pga. kamp, vækst eller død.
+
+**Afgørende skelnen:** Tilgængelig energi er en beholdning; modtaget og afgivet energi er historiske strømme (kumulative summer). De må ikke lægges sammen som tre beholdninger. Energi i reservoiret tilhører ikke længere arten; kolonnen 'til reservoir fra art' er blot oprindelsesbogføring.
+
+Modellen har ikke mekanisk/kemisk/termisk energiform som særskilt mikroskopisk tilstand, og der beregnes fortsat **ikke termodynamisk entropiproduktion** eller temperatur.
+
+### Kontroller og hypoteser
+
+- Kontrol: Summen af energibeholdning på alle levende træer og samlet reservoir skal være lig startenergien inden for afrundingsfejl.
+- Kontrol: Summen af artsopdelte reservoirbidrag skal være lig reservoirbeholdningen.
+- Kontrol: Lokal artsentropi må ikke overstige global artsentropi ud over numerisk afrunding.
+- Hypotese: Selektion kan sænke artsentropien, mens lokale områder forbliver stærkt blandede, eller omvendt.
+- Hypotese: Energiandel-entropi kan udvikle sig anderledes end artsentropi, fordi energien fordeles forskelligt mellem træer.
+- Afgrænsning: Gentagne batchforsøg er stadig slået fra i energitilstand, da den særskilte batchmotor endnu kun er valideret for grundmodellen.
