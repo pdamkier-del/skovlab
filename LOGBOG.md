@@ -130,7 +130,7 @@ T = T_0 + Q/C, \qquad
 = C\ln\!\left(1+\frac{Q}{CT_0}\right).
 \]
 
-Med T₀=1 og C=1000 i standardopsætningen.
+Med T₀=1 og C=10000000 i standardopsætningen.
 
 **Energibogføring:** Den eksisterende sum E_disponibel + Q er bevaret. Reservoirets initiale termiske energi er antaget U₀=C T₀, som er en uændret reference. Den fulde idealiserede energisum er E_disponibel + (U₀+Q) = E_initial + U₀. Numerisk vises den forskydningsfri sum E_disponibel+Q på skærmen.
 
@@ -142,3 +142,15 @@ Med T₀=1 og C=1000 i standardopsætningen.
 
 - HTML/JavaScript er blevet kontrolleret for syntaktisk gyldig JavaScript, ingen dublerede DOM-id'er og ingen referencer til ikke-eksisterende element-id'er.
 - Fuld browserinteraktion og fysisk validering af modellen er endnu ikke gennemført i denne ændring.
+
+### Eksekveret funktionstest af denne version
+
+JavaScript-koden blev evalueret i en mocket DOM/canvas med de faktiske standardindstillinger og 20 sweeps. Resultaterne før justeringen af standard-C fra 1000 til 100000 (der kun ændrer reservoirets termiske respons, ikke skovdynamikken):
+
+- Start: E_disponibel=100000 og Q=0.
+- Efter 20 sweeps: E_disponibel≈30101,588 og Q≈69898,412.
+- Bevarelsesfejl: \(E_{disponibel}+Q-E_{initial}\approx4,6\cdot10^{-9}\) modelenergienheder.
+- Artsentropi: fra ca. 2,30232 til 2,28929 nat.
+- Reservoirets entropi steg fra nul til 4261,25 for den daværende C=1000; efter C-ændringen bliver det numeriske resultat anderledes efter samme hændelsesforløb.
+
+Testen kontrollerede også, at nye entropital og artsenergibjælker blev skrevet til brugerfladen. Det er en **funktionstest med simuleret DOM**, ikke en visuel test i en rigtig browser. De termodynamiske antagelser er fortsat idealiserede.
