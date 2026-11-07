@@ -352,3 +352,33 @@ Fem tests à 150 sweeps, hver på 20×20-gitter med fem arter, kontrollerede ene
 Mikromodellens entropi faldt i 81 af 150 kredsløbssweeps i standardtestopsætningen (målt for hele systemets modeldefinerede mikroentropi), og ændringen fra start blev negativ. Dette er en konsekvens af overgangsreglerne og den valgte makrotilstandsopdeling, og må ikke udlægges som et brud på anden hovedsætning.
 
 **Åbne spørgsmål:** Skal sollys tilføres fra en virkelig ekstern sol-reservoir med særskilt udgående varme og entropiflux? Skal træernes egen termiske/kemiske entropi behandles med stokastisk termodynamik, hvor overgangsrater respekterer lokal detaljeret balance? Skal vi sammenligne energikonservering i total-puljen med en regulator, der holder træpuljens energi konstant ved at overføre overskud tilbage til lageret?
+
+
+### Rettelse og udvidelse — entropi for individuelle træsteder
+
+Den første mikrotilstandsversion beregnede én stor Einstein-solid for hele træernes disponible energi. Det viste sig at være utilstrækkeligt til at undersøge **indre entropi ved træerne individuelt**, fordi en energiflytning mellem to træer med fast samlet \(E_{træer}\) da ikke ændrede denne måling. Denne definition er nu **erstattet** — tidligere omtale af to faste grupper med \(n=L^2\) gælder ikke længere for træbidraget.
+
+Aktuel definition: Hvert gittersted har \(m=3\) idealiserede oscillatorer og \(q_i=\mathrm{round}(E_i/\varepsilon)\) kvanta, hvor \(\varepsilon=1\) modellenhed. Tomme steder har \(q_i=0\). Lageret har \(n_L=3L^2\) oscillatorer og \(q_L=\mathrm{round}(E_L/\varepsilon)\). Vi måler
+
+\[
+\frac{S_{træer}}{k_B}=\sum_{i\in levende} \ln \Omega(q_i,3),
+\quad
+\frac{S_{lager}}{k_B}=\ln \Omega(q_L,3L^2),
+\quad
+S_{mikro}=S_{træer}+S_{lager}.
+\]
+
+Der vises også \(S_{art}=\sum_{i\in art} k_B \ln\Omega(q_i,3)\) for hver art. \(S_{mikro}\) er altså en summeret **mikrotilstands-proxy**. Ved at antage adskilte, uafhængige oscillatorer på de enkelte steder undgår vi dobbeltoptælling mellem denne træ-entropi og lagerentropien. Men den faktiske træmodel har ikke tre fysiske oscillatorer pr. træ, og kvantiseringen anvendes kun til statistik. \(S_{mikro}\) er derfor ikke en empirisk, fuldstændig termodynamisk entropi for et skovøkosystem.
+
+**Opdaterede funktionstests:** Fire scenarier af 120 sweeps på 20×20 gitter med fem arter, inklusive direkte kontrol af summen af indre artsentropier.
+
+| Scenarie | E ved start | E_træer slut | E_lager slut | Negativt mikro-ΔS i antal sweeps | Samlet mikro-ΔS/kB |
+|---|---:|---:|---:|---:|---:|
+| Sol 1,5, returnering 0,5, død ~0,01 | 8000 | 7915 | 85 | 65/120 | -2739,389 |
+| Sol 1, returnering 0,5, død ~0,08 | 8000 | 1561,5 | 6438,5 | 61/120 | -365,076 |
+| Ingen sol, død ~0,01 | 8000 | 0 | 8000 | 84/120 | -923,201 |
+| Kun konservativ energi mellem træer | 4000 | 4000 | 0 | 67/120 | -692,901 |
+
+Den samlede energifejl var numerisk 0 i disse scenarier; summen af artsvise indre entropier afveg højst \(5,3\times10^{-12}\) fra \(S_{træer}/k_B\). Kodens syntaks og referencer til HTML-elementer bestod også funktionstesten med simuleret DOM/canvas.
+
+**Forskningsfortolkning:** Antallet af negative ændringer viser, at disse ad hoc-evolutionære overgangsregler **ikke er termodynamisk konsistente bare fordi de bevarer energi**. Vi kan bruge resultatet til at stille næste forskningsspørgsmål om at konstruere overgangsrater med lokal detaljeret balance, ikke til at påstå at anden hovedsætning er falsk.
