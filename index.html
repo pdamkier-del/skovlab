@@ -629,7 +629,7 @@ function updateReadout(){
     updateMicroSpeciesTable(micro);
     $("microExplain").textContent=S.energyMode==="circulation"?
       `Mikrotilstandsmodel: energien er konstant inklusive lageret. ΔS/kB = ${(micro.microTotal-microInitial).toFixed(2)} siden start. ${micro.microDelta>=-1e-8?"Sidste ændring var ikke-negativ.":"Sidste ændring var NEGATIV."} Dette er ikke et brud på anden hovedsætning, fordi vores vækst-/dødsrater ikke er afledt af termodynamisk konsistente overgangsregler. Vi må ikke forveksle dette med artsdiversiteten.`:
-      "I konservativ modus ændres fordelingen mellem træer, men de to faste energipuljer har samme energi. Derfor kan denne to-kompartmenters entropi ikke beskrive den interne træ-til-træ omfordeling.";
+      "I konservativ modus er summen af træernes energi konstant, men træernes indre kvantemodel kan ændre entropi, når energien flyttes mellem de enkelte træer. Derfor vises også artens summerede indre entropibidrag.";
     $("exArt").textContent=lastMetric.artRaw.toFixed(4);
     $("exLocal").textContent=lastMetric.localRaw.toFixed(4);
     $("exEnergy").textContent=lastMetric.energyRaw===null?"–":lastMetric.energyRaw.toFixed(4);
