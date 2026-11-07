@@ -103,7 +103,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
 
 
 .wrap{max-width:1440px}.layout{grid-template-columns:minmax(0,1fr) 330px;gap:18px}
-.stage{padding:18px}.stage>.chart-box{margin-top:18px}header{max-width:90ch}
+.stage{padding:18px}.stage>.chart-box{margin-top:18px}.lattice-box{max-width:620px;margin:0 auto}header{max-width:90ch}
 .stage .hero-panel{border:1px solid var(--line);border-radius:12px;padding:16px}
 .hero-panel h2{font-size:24px}.secondary-detail{border:1px solid var(--line);border-radius:10px;padding:12px}
 .secondary-detail>summary,.accordion-panel>summary,.formula-more>summary{cursor:pointer;list-style:none;font-weight:600}
@@ -222,8 +222,8 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <p class="hint" style="margin-top:0">Disponibel energi hos træerne kan flyttes til reservoiret og blive til varme. Den samlede energi bevares. Værdierne er model-enheder, ikke joule.</p>
         <div class="metric-grid">
           <div class="metric"><small>Disponibel energi hos træer</small><b id="enTrees">–</b></div>
-          <div class="metric"><small>Energi i reservoir</small><b id="enBath">–</b></div>
-          <div class="metric"><small>Total energi (inkl. reservoir)</small><b id="enTotal">–</b></div>
+          <div class="metric"><small>Afgivet varme Q</small><b id="enBath">–</b></div>
+          <div class="metric"><small>Disponibel energi + afgivet varme</small><b id="enTotal">–</b></div>
           <div class="metric"><small>Numerisk afvigelse fra start</small><b id="enError">–</b></div>
         </div>
         <div class="explain" id="energyInterpret">Slå energiforsøget til for at se energiregnskabet. Energi alene bestemmer ikke termodynamisk entropi.</div>
@@ -315,7 +315,7 @@ td input[type=number]{width:64px;padding:3px 6px;font-size:13px}
         <div class="field two"><label for="enCost">Energiomkostning ved højdevækst</label><input type="number" id="enCost" value="0.5" min="0" max="1000" step="0.5"></div>
         <div class="field two"><label for="enBirth">Minimum til formering</label><input type="number" id="enBirth" value="2" min="0.01" max="1000" step="0.5"></div>
         <p class="hint">Ved spredning flyttes et energibeløb fra forælder til den nye celle. Uden tilstrækkelig energi kan træet ikke sprede sig. Ved vækst betales en omkostning til reservoiret.</p>
-        <div class="field two"><label for="enCapacity">Reservoirets varmekapacitet C</label><input type="number" id="enCapacity" value="1000" min="0.1" max="100000000" step="100"></div>
+        <div class="field two"><label for="enCapacity">Reservoirets varmekapacitet C</label><input type="number" id="enCapacity" value="100000" min="0.1" max="100000000" step="100"></div>
         <p class="hint">Varmekapaciteten C bestemmer, hvor meget reservoiret opvarmes. T₀ = 1. η &lt; 1 giver varme ved konkurrence. Ændring af C genstarter forsøget.</p>
       </section>
       <details class="panel accordion-panel" id="batchPanel"><summary>Gentagne forsøg og CSV</summary>
@@ -368,7 +368,7 @@ function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508
 function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:1000};
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:100000};
 let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[];
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
@@ -642,7 +642,7 @@ function updateEnergyControls(reinit){
   S.eta=Number($("enTransfer").value);
   S.growCost=Math.max(0,Number($("enCost").value)||0);
   S.birth=Math.max(.01,Number($("enBirth").value)||2);
-  S.capacity=Math.max(.1,Number($("enCapacity").value)||1000);
+  S.capacity=Math.max(.1,Number($("enCapacity").value)||100000);
   $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
   $("btnBatch").disabled=S.energyOn;
   $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
