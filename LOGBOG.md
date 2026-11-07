@@ -503,3 +503,40 @@ I setup A havde den *konstruerede* mikrotilstandsproxy negativ ændring i 52,3 %
 **Status:** Delvis korttidstilpasning af E_træ og S_mikro i A/C, men vedvarende artsselektion, så der er ingen påvist fuld stationær ligevægt. Robust periode ikke påvist; længere runs og spektraltests er stadig ønskelige.
 
 **Anbefaling:** En paret, matched-energy analyse over f.eks. \(I/R\)-rater og dødelighed, samt kvantificering af entropiflux/produktion med lokalt detaljeret balance, ville være næste fysiske udvikling. Separér stationære udsving fra irreversibel udryddelsesdrift i plottet.
+
+
+## 7. november 2026 — Tidens pil, version 1 (bygget og testet)
+
+**Motivation:** Flyt fokus fra alene at plotte entropi som funktion af tid til at teste, om et forløbs retning kan udledes statistisk af observerede tilstande.
+
+### Implementering i den eksisterende webapp
+
+Der er tilføjet et nyt panel **Tidens pil** i `index.html`. Brugeren kan optage et fuldt forward-forløb med 200, 500 eller 1000 sweeps fra det valgte seed og regelsæt. Antallet af gemte frames begrænses automatisk til højst omtrent 150 med mellemliggende observationer. Hver frame gemmer skovens faktiske arter pr. gittercelle samt træantal, levende artsantal, arts-Shannon-entropi, tilgængelig energi hos træerne og mikrotilstands-entropi, når den er defineret. Selve simulationen kører hele sweeps; den hopper ikke over dynamik, selvom nogle frames springes over ved optagelsen.
+
+Afspilleren har en frem-/tilbage-knap, en tids-skyder, start/pause og en graf over det valgte mål med markering af den aktuelle frame. Tidsvendt afspilning viser **samme lagrede tilstande i omvendt rækkefølge**; den beregner ikke sandsynligheden for en fysisk tidsvendt overgang og udgør ikke en dynamisk reversibilitetstest i sig selv.
+
+### Mål for observeret tidsasymmetri
+
+Vælg en af: træernes disponible energi, antal træer, artsentropi eller den idealiserede mikroentropi. Den scalar tidsserie, samplet på optagelsens frames, opdeles i fire lige brede intervaller mellem observeret min og max. Observerede tretrinsekvenser \(a\to b\to c\) sammenlignes med omvendte \(c\to b\to a\). Den viste målestørrelse er Jensen–Shannon-divergensen:
+
+\[
+\mathrm{JSD}(P_F,P_R)=\frac12 D_{KL}(P_F\Vert M)+\frac12 D_{KL}(P_R\Vert M),\qquad M=\frac{P_F+P_R}{2}.
+\]
+
+Den måles i nat, ligger mellem 0 og \(\ln 2\), og nul betyder symmetri i **den valgte observerede tretrinsfordeling**. Mængden er ikke nødvendigvis nul for en kort, finit tilfældig tidsserie, selv under en tidsreversibel kontrol. Den er følsom for binning, sampling, antal frames og en mulig tidslig drift. Den må **ikke** kaldes faktisk fysisk entropiproduktion eller en verificeret sandsynlighed for frem-/baglæns baner.
+
+**Særligt problem i denne skov:** Artsudryddelse er en indbygget ensrettet regel. Den udryddede art kan ikke genopstå spontant uden mutation/immigration. Denne irreversibilitet er derfor triviel i en artshistorik og siger ikke i sig selv noget fundamentalt om tidens pil.
+
+### Funktionstest
+
+Den konkrete JavaScript-kode blev eksekveret i et mocket DOM/canvas-miljø (ikke en rigtig browser). På 20×20 gitter med 5 arter, seed 2, 100 sweeps og ét frame pr. 5 sweeps:
+
+- Der blev gemt 21 snapshots, start ved sweep 0 og slut ved sweep 100.
+- Energiregnskabet var eksakt bevaret i modelprecision: E_total = E_initial = 8000.
+- Det beregnede tidsasymmetrimål for træernes energi var JSD = 0,109444 nat.
+- Spoling tilbageviste det gemte snapshot fra sweep 100 korrekt.
+- For en eksplicit tids-symmetrisk testserie (palindrom) var JSD = 0.
+- For en konstant testserie var JSD = 0.
+- JavaScript-syntaksen bestod, og der var ingen dublerede eller manglende direkte DOM-id'er.
+
+**Næste metodiske trin:** Sammenlign med kontrolleret, tidsreversibel Markov-dynamik med kendt detaljeret balance; anvend flere uafhængige forløb og bootstrap/blokbootstrap eller passende nulmodel; undersøge stationaritet, spektralanalyse og skelnen mellem irreversibel selektion og fysisk termodynamisk entropiproduktion. Først efter en sådan validering kan forhold mellem observeret tidsasymmetri og entropiproduktion studeres kvantitativt.
