@@ -1181,6 +1181,152 @@ $("btnCsv").addEventListener("click",()=>{
   a.href=url;a.download="skovlaboratoriet_forsog.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 
+
+// --- Tidens pil: snapshots and time-reversal diagnostics ---
+// A replay of the forward dynamics is not itself a physical reverse process.
+const arrow={frames:[],running:false,recording:false,reverse:false,index:0,lastTime:0,token:0,stride:5};
+function arrowSnapshot(){
+  let n=0,tot=0,hArt=0,meanH=0;const counts=Array(S.K).fill(0);
+  for(let i=0;i<sp.length;i++){const k=sp[i];if(k>=0){counts[k]++;n++;tot+=h[i]}}
+  for(const c of counts)if(c>0){const p=c/n;hArt-=p*Math.log(p)}
+  let treeEnergy=0; if(S.energyOn)for(let i=0;i<energy.length;i++)treeEnergy+=energy[i];
+  const m=S.energyOn&&S.energyMode!=="dissipative"?microObservables():null;
+  return {t:sweep,tree:sp.slice(),hArt,trees:n,alive:counts.filter(x=>x>0).length,energy:S.energyOn?treeEnergy:null,
+    micro:m?m.microTotal:null};
+}
+function arrowAvailableSeries(key){
+  const f=arrow.frames.filter(x=>Number.isFinite(x[key]));
+  return {frames:f,values:f.map(x=>x[key])};
+}
+function arrowJSD(key){
+  const {values}=arrowAvailableSeries(key);
+  if(values.length<12)return null;
+  const lo=Math.min(...values),hi=Math.max(...values);
+  if(hi-lo<1e-10)return 0;
+  const b=values.map(x=>Math.min(3,Math.max(0,Math.floor((x-lo)/(hi-lo+1e-10)*4))));
+  const forward=Array(64).fill(0),reverse=Array(64).fill(0);
+  for(let i=0;i<b.length-2;i++){
+    const x=b[i],y=b[i+1],z=b[i+2];
+    forward[16*x+4*y+z]++;reverse[16*z+4*y+x]++;
+  }
+  const denom=b.length-2;let jsd=0;
+  for(let i=0;i<64;i++){
+    const p=forward[i]/denom,q=reverse[i]/denom,m=(p+q)/2;
+    if(p>0)jsd+=.5*p*Math.log(p/m);
+    if(q>0)jsd+=.5*q*Math.log(q/m);
+  }
+  return Math.max(0,jsd);
+}
+function drawArrowPlot(){
+  const c=$("arrowPlot"),rect=c.getBoundingClientRect();if(!rect.width)return;
+  const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
+  const left=49*d,right=11*d,top=12*d,bottom=24*d;
+  g.clearRect(0,0,w,h);g.font=`${10*d}px system-ui`;
+  const {frames,values}=arrowAvailableSeries($("arrowMetric").value);
+  if(frames.length<2){g.fillStyle=css("--muted");g.fillText("Optag et forløb for at vise en tidsserie.",left,top+28*d);return}
+  const lo=Math.min(...values),hi=Math.max(...values),range=Math.max(1e-8,hi-lo);
+  const x=t=>left+(w-left-right)*(t-frames[0].t)/Math.max(1,frames[frames.length-1].t-frames[0].t);
+  const y=v=>top+(h-top-bottom)*(1-(v-lo)/range);
+  g.strokeStyle=css("--grid");g.fillStyle=css("--muted");g.textAlign="right";g.textBaseline="middle";
+  for(let j=0;j<=4;j++){const yy=top+(h-top-bottom)*(1-j/4);g.beginPath();g.moveTo(left,yy);g.lineTo(w-right,yy);g.stroke();g.fillText((lo+range*j/4).toFixed(range>100?0:2),left-6*d,yy)}
+  g.lineWidth=1.8*d;g.strokeStyle="#298b78";g.beginPath();
+  frames.forEach((v,i)=>{const xx=x(v.t),yy=y(values[i]);i?g.lineTo(xx,yy):g.moveTo(xx,yy)});
+  g.stroke();
+  if(arrow.frames.length){const active=arrow.frames[arrow.index];if(active&&Number.isFinite(active[$("arrowMetric").value])){g.strokeStyle="#a86643";g.beginPath();g.moveTo(x(active.t),top);g.lineTo(x(active.t),h-bottom);g.stroke()}}
+  g.textAlign="left";g.textBaseline="bottom";g.fillStyle=css("--muted");
+  g.fillText(`sweep ${frames[0].t}`,left,h-2*d);g.textAlign="right";g.fillText(`sweep ${frames[frames.length-1].t}`,w-right,h-2*d);
+}
+function arrowDrawFrame(){
+  if(!arrow.frames.length)return;
+  const frame=arrow.frames[arrow.index],canvas=$("arrowCanvas"),d=S.L;
+  if(canvas.width!==d||canvas.height!==d){canvas.width=d;canvas.height=d}
+  const c=canvas.getContext("2d"),img=c.createImageData(d,d);
+  const cols=species.map((_,i)=>colorOf(i)),empty=hex2rgb(toHex(css("--empty")));
+  for(let i=0;i<frame.tree.length;i++){
+    const k=frame.tree[i],v=k<0?empty:cols[k],o=i*4;
+    img.data[o]=v[0];img.data[o+1]=v[1];img.data[o+2]=v[2];img.data[o+3]=255;
+  }
+  c.putImageData(img,0,0);
+  $("arrowSlider").value=arrow.index;
+  $("arrowFrame").textContent=`Sweep ${frame.t} · ${frame.trees} træer · ${frame.alive} arter`;
+  $("arrowPlaybackDirection").textContent=arrow.reverse?"Baglæns ←":"Fremad →";
+  $("arrowH").textContent=frame.hArt.toFixed(3);
+  $("arrowE").textContent=frame.energy===null?"–":frame.energy.toFixed(1);
+  drawArrowPlot();
+}
+function arrowRefresh(){
+  const ready=arrow.frames.length>1;
+  for(const id of ["arrowPlay","arrowReverse","arrowSlider"])$(id).disabled=!ready||arrow.recording;
+  $("arrowRecord").disabled=arrow.recording;
+  $("arrowReverse").textContent=arrow.reverse?"Retning: baglæns":"Retning: fremad";
+  $("arrowPlay").textContent=arrow.running?"Pause":"Afspil";
+  if(!ready)return;
+  const jsd=arrowJSD($("arrowMetric").value);
+  $("arrowJSD").textContent=jsd===null?"–":jsd.toFixed(4);
+  const first=arrow.frames[0],last=arrow.frames[arrow.frames.length-1];
+  $("arrowExtinct").textContent=Math.max(0,first.alive-last.alive);
+  $("arrowInterpret").textContent=jsd===null?
+    "Denne måling har for få gyldige datapunkter til sammenligning.":
+    `JSD = ${jsd.toFixed(4)} nat for tretrinsovergangene i ${$("arrowMetric").selectedOptions?.[0]?.textContent||"det valgte mål"}. 0 betyder symmetrisk observeret mønsterfordeling; maksimum ln(2) ≈ 0,693. ${Math.max(0,first.alive-last.alive)} arter forsvandt helt i forløbet. Målet er følsomt over for binning og drift, og det er IKKE beregnet fysisk entropiproduktion.`;
+  arrowDrawFrame();
+}
+function arrowPause(){
+  arrow.running=false;arrow.token++;arrow.lastTime=0;
+  $("arrowPlay").textContent="Afspil";
+}
+function arrowAnimation(stamp,token){
+  if(!arrow.running||token!==arrow.token)return;
+  if(!arrow.lastTime)arrow.lastTime=stamp;
+  if(stamp-arrow.lastTime>155){
+    arrow.lastTime=stamp;
+    const next=arrow.index+(arrow.reverse?-1:1);
+    if(next<0||next>=arrow.frames.length){arrowPause();return}
+    arrow.index=next;arrowDrawFrame();
+  }
+  requestAnimationFrame(t=>arrowAnimation(t,token));
+}
+$("arrowPlay").addEventListener("click",()=>{
+  if(arrow.running){arrowPause();return}
+  if(!arrow.frames.length)return;
+  if((!arrow.reverse&&arrow.index===arrow.frames.length-1)||(arrow.reverse&&arrow.index===0))
+    arrow.index=arrow.reverse?arrow.frames.length-1:0;
+  arrow.running=true;arrow.lastTime=0;$("arrowPlay").textContent="Pause";
+  const token=++arrow.token;requestAnimationFrame(t=>arrowAnimation(t,token));
+});
+$("arrowReverse").addEventListener("click",()=>{
+  arrowPause();arrow.reverse=!arrow.reverse;arrowRefresh();
+});
+$("arrowSlider").addEventListener("input",()=>{
+  arrowPause();arrow.index=Math.min(arrow.frames.length-1,Math.max(0,Number($("arrowSlider").value)));
+  arrowDrawFrame();
+});
+$("arrowMetric").addEventListener("change",arrowRefresh);
+$("arrowRecord").addEventListener("click",async()=>{
+  if(arrow.recording)return;
+  arrowPause();setRunning(false);
+  arrow.recording=true;arrow.frames=[];arrow.index=0;arrow.reverse=false;
+  const total=Number($("arrowLength").value),stride=Math.max(1,Math.ceil(total/150));arrow.stride=stride;
+  $("arrowRecord").textContent="Optager…";arrowRefresh();
+  // Reinitialize from the specified seed; this is a new forward experiment.
+  init();
+  arrow.frames.push(arrowSnapshot());
+  try{
+    for(let i=1;i<=total;i++){
+      doSweep();
+      if(i%stride===0||i===total)arrow.frames.push(arrowSnapshot());
+      if(i%25===0){
+        $("arrowFrame").textContent=`Optager sweep ${i}/${total}`;
+        await new Promise(resolve=>requestAnimationFrame(resolve));
+      }
+    }
+    $("arrowSlider").max=arrow.frames.length-1;
+    $("arrowFrame").textContent=`Færdig · ${arrow.frames.length} observationer`;
+  }finally{
+    arrow.recording=false;$("arrowRecord").textContent="Optag igen";
+    draw();arrowRefresh();
+  }
+});
+
 init();
 })();
 </script>
