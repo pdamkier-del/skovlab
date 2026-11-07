@@ -360,7 +360,7 @@ function catColor(i){if(i<CAT.length)return hex2rgb(CAT[i]);const hue=(i*137.508
 function hslToRgb(h,s,l){const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const f=t=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};return [f(h+1/3),f(h),f(h-1/3)].map(v=>Math.round(v*255))}
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:false,e0:10,eta:1,growCost:0,birth:2};
+const S={L:100,K:10,fill:1,speed:1,seed:1,newH:"sapling",nb:4,death:0,hmax:0,per:true,mode:"species",byS:true,running:false,energyOn:true,e0:10,eta:.8,growCost:.5,birth:2,capacity:1000};
 let species=[],sp,h,stamp,order,sweep=0,history=[],histStride=1,histTick=0,energy=null,energyBath=0,energyInitial=0,energyBathBySpecies=[],energyCapturedBySpecies=[];
 let metricHistory=[], lastMetric=null, batchData=[], batchAbort=false, batchBusy=false;
 let off=document.createElement("canvas"),offCtx,img;
@@ -445,6 +445,7 @@ function record(){
   history.push({t:sweep,f:last.cnt.map(c=>c/last.N)});
   lastMetric=measureForest(sp,species,S.L,S.K,S.per,last);
   Object.assign(lastMetric,moreEntropyMeasures());
+  Object.assign(lastMetric,thermalObservables());
   metricHistory.push({t:sweep,...lastMetric});
   if(history.length>1200){history=history.filter((_,i)=>i%2===0);metricHistory=metricHistory.filter((_,i)=>i%2===0);histStride*=2}
 }
@@ -470,7 +471,7 @@ function draw(){
   offCtx.putImageData(img,0,0);
   const r=cv.getBoundingClientRect();fitCanvas(cv,r.width,r.height);
   ctx.imageSmoothingEnabled=false;ctx.drawImage(off,0,0,cv.width,cv.height);
-  drawChart();updateReadout();drawMetricChart();drawEntropyChart();
+  drawChart();updateReadout();drawMetricChart();drawEntropyChart();drawThermalChart();
 }
 
 function toHex(c){if(c.startsWith("#"))return c.length===4?"#"+[...c.slice(1)].map(x=>x+x).join(""):c;return "#888888"}
@@ -522,7 +523,7 @@ function updateReadout(){
     $("enBath").textContent=energyBath.toFixed(2);
     $("enTotal").textContent=totalE.toFixed(2);
     $("enError").textContent=(totalE-energyInitial).toExponential(2);
-    $("energyInterpret").textContent=`Modelenergi: ${treeE.toFixed(2)} hos træerne og ${energyBath.toFixed(2)} i reservoiret. η = ${S.eta.toFixed(2)}. En ændring i artsentropi er ikke det samme som termodynamisk entropiproduktion.`;
+    $("energyInterpret").textContent=`Disponibel energi: ${treeE.toFixed(2)}. Afgivet varme: ${energyBath.toFixed(2)}. Sum = ${totalE.toFixed(2)} (samme som ved start). Dertil indeholder varmebadet en uændret referenceenergi C · T₀ = ${S.capacity.toFixed(1)}, som ikke indgår i dette energi-regnskab.`;
   }else{
     for(const id of ["enTrees","enBath","enTotal","enError"])$(id).textContent="–";
     $("energyInterpret").textContent="Energiforsøget er slået fra. Oskars originale regler er aktive.";
@@ -533,6 +534,15 @@ function updateReadout(){
     $("exLocal").textContent=lastMetric.localRaw.toFixed(4);
     $("exEnergy").textContent=lastMetric.energyRaw===null?"–":lastMetric.energyRaw.toFixed(4);
     $("exSpatial").textContent=Math.max(0,lastMetric.artRaw-lastMetric.localRaw).toFixed(4);
+    $("thEntropy").textContent=lastMetric.bathEntropy===null?"–":lastMetric.bathEntropy.toFixed(3);
+    $("thTemp").textContent=lastMetric.bathTemp===null?"–":lastMetric.bathTemp.toFixed(3);
+    $("thHeat").textContent=S.energyOn?energyBath.toFixed(2):"–";
+    $("thReduced").textContent=lastMetric.bathReduced===null?"–":lastMetric.bathReduced.toFixed(5);
+    const m0=metricHistory.length?metricHistory[0]:lastMetric;
+    const dH=lastMetric.artRaw-m0.artRaw,dE=lastMetric.energyRaw===null||m0.energyRaw===null?null:lastMetric.energyRaw-m0.energyRaw;
+    $("entropyComparison").textContent=S.energyOn?
+      `Siden starten: ΔH_art = ${dH>=0?"+":""}${dH.toFixed(3)} nat; ${dE===null?"ingen energiandel-entropi":`ΔH_E = ${dE>=0?"+":""}${dE.toFixed(3)} nat`}. Samtidig er ΔS_bad = +${lastMetric.bathEntropy.toFixed(3)} modelenergi/temperatur. Entropierne har forskellige definitioner, enheder og fysisk betydning; de kan ikke lægges sammen som én samlet entropi.`:
+      "Slå energimodellen til for at beregne varmereservoirets entropi. Informationsentropierne kan også måles uden energi.";
     $("mEntropy").textContent=lastMetric.entropy.toFixed(3);
     const N=last.trees;
     let Hraw=0,sumP=0,example=null;
@@ -624,6 +634,7 @@ function updateEnergyControls(reinit){
   S.eta=Number($("enTransfer").value);
   S.growCost=Math.max(0,Number($("enCost").value)||0);
   S.birth=Math.max(.01,Number($("enBirth").value)||2);
+  S.capacity=Math.max(.1,Number($("enCapacity").value)||1000);
   $("enTransferLabel").textContent=Math.round(S.eta*100)+" %";
   $("btnBatch").disabled=S.energyOn;
   $("batchStatus").textContent=S.energyOn?"Gentagelser er foreløbig kun valideret for originalmodellen. Slå energitilvalget fra for at bruge batch.":"Klar til gentagelser.";
@@ -634,6 +645,7 @@ $("enInitial").addEventListener("change",()=>updateEnergyControls(true));
 $("enTransfer").addEventListener("input",()=>updateEnergyControls(false));
 $("enCost").addEventListener("change",()=>updateEnergyControls(false));
 $("enBirth").addEventListener("change",()=>updateEnergyControls(false));
+$("enCapacity").addEventListener("change",()=>updateEnergyControls(true));
 updateEnergyControls(false);
 $("inSeed").addEventListener("change",e=>{const v=parseInt(e.target.value,10);S.seed=isNaN(v)||v<1?1:v;e.target.value=S.seed;init()});
 $("inNew").addEventListener("change",e=>S.newH=e.target.value);
@@ -652,6 +664,7 @@ cv.addEventListener("mousemove",e=>{
 });
 cv.addEventListener("mouseleave",()=>$("probe").textContent="Hover over the lattice to inspect a cell.");
 window.addEventListener("resize",()=>draw());
+document.querySelectorAll("details").forEach(el=>el.addEventListener("toggle",()=>{if(el.open)requestAnimationFrame(()=>draw())}));
 if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",()=>draw());
 
 
@@ -675,6 +688,31 @@ function measureForest(arr,types,L,K,periodic,already){
     if(y+1<L||periodic){const b=arr[((y+1)%L)*L+x];if(b>=0){pairs++;if(a!==b)unlike++}}
   }
   return {entropy,edges:pairs?unlike/pairs:0,meanS:trees?meanS:0,leader:trees?leader/trees:0,alive,leaderId,trees};
+}
+function thermalObservables(){
+  if(!S.energyOn)return {bathEntropy:null,bathTemp:null,bathReduced:null};
+  // Calorimetric idealization: constant heat capacity C > 0, T0 = 1;
+  // Q=energyBath is the nonnegative cumulative energy converted into heat.
+  const c=S.capacity, t0=1, q=Math.max(0,energyBath);
+  const reduced=Math.log1p(q/(c*t0));
+  return {bathEntropy:c*reduced,bathTemp:t0+q/c,bathReduced:reduced};
+}
+function drawThermalChart(){
+  const c=$("thermalChart"),rect=c.getBoundingClientRect();if(!rect.width)return;
+  const d=fitCanvas(c,rect.width,rect.height),g=c.getContext("2d"),w=c.width,h=c.height;
+  const left=58*d,right=9*d,top=12*d,bottom=23*d;g.clearRect(0,0,w,h);
+  g.strokeStyle=css("--grid");g.fillStyle=css("--muted");g.font=`${10*d}px system-ui`;g.textBaseline="middle";g.textAlign="right";
+  const vals=metricHistory.filter(p=>Number.isFinite(p.bathEntropy));
+  let maxY=Math.max(1,...vals.map(p=>p.bathEntropy));maxY=maxY<=10?Math.ceil(maxY*10)/10:Math.ceil(maxY/10)*10;
+  for(let i=0;i<=4;i++){const y=top+(h-top-bottom)*(1-i/4);g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((maxY*i/4).toFixed(maxY<10?1:0),left-6*d,y)}
+  if(vals.length>1){
+    const a=vals[0].t,b=vals[vals.length-1].t,xx=t=>left+(w-left-right)*(t-a)/Math.max(1,b-a),yy=v=>top+(h-top-bottom)*(1-v/maxY);
+    g.strokeStyle="#a86643";g.lineWidth=2*d;g.beginPath();
+    vals.forEach((p,i)=>{i?g.lineTo(xx(p.t),yy(p.bathEntropy)):g.moveTo(xx(p.t),yy(p.bathEntropy))});g.stroke();
+    g.fillStyle=css("--muted");g.textBaseline="bottom";g.textAlign="left";g.fillText(`sweep ${a}`,left,h-1*d);g.textAlign="right";g.fillText(`sweep ${b}`,w-right,h-1*d);
+  }else{
+    g.fillStyle=css("--muted");g.textAlign="left";g.fillText(S.energyOn?"Start simulationen for at se varmens entropibidrag.":"Slå energimodellen til for at se varmereservoirets entropi.",left+7*d,h/2);
+  }
 }
 function moreEntropyMeasures(){
   const K=S.K,L=S.L,N=sp.length;
