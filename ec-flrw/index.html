@@ -24,7 +24,7 @@ button.secondary{background:#f0f5fb;border-color:#bacbda;color:#24435d}
 @media(max-width:530px){.mainPanel{padding:15px}.graphOptions{width:100%}.graphOptions>div,.graphOptions select{width:100%}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chartArea{padding:7px 2px}.legend{font-size:12px;gap:10px}.head{margin-bottom:16px}}
 </style></head>
 <body><div class="shell">
-<header class="head"><div><div class="eyebrow">Einstein–Cartan · Numerical research</div><h1>Geometry Lab</h1></div><div class="headNote">FLRW & Kantowski–Sachs · v2.1<br>Dimensionløse modeller · Ingen Holst eller partikelproduktion</div></header>
+<header class="head"><div><div class="eyebrow">Einstein–Cartan · Numerical research</div><h1>Geometry Lab</h1></div><div class="headNote">FLRW & Kantowski–Sachs · v2.2<br>Dimensionløse modeller · Ingen Holst eller partikelproduktion</div></header>
 <div class="workspace">
 <main class="panel mainPanel">
 <div class="plotHeader"><div><div class="eyebrow" id="plotEyebrow">FLRW · isotrop</div><h2 id="plotTitle">Skalafaktor a(t)</h2></div><div class="graphOptions"><div><label class="fieldLabel" for="graphSelect">Vælg graf</label><select id="graphSelect" aria-label="Vælg graf"></select></div></div></div>
@@ -62,8 +62,8 @@ button.secondary{background:#f0f5fb;border-color:#bacbda;color:#24435d}
 const $=id=>document.getElementById(id);
 const colors=['#087e7b','#526aca','#b9770b','#bc5481'];
 const graphDefs={
-flrw:[['a','Skalafaktor a(t)','Kollaps, bounce og udvidelse.'],['h','Hubble-rate H(t)','H < 0: kollaps · H > 0: udvidelse.'],['n','E-folds N(t)','Samlede e-folds og den accelererede andel.'],['acc','Acceleration ä/a','Positiv acceleration betyder accelereret udvidelse.']],
-ks:[['a','Volumenskala aᵥ(t)','Gennemsnitlig rumlig størrelse: aᵥ=(XY²)⅓.'],['h','Hubble-rate Hᵥ(t)','Hᵥ=(Hᵣ+2HΩ)/3.'],['n','E-folds Nᵥ(t)','Nᵥ=ln(aᵥ/aᵥ(0)), accelererede e-folds beregnes særskilt.'],['acc','Acceleration äᵥ/aᵥ','Volumenskalafaktorens acceleration.'],['xy','Retninger X(t) og Y(t)','Radial og sfærisk skalafaktor.'],['shear','Shear σ²(t)','Anisotropi mellem de to retninger.']]
+flrw:[['both','a(t) + H(t)','Begge kurver på ét koordinatsystem. Venstre akse: skalafaktor. Højre akse: Hubble-rate. Bounce markeres ved H: negativ → positiv.'],['a','Skalafaktor a(t)','Kollaps, bounce og udvidelse.'],['h','Hubble-rate H(t)','H < 0: kollaps · H > 0: udvidelse.'],['n','E-folds N(t)','Samlede e-folds og den accelererede andel.'],['acc','Acceleration ä/a','Positiv acceleration betyder accelereret udvidelse.']],
+ks:[['both','aᵥ(t) + Hᵥ(t)','Volumenskala og gennemsnitlig Hubble-rate i samme koordinatsystem. Volumen-bounce markeres ved Hᵥ: negativ → positiv; dette er ikke nødvendigvis et regulært geometrisk bounce.'],['a','Volumenskala aᵥ(t)','Gennemsnitlig rumlig størrelse: aᵥ=(XY²)⅓.'],['h','Hubble-rate Hᵥ(t)','Hᵥ=(Hᵣ+2HΩ)/3.'],['n','E-folds Nᵥ(t)','Nᵥ=ln(aᵥ/aᵥ(0)), accelererede e-folds beregnes særskilt.'],['acc','Acceleration äᵥ/aᵥ','Volumenskalafaktorens acceleration.'],['xy','Retninger X(t) og Y(t)','Radial og sfærisk skalafaktor.'],['shear','Shear σ²(t)','Anisotropi mellem de to retninger.']]
 };
 let latest=null,currentPlot=null;
 function computeFLRW(){
@@ -112,12 +112,14 @@ return {type:'ks',w,S0,hr,ha,rho0,data,minVol,peakShear,residual,reason,bounce,n
 function curvesOf(o,key){
 if(o.type==='flrw'){
 const all=o.all,right=o.right;
+if(key==='both')return {combined:true,curves:[{label:'a(t)',axis:'left',color:colors[0],pts:all.map(p=>[p.t,p.a])},{label:'H(t)',axis:'right',color:colors[1],pts:all.map(p=>[p.t,p.v/p.a])}],x:'Tid t',y:'a(t) / H(t)'};
 if(key==='a')return {curves:[{label:'a(t)',color:colors[0],pts:all.map(p=>[p.t,p.a])}],x:'Tid t',y:'a(t)'};
 if(key==='h')return {curves:[{label:'H(t)',color:colors[1],pts:all.map(p=>[p.t,p.v/p.a])}],x:'Tid t',y:'H(t)'};
 if(key==='acc')return {curves:[{label:'ä/a',color:colors[2],pts:all.map(p=>[p.t,p.acc/p.a])}],x:'Tid t',y:'ä/a'};
 return {curves:[{label:'Samlet N',color:colors[0],pts:right.map(p=>[p.t,Math.log(p.a)])},{label:'Accelereret N',color:colors[2],pts:right.map(p=>[p.t,Math.min(o.Nacc,Math.log(p.a))])}],x:'Tid t',y:'N'};
 }
 const d=o.data;
+if(key==='both')return {combined:true,curves:[{label:'aᵥ(t)',axis:'left',color:colors[0],pts:d.map(p=>[p.t,p.volume])},{label:'Hᵥ(t)',axis:'right',color:colors[1],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'aᵥ(t) / Hᵥ(t)'};
 if(key==='a')return {curves:[{label:'aᵥ(t)',color:colors[0],pts:d.map(p=>[p.t,p.volume])}],x:'Tid t',y:'aᵥ(t)'};
 if(key==='h')return {curves:[{label:'Hᵥ(t)',color:colors[1],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'Hᵥ(t)'};
 if(key==='n')return {curves:[{label:'Samlet Nᵥ',color:colors[0],pts:d.map(p=>[p.t,p.nTotal])},{label:'Accelereret Nacc',color:colors[2],pts:d.map(p=>[p.t,p.nAcc])}],x:'Tid t',y:'N'};
@@ -126,7 +128,47 @@ if(key==='xy')return {curves:[{label:'X(t) radial',color:colors[0],pts:d.map(p=>
 return {curves:[{label:'σ²(t)',color:colors[1],pts:d.map(p=>[p.t,p.shear])}],x:'Tid t',y:'σ²'};
 }
 function nice(v){if(!Number.isFinite(v))return '—';if(Math.abs(v)>=10000||Math.abs(v)<.001&&v!==0)return v.toExponential(1);return (+v.toPrecision(4)).toString();}
+
+function plotCombined(graph){
+const canvas=$('plot'),r=canvas.getBoundingClientRect(),W=r.width,H=r.height;if(W<50||H<50)return;
+const scale=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(W*scale);canvas.height=Math.round(H*scale);
+const c=canvas.getContext('2d');c.setTransform(scale,0,0,scale,0,0);
+const m={l:Math.min(69,W*.15),r:Math.min(75,W*.16),t:30,b:55},cw=W-m.l-m.r,ch=H-m.t-m.b;
+const [a,h]=graph.curves,points=a.pts.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1])),hp=h.pts.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
+if(!points.length||!hp.length||cw<=0||ch<=0)return;
+const xmin=points[0][0],xmax=points[points.length-1][0];
+const av=points.map(p=>p[1]),hv=hp.map(p=>p[1]);
+function bounds(values,includeZero){let lo=Math.min(...values),hi=Math.max(...values);if(includeZero){lo=Math.min(0,lo);hi=Math.max(0,hi)}let pad=(hi-lo||1)*.10;return [lo-pad,hi+pad]}
+const [amin,amax]=bounds(av,false),[hmin,hmax]=bounds(hv,true);
+const xp=x=>m.l+(x-xmin)/(xmax-xmin||1)*cw;
+const ya=y=>m.t+(amax-y)/(amax-amin)*ch, yh=y=>m.t+(hmax-y)/(hmax-hmin)*ch;
+c.font='12px system-ui';c.textBaseline='middle';
+for(let i=0;i<=5;i++){
+const y=m.t+ch*i/5;c.lineWidth=1;c.strokeStyle='#e4ebf1';c.beginPath();c.moveTo(m.l,y);c.lineTo(m.l+cw,y);c.stroke();
+c.fillStyle=a.color;c.textAlign='right';c.fillText(nice(amax-(amax-amin)*i/5),m.l-9,y);
+c.fillStyle=h.color;c.textAlign='left';c.fillText(nice(hmax-(hmax-hmin)*i/5),m.l+cw+9,y);
+}
+c.textBaseline='top';c.textAlign='center';c.fillStyle='#61758a';
+for(let i=0;i<=5;i++){const x=m.l+cw*i/5;c.fillText(nice(xmin+(xmax-xmin)*i/5),x,m.t+ch+12)}
+c.save();c.beginPath();c.rect(m.l,m.t,cw,ch);c.clip();
+if(hmin<0&&hmax>0){c.beginPath();c.setLineDash([5,5]);c.strokeStyle='#a3b4c4';c.moveTo(m.l,yh(0));c.lineTo(m.l+cw,yh(0));c.stroke();c.setLineDash([])}
+const turning=[];
+for(let i=1;i<hp.length;i++){
+let p=hp[i-1],q=hp[i];if(p[1]<0&&q[1]>=0){let frac=(0-p[1])/(q[1]-p[1]||1);turning.push(p[0]+(q[0]-p[0])*frac)}
+}
+for(const t of turning){let x=xp(t);c.beginPath();c.setLineDash([4,4]);c.strokeStyle='#cc8541';c.moveTo(x,m.t);c.lineTo(x,m.t+ch);c.stroke();c.setLineDash([]);
+const nearest=points.reduce((p,q)=>Math.abs(q[0]-t)<Math.abs(p[0]-t)?q:p);
+c.beginPath();c.fillStyle='#cc8541';c.arc(x,ya(nearest[1]),4.5,0,2*Math.PI);c.fill();
+}
+for(const series of [a,h]){const y=series.axis==='left'?ya:yh;c.beginPath();c.strokeStyle=series.color;c.lineWidth=2.8;c.lineJoin='round';series.pts.forEach((p,i)=>i?c.lineTo(xp(p[0]),y(p[1])):c.moveTo(xp(p[0]),y(p[1])));c.stroke()}
+c.restore();
+c.font='bold 12px system-ui';c.fillStyle=a.color;c.textAlign='left';c.textBaseline='top';c.fillText(a.label+' · venstre akse',m.l,m.t-24);
+c.fillStyle=h.color;c.textAlign='right';c.fillText(h.label+' · højre akse',m.l+cw,m.t-24);
+c.font='12px system-ui';c.fillStyle='#456074';c.textAlign='center';c.fillText('Tid t',m.l+cw/2,H-23);
+}
+
 function plot(graph){
+if(graph.combined){plotCombined(graph);return;}
 const canvas=$('plot'),rect=canvas.getBoundingClientRect(),W=rect.width,H=rect.height;
 if(W<10||H<10)return;
 const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
