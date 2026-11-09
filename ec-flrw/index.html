@@ -36,6 +36,7 @@
             >Graph<select id="graph">
               <option value="expansion">Expansion dynamics</option>
               <option value="geometry">Geometry</option>
+              <option value="collapse">Collapse · relative size</option>
               <option value="acceleration">Acceleration</option>
               <option value="efolds">E-folds</option>
               <option value="anisotropy">Anisotropy · KS</option>
@@ -56,7 +57,11 @@
             <select id="scale">
               <option value="linear">Linear</option>
               <option value="log">Log · positive values only</option>
+              <option value="signedlog">
+                Signed log · includes zero & negatives
+              </option>
             </select></label
+          ><button id="collapseView" class="quiet">Show collapse</button
           ><button id="view" class="quiet">Reset view</button>
         </div>
         <div id="plot" aria-label="Interactive simulation plot"></div>
@@ -84,6 +89,7 @@
             advances</label
           >
         </div>
+        <div id="collapseStatus" class="collapse-status" aria-live="off"></div>
         <div id="values" class="values" aria-live="off"></div>
         <div class="diagnostics">
           <div>

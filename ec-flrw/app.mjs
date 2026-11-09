@@ -17,6 +17,10 @@ const palette = [
   "#545d68",
 ];
 const specs = {
+  vRatio: ["Volume V / V(0)", "dimensionless"],
+  yRatio: ["Angular size Y / Y(0)", "dimensionless"],
+  xRatio: ["Radial size X / X(0)", "dimensionless"],
+  aRatio: ["Mean size a / a(0)", "dimensionless"],
   H: ["H", "t*⁻¹"],
   dH: ["Ḣ", "t*⁻²"],
   a: ["a", "dimensionless"],
@@ -34,6 +38,7 @@ const specs = {
   residual: ["Relative constraint", "dimensionless"],
 };
 const titles = {
+  collapse: "Collapse · size relative to τ = 0",
   expansion: "Expansion dynamics",
   geometry: "Geometry",
   acceleration: "Acceleration",
@@ -62,6 +67,8 @@ let active = location.hash === "#ks" ? "ks" : "flrw",
   comparison,
   index = 0,
   traces = [],
+  axesBeforeCollapse = "dual",
+  graphByGeometry = { flrw: "expansion", ks: "collapse" },
   playing = false,
   lastFrame = 0,
   frame,
@@ -173,6 +180,7 @@ function recalculate() {
     comparison = null;
     Plotly.purge("plot");
     $("values").replaceChildren();
+    $("collapseStatus").textContent = "";
     $("events").replaceChildren();
     $("health").textContent = "No valid solution.";
     $("warnings").innerHTML = "";
@@ -183,8 +191,53 @@ function recalculate() {
     $("play").disabled = true;
   }
 }
+function value(key, s, run) {
+  if (key === "vRatio") return (s.a / run.initial.a) ** 3;
+  if (key === "yRatio") return s.Y / run.initial.Y;
+  if (key === "xRatio") return s.X / run.initial.X;
+  if (key === "aRatio") return s.a / run.initial.a;
+  return s[key];
+}
+// Signed logarithmic coordinates retain zero crossings; ticks and hover report original values.
+const signedLog = (y) => Math.sign(y) * Math.log10(1 + Math.abs(y) / 0.01);
+function signedTicks(series) {
+  const values = series
+    .filter((t) => t.visible !== "legendonly")
+    .flatMap((t) => t.meta.ys)
+    .filter(Number.isFinite);
+  const lo = Math.min(0, ...values),
+    hi = Math.max(0, ...values),
+    gap = (hi - lo || 1) / 7;
+  const ticks = [{ v: 0, text: "0" }];
+  for (const sign of [-1, 1]) {
+    let previous = 0;
+    for (let exponent = -12; exponent <= 30; exponent++) {
+      for (const mantissa of [1, 2, 5]) {
+        const raw = sign * mantissa * 10 ** exponent,
+          v = signedLog(raw);
+        if (v < lo || v > hi || Math.abs(v - previous) < gap) continue;
+        ticks.push({
+          v,
+          text:
+            Math.abs(raw) >= 1000 || Math.abs(raw) < 0.001
+              ? raw.toExponential(0).replace("e+", "e")
+              : Number(raw.toPrecision(3)).toString(),
+        });
+        previous = v;
+      }
+    }
+  }
+  ticks.sort((a, b) => a.v - b.v);
+  return {
+    tickmode: "array",
+    tickvals: ticks.map((t) => t.v),
+    ticktext: ticks.map((t) => t.text),
+  };
+}
 function keys(g = active) {
   switch ($("graph").value) {
+    case "collapse":
+      return g === "ks" ? ["vRatio", "yRatio", "xRatio"] : ["vRatio", "aRatio"];
     case "geometry":
       return g === "ks" ? ["X", "Y", "a"] : ["a", "adot"];
     case "acceleration":
@@ -217,10 +270,23 @@ function label(key, g) {
 function draw() {
   if (!result) return;
   ready = false;
+  const collapse = $("graph").value === "collapse";
+  if (collapse) {
+    if (!$("axes").disabled) axesBeforeCollapse = $("axes").value;
+    $("axes").value = "shared";
+    $("axes").disabled = true;
+  } else if ($("axes").disabled) {
+    $("axes").disabled = false;
+    $("axes").value = axesBeforeCollapse;
+  }
+  $("axes").querySelector("[value=shared]").textContent = collapse
+    ? "Relative to τ = 0 · shared axis"
+    : "Physical units · shared axis";
   const token = ++plotVersion,
     graph = $("graph").value,
     mode = $("axes").value,
-    log = $("scale").value === "log";
+    log = $("scale").value === "log",
+    signed = $("scale").value === "signedlog";
   traces = [];
   const groups = [];
   let hiddenLog = 0;
@@ -233,7 +299,8 @@ function draw() {
     keys(g).forEach((key, i) => {
       const [_, unit] = specs[key],
         name = label(key, g) + (isCompare ? ` · ${g.toUpperCase()}` : "");
-      const norm = Math.max(...run.data.map((s) => Math.abs(s[key]))) || 1,
+      const norm =
+          Math.max(...run.data.map((s) => Math.abs(value(key, s, run)))) || 1,
         group =
           mode === "normalized"
             ? "normalized"
@@ -243,12 +310,12 @@ function draw() {
       if (!groups.includes(group)) groups.push(group);
       const axis = groups.indexOf(group) + 1;
       const ys = run.data.map((s) => {
-        const y = s[key] / (mode === "normalized" ? norm : 1);
+        const y = value(key, s, run) / (mode === "normalized" ? norm : 1);
         if (log && y <= 0) {
           hiddenLog++;
           return null;
         }
-        return y;
+        return signed ? signedLog(y) : y;
       });
       traces.push({
         type: "scatter",
@@ -256,7 +323,10 @@ function draw() {
         name: `${name} [${mode === "normalized" ? "normalized" : unit}]`,
         x: run.data.map((s) => s.t),
         y: ys,
-        customdata: run.data.map((s) => s[key]),
+        customdata: run.data.map((s) => value(key, s, run)),
+        visible: key === "xRatio" ? "legendonly" : true,
+        fill: key === "vRatio" && !isCompare ? "tozeroy" : undefined,
+        fillcolor: "rgba(8,127,131,0.07)",
         yaxis: axis === 1 ? "y" : "y" + axis,
         line: {
           color: palette[i % palette.length],
@@ -298,15 +368,25 @@ function draw() {
     const associated = traces
       .filter((t) => t.yaxis === (j ? "y" + (j + 1) : "y"))
       .map((t) => t.name.split(" [")[0]);
-    const title =
-      mode === "normalized"
+    const title = collapse
+      ? "Size / value at τ = 0 (dimensionless)"
+      : mode === "normalized"
         ? "Each curve / max |value| (dimensionless)"
         : mode === "shared"
           ? "Values · units specified in legend"
           : `${associated.join(", ")} [${group}]`;
     layout[j ? "yaxis" + (j + 1) : "yaxis"] = {
-      title: { text: title, font: { size: 10 } },
+      title: {
+        text: title + (signed ? " · signed log" : ""),
+        font: { size: 10 },
+      },
       type: log ? "log" : "linear",
+      rangemode: signed ? "tozero" : "normal",
+      ...(signed
+        ? signedTicks(
+            traces.filter((t) => t.yaxis === (j ? "y" + (j + 1) : "y")),
+          )
+        : {}),
       gridcolor: "#edf0f0",
       zerolinecolor: "#b9c8ca",
       ticks: "outside",
@@ -343,11 +423,34 @@ function draw() {
       hovertext: e.label,
     });
   }
+  if (collapse && !log)
+    layout.shapes.push({
+      type: "line",
+      xref: "paper",
+      yref: "y",
+      x0: 0,
+      x1: 1,
+      y0: signed ? signedLog(1) : 1,
+      y1: signed ? signedLog(1) : 1,
+      line: { color: "#9aabab", width: 1, dash: "dot" },
+    });
   layout.shapes.push(cursorShape());
   $("title").textContent = titles[graph];
   $("title").title =
     "Kinematic identity: ä/a = Ḣ + H². For KS this applies to aᵥ = (XY²)⅓, using the KS evolution equations.";
   $("plotNote").textContent =
+    (collapse
+      ? "1 = size at τ = 0. Below 1 means smaller. V / V(0) = [a / a(0)]³, using the mean scale aᵥ for KS. " +
+        (active === "ks"
+          ? "For KS, V ∝ XY². Radial size is available in the legend, initially hidden so its growth does not flatten the collapse. "
+          : "")
+      : "") +
+    (signed
+      ? "Signed logarithmic spacing: sign(u) log₁₀(1 + |u| / 0.01), u = value in the stated units. Tick labels and hover show original values; zero and negative values remain visible. "
+      : "") +
+    (active === "ks" && !collapse && !signed && !log
+      ? "Large endpoint values can flatten early evolution. Use Show collapse to see shrinking size, or Signed log to inspect rates across magnitudes. "
+      : "") +
     (mode === "normalized"
       ? "Normalization is separate for each curve over its full computed interval. Hover shows original values. "
       : "") +
@@ -394,16 +497,26 @@ function updateCursor() {
   const s = result.data[index];
   $("time").value = (index / (result.data.length - 1)) * 1000;
   $("clock").textContent = `τ ${fmt(s.t)}`;
+  const volumeRatio = (s.a / result.initial.a) ** 3;
+  const direction =
+    s.H < -1e-10
+      ? "Volume contracting"
+      : s.H > 1e-10
+        ? "Volume expanding"
+        : "Volume stationary";
+  const signedPercent = 100 * (volumeRatio - 1);
+  $("collapseStatus").textContent =
+    `${direction} · ${(volumeRatio * 100).toPrecision(4)}% of the volume at τ = 0 (${signedPercent >= 0 ? "+" : ""}${signedPercent.toFixed(2)}%). ${active === "ks" ? `Radial direction ${s.hr < -1e-10 ? "contracting" : s.hr > 1e-10 ? "expanding" : "stationary"}; angular direction ${s.ho < -1e-10 ? "contracting" : s.ho > 1e-10 ? "expanding" : "stationary"}.` : ""}`;
   $("values").innerHTML =
     keys()
       .map(
         (k, i) =>
-          `<div class="value" style="--c:${palette[i % palette.length]}"><span>${label(k, active)} · ${specs[k][1]}</span><strong>${fmt(s[k])}</strong></div>`,
+          `<div class="value" style="--c:${palette[i % palette.length]}"><span>${label(k, active)} · ${specs[k][1]}</span><strong>${fmt(value(k, s, result))}</strong></div>`,
       )
       .join("") +
     `<div class="value" style="--c:#87979b"><span>Relative constraint</span><strong>${s.residual.toExponential(2)}</strong></div>`;
   if (!ready) return;
-  const shapeIndex = result.events.length;
+  const shapeIndex = $("plot").layout.shapes.length - 1;
   Plotly.relayout("plot", {
     [`shapes[${shapeIndex}].x0`]: s.t,
     [`shapes[${shapeIndex}].x1`]: s.t,
@@ -467,8 +580,10 @@ $("progressive").onchange = () => {
 };
 $("geometry").onchange = () => {
   pause();
+  graphByGeometry[active] = $("graph").value;
   active = $("geometry").value;
   load();
+  $("graph").value = graphByGeometry[active];
   recalculate();
 };
 for (const id of inputs)
@@ -481,6 +596,12 @@ for (const id of ["graph", "axes", "scale"])
     draw();
   };
 $("compare").onchange = recalculate;
+$("collapseView").onclick = () => {
+  pause();
+  $("graph").value = "collapse";
+  $("scale").value = "linear";
+  draw();
+};
 $("view").onclick = () => {
   if (!ready) return;
   Plotly.relayout("plot", {
@@ -532,4 +653,5 @@ $("export").onclick = () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 load();
+if (active === "ks") $("graph").value = "collapse";
 recalculate();

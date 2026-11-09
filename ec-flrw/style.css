@@ -499,3 +499,31 @@ footer {
     margin-top: 8px;
   }
 }
+
+.collapse-status {
+  padding: 12px 14px;
+  margin-top: 16px;
+  border-left: 3px solid var(--teal);
+  background: #f0f7f6;
+  color: #31595d;
+  font-size: 12px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+.plot-options {
+  flex-wrap: wrap;
+}
+.plot-options select {
+  max-width: 230px;
+}
+.plot-options #collapseView {
+  margin-left: auto;
+}
+.plot-options #view {
+  margin-left: 0;
+}
+@media (max-width: 720px) {
+  .plot-options select {
+    max-width: 155px;
+  }
+}

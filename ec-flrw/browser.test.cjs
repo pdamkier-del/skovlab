@@ -13,14 +13,12 @@ const assert = require("node:assert/strict");
     errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   const plot = () =>
-    page
-      .locator("#plot")
-      .evaluate((el) => ({
-        names: el.data.map((t) => t.name),
-        layout: el.layout,
-        lengths: el.data.map((t) => t.x.length),
-        ys: el.data.map((t) => t.y),
-      }));
+    page.locator("#plot").evaluate((el) => ({
+      names: el.data.map((t) => t.name),
+      layout: el.layout,
+      lengths: el.data.map((t) => t.x.length),
+      ys: el.data.map((t) => t.y),
+    }));
   const settle = () => page.waitForTimeout(450);
   try {
     await page.goto("http://127.0.0.1:8000/ec-flrw/");
@@ -101,6 +99,53 @@ const assert = require("node:assert/strict");
     assert.equal(await page.locator("#ksFields").isVisible(), true);
     assert.match(await page.locator("#events").innerText(), /Radial/);
     assert.match(await page.locator("#warnings").innerText(), /not proof/);
+    // A volume plot must stay readable even when radial size grows by orders of magnitude.
+    assert.equal(await page.locator("#graph").inputValue(), "collapse");
+    p = await plot();
+    assert.match(p.names[0], /Volume V/);
+    assert.ok(p.ys[0].at(-1) < 0.00001);
+    assert.ok(p.layout.yaxis.range[1] < 1.2);
+    assert.equal(
+      await page.locator("#plot").evaluate((el) => el.data[2].visible),
+      "legendonly",
+    );
+    assert.equal(await page.locator("#axes").isDisabled(), true);
+    await page.locator("#time").fill("950");
+    await page.locator("#time").dispatchEvent("input");
+    assert.match(
+      await page.locator("#collapseStatus").innerText(),
+      /Volume contracting/,
+    );
+    assert.match(
+      await page.locator("#collapseStatus").innerText(),
+      /Radial direction expanding; angular direction contracting/,
+    );
+    const selectedTime = await page.locator("#clock").innerText();
+    await page.locator("#graph").selectOption("expansion");
+    await page.locator("#scale").selectOption("signedlog");
+    await settle();
+    assert.equal(await page.locator("#axes").inputValue(), "dual");
+    assert.equal(await page.locator("#clock").innerText(), selectedTime);
+    const signedTraces = await page
+      .locator("#plot")
+      .evaluate((el) => el.data.map((t) => ({ y: t.y, raw: t.customdata })));
+    for (const tr of signedTraces)
+      for (let i = 0; i < tr.y.length; i++) {
+        assert.ok(
+          Math.abs(
+            tr.y[i] -
+              Math.sign(tr.raw[i]) * Math.log10(1 + Math.abs(tr.raw[i]) / 0.01),
+          ) < 1e-10,
+        );
+      }
+    assert.match(
+      await page.locator("#plotNote").innerText(),
+      /Tick labels and hover show original values/,
+    );
+    await page.locator("#collapseView").click();
+    await settle();
+    assert.equal(await page.locator("#clock").innerText(), selectedTime);
+    await page.locator("#scale").selectOption("linear");
     await page.locator("#graph").selectOption("anisotropy");
     await settle();
     assert.equal((await plot()).names.length, 4);

@@ -68,3 +68,11 @@ Run `node --test ec-flrw/model.test.mjs`. Tests check the analytic dust trajecto
 For browser regression, serve the repository (`python -m http.server 8000`) and run `node ec-flrw/browser.test.cjs` with Playwright and Chromium installed. Plotly 3.3.0 is vendored with its MIT license header; the application needs no CDN, build service or paid hosting. The route remains `ec-flrw/` for GitHub Pages.
 
 Background references retained from the prior implementation: [Bréchet et al.](https://arxiv.org/abs/0706.2367), [Hashemi et al.](https://arxiv.org/abs/1407.4103), [Popławski](https://arxiv.org/abs/2007.11556). These motivate the approximation; they do not establish every possible physical interpretation of a computed solution.
+
+## Reading collapse on the shared plot
+
+KS initially opens the **Collapse · relative size** graph. It shows V/V(0)=[aᵥ/aᵥ(0)]³ and Y/Y(0) on one dimensionless axis: 1 is the value at τ=0; lower values mean shrinkage. X/X(0) is available as a third legend entry, hidden initially because radial growth can dwarf the shrinking quantities. These are explicitly ratios to the initial state, not independent maximum normalization. The Show collapse shortcut preserves the selected time. Each geometry remembers its graph during geometry switches.
+
+The cursor readout states the current volume fraction and whether the volume and each KS direction are expanding or contracting. The playback and progressive-time trace use the original shared samples unchanged.
+
+The optional **Signed log** scale displays sign(u)·log₁₀(1+|u|/0.01), where u is the numerical value in the labelled units (or the explicitly selected normalized value). The 0.01 core is a display choice, not a physical threshold. Tick labels and hover values remain in original units. Zero and negative values are retained; the scale is linear close to zero and logarithmic at larger magnitudes. This makes the pre-collapse evolution readable when endpoint rates span many orders of magnitude. Each dimensional axis has its own transformation. Ordinary linear and positive-only log scales remain available. No evolution equations, integration settings or stopping thresholds are changed by these display modes.
