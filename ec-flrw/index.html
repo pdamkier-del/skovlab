@@ -2,29 +2,29 @@
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Einstein–Cartan · Geometry Lab</title>
 <style>
-:root{color-scheme:dark;--bg:#08111d;--panel:#101e2d;--border:#2b3d51;--txt:#e9f2f7;--dim:#9fb0bf;--mint:#61ddc3;--blue:#91a8ff;--gold:#ffc77c}
+:root{color-scheme:light;--bg:#f4f7fb;--panel:#ffffff;--border:#d8e2ec;--txt:#152b40;--dim:#5d7184;--mint:#087e7b;--blue:#4c62c8;--gold:#b9770b}
 *{box-sizing:border-box}body{margin:0;color:var(--txt);background:var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,select,input{font:inherit}button,select{cursor:pointer}
 .shell{max-width:1440px;margin:auto;padding:27px 27px 42px}.head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--mint);font-weight:750}h1{margin:4px 0 0;letter-spacing:-.038em;font-size:clamp(25px,3vw,36px);line-height:1.15}.headNote{color:var(--dim);font-size:12px}
 .workspace{display:grid;grid-template-columns:minmax(0,1fr) 315px;align-items:start;gap:17px}.panel{border:1px solid var(--border);border-radius:15px;background:var(--panel)}.mainPanel{padding:23px;min-width:0}.plotHeader{display:flex;align-items:end;gap:18px;justify-content:space-between;flex-wrap:wrap}.plotHeader h2{font-size:20px;letter-spacing:-.025em;margin:0}.mini{color:var(--dim);font-size:12px}.graphOptions{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
-.fieldLabel{display:block;font-size:12px;letter-spacing:.01em;font-weight:700;color:#b8ccda;margin:0 0 7px}
-select{background:#0b1827;border:1px solid #395369;color:var(--txt);padding:10px 13px;border-radius:9px;max-width:100%}
+.fieldLabel{display:block;font-size:12px;letter-spacing:.01em;font-weight:700;color:#496176;margin:0 0 7px}
+select{background:#f3f7fb;border:1px solid #c9d7e4;color:var(--txt);padding:10px 13px;border-radius:9px;max-width:100%}
 .graphOptions select{min-width:194px}
-.chartArea{margin-top:20px;border:1px solid #25394e;background:#0a1725;border-radius:13px;padding:14px 8px 2px;overflow:hidden}
-canvas{display:block;width:100%;height:clamp(320px,46vw,570px)}.legend{display:flex;gap:20px;flex-wrap:wrap;margin:12px 15px 14px;font-size:13px;color:#c0d2dc}.swatch{display:inline-block;width:13px;height:3px;border-radius:2px;margin-right:8px;vertical-align:middle;background:var(--mint)}
+.chartArea{margin-top:20px;border:1px solid #d5e2ed;background:#ffffff;border-radius:13px;padding:14px 8px 2px;overflow:hidden}
+canvas{display:block;width:100%;height:clamp(320px,46vw,570px)}.legend{display:flex;gap:20px;flex-wrap:wrap;margin:12px 15px 14px;font-size:13px;color:#4b6478}.swatch{display:inline-block;width:13px;height:3px;border-radius:2px;margin-right:8px;vertical-align:middle;background:var(--mint)}
 .plotCaption{min-height:42px;font-size:13px;color:var(--dim);margin:17px 2px}
-.metrics{border-top:1px solid var(--border);margin-top:14px;padding-top:17px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:10px 12px;background:#0b1827;border-radius:10px;min-width:0}.metric span{display:block;font-size:12px;color:var(--dim)}.metric strong{display:block;font-size:clamp(17px,2vw,23px);margin-top:5px;font-variant-numeric:tabular-nums}
+.metrics{border-top:1px solid var(--border);margin-top:14px;padding-top:17px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:10px 12px;background:#f3f7fb;border-radius:10px;min-width:0}.metric span{display:block;font-size:12px;color:var(--dim)}.metric strong{display:block;font-size:clamp(17px,2vw,23px);margin-top:5px;font-variant-numeric:tabular-nums}
 .side{padding:21px;position:sticky;top:15px}.side h2{font-size:18px;letter-spacing:-.01em;margin:0 0 17px}.side .section{padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:19px}.side .section:last-of-type{border:0;margin:0;padding:0}.side select{width:100%}.control{margin:18px 0 0}.control:first-child{margin-top:0}.controlTop{display:flex;justify-content:space-between;gap:8px;align-items:center}.controlTop label{font-size:13px;font-weight:650}.value{font-size:13px;color:var(--mint);font-variant-numeric:tabular-nums}
 input[type=range]{display:block;width:100%;accent-color:var(--mint);margin:9px 0 0}
-.info{color:var(--dim);font-size:12px;line-height:1.65;margin:12px 0 0}.actions{display:flex;gap:9px;margin-top:18px}button{background:#193c3c;border:1px solid #3c7673;color:#dffcf6;padding:9px 12px;border-radius:9px;font-weight:650}
-button.secondary{background:#14273a;border-color:#3c5066;color:#c7d6e5}
-.disclosure{margin-top:17px;background:#101e2d;border:1px solid var(--border);border-radius:12px;padding:15px 19px}.disclosure summary{cursor:pointer;font-weight:700}.disclosure p{color:var(--dim);font-size:13px;line-height:1.65}.mono{font-family:ui-serif,Georgia,serif;color:#e7f8f2;font-size:17px}
-.notice{padding:12px 13px;border:1px solid #33596a;background:#102637;border-radius:10px;color:#c7dde7;font-size:12px;line-height:1.55}
-[hidden]{display:none!important}a{color:#8bdfcd}
+.info{color:var(--dim);font-size:12px;line-height:1.65;margin:12px 0 0}.actions{display:flex;gap:9px;margin-top:18px}button{background:#087e7b;border:1px solid #087e7b;color:#ffffff;padding:9px 12px;border-radius:9px;font-weight:650}
+button.secondary{background:#f0f5fb;border-color:#bacbda;color:#24435d}
+.disclosure{margin-top:17px;background:#101e2d;border:1px solid var(--border);border-radius:12px;padding:15px 19px}.disclosure summary{cursor:pointer;font-weight:700}.disclosure p{color:var(--dim);font-size:13px;line-height:1.65}.mono{font-family:ui-serif,Georgia,serif;color:#184f58;font-size:17px}
+.notice{padding:12px 13px;border:1px solid #c8dce9;background:#edf6f9;border-radius:10px;color:#31576a;font-size:12px;line-height:1.55}
+[hidden]{display:none!important}a{color:#0a7774}
 @media(max-width:880px){.workspace{grid-template-columns:minmax(0,1fr)}.side{position:static;order:2}.mainPanel{order:1}.shell{padding:20px 12px 38px}}
 @media(max-width:530px){.mainPanel{padding:15px}.graphOptions{width:100%}.graphOptions>div,.graphOptions select{width:100%}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chartArea{padding:7px 2px}.legend{font-size:12px;gap:10px}.head{margin-bottom:16px}}
 </style></head>
 <body><div class="shell">
-<header class="head"><div><div class="eyebrow">Einstein–Cartan · Numerical research</div><h1>Geometry Lab</h1></div><div class="headNote">FLRW & Kantowski–Sachs · v2.0<br>Dimensionløse modeller · Ingen Holst eller partikelproduktion</div></header>
+<header class="head"><div><div class="eyebrow">Einstein–Cartan · Numerical research</div><h1>Geometry Lab</h1></div><div class="headNote">FLRW & Kantowski–Sachs · v2.1<br>Dimensionløse modeller · Ingen Holst eller partikelproduktion</div></header>
 <div class="workspace">
 <main class="panel mainPanel">
 <div class="plotHeader"><div><div class="eyebrow" id="plotEyebrow">FLRW · isotrop</div><h2 id="plotTitle">Skalafaktor a(t)</h2></div><div class="graphOptions"><div><label class="fieldLabel" for="graphSelect">Vælg graf</label><select id="graphSelect" aria-label="Vælg graf"></select></div></div></div>
@@ -60,10 +60,10 @@ button.secondary{background:#14273a;border-color:#3c5066;color:#c7d6e5}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const colors=['#61ddc3','#91a8ff','#ffc77c','#fb91ac'];
+const colors=['#087e7b','#526aca','#b9770b','#bc5481'];
 const graphDefs={
-flrw:[['a','Skalafaktor a(t)','Kollaps, bounce og efterfølgende udvidelse.'],['h','Hubble-parameter H(t)','H < 0 betyder kollaps, H > 0 betyder udvidelse.'],['n','E-folds N(t)','Grøn: samlet udvidelse efter bounce. Gul: kun accelereret udvidelse.'],['acc','Acceleration ä/a','Positiv værdi betyder accelereret udvidelse.']],
-ks:[['xy','Skalafaktorer X(t) og Y(t)','Radial og sfærisk retning vises hver for sig.'],['h','Middeludvidelse Hᵥ(t)','Volumenets gennemsnitlige ekspansionsrate.'],['shear','Shear σ²(t)','Forskellen i radial og sfærisk udvidelse.'],['volume','Volumenskala (XY²)⅓','Et vendepunkt i volumen er ikke nødvendigvis et regulært bounce.']]
+flrw:[['a','Skalafaktor a(t)','Kollaps, bounce og udvidelse.'],['h','Hubble-rate H(t)','H < 0: kollaps · H > 0: udvidelse.'],['n','E-folds N(t)','Samlede e-folds og den accelererede andel.'],['acc','Acceleration ä/a','Positiv acceleration betyder accelereret udvidelse.']],
+ks:[['a','Volumenskala aᵥ(t)','Gennemsnitlig rumlig størrelse: aᵥ=(XY²)⅓.'],['h','Hubble-rate Hᵥ(t)','Hᵥ=(Hᵣ+2HΩ)/3.'],['n','E-folds Nᵥ(t)','Nᵥ=ln(aᵥ/aᵥ(0)), accelererede e-folds beregnes særskilt.'],['acc','Acceleration äᵥ/aᵥ','Volumenskalafaktorens acceleration.'],['xy','Retninger X(t) og Y(t)','Radial og sfærisk skalafaktor.'],['shear','Shear σ²(t)','Anisotropi mellem de to retninger.']]
 };
 let latest=null,currentPlot=null;
 function computeFLRW(){
@@ -134,15 +134,15 @@ if(xmin===xmax)xmax=xmin+1;if(ymin===ymax){ymin-=1;ymax+=1}
 const pad=(ymax-ymin)*.09;ymin-=pad;ymax+=pad;
 const xp=x=>m.l+(x-xmin)/(xmax-xmin)*cw,yp=y=>m.t+(ymax-y)/(ymax-ymin)*ch;
 c.font='12px system-ui';c.textAlign='right';c.textBaseline='middle';
-for(let i=0;i<=5;i++){const y=m.t+i*ch/5;c.strokeStyle='#24394c';c.lineWidth=1;c.beginPath();c.moveTo(m.l,y);c.lineTo(m.l+cw,y);c.stroke();c.fillStyle='#91a7b9';c.fillText(nice(ymax-i*(ymax-ymin)/5),m.l-10,y)}
+for(let i=0;i<=5;i++){const y=m.t+i*ch/5;c.strokeStyle='#e4ebf1';c.lineWidth=1;c.beginPath();c.moveTo(m.l,y);c.lineTo(m.l+cw,y);c.stroke();c.fillStyle='#5b7083';c.fillText(nice(ymax-i*(ymax-ymin)/5),m.l-10,y)}
 c.textAlign='center';c.textBaseline='top';
-for(let i=0;i<=5;i++){const x=m.l+i*cw/5;c.fillStyle='#91a7b9';c.fillText(nice(xmin+i*(xmax-xmin)/5),x,m.t+ch+11)}
-c.strokeStyle='#6d8596';c.beginPath();c.moveTo(m.l,m.t);c.lineTo(m.l,m.t+ch);c.lineTo(m.l+cw,m.t+ch);c.stroke();
-if(xmin<0&&xmax>0){c.setLineDash([4,5]);c.strokeStyle='#617488';c.beginPath();c.moveTo(xp(0),m.t);c.lineTo(xp(0),m.t+ch);c.stroke();c.setLineDash([])}
-if(ymin<0&&ymax>0){c.setLineDash([4,5]);c.strokeStyle='#4e6979';c.beginPath();c.moveTo(m.l,yp(0));c.lineTo(m.l+cw,yp(0));c.stroke();c.setLineDash([])}
+for(let i=0;i<=5;i++){const x=m.l+i*cw/5;c.fillStyle='#5b7083';c.fillText(nice(xmin+i*(xmax-xmin)/5),x,m.t+ch+11)}
+c.strokeStyle='#637c90';c.beginPath();c.moveTo(m.l,m.t);c.lineTo(m.l,m.t+ch);c.lineTo(m.l+cw,m.t+ch);c.stroke();
+if(xmin<0&&xmax>0){c.setLineDash([4,5]);c.strokeStyle='#9eb1c1';c.beginPath();c.moveTo(xp(0),m.t);c.lineTo(xp(0),m.t+ch);c.stroke();c.setLineDash([])}
+if(ymin<0&&ymax>0){c.setLineDash([4,5]);c.strokeStyle='#a8b8c6';c.beginPath();c.moveTo(m.l,yp(0));c.lineTo(m.l+cw,yp(0));c.stroke();c.setLineDash([])}
 c.save();c.beginPath();c.rect(m.l,m.t,cw,ch);c.clip();
 for(const s of graph.curves){c.beginPath();c.strokeStyle=s.color;c.lineWidth=2.7;c.lineJoin='round';s.pts.forEach((p,i)=>i?c.lineTo(xp(p[0]),yp(p[1])):c.moveTo(xp(p[0]),yp(p[1])));c.stroke()}c.restore();
-c.fillStyle='#bfd1dd';c.textAlign='center';c.textBaseline='bottom';c.font='12px system-ui';c.fillText(graph.x,m.l+cw/2,H-6);
+c.fillStyle='#456074';c.textAlign='center';c.textBaseline='bottom';c.font='12px system-ui';c.fillText(graph.x,m.l+cw/2,H-6);
 c.save();c.translate(15,m.t+ch/2);c.rotate(-Math.PI/2);c.fillText(graph.y,0,0);c.restore();
 }
 function showMetrics(o){
