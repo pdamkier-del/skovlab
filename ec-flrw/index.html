@@ -53,7 +53,7 @@ button.secondary{background:#f0f5fb;border-color:#bacbda;color:#24435d}
 </aside></div>
 <details class="disclosure"><summary>Fysisk model og ligninger</summary>
 <p><strong>FLRW:</strong> Den normaliserede model anvender <span class="mono">H² = a⁻³⁽¹⁺ʷ⁾ − a⁻⁶</span>, og accelerationen <span class="mono">ä = −(1+3w)a⁻²⁻³ʷ/2 + 2a⁻⁵</span>. Fluidet antages homogent, isotropt og med bevaret partikelantal. Spinkorrektionen skalerer som a⁻⁶. Den accelererede e-fold varighed er <span class="mono">Nₐ꜀꜀ = ln[4/(1+3w)]/[3(1−w)]</span> for 0≤w&lt;1. N er ikke automatisk inflation.</p>
-<p><strong>KS:</strong> <span class="mono">ds² = −dt² + X²dr² + Y²dΩ²</span>. I vores reducerede model: <span class="mono">(Ẏ²+1)/Y² + 2ẊẎ/(XY) = ρ − S</span>, <span class="mono">2Ÿ/Y + (Ẏ²+1)/Y² = −(wρ−S)</span> og <span class="mono">Ẍ/X + Ÿ/Y + ẊẎ/(XY) = −(wρ−S)</span>. Vi anvender ρ=ρ₀(XY²)⁻⁽¹⁺ʷ⁾ og S=S₀(XY²)⁻². ρ₀ bestemmes af startconstrainten. Disse approksimationer beskriver ikke fuld spinorientering, spin-gradienter eller en realistisk Kerr-geometri.</p>
+<p><strong>KS:</strong> <span class="mono">ds² = −dt² + X²dr² + Y²dΩ²</span>. I vores reducerede model: <span class="mono">(Ẏ²+1)/Y² + 2ẊẎ/(XY) = ρ − S</span>, <span class="mono">2Ÿ/Y + (Ẏ²+1)/Y² = −(wρ−S)</span> og <span class="mono">Ẍ/X + Ÿ/Y + ẊẎ/(XY) = −(wρ−S)</span>. Vi anvender ρ=ρ₀(XY²)⁻⁽¹⁺ʷ⁾ og S=S₀(XY²)⁻². ρ₀ bestemmes af startconstrainten. Vi definerer aᵥ=(XY²)⅓, Hᵥ=ȧᵥ/aᵥ, Nᵥ=ln(aᵥ/aᵥ(0)). Nacc optælles kun under udvidelse og positiv acceleration af aᵥ. Disse approksimationer beskriver ikke fuld spinorientering, spin-gradienter eller en realistisk Kerr-geometri.</p>
 <p>Basis: <a href="https://arxiv.org/abs/0706.2367" target="_blank" rel="noopener">Bréchet m.fl. (Weyssenhoff-fluid)</a>, <a href="https://arxiv.org/abs/1407.4103" target="_blank" rel="noopener">Hashemi m.fl. (FLRW-kollaps)</a> samt <a href="https://arxiv.org/abs/2007.11556" target="_blank" rel="noopener">Popławski (KS og torsion)</a>. Denne app er en udforskning af specificerede reducerede ligninger, ikke et bevis for et babyunivers.</p>
 </details>
 </div>
@@ -91,20 +91,23 @@ const ddY=-(vY*vY+1)/(2*Y)-p*Y/2;
 const ddX=-X*(ddY/Y+vX*vY/(X*Y)+p);
 return [vX,vY,ddX,ddY];
 }
-const dt=.00035,N=Math.floor(5/dt);let q=[1,1,hr,ha],data=[],minVol=1,peakShear=0,residual=0,reason='tidsgrænse',bounce=false,prev=(hr+2*ha)/3;
+const dt=.00035,N=Math.floor(5/dt);let q=[1,1,hr,ha],data=[],minVol=1,peakShear=0,residual=0,reason='tidsgrænse',bounce=false,prev=(hr+2*ha)/3,nAcc=0,previousH=prev,previousAccel=0,previousT=0;
 for(let i=0;i<=N;i++){
 const [X,Y,vX,vY]=q;
 if(!q.every(Number.isFinite)||X<.12||Y<.12||X>500||Y>500){reason='sikkerhedsgrænse';break}
 const t=i*dt,V=X*Y*Y,volume=Math.cbrt(V),hrNow=vX/X,haNow=vY/Y,H=(hrNow+2*haNow)/3,shear=(hrNow-haNow)**2/3;
 const density=rho0*Math.pow(V,-1-w),S=S0/(V*V);
+const d=derivative(q),accel=(d[2]/X-hrNow*hrNow+2*(d[3]/Y-haNow*haNow))/3+H*H;
+if(i>0 && H>0 && accel>0 && previousH>0 && previousAccel>0)nAcc+=.5*(previousH+H)*(t-previousT);
+previousH=H;previousAccel=accel;previousT=t;
 residual=Math.max(residual,Math.abs((vY*vY+1)/(Y*Y)+2*hrNow*haNow-(density-S)));
 minVol=Math.min(minVol,volume);peakShear=Math.max(peakShear,shear);
 if(prev<0&&H>=0)bounce=true;prev=H;
-if(i%20===0)data.push({t,X,Y,H,shear,volume});
+if(i%20===0)data.push({t,X,Y,H,shear,volume,accel,nAcc,nTotal:Math.log(volume)});
 const k1=derivative(q),k2=derivative(q.map((v,j)=>v+dt*k1[j]/2)),k3=derivative(q.map((v,j)=>v+dt*k2[j]/2)),k4=derivative(q.map((v,j)=>v+dt*k3[j]));
 q=q.map((v,j)=>v+dt*(k1[j]+2*k2[j]+2*k3[j]+k4[j])/6);
 }
-return {type:'ks',w,S0,hr,ha,rho0,data,minVol,peakShear,residual,reason,bounce};
+return {type:'ks',w,S0,hr,ha,rho0,data,minVol,peakShear,residual,reason,bounce,nAcc};
 }
 function curvesOf(o,key){
 if(o.type==='flrw'){
@@ -115,10 +118,12 @@ if(key==='acc')return {curves:[{label:'ä/a',color:colors[2],pts:all.map(p=>[p.t
 return {curves:[{label:'Samlet N',color:colors[0],pts:right.map(p=>[p.t,Math.log(p.a)])},{label:'Accelereret N',color:colors[2],pts:right.map(p=>[p.t,Math.min(o.Nacc,Math.log(p.a))])}],x:'Tid t',y:'N'};
 }
 const d=o.data;
-if(key==='xy')return {curves:[{label:'X(t) · radial',color:colors[0],pts:d.map(p=>[p.t,p.X])},{label:'Y(t) · sfærisk',color:colors[1],pts:d.map(p=>[p.t,p.Y])}],x:'Tid t',y:'Skalafaktor'};
-if(key==='h')return {curves:[{label:'Hᵥ(t)',color:colors[2],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'Hᵥ(t)'};
-if(key==='shear')return {curves:[{label:'σ²(t)',color:colors[1],pts:d.map(p=>[p.t,p.shear])}],x:'Tid t',y:'σ²'};
-return {curves:[{label:'(XY²)⅓',color:colors[0],pts:d.map(p=>[p.t,p.volume])}],x:'Tid t',y:'Volumenskala'};
+if(key==='a')return {curves:[{label:'aᵥ(t)',color:colors[0],pts:d.map(p=>[p.t,p.volume])}],x:'Tid t',y:'aᵥ(t)'};
+if(key==='h')return {curves:[{label:'Hᵥ(t)',color:colors[1],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'Hᵥ(t)'};
+if(key==='n')return {curves:[{label:'Samlet Nᵥ',color:colors[0],pts:d.map(p=>[p.t,p.nTotal])},{label:'Accelereret Nacc',color:colors[2],pts:d.map(p=>[p.t,p.nAcc])}],x:'Tid t',y:'N'};
+if(key==='acc')return {curves:[{label:'äᵥ/aᵥ',color:colors[2],pts:d.map(p=>[p.t,p.accel])}],x:'Tid t',y:'äᵥ/aᵥ'};
+if(key==='xy')return {curves:[{label:'X(t) radial',color:colors[0],pts:d.map(p=>[p.t,p.X])},{label:'Y(t) sfærisk',color:colors[1],pts:d.map(p=>[p.t,p.Y])}],x:'Tid t',y:'Skalafaktor'};
+return {curves:[{label:'σ²(t)',color:colors[1],pts:d.map(p=>[p.t,p.shear])}],x:'Tid t',y:'σ²'};
 }
 function nice(v){if(!Number.isFinite(v))return '—';if(Math.abs(v)>=10000||Math.abs(v)<.001&&v!==0)return v.toExponential(1);return (+v.toPrecision(4)).toString();}
 function plot(graph){
@@ -146,9 +151,9 @@ c.fillStyle='#456074';c.textAlign='center';c.textBaseline='bottom';c.font='12px 
 c.save();c.translate(15,m.t+ch/2);c.rotate(-Math.PI/2);c.fillText(graph.y,0,0);c.restore();
 }
 function showMetrics(o){
-const list=o.type==='flrw'?[['Accelererede e-folds Nacc',o.Nacc.toFixed(4)],['Samlede e-folds N(+T)',o.nTotal.toFixed(4)],['Constraint-fejl',o.residual.toExponential(1)]]:[['Mindste volumenskala',nice(o.minVol)],['Maksimal shear',nice(o.peakShear)],['Constraint-fejl',o.residual.toExponential(1)]];
+const list=o.type==='flrw'?[['Accelererede e-folds Nacc',o.Nacc.toFixed(4)],['Samlede e-folds N(+T)',o.nTotal.toFixed(4)],['Constraint-fejl',o.residual.toExponential(1)]]:[['Accelererede e-folds Nacc',nice(o.nAcc)],['Mindste volumenskala',nice(o.minVol)],['Constraint-fejl',o.residual.toExponential(1)]];
 $('metrics').innerHTML=list.map(([label,v])=>'<div class="metric"><span>'+label+'</span><strong>'+v+'</strong></div>').join('');
-$('status').textContent=o.type==='flrw'?'FLRW: bounce er normaliseret til t=0. Numerisk Friedmann-residual: '+o.residual.toExponential(2)+'.':'KS: '+(o.bounce?'Et volumen-vendepunkt optræder.':'Intet volumen-vendepunkt fundet.')+' Integration stoppet ved '+o.reason+'. Et vendepunkt er ikke bevis for et regulært bounce.';
+$('status').textContent=o.type==='flrw'?'FLRW: bounce er normaliseret til t=0. Numerisk Friedmann-residual: '+o.residual.toExponential(2)+'.':'KS: '+(o.bounce?'Et volumen-vendepunkt optræder.':'Intet volumen-vendepunkt fundet.')+' Integration stoppet ved '+o.reason+'. Accelererede e-folds er en lokal volumenbaseret indikator, ikke automatisk inflation.';
 }
 function refreshPlot(){
 if(!latest)return;
