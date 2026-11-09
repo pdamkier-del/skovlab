@@ -37,6 +37,9 @@ button{background:#164f4b;color:#d3fff5;border:1px solid #327b72;border-radius:8
 <section class="panel graph"><div class="chart-title"><h2>Scale factor a(t)</h2><span class="badge">Bounce at t = 0</span></div><canvas id="aChart"></canvas></section>
 <section class="panel graph"><div class="chart-title"><h2>Expansion rate H(t) = ȧ/a</h2><span class="badge">H &lt; 0 collapse · H &gt; 0 expansion</span></div><canvas id="hChart"></canvas></section>
 <section class="panel graph"><div class="chart-title"><h2>E-folds after the bounce</h2><span class="badge">Green total · Amber accelerated</span></div><canvas id="nChart"></canvas></section>
+<section class="panel" style="margin-top:12px"><h2>Validation checks</h2>
+<p class="note">These checks compare the numerical integrator with an exact flat-dust solution and with a separate closed FLRW example using Hashemi et al.'s published equation (16). The closed example uses our own sample parameters, not a digitisation of the paper's plots.</p>
+<div id="validations" class="note" aria-live="polite">Running validation…</div></section>
 <section class="panel" style="margin-top:12px"><h2>Equations used</h2><div class="eq">H² = a<sup>−3(1+w)</sup> − a<sup>−6</sup></div>
 <p class="note">Integrate the corresponding acceleration equation through the bounce: ä = −(1+3w)a<sup>−2−3w</sup>/2 + 2a<sup>−5</sup>. This is a specific reduced model, not the complete Einstein–Cartan tensor system.</p>
 <div class="eq">N<sub>acc</sub> = ln(a<sub>end</sub>/a<sub>B</sub>)</div>
@@ -46,7 +49,7 @@ button{background:#164f4b;color:#d3fff5;border:1px solid #327b72;border-radius:8
 <details class="details"><summary>Published assumptions versus our simplification</summary><p class="note">Bréchet et al. (arXiv:0706.2367) derive a more general Weyssenhoff effective stress tensor, including spin-gradient contributions. Hashemi et al. (arXiv:1407.4103) study homogeneous collapsing spin fluids, including curvature and an initially stationary configuration. Our baseline instead fixes k = 0 and normalises a bounce at t = 0. Thus its N<sub>acc</sub> numbers are analytical predictions of this baseline, not reported results of Hashemi's collapse model.</p></details>
 <p class="note" id="quality">Integrator status: running…</p></section>
 </div></div>
-<p class="note" style="margin-top:17px">Model version 1.1 · Mathematics and assumptions are documented here so subsequent updates at this URL remain interpretable. No inflationary field or particle production has been introduced.</p>
+<p class="note" style="margin-top:17px">Model version 1.2 · Mathematics and assumptions are documented here so subsequent updates at this URL remain interpretable. No inflationary field or particle production has been introduced.</p>
 </main>
 <script>
 "use strict";
@@ -84,5 +87,42 @@ saved='Einstein–Cartan FLRW (flat, bounce-normalised): w='+w.toFixed(2)+', T='
 el('matter').addEventListener('change',update);el('w').addEventListener('input',update);el('time').addEventListener('input',update);
 el('reset').onclick=()=>{el('matter').value='0';el('time').value='12';el('w').value='.20';update()};
 el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(saved);el('copy').textContent='Copied';setTimeout(()=>el('copy').textContent='Copy result',1000)}catch{window.prompt('Copy your result:',saved)}};
-window.addEventListener('resize',()=>update());update();
+
+// Independent validation routines, executed for every update.
+function testRK4(w,T,steps){
+const dt=T/steps,out=[{t:0,a:1,v:0}],F=a=>-(1+3*w)*.5*Math.pow(a,-2-3*w)+2*Math.pow(a,-5);let a=1,v=0;
+for(let j=1;j<=steps;j++){
+const p=v,q=F(a),r=v+dt*q/2,s=F(a+dt*p/2),u=v+dt*s/2,z=F(a+dt*r/2),aa=v+dt*z,bb=F(a+dt*u);
+a+=dt*(p+2*r+2*u+aa)/6;v+=dt*(q+2*s+2*z+bb)/6;out.push({t:j*dt,a,v});
+}
+return out;
+}
+function runValidation(){
+const duration=6,p=testRK4(0,duration,1200);
+const exact=t=>Math.pow(1+9*t*t/4,1/3);
+const maxAnalytic=Math.max(...p.map(x=>Math.abs(x.a-exact(x.t))));
+const maxConstraint=Math.max(...p.map(x=>Math.abs(x.v*x.v-(1/x.a-1/Math.pow(x.a,4)))));
+const nDust=Math.log(4)/3;
+const nMeasured=Math.log(Math.pow(4,1/3));
+const ai=3,C=.5,D=1,w=0,k=2*C/ai-D/Math.pow(ai,4);
+let a=ai,v=0,tb=null,amin=ai,t=0;const dt=.004,steps=13000;
+const accel=x=>-C*(1+3*w)*Math.pow(x,-2-3*w)+2*D*Math.pow(x,-5);
+let hadNegative=false,hadPositive=false,maxPaperConstraint=0;
+for(let j=1;j<=steps;j++){
+const f1=v,g1=accel(a),f2=v+dt*g1/2,g2=accel(a+dt*f1/2),f3=v+dt*g2/2,g3=accel(a+dt*f2/2),f4=v+dt*g3,g4=accel(a+dt*f3);
+const nextA=a+dt*(f1+2*f2+2*f3+f4)/6,nextV=v+dt*(g1+2*g2+2*g3+g4)/6;
+if(v<0)hadNegative=true;if(hadNegative&&nextV>0&&!hadPositive){hadPositive=true;tb=j*dt}
+a=nextA;v=nextV;t=j*dt;amin=Math.min(a,amin);
+maxPaperConstraint=Math.max(maxPaperConstraint,Math.abs(v*v-(2*C/a-D/Math.pow(a,4)-k)));
+}
+const paperPass=hadNegative&&hadPositive&&amin>0&&amin<ai&&maxPaperConstraint<2e-6;
+const results=[
+['Exact flat-dust a(t) = (1 + 9t²/4)^(1/3)',maxAnalytic<2e-6,'max scale-factor error '+maxAnalytic.toExponential(2)],
+['Flat-dust Friedmann constraint',maxConstraint<2e-6,'max residual '+maxConstraint.toExponential(2)],
+['Accelerated e-fold analytical value',Math.abs(nMeasured-nDust)<1e-12,'Nacc = '+nDust.toFixed(6)],
+['Hashemi-style closed FLRW collapse (own parameters)',paperPass,'a_i=3, 2C=1, D=1, k='+k.toFixed(6)+'; a_min≈'+amin.toFixed(6)+', t_b≈'+(tb||0).toFixed(2)+', max constraint residual '+maxPaperConstraint.toExponential(2)]
+];
+el('validations').innerHTML=results.map(([name,ok,note])=>'<p style="margin:7px 0"><strong style="color:'+(ok?'#4fdfc5':'#ff8b8b')+'">'+(ok?'PASS':'FAIL')+'</strong> · '+name+'<br><span style="color:#a4b7cb">'+note+'</span></p>').join('');
+}
+window.addEventListener('resize',()=>update());update();runValidation();
 </script></body></html>
