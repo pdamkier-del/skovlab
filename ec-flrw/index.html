@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Einstein–Cartan | FLRW Research Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#09111d;--panel:#122238;--line:#29415c;--txt:#e8f1fa;--mut:#a4b7cb;--a:#4fdfc5;--b:#93adff;--c:#ffcf80}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#1d3651,#09111d 66%);font:15px/1.5 system-ui,Arial;color:var(--txt)}
+main{max-width:1120px;margin:auto;padding:24px 16px 60px}h1{font-size:clamp(27px,4vw,44px);letter-spacing:-.035em;margin:8px 0}h2{font-size:17px;margin:0 0 10px}
+p{color:var(--mut);margin:6px 0 15px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--a);font-weight:750}
+.layout{display:grid;grid-template-columns:265px minmax(0,1fr);gap:15px;margin-top:24px}.panel{background:#122238ee;border:1px solid var(--line);border-radius:15px;padding:18px}
+.controls{align-self:start;position:sticky;top:15px}label{display:block;margin:18px 0 5px;font-weight:650;font-size:13px}
+input[type=range]{width:100%;accent-color:var(--a)}select{width:100%;padding:10px;background:#071421;border:1px solid var(--line);color:var(--txt);border-radius:8px}
+button{background:#164f4b;color:#d3fff5;border:1px solid #327b72;border-radius:8px;padding:9px 12px;cursor:pointer;font-weight:700}
+.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.note{font-size:12px;color:var(--mut);line-height:1.65}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat .num{font-size:clamp(19px,3vw,29px);font-weight:750;margin:8px 0 2px;font-variant-numeric:tabular-nums}.stat small{color:var(--mut)}
+.graph{margin-top:12px}.graph canvas{width:100%;height:235px;display:block}.chart-title{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.badge{font-size:11px;padding:5px 9px;border:1px solid #43647d;border-radius:999px;color:#bed6f0}
+.eq{font-family:Georgia,serif;font-size:19px;text-align:center;padding:12px;background:#091728;border-radius:10px;overflow:auto;white-space:nowrap}
+.details{margin-top:14px}.details summary{cursor:pointer;font-weight:650}.details p{margin:10px 0}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.controls{position:static}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:470px){.grid{grid-template-columns:1fr 1fr}.stat{padding:12px}.graph canvas{height:210px}main{padding:18px 10px}}
+</style></head><body><main>
+<div class="eyebrow">Einstein–Cartan research / Phase 1 · FLRW</div>
+<h1>Spin-fluid collapse laboratory</h1>
+<p>One stable address. Change the assumptions and investigate scale factor, Hubble rate, and e-folds of acceleration. This is a <strong>dimensionless, spatially flat FLRW baseline</strong>, not a simulation of a Kerr black hole.</p>
+<div class="layout"><aside class="panel controls"><h2>Model controls</h2>
+<label for="matter">Fluid type</label><select id="matter"><option value="0">Dust · w = 0</option><option value="0.3333333333333333">Radiation-like · w = 1/3</option><option value="custom">Custom equation of state</option></select>
+<div id="customBox" hidden><label for="w">w = <output id="wText">0.20</output></label><input id="w" type="range" min="0" max="0.90" step=".01" value=".20"></div>
+<label for="time">Time window: ± <output id="timeText">12</output></label><input id="time" type="range" min="3" max="30" step="1" value="12">
+<div class="buttons"><button id="reset">Reset</button><button id="copy">Copy result</button></div>
+<hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+<h2>Fixed assumptions</h2><p class="note">Flat FLRW (k = 0); homogeneous isotropic <em>effective</em> Weyssenhoff spin fluid; p = wρ; conserved particle number; ρ ∝ a<sup>−3(1+w)</sup>; spin squared ∝ a<sup>−6</sup>. No shear, spin-gradient terms, particle production, cosmological constant or Holst sector.</p>
+<p class="note">The bounce is normalised to a(0) = 1, H(0) = 0. Time is dimensionless; curves cannot be converted into seconds without restoring a physical density scale.</p>
+</aside><div>
+<div class="grid"><section class="panel stat"><small>Accelerated e-folds N<sub>acc</sub></small><div class="num" id="nAcc">—</div><small>Only expanding phase with ä &gt; 0</small></section>
+<section class="panel stat"><small>End of acceleration a/a<sub>B</sub></small><div class="num" id="aEnd">—</div><small>Analytical prediction</small></section>
+<section class="panel stat"><small>Total e-folds at +T</small><div class="num" id="nTotal">—</div><small>Includes decelerated expansion</small></section></div>
+<section class="panel graph"><div class="chart-title"><h2>Scale factor a(t)</h2><span class="badge">Bounce at t = 0</span></div><canvas id="aChart"></canvas></section>
+<section class="panel graph"><div class="chart-title"><h2>Expansion rate H(t) = ȧ/a</h2><span class="badge">H &lt; 0 collapse · H &gt; 0 expansion</span></div><canvas id="hChart"></canvas></section>
+<section class="panel graph"><div class="chart-title"><h2>E-folds after the bounce</h2><span class="badge">Green total · Amber accelerated</span></div><canvas id="nChart"></canvas></section>
+<section class="panel" style="margin-top:12px"><h2>Equations used</h2><div class="eq">H² = a<sup>−3(1+w)</sup> − a<sup>−6</sup></div>
+<p class="note">Integrate the corresponding acceleration equation through the bounce: ä = −(1+3w)a<sup>−2−3w</sup>/2 + 2a<sup>−5</sup>. This is a specific reduced model, not the complete Einstein–Cartan tensor system.</p>
+<div class="eq">N<sub>acc</sub> = ln(a<sub>end</sub>/a<sub>B</sub>)</div>
+<details class="details"><summary>Where does N<sub>acc</sub> come from?</summary>
+<p class="note">The spin-fluid acceleration equation is ä/a = −κ[(1+3w)ρ − 4κS²]/6. Set ä = 0 to find the end of acceleration. Conservation gives ρ ∝ a<sup>−3(1+w)</sup>, S² ∝ a<sup>−6</sup>. For a flat bounce, ρ<sub>B</sub> = κS²<sub>B</sub>. Thus a<sub>end</sub>/a<sub>B</sub> = [4/(1+3w)]<sup>1/[3(1−w)]</sup> and N<sub>acc</sub> = ln[4/(1+3w)]/[3(1−w)]. This expression is valid for −1/3 &lt; w &lt; 1 under these assumptions; here the UI restricts w to [0, 0.9].</p>
+</details>
+<details class="details"><summary>Published assumptions versus our simplification</summary><p class="note">Bréchet et al. (arXiv:0706.2367) derive a more general Weyssenhoff effective stress tensor, including spin-gradient contributions. Hashemi et al. (arXiv:1407.4103) study homogeneous collapsing spin fluids, including curvature and an initially stationary configuration. Our baseline instead fixes k = 0 and normalises a bounce at t = 0. Thus its N<sub>acc</sub> numbers are analytical predictions of this baseline, not reported results of Hashemi's collapse model.</p></details>
+<p class="note" id="quality">Integrator status: running…</p></section>
+</div></div>
+<p class="note" style="margin-top:17px">Model version 1.1 · Mathematics and assumptions are documented here so subsequent updates at this URL remain interpretable. No inflationary field or particle production has been introduced.</p>
+</main>
+<script>
+"use strict";
+const el=id=>document.getElementById(id);
+function solution(w,T){
+const steps=4000,dt=T/steps,dat=[{t:0,a:1,v:0}],force=a=>-.5*(1+3*w)*Math.pow(a,-2-3*w)+2*Math.pow(a,-5);let a=1,v=0;
+for(let i=1;i<=steps;i++){const k1a=v,k1v=force(a),k2a=v+dt*k1v/2,k2v=force(a+dt*k1a/2),k3a=v+dt*k2v/2,k3v=force(a+dt*k2a/2),k4a=v+dt*k3v,k4v=force(a+dt*k3a);
+a+=dt*(k1a+2*k2a+2*k3a+k4a)/6;v+=dt*(k1v+2*k2v+2*k3v+k4v)/6;dat.push({t:i*dt,a,v})}
+return dat;
+}
+function draw(id,curves,xmin,xmax,zero=false){
+const can=el(id),rect=can.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);can.width=Math.round(rect.width*dpr);can.height=Math.round(rect.height*dpr);const ctx=can.getContext('2d'),W=rect.width,H=rect.height;ctx.scale(dpr,dpr);
+const m={l:45,r:16,t:12,b:30},pw=W-m.l-m.r,ph=H-m.t-m.b;
+const all=curves.flatMap(c=>c.data.map(p=>p.y));let ymin=Math.min(...all),ymax=Math.max(...all);if(zero){ymin=Math.min(0,ymin);ymax=Math.max(0,ymax)}let span=ymax-ymin||1;ymin-=span*.08;ymax+=span*.08;
+const xp=x=>m.l+(x-xmin)/(xmax-xmin)*pw,yp=y=>m.t+(ymax-y)/(ymax-ymin)*ph;
+ctx.font='11px system-ui';ctx.lineWidth=1;for(let i=0;i<=4;i++){let y=m.t+i*ph/4;ctx.strokeStyle='#2d4660';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(W-m.r,y);ctx.stroke();ctx.fillStyle='#a4b7cb';ctx.textAlign='right';ctx.fillText((ymax-i*(ymax-ymin)/4).toFixed(2),m.l-7,y+3);let x=m.l+i*pw/4;ctx.textAlign='center';ctx.fillText((xmin+i*(xmax-xmin)/4).toFixed(1),x,H-11)}
+if(xmin<0&&xmax>0){ctx.strokeStyle='#8395ad';ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(xp(0),m.t);ctx.lineTo(xp(0),m.t+ph);ctx.stroke();ctx.setLineDash([])}
+for(const c of curves){ctx.beginPath();ctx.strokeStyle=c.color;ctx.lineWidth=2.7;c.data.forEach((p,i)=>i?ctx.lineTo(xp(p.x),yp(p.y)):ctx.moveTo(xp(p.x),yp(p.y)));ctx.stroke()}
+}
+let saved='';
+function update(){
+const custom=el('matter').value==='custom';el('customBox').hidden=!custom;let w=custom?+el('w').value:+el('matter').value,T=+el('time').value;
+el('wText').textContent=w.toFixed(2);el('timeText').textContent=T;
+const p=solution(w,T),end=Math.pow(4/(1+3*w),1/(3*(1-w))),N=Math.log(end),tot=Math.log(p[p.length-1].a);
+el('nAcc').textContent=N.toFixed(3);el('aEnd').textContent=end.toFixed(3);el('nTotal').textContent=tot.toFixed(3);
+const interval=p.filter((x,i)=>i%8===0||i===p.length-1);
+const whole=[...interval.slice(1).reverse().map(x=>({t:-x.t,a:x.a,v:-x.v})),...interval];
+draw('aChart',[{color:'#4fdfc5',data:whole.map(x=>({x:x.t,y:x.a}))}],-T,T);
+draw('hChart',[{color:'#93adff',data:whole.map(x=>({x:x.t,y:x.v/x.a}))}],-T,T,true);
+draw('nChart',[{color:'#4fdfc5',data:interval.map(x=>({x:x.t,y:Math.log(x.a)}))},{color:'#ffcf80',data:interval.map(x=>({x:x.t,y:Math.min(N,Math.log(x.a))}))}],0,T,true);
+const err=Math.max(...interval.map(x=>Math.abs(x.v*x.v-(Math.pow(x.a,-1-3*w)-Math.pow(x.a,-4)))));
+el('quality').textContent='Numerical constraint check: maximum |ȧ² − (a⁻¹⁻³ʷ − a⁻⁴)| = '+err.toExponential(2);
+saved='Einstein–Cartan FLRW (flat, bounce-normalised): w='+w.toFixed(2)+', T='+T+', Nacc='+N.toFixed(4)+', a_end/a_B='+end.toFixed(4)+', N_total(+T)='+tot.toFixed(4);
+}
+el('matter').addEventListener('change',update);el('w').addEventListener('input',update);el('time').addEventListener('input',update);
+el('reset').onclick=()=>{el('matter').value='0';el('time').value='12';el('w').value='.20';update()};
+el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(saved);el('copy').textContent='Copied';setTimeout(()=>el('copy').textContent='Copy result',1000)}catch{window.prompt('Copy your result:',saved)}};
+window.addEventListener('resize',()=>update());update();
+</script></body></html>
