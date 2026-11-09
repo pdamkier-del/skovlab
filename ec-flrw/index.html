@@ -1,230 +1,283 @@
 <!doctype html>
-<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Einstein–Cartan · Geometry Lab</title>
-<style>
-:root{color-scheme:light;--bg:#f4f7fb;--panel:#ffffff;--border:#d8e2ec;--txt:#152b40;--dim:#5d7184;--mint:#087e7b;--blue:#4c62c8;--gold:#b9770b}
-*{box-sizing:border-box}body{margin:0;color:var(--txt);background:var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,select,input{font:inherit}button,select{cursor:pointer}
-.shell{max-width:1440px;margin:auto;padding:27px 27px 42px}.head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--mint);font-weight:750}h1{margin:4px 0 0;letter-spacing:-.038em;font-size:clamp(25px,3vw,36px);line-height:1.15}.headNote{color:var(--dim);font-size:12px}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) 315px;align-items:start;gap:17px}.panel{border:1px solid var(--border);border-radius:15px;background:var(--panel)}.mainPanel{padding:23px;min-width:0}.plotHeader{display:flex;align-items:end;gap:18px;justify-content:space-between;flex-wrap:wrap}.plotHeader h2{font-size:20px;letter-spacing:-.025em;margin:0}.mini{color:var(--dim);font-size:12px}.graphOptions{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
-.fieldLabel{display:block;font-size:12px;letter-spacing:.01em;font-weight:700;color:#496176;margin:0 0 7px}
-select{background:#f3f7fb;border:1px solid #c9d7e4;color:var(--txt);padding:10px 13px;border-radius:9px;max-width:100%}
-.graphOptions select{min-width:194px}
-.chartArea{margin-top:20px;border:1px solid #d5e2ed;background:#ffffff;border-radius:13px;padding:14px 8px 2px;overflow:hidden}
-canvas{display:block;width:100%;height:clamp(320px,46vw,570px)}.legend{display:flex;gap:20px;flex-wrap:wrap;margin:12px 15px 14px;font-size:13px;color:#4b6478}.swatch{display:inline-block;width:13px;height:3px;border-radius:2px;margin-right:8px;vertical-align:middle;background:var(--mint)}
-.plotCaption{min-height:42px;font-size:13px;color:var(--dim);margin:17px 2px}
-.metrics{border-top:1px solid var(--border);margin-top:14px;padding-top:17px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:10px 12px;background:#f3f7fb;border-radius:10px;min-width:0}.metric span{display:block;font-size:12px;color:var(--dim)}.metric strong{display:block;font-size:clamp(17px,2vw,23px);margin-top:5px;font-variant-numeric:tabular-nums}
-.side{padding:21px;position:sticky;top:15px}.side h2{font-size:18px;letter-spacing:-.01em;margin:0 0 17px}.side .section{padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:19px}.side .section:last-of-type{border:0;margin:0;padding:0}.side select{width:100%}.control{margin:18px 0 0}.control:first-child{margin-top:0}.controlTop{display:flex;justify-content:space-between;gap:8px;align-items:center}.controlTop label{font-size:13px;font-weight:650}.value{font-size:13px;color:var(--mint);font-variant-numeric:tabular-nums}
-input[type=range]{display:block;width:100%;accent-color:var(--mint);margin:9px 0 0}
-.info{color:var(--dim);font-size:12px;line-height:1.65;margin:12px 0 0}.actions{display:flex;gap:9px;margin-top:18px}button{background:#087e7b;border:1px solid #087e7b;color:#ffffff;padding:9px 12px;border-radius:9px;font-weight:650}
-button.secondary{background:#f0f5fb;border-color:#bacbda;color:#24435d}
-.disclosure{margin-top:17px;background:#101e2d;border:1px solid var(--border);border-radius:12px;padding:15px 19px}.disclosure summary{cursor:pointer;font-weight:700}.disclosure p{color:var(--dim);font-size:13px;line-height:1.65}.mono{font-family:ui-serif,Georgia,serif;color:#184f58;font-size:17px}
-.notice{padding:12px 13px;border:1px solid #c8dce9;background:#edf6f9;border-radius:10px;color:#31576a;font-size:12px;line-height:1.55}
-[hidden]{display:none!important}a{color:#0a7774}
-@media(max-width:880px){.workspace{grid-template-columns:minmax(0,1fr)}.side{position:static;order:2}.mainPanel{order:1}.shell{padding:20px 12px 38px}}
-@media(max-width:530px){.mainPanel{padding:15px}.graphOptions{width:100%}.graphOptions>div,.graphOptions select{width:100%}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chartArea{padding:7px 2px}.legend{font-size:12px;gap:10px}.head{margin-bottom:16px}}
-</style></head>
-<body><div class="shell">
-<header class="head"><div><div class="eyebrow">Einstein–Cartan · Numerical research</div><h1>Geometry Lab</h1></div><div class="headNote">FLRW & Kantowski–Sachs · v2.2<br>Dimensionløse modeller · Ingen Holst eller partikelproduktion</div></header>
-<div class="workspace">
-<main class="panel mainPanel">
-<div class="plotHeader"><div><div class="eyebrow" id="plotEyebrow">FLRW · isotrop</div><h2 id="plotTitle">Skalafaktor a(t)</h2></div><div class="graphOptions"><div><label class="fieldLabel" for="graphSelect">Vælg graf</label><select id="graphSelect" aria-label="Vælg graf"></select></div></div></div>
-<div class="chartArea"><canvas id="plot" aria-label="Simuleret koordinatsystem" role="img"></canvas><div class="legend" id="legend"></div></div>
-<p class="plotCaption" id="plotCaption"></p>
-<div class="metrics" id="metrics"></div>
-</main>
-<aside class="panel side">
-<h2>Parametre</h2>
-<div class="section"><label class="fieldLabel" for="geometry">Geometri</label><select id="geometry"><option value="flrw">FLRW</option><option value="ks">Kantowski–Sachs (KS)</option></select></div>
-<div class="section" id="flrwControls">
-<div class="control"><label class="fieldLabel" for="flrwMatter">Fluidtype</label><select id="flrwMatter"><option value="0">Støv (w = 0)</option><option value="0.3333333333333333">Stråling (w = 1/3)</option><option value="custom">Valgfri w</option></select></div>
-<div class="control" id="wControl" hidden><div class="controlTop"><label for="w">Ligningstilstand w</label><output class="value" id="wValue"></output></div><input type="range" id="w" min="0" max=".9" step=".01" value=".2"></div>
-<div class="control"><div class="controlTop"><label for="flrwTime">Tidsvindue ±T</label><output class="value" id="flrwTimeValue"></output></div><input id="flrwTime" type="range" min="3" max="30" step="1" value="12"></div>
-<p class="info">Flad geometri (k=0), a(0)=1 og H(0)=0. Bouncet er valgt som begyndelsesbetingelse.</p>
-</div>
-<div class="section" id="ksControls" hidden>
-<div class="control"><label class="fieldLabel" for="ksMatter">Fluidtype</label><select id="ksMatter"><option value="0">Støv (w = 0)</option><option value="0.3333333333333333">Stråling (w = 1/3)</option></select></div>
-<div class="control"><div class="controlTop"><label for="ksSpin">Spin-korrektion S₀</label><output class="value" id="ksSpinValue"></output></div><input id="ksSpin" type="range" min="0" max="4" step=".1" value=".5"></div>
-<div class="control"><div class="controlTop"><label for="ksRadial">Radial Hᵣ(0)</label><output class="value" id="ksRadialValue"></output></div><input id="ksRadial" type="range" min="-.9" max="-.1" step=".05" value="-.3"></div>
-<div class="control"><div class="controlTop"><label for="ksAngular">Sfærisk HΩ(0)</label><output class="value" id="ksAngularValue"></output></div><input id="ksAngular" type="range" min="-.9" max="-.1" step=".05" value="-.3"></div>
-<p class="info">KS er anisotrop, men stadig homogen. De to skalafaktorer kan udvikle sig forskelligt. Vi stopper integrationen ved en numerisk sikkerhedsgrænse.</p>
-</div>
-<div class="section"><div class="actions"><button type="button" id="reset">Nulstil</button><button type="button" class="secondary" id="copy">Kopiér resultater</button></div></div>
-<div class="notice" id="status">Beregner model…</div>
-</aside></div>
-<details class="disclosure"><summary>Fysisk model og ligninger</summary>
-<p><strong>FLRW:</strong> Den normaliserede model anvender <span class="mono">H² = a⁻³⁽¹⁺ʷ⁾ − a⁻⁶</span>, og accelerationen <span class="mono">ä = −(1+3w)a⁻²⁻³ʷ/2 + 2a⁻⁵</span>. Fluidet antages homogent, isotropt og med bevaret partikelantal. Spinkorrektionen skalerer som a⁻⁶. Den accelererede e-fold varighed er <span class="mono">Nₐ꜀꜀ = ln[4/(1+3w)]/[3(1−w)]</span> for 0≤w&lt;1. N er ikke automatisk inflation.</p>
-<p><strong>KS:</strong> <span class="mono">ds² = −dt² + X²dr² + Y²dΩ²</span>. I vores reducerede model: <span class="mono">(Ẏ²+1)/Y² + 2ẊẎ/(XY) = ρ − S</span>, <span class="mono">2Ÿ/Y + (Ẏ²+1)/Y² = −(wρ−S)</span> og <span class="mono">Ẍ/X + Ÿ/Y + ẊẎ/(XY) = −(wρ−S)</span>. Vi anvender ρ=ρ₀(XY²)⁻⁽¹⁺ʷ⁾ og S=S₀(XY²)⁻². ρ₀ bestemmes af startconstrainten. Vi definerer aᵥ=(XY²)⅓, Hᵥ=ȧᵥ/aᵥ, Nᵥ=ln(aᵥ/aᵥ(0)). Nacc optælles kun under udvidelse og positiv acceleration af aᵥ. Disse approksimationer beskriver ikke fuld spinorientering, spin-gradienter eller en realistisk Kerr-geometri.</p>
-<p>Basis: <a href="https://arxiv.org/abs/0706.2367" target="_blank" rel="noopener">Bréchet m.fl. (Weyssenhoff-fluid)</a>, <a href="https://arxiv.org/abs/1407.4103" target="_blank" rel="noopener">Hashemi m.fl. (FLRW-kollaps)</a> samt <a href="https://arxiv.org/abs/2007.11556" target="_blank" rel="noopener">Popławski (KS og torsion)</a>. Denne app er en udforskning af specificerede reducerede ligninger, ikke et bevis for et babyunivers.</p>
-</details>
-</div>
-<script>
-'use strict';
-const $=id=>document.getElementById(id);
-const colors=['#087e7b','#526aca','#b9770b','#bc5481'];
-const graphDefs={
-flrw:[['both','a(t) + H(t)','Begge kurver på ét koordinatsystem. Venstre akse: skalafaktor. Højre akse: Hubble-rate. Bounce markeres ved H: negativ → positiv.'],['a','Skalafaktor a(t)','Kollaps, bounce og udvidelse.'],['h','Hubble-rate H(t)','H < 0: kollaps · H > 0: udvidelse.'],['n','E-folds N(t)','Samlede e-folds og den accelererede andel.'],['acc','Acceleration ä/a','Positiv acceleration betyder accelereret udvidelse.']],
-ks:[['both','aᵥ(t) + Hᵥ(t)','Volumenskala og gennemsnitlig Hubble-rate i samme koordinatsystem. Volumen-bounce markeres ved Hᵥ: negativ → positiv; dette er ikke nødvendigvis et regulært geometrisk bounce.'],['a','Volumenskala aᵥ(t)','Gennemsnitlig rumlig størrelse: aᵥ=(XY²)⅓.'],['h','Hubble-rate Hᵥ(t)','Hᵥ=(Hᵣ+2HΩ)/3.'],['n','E-folds Nᵥ(t)','Nᵥ=ln(aᵥ/aᵥ(0)), accelererede e-folds beregnes særskilt.'],['acc','Acceleration äᵥ/aᵥ','Volumenskalafaktorens acceleration.'],['xy','Retninger X(t) og Y(t)','Radial og sfærisk skalafaktor.'],['shear','Shear σ²(t)','Anisotropi mellem de to retninger.']]
-};
-let latest=null,currentPlot=null;
-function computeFLRW(){
-const w=$('flrwMatter').value==='custom'?+$('w').value:+$('flrwMatter').value,T=+$('flrwTime').value;
-const steps=4000,dt=T/steps,F=a=>-.5*(1+3*w)*Math.pow(a,-2-3*w)+2*Math.pow(a,-5);
-let a=1,v=0;const right=[{t:0,a,v,acc:F(1)}],samples=[];
-for(let i=1;i<=steps;i++){
- const a1=v,v1=F(a),a2=v+dt*v1/2,v2=F(a+dt*a1/2),a3=v+dt*v2/2,v3=F(a+dt*a2/2),a4=v+dt*v3,v4=F(a+dt*a3);
- a+=dt*(a1+2*a2+2*a3+a4)/6;v+=dt*(v1+2*v2+2*v3+v4)/6;
- if(i%8===0||i===steps)right.push({t:i*dt,a,v,acc:F(a)});
-}
-const left=right.slice(1).reverse().map(x=>({t:-x.t,a:x.a,v:-x.v,acc:x.acc}));
-const all=[...left,...right],Nacc=Math.log(4/(1+3*w))/(3*(1-w)),nTotal=Math.log(right[right.length-1].a),end=Math.exp(Nacc);
-let residual=0;for(const p of all)residual=Math.max(residual,Math.abs(p.v*p.v-(Math.pow(p.a,-1-3*w)-Math.pow(p.a,-4))));
-return {type:'flrw',w,T,all,right,Nacc,nTotal,end,residual};
-}
-function computeKS(){
-const w=+$('ksMatter').value,S0=+$('ksSpin').value,hr=+$('ksRadial').value,ha=+$('ksAngular').value;
-const rho0=1+ha*ha+2*hr*ha+S0;
-function derivative(q){
-const [X,Y,vX,vY]=q,V=X*Y*Y;
-if(X<=0||Y<=0||!Number.isFinite(V))return [0,0,0,0];
-const rho=rho0*Math.pow(V,-1-w),S=S0/(V*V),p=w*rho-S;
-const ddY=-(vY*vY+1)/(2*Y)-p*Y/2;
-const ddX=-X*(ddY/Y+vX*vY/(X*Y)+p);
-return [vX,vY,ddX,ddY];
-}
-const dt=.00035,N=Math.floor(5/dt);let q=[1,1,hr,ha],data=[],minVol=1,peakShear=0,residual=0,reason='tidsgrænse',bounce=false,prev=(hr+2*ha)/3,nAcc=0,previousH=prev,previousAccel=0,previousT=0;
-for(let i=0;i<=N;i++){
-const [X,Y,vX,vY]=q;
-if(!q.every(Number.isFinite)||X<.12||Y<.12||X>500||Y>500){reason='sikkerhedsgrænse';break}
-const t=i*dt,V=X*Y*Y,volume=Math.cbrt(V),hrNow=vX/X,haNow=vY/Y,H=(hrNow+2*haNow)/3,shear=(hrNow-haNow)**2/3;
-const density=rho0*Math.pow(V,-1-w),S=S0/(V*V);
-const d=derivative(q),accel=(d[2]/X-hrNow*hrNow+2*(d[3]/Y-haNow*haNow))/3+H*H;
-if(i>0 && H>0 && accel>0 && previousH>0 && previousAccel>0)nAcc+=.5*(previousH+H)*(t-previousT);
-previousH=H;previousAccel=accel;previousT=t;
-residual=Math.max(residual,Math.abs((vY*vY+1)/(Y*Y)+2*hrNow*haNow-(density-S)));
-minVol=Math.min(minVol,volume);peakShear=Math.max(peakShear,shear);
-if(prev<0&&H>=0)bounce=true;prev=H;
-if(i%20===0)data.push({t,X,Y,H,shear,volume,accel,nAcc,nTotal:Math.log(volume)});
-const k1=derivative(q),k2=derivative(q.map((v,j)=>v+dt*k1[j]/2)),k3=derivative(q.map((v,j)=>v+dt*k2[j]/2)),k4=derivative(q.map((v,j)=>v+dt*k3[j]));
-q=q.map((v,j)=>v+dt*(k1[j]+2*k2[j]+2*k3[j]+k4[j])/6);
-}
-return {type:'ks',w,S0,hr,ha,rho0,data,minVol,peakShear,residual,reason,bounce,nAcc};
-}
-function curvesOf(o,key){
-if(o.type==='flrw'){
-const all=o.all,right=o.right;
-if(key==='both')return {combined:true,curves:[{label:'a(t)',axis:'left',color:colors[0],pts:all.map(p=>[p.t,p.a])},{label:'H(t)',axis:'right',color:colors[1],pts:all.map(p=>[p.t,p.v/p.a])}],x:'Tid t',y:'a(t) / H(t)'};
-if(key==='a')return {curves:[{label:'a(t)',color:colors[0],pts:all.map(p=>[p.t,p.a])}],x:'Tid t',y:'a(t)'};
-if(key==='h')return {curves:[{label:'H(t)',color:colors[1],pts:all.map(p=>[p.t,p.v/p.a])}],x:'Tid t',y:'H(t)'};
-if(key==='acc')return {curves:[{label:'ä/a',color:colors[2],pts:all.map(p=>[p.t,p.acc/p.a])}],x:'Tid t',y:'ä/a'};
-return {curves:[{label:'Samlet N',color:colors[0],pts:right.map(p=>[p.t,Math.log(p.a)])},{label:'Accelereret N',color:colors[2],pts:right.map(p=>[p.t,Math.min(o.Nacc,Math.log(p.a))])}],x:'Tid t',y:'N'};
-}
-const d=o.data;
-if(key==='both')return {combined:true,curves:[{label:'aᵥ(t)',axis:'left',color:colors[0],pts:d.map(p=>[p.t,p.volume])},{label:'Hᵥ(t)',axis:'right',color:colors[1],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'aᵥ(t) / Hᵥ(t)'};
-if(key==='a')return {curves:[{label:'aᵥ(t)',color:colors[0],pts:d.map(p=>[p.t,p.volume])}],x:'Tid t',y:'aᵥ(t)'};
-if(key==='h')return {curves:[{label:'Hᵥ(t)',color:colors[1],pts:d.map(p=>[p.t,p.H])}],x:'Tid t',y:'Hᵥ(t)'};
-if(key==='n')return {curves:[{label:'Samlet Nᵥ',color:colors[0],pts:d.map(p=>[p.t,p.nTotal])},{label:'Accelereret Nacc',color:colors[2],pts:d.map(p=>[p.t,p.nAcc])}],x:'Tid t',y:'N'};
-if(key==='acc')return {curves:[{label:'äᵥ/aᵥ',color:colors[2],pts:d.map(p=>[p.t,p.accel])}],x:'Tid t',y:'äᵥ/aᵥ'};
-if(key==='xy')return {curves:[{label:'X(t) radial',color:colors[0],pts:d.map(p=>[p.t,p.X])},{label:'Y(t) sfærisk',color:colors[1],pts:d.map(p=>[p.t,p.Y])}],x:'Tid t',y:'Skalafaktor'};
-return {curves:[{label:'σ²(t)',color:colors[1],pts:d.map(p=>[p.t,p.shear])}],x:'Tid t',y:'σ²'};
-}
-function nice(v){if(!Number.isFinite(v))return '—';if(Math.abs(v)>=10000||Math.abs(v)<.001&&v!==0)return v.toExponential(1);return (+v.toPrecision(4)).toString();}
-
-function plotCombined(graph){
-const canvas=$('plot'),r=canvas.getBoundingClientRect(),W=r.width,H=r.height;if(W<50||H<50)return;
-const scale=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(W*scale);canvas.height=Math.round(H*scale);
-const c=canvas.getContext('2d');c.setTransform(scale,0,0,scale,0,0);
-const m={l:Math.min(69,W*.15),r:Math.min(75,W*.16),t:30,b:55},cw=W-m.l-m.r,ch=H-m.t-m.b;
-const [a,h]=graph.curves,points=a.pts.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1])),hp=h.pts.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
-if(!points.length||!hp.length||cw<=0||ch<=0)return;
-const xmin=points[0][0],xmax=points[points.length-1][0];
-const av=points.map(p=>p[1]),hv=hp.map(p=>p[1]);
-function bounds(values,includeZero){let lo=Math.min(...values),hi=Math.max(...values);if(includeZero){lo=Math.min(0,lo);hi=Math.max(0,hi)}let pad=(hi-lo||1)*.10;return [lo-pad,hi+pad]}
-const [amin,amax]=bounds(av,false),[hmin,hmax]=bounds(hv,true);
-const xp=x=>m.l+(x-xmin)/(xmax-xmin||1)*cw;
-const ya=y=>m.t+(amax-y)/(amax-amin)*ch, yh=y=>m.t+(hmax-y)/(hmax-hmin)*ch;
-c.font='12px system-ui';c.textBaseline='middle';
-for(let i=0;i<=5;i++){
-const y=m.t+ch*i/5;c.lineWidth=1;c.strokeStyle='#e4ebf1';c.beginPath();c.moveTo(m.l,y);c.lineTo(m.l+cw,y);c.stroke();
-c.fillStyle=a.color;c.textAlign='right';c.fillText(nice(amax-(amax-amin)*i/5),m.l-9,y);
-c.fillStyle=h.color;c.textAlign='left';c.fillText(nice(hmax-(hmax-hmin)*i/5),m.l+cw+9,y);
-}
-c.textBaseline='top';c.textAlign='center';c.fillStyle='#61758a';
-for(let i=0;i<=5;i++){const x=m.l+cw*i/5;c.fillText(nice(xmin+(xmax-xmin)*i/5),x,m.t+ch+12)}
-c.save();c.beginPath();c.rect(m.l,m.t,cw,ch);c.clip();
-if(hmin<0&&hmax>0){c.beginPath();c.setLineDash([5,5]);c.strokeStyle='#a3b4c4';c.moveTo(m.l,yh(0));c.lineTo(m.l+cw,yh(0));c.stroke();c.setLineDash([])}
-const turning=[];
-for(let i=1;i<hp.length;i++){
-let p=hp[i-1],q=hp[i];if(p[1]<0&&q[1]>=0){let frac=(0-p[1])/(q[1]-p[1]||1);turning.push(p[0]+(q[0]-p[0])*frac)}
-}
-for(const t of turning){let x=xp(t);c.beginPath();c.setLineDash([4,4]);c.strokeStyle='#cc8541';c.moveTo(x,m.t);c.lineTo(x,m.t+ch);c.stroke();c.setLineDash([]);
-const nearest=points.reduce((p,q)=>Math.abs(q[0]-t)<Math.abs(p[0]-t)?q:p);
-c.beginPath();c.fillStyle='#cc8541';c.arc(x,ya(nearest[1]),4.5,0,2*Math.PI);c.fill();
-}
-for(const series of [a,h]){const y=series.axis==='left'?ya:yh;c.beginPath();c.strokeStyle=series.color;c.lineWidth=2.8;c.lineJoin='round';series.pts.forEach((p,i)=>i?c.lineTo(xp(p[0]),y(p[1])):c.moveTo(xp(p[0]),y(p[1])));c.stroke()}
-c.restore();
-c.font='bold 12px system-ui';c.fillStyle=a.color;c.textAlign='left';c.textBaseline='top';c.fillText(a.label+' · venstre akse',m.l,m.t-24);
-c.fillStyle=h.color;c.textAlign='right';c.fillText(h.label+' · højre akse',m.l+cw,m.t-24);
-c.font='12px system-ui';c.fillStyle='#456074';c.textAlign='center';c.fillText('Tid t',m.l+cw/2,H-23);
-}
-
-function plot(graph){
-if(graph.combined){plotCombined(graph);return;}
-const canvas=$('plot'),rect=canvas.getBoundingClientRect(),W=rect.width,H=rect.height;
-if(W<10||H<10)return;
-const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
-const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
-const m={l:66,r:22,t:18,b:54},cw=Math.max(50,W-m.l-m.r),ch=Math.max(50,H-m.t-m.b);
-const pts=graph.curves.flatMap(x=>x.pts).filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
-if(!pts.length)return;
-let xmin=Math.min(...pts.map(p=>p[0])),xmax=Math.max(...pts.map(p=>p[0])),ymin=Math.min(...pts.map(p=>p[1])),ymax=Math.max(...pts.map(p=>p[1]));
-if(xmin===xmax)xmax=xmin+1;if(ymin===ymax){ymin-=1;ymax+=1}
-const pad=(ymax-ymin)*.09;ymin-=pad;ymax+=pad;
-const xp=x=>m.l+(x-xmin)/(xmax-xmin)*cw,yp=y=>m.t+(ymax-y)/(ymax-ymin)*ch;
-c.font='12px system-ui';c.textAlign='right';c.textBaseline='middle';
-for(let i=0;i<=5;i++){const y=m.t+i*ch/5;c.strokeStyle='#e4ebf1';c.lineWidth=1;c.beginPath();c.moveTo(m.l,y);c.lineTo(m.l+cw,y);c.stroke();c.fillStyle='#5b7083';c.fillText(nice(ymax-i*(ymax-ymin)/5),m.l-10,y)}
-c.textAlign='center';c.textBaseline='top';
-for(let i=0;i<=5;i++){const x=m.l+i*cw/5;c.fillStyle='#5b7083';c.fillText(nice(xmin+i*(xmax-xmin)/5),x,m.t+ch+11)}
-c.strokeStyle='#637c90';c.beginPath();c.moveTo(m.l,m.t);c.lineTo(m.l,m.t+ch);c.lineTo(m.l+cw,m.t+ch);c.stroke();
-if(xmin<0&&xmax>0){c.setLineDash([4,5]);c.strokeStyle='#9eb1c1';c.beginPath();c.moveTo(xp(0),m.t);c.lineTo(xp(0),m.t+ch);c.stroke();c.setLineDash([])}
-if(ymin<0&&ymax>0){c.setLineDash([4,5]);c.strokeStyle='#a8b8c6';c.beginPath();c.moveTo(m.l,yp(0));c.lineTo(m.l+cw,yp(0));c.stroke();c.setLineDash([])}
-c.save();c.beginPath();c.rect(m.l,m.t,cw,ch);c.clip();
-for(const s of graph.curves){c.beginPath();c.strokeStyle=s.color;c.lineWidth=2.7;c.lineJoin='round';s.pts.forEach((p,i)=>i?c.lineTo(xp(p[0]),yp(p[1])):c.moveTo(xp(p[0]),yp(p[1])));c.stroke()}c.restore();
-c.fillStyle='#456074';c.textAlign='center';c.textBaseline='bottom';c.font='12px system-ui';c.fillText(graph.x,m.l+cw/2,H-6);
-c.save();c.translate(15,m.t+ch/2);c.rotate(-Math.PI/2);c.fillText(graph.y,0,0);c.restore();
-}
-function showMetrics(o){
-const list=o.type==='flrw'?[['Accelererede e-folds Nacc',o.Nacc.toFixed(4)],['Samlede e-folds N(+T)',o.nTotal.toFixed(4)],['Constraint-fejl',o.residual.toExponential(1)]]:[['Accelererede e-folds Nacc',nice(o.nAcc)],['Mindste volumenskala',nice(o.minVol)],['Constraint-fejl',o.residual.toExponential(1)]];
-$('metrics').innerHTML=list.map(([label,v])=>'<div class="metric"><span>'+label+'</span><strong>'+v+'</strong></div>').join('');
-$('status').textContent=o.type==='flrw'?'FLRW: bounce er normaliseret til t=0. Numerisk Friedmann-residual: '+o.residual.toExponential(2)+'.':'KS: '+(o.bounce?'Et volumen-vendepunkt optræder.':'Intet volumen-vendepunkt fundet.')+' Integration stoppet ved '+o.reason+'. Accelererede e-folds er en lokal volumenbaseret indikator, ikke automatisk inflation.';
-}
-function refreshPlot(){
-if(!latest)return;
-const key=$('graphSelect').value,def=graphDefs[latest.type].find(g=>g[0]===key)||graphDefs[latest.type][0];
-$('plotEyebrow').textContent=latest.type==='flrw'?'FLRW · isotrop':'Kantowski–Sachs · anisotrop';
-$('plotTitle').textContent=def[1];$('plotCaption').textContent=def[2];
-const graph=curvesOf(latest,key);currentPlot=graph;
-$('legend').innerHTML=graph.curves.map(s=>'<span><i class="swatch" style="background:'+s.color+'"></i>'+s.label+'</span>').join('');
-plot(graph);
-}
-function recalculate(){
-$('wControl').hidden=$('flrwMatter').value!=='custom';
-$('wValue').textContent=(+$('w').value).toFixed(2);$('flrwTimeValue').textContent=$('flrwTime').value;
-$('ksSpinValue').textContent=(+$('ksSpin').value).toFixed(2);$('ksRadialValue').textContent=(+$('ksRadial').value).toFixed(2);$('ksAngularValue').textContent=(+$('ksAngular').value).toFixed(2);
-latest=$('geometry').value==='flrw'?computeFLRW():computeKS();
-showMetrics(latest);refreshPlot();
-}
-function changeGeometry(){
-const type=$('geometry').value;const previous=$('graphSelect').value;
-$('flrwControls').hidden=type!=='flrw';$('ksControls').hidden=type!=='ks';
-$('graphSelect').innerHTML=graphDefs[type].map(([id,title])=>'<option value="'+id+'">'+title+'</option>').join('');
-if(graphDefs[type].some(d=>d[0]===previous))$('graphSelect').value=previous;
-try{history.replaceState(null,'','#'+type)}catch(_){}
-recalculate();
-}
-$('geometry').addEventListener('change',changeGeometry);$('graphSelect').addEventListener('change',refreshPlot);
-for(const id of ['flrwMatter','w','flrwTime','ksMatter','ksSpin','ksRadial','ksAngular'])$(id).addEventListener('input',recalculate);
-$('reset').addEventListener('click',()=>{if($('geometry').value==='flrw'){$('flrwMatter').value='0';$('w').value='.2';$('flrwTime').value='12'}else{$('ksMatter').value='0';$('ksSpin').value='.5';$('ksRadial').value='-.3';$('ksAngular').value='-.3'}recalculate()});
-$('copy').addEventListener('click',async()=>{const text=$('geometry').value+' / '+$('graphSelect').value+' / '+$('status').textContent+' / '+$('metrics').innerText;try{await navigator.clipboard.writeText(text);$('copy').textContent='Kopieret';setTimeout(()=>$('copy').textContent='Kopiér resultater',1200)}catch(_){window.prompt('Kopiér resultater',text)}});
-window.addEventListener('resize',()=>{if(currentPlot)plot(currentPlot)});
-$('geometry').value=location.hash==='#ks'?'ks':'flrw';changeGeometry();
-</script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Einstein–Cartan · Geometry Lab</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="vendor/plotly.min.js"></script>
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="../" class="brand">SKOVLAB <span>/ GEOMETRY LAB</span></a
+      ><span class="tag">EINSTEIN–CARTAN GRAVITY</span>
+    </header>
+    <div class="intro">
+      <div>
+        <p class="eyebrow">COMPUTATIONAL COSMOLOGY</p>
+        <h1>Follow the geometry.</h1>
+        <p>
+          Collapse, turning points and expansion in an effective spin-fluid
+          universe.
+        </p>
+      </div>
+      <a href="#model">Model & numerical methods ↗</a>
+    </div>
+    <div class="workspace">
+      <main>
+        <div class="plot-head">
+          <div>
+            <p class="eyebrow" id="modelLabel">SPATIALLY FLAT FLRW</p>
+            <h2 id="title">Expansion dynamics</h2>
+          </div>
+          <label
+            >Graph<select id="graph">
+              <option value="expansion">Expansion dynamics</option>
+              <option value="geometry">Geometry</option>
+              <option value="acceleration">Acceleration</option>
+              <option value="efolds">E-folds</option>
+              <option value="anisotropy">Anisotropy · KS</option>
+              <option value="curvature">Curvature & constraint</option>
+            </select></label
+          >
+        </div>
+        <div class="plot-options">
+          <label
+            >Axes
+            <select id="axes">
+              <option value="dual">Physical units · dual axes</option>
+              <option value="shared">Physical units · shared axis</option>
+              <option value="normalized">Each curve / max |value|</option>
+            </select></label
+          ><label
+            >Scale
+            <select id="scale">
+              <option value="linear">Linear</option>
+              <option value="log">Log · positive values only</option>
+            </select></label
+          ><button id="view" class="quiet">Reset view</button>
+        </div>
+        <div id="plot" aria-label="Interactive simulation plot"></div>
+        <p id="plotNote" class="small"></p>
+        <div class="transport">
+          <button id="rewind" class="quiet" aria-label="Rewind to start">
+            Start</button
+          ><button id="play">Play</button
+          ><input
+            id="time"
+            type="range"
+            min="0"
+            max="1000"
+            value="0"
+            step=".1"
+            aria-label="Simulation time"
+          /><output id="clock"></output
+          ><select id="speed" aria-label="Playback speed">
+            <option value=".25">0.25×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="4">4×</option></select
+          ><label class="check"
+            ><input id="progressive" type="checkbox" /> Trace as time
+            advances</label
+          >
+        </div>
+        <div id="values" class="values" aria-live="off"></div>
+        <div class="diagnostics">
+          <div>
+            <h3>Numerical health</h3>
+            <p id="health"></p>
+            <p id="convergence"></p>
+            <button id="validate" class="quiet">
+              Check at tighter tolerance
+            </button>
+          </div>
+          <div>
+            <h3>Detected events <span id="eventCount"></span></h3>
+            <div id="events"></div>
+            <p id="eventDetail"></p>
+            <p class="small">
+              KS volume reversal does not establish a nonsingular spacetime
+              bounce.
+            </p>
+          </div>
+        </div>
+        <div id="warnings" role="status"></div>
+      </main>
+      <aside>
+        <div class="side-head">
+          <h2>Parameters</h2>
+          <span class="dot"></span>
+        </div>
+        <label
+          >Geometry<select id="geometry">
+            <option value="flrw">Spatially flat FLRW</option>
+            <option value="ks">Kantowski–Sachs</option>
+          </select></label
+        >
+        <fieldset>
+          <legend>Effective matter</legend>
+          <label
+            >Equation of state w<input
+              id="w"
+              type="number"
+              value="0"
+              min="0"
+              max=".99"
+              step=".01" /></label
+          ><label
+            >Initial spin correction <span id="spinLabel">S coefficient</span
+            ><input id="spin" type="number" value="1" min="0" step=".05"
+          /></label>
+          <p class="small">
+            Isotropically averaged Weyssenhoff fluid; conserved particle number.
+          </p>
+        </fieldset>
+        <fieldset>
+          <legend>Initial conditions · τ = 0</legend>
+          <div id="flrwFields">
+            <label
+              >Initial condition<select id="branch">
+                <option value="bounce">Bounce-centred benchmark</option>
+                <option value="contract">
+                  Contracting · density coefficient = 1
+                </option>
+                <option value="expand">
+                  Expanding · density coefficient = 1
+                </option>
+              </select></label
+            ><label
+              >Scale factor a(0)<input
+                id="a0"
+                type="number"
+                min=".01"
+                step=".1"
+                value="1"
+            /></label>
+          </div>
+          <div id="ksFields" hidden>
+            <div class="pair">
+              <label
+                >X(0) / L*<input
+                  id="X0"
+                  type="number"
+                  min=".01"
+                  step=".1"
+                  value="1" /></label
+              ><label
+                >Y(0) / L*<input
+                  id="Y0"
+                  type="number"
+                  min=".01"
+                  step=".1"
+                  value="1"
+              /></label>
+            </div>
+            <div class="pair">
+              <label
+                >Hᵣ(0) t*<input
+                  id="hr0"
+                  type="number"
+                  step=".05"
+                  value="-.3" /></label
+              ><label
+                >HΩ(0) t*<input id="ho0" type="number" step=".05" value="-.3"
+              /></label>
+            </div>
+          </div>
+          <p id="initialNote" class="small"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Integration</legend>
+          <label
+            >Time extent T / t*<input
+              id="T"
+              type="number"
+              value="12"
+              min=".1"
+              max="100"
+              step=".5" /></label
+          ><label
+            >Relative / absolute tolerance<select id="tol">
+              <option value="0.000001">10⁻⁶ · exploratory</option>
+              <option value="1e-8" selected>10⁻⁸ · standard</option>
+              <option value="1e-10">10⁻¹⁰ · fine</option>
+            </select></label
+          >
+        </fieldset>
+        <label class="check"
+          ><input id="compare" type="checkbox" /> Overlay other geometry</label
+        >
+        <p class="small" id="compareNote">
+          Comparison uses each model’s own initial conditions and the same
+          declared t*. It is not a matched physical system.
+        </p>
+        <div class="side-actions">
+          <button id="reset" class="quiet">Reset parameters</button
+          ><button id="export" class="quiet">Export CSV ↓</button>
+        </div>
+        <p class="small">
+          Legend: click to hide a curve, double-click to isolate. Drag to zoom;
+          use the plot toolbar to pan.
+        </p>
+      </aside>
+    </div>
+    <section id="model">
+      <p class="eyebrow">THEORY & VALIDITY</p>
+      <h2>A specified effective model, with visible limits.</h2>
+      <div class="model-grid">
+        <div>
+          <h3>Equations retained</h3>
+          <p>
+            FLRW: H² = A a⁻³⁽¹⁺ʷ⁾ − B a⁻⁶; ä/a = −½(1+3w)A a⁻³⁽¹⁺ʷ⁾ + 2B a⁻⁶. In
+            the bounce-centred benchmark A is fixed by H(0)=0. A bounce is
+            therefore an initial condition, not an independent prediction.
+          </p>
+          <p>
+            KS: HΩ² + 1/Y² + 2HᵣHΩ = ρ − S. 2Ÿ/Y + HΩ² + 1/Y² = −pₑff; Ẍ/X + Ÿ/Y
+            + HᵣHΩ = −pₑff. Here ρ ∝ (XY²)⁻⁽¹⁺ʷ⁾, S ∝ (XY²)⁻² and pₑff = wρ − S.
+          </p>
+        </div>
+        <div>
+          <h3>Time, units & interpretation</h3>
+          <p>
+            All curves use τ = t/t*, with c = 1 and L* = t*. Rates are shown in
+            t*⁻¹, derivatives in t*⁻², and curvature in t*⁻⁴. There is no fixed
+            conversion to seconds without specifying a physical density scale.
+            KS scales X, Y and aᵥ are plotted relative to L*. KS uses 8πGρt*²;
+            FLRW density coefficients absorb 8πG/3.
+          </p>
+          <p>
+            FLRW benchmark spans [−T,T]; other starts and KS span [0,T]. E-folds
+            count from the first sample; accelerated e-folds accumulate only
+            when H &gt; 0 and ä/a &gt; 0. For KS every mean quantity uses aᵥ =
+            (XY²)⅓.
+          </p>
+        </div>
+        <div>
+          <h3>Numerics & assumptions</h3>
+          <p>
+            Adaptive RK4 with step doubling, explicit constraints, geometric
+            curvature invariants and tolerance comparison. Hover values are
+            numerical samples; event times use refined zero crossings. No
+            stopping threshold proves a singularity.
+          </p>
+          <p>
+            Einstein–Cartan torsion and effective spin repulsion motivate the
+            model. Isotropic spin averaging, the barotropic closure and
+            conserved particle number are modelling assumptions. A computed
+            turning point is a numerical result. A baby universe or a resolved
+            realistic black-hole interior would be a speculative interpretation.
+          </p>
+          <a href="MODEL.md">Read the equation audit & validation details ↗</a>
+        </div>
+      </div>
+    </section>
+    <footer>
+      Geometry Lab / Einstein–Cartan · No Holst term or particle
+      production.<span>Numerical results require convergence checks.</span>
+    </footer>
+  </body>
+</html>

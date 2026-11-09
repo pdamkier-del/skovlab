@@ -1,0 +1,501 @@
+:root {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #20323b;
+  background: #f9faf9;
+  font-size: 14px;
+  --line: #dce3e3;
+  --muted: #67767b;
+  --teal: #087f83;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header,
+.intro,
+.workspace,
+#model,
+footer {
+  max-width: 1600px;
+  margin: auto;
+}
+header {
+  height: 72px;
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #20323b;
+  font-size: 13px;
+}
+.brand span {
+  font-weight: 450;
+  color: var(--muted);
+  margin-left: 12px;
+}
+.tag,
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--teal);
+}
+.tag {
+  color: var(--muted);
+}
+.intro {
+  padding: 34px 36px 30px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.eyebrow {
+  margin: 0 0 8px;
+}
+h1 {
+  font-size: 34px;
+  font-weight: 550;
+  letter-spacing: -1.3px;
+  margin: 0 0 10px;
+}
+p {
+  line-height: 1.65;
+}
+.intro p:last-child {
+  color: var(--muted);
+  margin: 0;
+}
+.intro a {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.workspace {
+  padding: 0 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(270px, 1fr);
+  border-top: 1px solid var(--line);
+}
+main {
+  background: white;
+  min-width: 0;
+  padding: 26px 26px 25px 0;
+}
+aside {
+  border-left: 1px solid var(--line);
+  padding: 26px 0 24px 26px;
+}
+h2 {
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+  margin: 0;
+}
+h3 {
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #52636a;
+  display: block;
+}
+select,
+input[type="number"] {
+  display: block;
+  background: #fff;
+  color: #20323b;
+  border: 1px solid #ccd6d7;
+  border-radius: 5px;
+  padding: 9px 10px;
+  margin-top: 7px;
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+}
+select {
+  cursor: pointer;
+}
+button {
+  border: 1px solid var(--teal);
+  background: var(--teal);
+  color: #fff;
+  border-radius: 5px;
+  padding: 9px 15px;
+  cursor: pointer;
+  font: 600 12px inherit;
+  font-size: 12px;
+  white-space: nowrap;
+}
+button:hover {
+  filter: brightness(0.94);
+}
+button.quiet {
+  color: #39555d;
+  background: white;
+  border-color: #ccd6d7;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #24a7b2;
+  outline-offset: 3px;
+}
+.plot-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.plot-head select {
+  min-width: 210px;
+}
+.plot-options {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0 10px;
+}
+.plot-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.plot-options select {
+  margin: 0;
+  padding: 6px;
+  max-width: 210px;
+}
+.plot-options button {
+  margin-left: auto;
+  padding: 7px 10px;
+}
+#plot {
+  height: 510px;
+  width: 100%;
+}
+.small,
+#plotNote {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+#plotNote {
+  margin: 0 8px 15px;
+  min-height: 20px;
+}
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+.transport input[type="range"] {
+  flex: 1;
+  min-width: 110px;
+  accent-color: var(--teal);
+}
+.transport output {
+  font:
+    12px ui-monospace,
+    monospace;
+  min-width: 85px;
+}
+.transport select {
+  width: auto;
+  margin: 0;
+  padding: 7px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 450;
+}
+.check input {
+  accent-color: var(--teal);
+}
+.values {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 18px 0;
+  min-height: 78px;
+}
+.value {
+  flex: 1;
+  min-width: 110px;
+  border-left: 2px solid var(--c);
+  padding-left: 10px;
+}
+.value span {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+}
+.value strong {
+  font:
+    17px ui-monospace,
+    monospace;
+  display: block;
+  margin-top: 6px;
+}
+.diagnostics {
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  padding-top: 20px;
+}
+.diagnostics p {
+  font-size: 11px;
+  margin: 7px 0;
+  color: var(--muted);
+}
+#health {
+  color: #087864;
+}
+#events {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-height: 170px;
+  overflow: auto;
+}
+#events button {
+  font-size: 10px;
+  padding: 6px 8px;
+  white-space: normal;
+  text-align: left;
+  max-width: 100%;
+}
+#eventCount {
+  color: var(--muted);
+  font-weight: 400;
+}
+.warning {
+  background: #fff6e6;
+  border-left: 3px solid #b47c20;
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 1.65;
+  margin-top: 14px;
+}
+.error {
+  background: #fff0ed;
+  border-color: #c6553d;
+}
+.side-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 23px;
+}
+.side-head h2 {
+  font-size: 16px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #088983;
+}
+fieldset {
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding: 16px 0 8px;
+  margin: 22px 0 0;
+}
+legend {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0 10px 0 0;
+  color: var(--muted);
+}
+fieldset label {
+  margin-bottom: 14px;
+}
+label span {
+  float: right;
+  font-size: 9px;
+  color: var(--muted);
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.side-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+#compareNote {
+  font-size: 10px;
+}
+#model {
+  padding: 36px;
+  border-top: 1px solid var(--line);
+}
+.model-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 36px;
+  margin-top: 25px;
+}
+.model-grid p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.model-grid a {
+  font-size: 12px;
+}
+footer {
+  padding: 20px 36px 30px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+[hidden] {
+  display: none !important;
+}
+@media (min-width: 1600px) {
+  #plot {
+    height: 590px;
+  }
+}
+@media (max-width: 1000px) {
+  header,
+  .intro {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .workspace {
+    padding: 0 20px;
+    grid-template-columns: minmax(0, 1fr) 265px;
+  }
+  main {
+    padding-right: 18px;
+  }
+  aside {
+    padding-left: 18px;
+  }
+  .plot-options {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .plot-head {
+    align-items: start;
+    flex-direction: column;
+  }
+  .model-grid {
+    gap: 20px;
+  }
+  .transport .check {
+    width: 100%;
+  }
+}
+@media (max-width: 720px) {
+  .workspace {
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    padding: 22px 0;
+  }
+  aside {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 24px 0;
+  }
+  .intro {
+    padding-top: 24px;
+    display: block;
+  }
+  .intro a {
+    display: block;
+    margin-top: 15px;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  .tag {
+    display: none;
+  }
+  header {
+    height: 58px;
+  }
+  .plot-head {
+    flex-direction: row;
+    align-items: center;
+  }
+  .plot-head select {
+    min-width: 0;
+    width: 160px;
+  }
+  #plot {
+    height: 400px;
+  }
+  .plot-options label {
+    font-size: 10px;
+  }
+  .plot-options select {
+    max-width: 155px;
+    font-size: 10px;
+  }
+  .values {
+    gap: 14px;
+  }
+  .value {
+    min-width: 105px;
+  }
+  .diagnostics {
+    gap: 18px;
+  }
+  .model-grid {
+    grid-template-columns: 1fr;
+  }
+  #model {
+    padding: 25px 20px;
+  }
+  footer {
+    padding: 20px;
+    display: block;
+  }
+  footer span {
+    display: block;
+    margin-top: 8px;
+  }
+}

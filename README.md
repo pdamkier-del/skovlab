@@ -30,3 +30,9 @@ Oprindelige skovregler er udgangspunktet; energimodellen er en eksperimentel udv
 1. Batchkørsler for både kontrolmodel og energivariant.
 2. Sammenligning af vinderstrategier for forskellige energiomkostninger og overførselseffektiviteter.
 3. Følsomhedstests og logning af numeriske kontrolberegninger.
+
+## Einstein–Cartan Geometry Lab
+
+The separate [Geometry Lab](https://pdamkier-del.github.io/skovlab/ec-flrw/) explores spatially flat FLRW and Kantowski–Sachs dynamics with an effective averaged Weyssenhoff spin fluid. It includes interactive plots, shared-time playback, turning-point detection, constraint diagnostics and CSV export. The existing `ec-flrw/` route is unchanged; all runtime assets are local.
+
+See [the model audit](ec-flrw/MODEL.md) for equations, normalization, assumptions and numerical limits. Run numerical checks with `node --test ec-flrw/model.test.mjs`. To run browser checks, serve the repository on port 8000 and run `node ec-flrw/browser.test.cjs` with Playwright and Chromium available.
