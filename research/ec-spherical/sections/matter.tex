@@ -1,0 +1,118 @@
+\section{The three matter descriptions and their symmetry limits}
+\subsection{Model 1: spinless perfect fluid}
+Set the spin current and torsion to zero. A conserved-current action of the standard Brown type \cite{Brown} suffices to make the constitutive content explicit:
+\begin{equation}\label{eq:fluidaction}
+ I_{\rm pf}=\int\left[-\sqrt{-g}\,\eps(n,\chi)+J^\mu(\partial_\mu\varphi+\beta\partial_\mu\chi+\beta_A\partial_\mu\alpha^A)\right]\dd^4x,
+ \quad n=\frac{\sqrt{-g_{\mu\nu}J^\mu J^\nu}}{\sqrt{-g}}.
+\end{equation}
+$J$ is a vector density; its potential enforces particle conservation, and $\beta$ enforces $u\cdot\nabla\chi=0$. Material labels allow general fluid variations; they introduce no additional stress when eliminated. At fixed current density $J$, $\delta n=\tfrac n2(g_{\mu\nu}+u_\mu u_\nu)\delta g^{\mu\nu}$ and $\delta\sqrt{-g}=-\tfrac12\sqrt{-g}g_{\mu\nu}\delta g^{\mu\nu}$. Substituting these variations into the material energy term gives the perfect-fluid metric source and $P=n\eps_{,n}-\eps$. Varying $J$ and the potentials gives
+\begin{equation}
+ \nabla_\mu(nu^\mu)=0,\quad \Dt\chi=0,\quad
+ T_{\mu\nu}=(\eps+P)u_\mu u_\nu+Pg_{\mu\nu},\quad
+ P=n\eps_{,n}-\eps.
+\end{equation}
+For $\eps=\rho=C(\chi)n^{1+w}$, $P=p=w\rho$ and $\tau=0$. Equations \eqref{eq:energy}--\eqref{eq:momentum} reduce to
+\begin{equation}\label{eq:PFconservation}
+ \Dt\rho=-(1+w)\rho\Theta,\qquad p'=-(\rho+p)\Phi'.
+\end{equation}
+For $\rho>0$, $0<w\leq1$ the fluid acoustic speed is $c_s^2=w$, real and causal; the full gravitational gauge and boundary problem must still be specified. Dust $w=0$ has coincident pressureless characteristics and requires a pre-caustic Lagrangian/dust formulation, not a strictly hyperbolic acoustic solver. For $w<0$ or $w>1$ the standard causal Euler interpretation fails; no such branch is authorized by this audit.
+
+\subsection{Model 2: unpolarized, averaged Weyssenhoff fluid}
+The microscopic source obeys a convective Frenkel condition, while
+\begin{equation}
+ \langle S^H_{\mu\nu}\rangle=0,\qquad
+ S_H^2=\tfrac12\langle S^H_{\mu\nu}S_H^{\mu\nu}\rangle\ne0.
+\end{equation}
+Under local rotationally isotropic statistics in the rest frame,
+\begin{align}
+ \langle S^H_{ij}S^H_{kl}\rangle&=\frac{S_H^2}{3}(\delta_{ik}\delta_{jl}-\delta_{il}\delta_{jk}),\\
+ \langle S^H_{i}{}^k S^H_{jk}\rangle&=\frac23 S_H^2\delta_{ij}.
+\end{align}
+We must first eliminate microscopic torsion and then average: $\langle K^2\rangle$ is not $\langle K\rangle^2$. Setting the mean torsion to zero at the start would erase the effect being modelled. The source used by the existing laboratory is
+\begin{equation}\label{eq:avgsource}
+ \eps=\rho-q,\quad P=w\rho-q,\quad q=\frac\kap4 S_H^2,\quad Q=0,\quad P_r=P_\perp=P.
+\end{equation}
+This follows the selected normalization in \cite{Hashemi}; the following \emph{additional} hypotheses are required for an inhomogeneous local use:
+\begin{enumerate}
+ \item Averaging is over a length small compared with resolved metric/matter variation, large compared with microscopic spin scales.
+ \item Derivatives and averaging commute at retained order; correlations of fluctuating velocity, connection, acceleration and shear with spin are discarded or shown negligible. Vanishing mean spin alone is insufficient.
+ \item The second moment is locally isotropic, and its statistics and spin per particle are transported without torque, relaxation, spin exchange or particle production.
+ \item Metric backreaction/averaging commutators and unresolved anisotropic moments are absent at the approximation order.
+\end{enumerate}
+These hypotheses are constitutive and coarse-graining assumptions, not established by inserting a radial dependence in a homogeneous formula. Under them, a precise local effective action is Eq.~\eqref{eq:fluidaction} with
+\begin{equation}\label{eq:effectiveEOS}
+ \eps(n,\chi)=C(\chi)n^{1+w}-D(\chi)n^2,
+ \qquad \rho=C(\chi)n^{1+w},\quad q=D(\chi)n^2.
+\end{equation}
+$D\geq0$ encodes conserved spin variance, not an arbitrary time-dependent repulsion. Variation yields $P=w\rho-q$ and
+\begin{align}
+ \Dt\rho&=-(1+w)\rho\Theta,&\Dt q&=-2q\Theta,&
+ \Phi'&=-\frac{w\rho'-q'}{(1+w)\rho-2q}.\label{eq:avgtransport}
+\end{align}
+Equivalently $q/\rho^{2/(1+w)}$ is advected. Either $\rho,q$ or $n,\chi$ can be used, not both pairs as independent fluid degrees of freedom. Separate ordinary/spin conservation is part of the model; effective conservation alone would not determine two matter functions. The current action justifies the \emph{effective metric theory} under these hypotheses; it is not a substitute derivation of every microscopic Weyssenhoff action.
+
+\subsubsection{Closure is not hyperbolicity}
+Let $h=\eps+P=(1+w)\rho-2q$. At fixed advected composition, the acoustic principal symbol has
+\begin{equation}\label{eq:sound}
+ c_{\rm eff}^2=\left.\frac{\dd P}{\dd\eps}\right|_\chi
+ =\frac{w(1+w)\rho-2q}{(1+w)\rho-2q}.
+\end{equation}
+Derive this by differentiating Eq.~\eqref{eq:effectiveEOS} with respect to $\ln n$. In a local inertial frame, the frozen-composition principal equations are
+\begin{equation}
+ \partial_t\delta\eps+h\partial_x\delta v=0,
+ \qquad h\partial_t\delta v+\partial_x\delta P=0,
+ \qquad \partial_t^2\delta\eps-c_{\rm eff}^2\partial_x^2\delta\eps=0.
+\end{equation}
+For $0\leq w<1$, the branch $h>0$ has $c_{\rm eff}^2<0$ whenever
+\begin{equation}
+ \frac{w(1+w)}2<\frac q\rho<\frac{1+w}2.
+\end{equation}
+In particular, ordinary dust with any $0<q<\rho/2$ has negative acoustic speed squared. Fourier modes grow as $\exp(|k|\sqrt{-c_{\rm eff}^2}t)$, without a wavelength-independent estimate: a generic smooth radial Euler initial-value problem is not well posed on this branch. At $h=0$ the usual Euler inversion degenerates. On the $h<0$ branch $c_{\rm eff}^2>1$ for $w<1$; this is a failure of a causal effective-fluid interpretation, not a theorem that the underlying EC action has propagating ghosts.
+
+A flat homogeneous bounce has $q=\rho$, hence $c_{\rm eff}^2=w+2$. Its trajectory crosses the $h=0$ ratio $(1+w)/2$ before bouncing when these ratios are attained continuously. The spatially homogeneous ODE has no acoustic gradients and remains a consistent symmetry-restricted calculation; this observation does \emph{not} invalidate its existing numerical benchmark. It does prevent calling its unrestricted inhomogeneous continuation a verified causal PDE. For a positive-pressure low-spin regime, only states with $h>0$ and $0<c_{\rm eff}^2\leq1$ are candidates for a causal Euler implementation; approaching $c_{\rm eff}^2=0$ also requires a characteristic-degeneracy analysis. Artificial viscosity, a guessed pressure or changing spin transport is not an authorized cure.
+
+\subsection{Model 3: selected full Weyssenhoff field formulation}
+The phrase ``full Weyssenhoff'' does not select a unique averaging scheme or microscopic material action. We use the \emph{published field equations} \cite{BHL}, Eqs. (19)--(27), based on \cite{OK}. This is an allowed identification of an established formulation, not a newly manufactured action. Its full constrained matter-action derivation is an explicitly open reproducibility task.
+
+Keep the BHL spin variable $b_{\mu\nu}$ for linear terms and use their Appendix B transformation to our metric signature: $g_B=-g$, $u_B^\mu=u^\mu$, $(u_B)_\mu=-u_\mu$, $(b_B)_{\mu\nu}=b_{\mu\nu}$. The resulting symmetric effective metric source and spin equation are
+\begin{align}
+ T_{\mu\nu}^{B}&=(\rho+p-2\kap b^2)u_\mu u_\nu+(p-\kap b^2)g_{\mu\nu}+\mathcal D_{\mu\nu},\label{eq:fullstress}\\
+ \mathcal D_{\mu\nu}&=-2(g^{\alpha\beta}-u^\alpha u^\beta)\nabla_\alpha[u_{(\mu}b_{\nu)\beta}],\label{eq:Dspin}\\
+ h_\mu{}^\alpha h_\nu{}^\beta\nabla_\lambda(u^\lambda b_{\alpha\beta})&=0,
+ \qquad b_{\mu\nu}u^\nu=0,\quad h_\mu{}^\nu=\delta_\mu^\nu+u_\mu u^\nu.\label{eq:fulltransport}
+\end{align}
+The tensor in parentheses in Eq.~\eqref{eq:Dspin} is \emph{not} the spatial projector; replacing its minus sign by plus without transforming the source equation changes the model. We use $b^2=\tfrac12 b_{\mu\nu}b^{\mu\nu}$. The spin current in the BHL source convention is $u^\lambda b_{\mu\nu}$, their torsion is $Q_B=\kap u b$, and the operational source for Eq.~\eqref{eq:cartanform} is $-2u b$. This is why Eq.~\eqref{eq:dictionary} is needed. After elimination, $\nabla_\mu T_B^{\mu\nu}=0$ rather than a guessed conservation law for a bare canonical tensor is imposed.
+
+Equation \eqref{eq:fulltransport} is equivalent to a projected spin-density transport equation. If $a_\mu=u^\alpha\nabla_\alpha u_\mu$, then
+\begin{equation}
+ u^\lambda\nabla_\lambda b_{\mu\nu}+\Theta b_{\mu\nu}
+ =-2u_{[\mu}b_{\nu]\lambda}a^\lambda.
+\end{equation}
+Its contraction gives $\Dt b^2=-2\Theta b^2$ in this ideal nondissipative formulation. This is a published transport specialization; collision, relaxation or particle-production laws are not being supplied.
+
+\subsubsection{Exact FLRW versus statistical FLRW}
+A nonzero spatial two-form is dual to a nonzero spatial axial vector and selects a direction. Exact FLRW invariance of the spin/torsion configuration under the spatial isometry group forces $b_{\mu\nu}=0$ for this convective Frenkel source. An isotropic axial torsion three-form is a different possible EC source and must not be identified with $u^\lambda b_{\mu\nu}$. The coherent nonzero model therefore has \emph{no exact strong-symmetry FLRW realization}. This agrees with the symmetry warning in \cite{BB}. A statistically isotropic ensemble can have zero mean two-form but nonzero variance and an FLRW \emph{effective metric}; it then requires the averaging assumptions of Model 2 or a separately closed moment theory. There is no contradiction between these two statements of symmetry.
+
+\paragraph{A verified metric-only exception.}
+The preceding exclusion concerns the \emph{complete configuration}, not the metric alone. To prevent an overstatement, consider the selected ideal field formulation on a flat FLRW metric in Cartesian coordinates, with a spatially homogeneous aligned spin $b_{xy}=a^2\beta(t)$, all other spatial components zero. Its scalar is $b^2=\beta^2$, and direct substitution gives $\mathcal D_{\mu\nu}=0$ and $\dot\beta+3H\beta=0$. In spherical coordinates the same tensor has
+\begin{equation}\label{eq:aligned}
+ b_{r\phi}=a^2\beta r\sin^2\theta,\qquad
+ b_{\theta\phi}=a^2\beta r^2\sin\theta\cos\theta.
+\end{equation}
+It is a smooth Cartesian aligned configuration, not a radial-spin profile with a singular center. The metric equations close as Eq.~\eqref{eq:homogeneous} with $q=\kap\beta^2$ and $\dot\beta=-3H\beta$. Thus a nonzero coherent spin field can be compatible with an \emph{FLRW metric} while failing rotational invariance of the full matter/torsion configuration. This is a symmetry-noninheriting source. The cancellation and its nonzero rotational Lie derivative are independently checked. It is an analytical compatibility example, not a proposed astrophysical spin preparation, and no classification of all such branches for $k\ne0$ is claimed. A generic ``full-spin FLRW'' mode would have to state which notion of symmetry and which formulation it uses.
+
+\subsubsection{Exact spherical spin branch}
+Under proper rotations about a regular center, a smooth covariant two-form has invariant basis $\dd t\wedge\dd r$ and $\sin\theta\,\dd\theta\wedge\dd\phi$. Frenkel with comoving $u$ kills the first. Thus the coherent ideal branch must have
+\begin{equation}\label{eq:radspin}
+ b_{\theta\phi}=R^2\sin\theta\,b(t,r),\qquad b_{\phi\theta}=-b_{\theta\phi},\qquad\text{all other components }0.
+\end{equation}
+This corresponds to a radial axial spin vector. It is allowed by $SO(3)$, but reflection/parity invariance of an axial radial field would force it to vanish. Smoothness at the center requires $b(t,r)=O(r)$ in a regular Cartesian extension, not a constant nonzero radial spin magnitude at $r=0$.
+
+There is a particularly restrictive result. Substitute Eq.~\eqref{eq:radspin} into the retained derivative tensor \eqref{eq:Dspin}. Angular divergence vanishes; radial acceleration contracts with no spin component; angular shear eigenvalues coincide and their symmetric contraction with an antisymmetric angular spin tensor cancels. Hence
+\begin{equation}\label{eq:radresult}
+ \mathcal D_{\mu\nu}=0,\quad Q=0,\quad P_r=P_\perp=w\rho-\kap b^2,\quad\eps=\rho-\kap b^2,
+ \quad\partial_t(BR^2b)=0.
+\end{equation}
+The cancellation is checked for arbitrary $\Phi,\Lambda,R,b$ by covariant differentiation, as is the Lie invariance under all three rotation generators. A nonspherical spin component produces nonzero derivative stress in a separate control test. The cancellation therefore does not silently discard terms: it follows from this precise symmetry-restricted ideal formulation. Tidal shear alone does not generate a thermodynamic $P_r\ne P_\perp$ here.
+
+Equations \eqref{eq:radresult} plus $p=w\rho$ give a formally closed smooth branch on the same nonsingular-fluid domain as Model 2, with $q=\kap b^2$ and the same local acoustic obstruction. It remains distinct from an unpolarized ensemble. A regular nonzero coherent radial branch cannot be promoted to an exact full-FLRW spin configuration. If the proposed Model 3 instead retains nonzero averaged velocity--spin, shear--spin, spin-gradient or metric correlations, these require additional moment evolution and constitutive equations. Equations for arbitrary $Q,P_r,P_\perp$ in Section 2 are a source decomposition, not that missing closure. This broader proposal remains \status{not closed; implementation blocked}.

@@ -1,0 +1,64 @@
+\section{Boundaries, exterior matching and observables}
+\subsection{Finite matter region and spin-free exterior}
+A source-free minimal EC exterior has zero torsion by the algebraic Cartan equation. With no other matter or cosmological constant it obeys the vacuum Einstein equation; a locally spherical vacuum region is Schwarzschild, subject to the usual domain assumptions. A Vaidya-type exterior instead contains a specified null radiative source and is not vacuum. Its mass function cannot be assigned from a desired interior plot.
+
+For a timelike boundary $\Sigma$, a shell-free \emph{effective metric} matching requires continuity of the induced metric and Levi--Civita extrinsic curvature. For a comoving no-flux perfect source against vacuum, the normal traction conditions give
+\begin{equation}\label{eq:matching}
+ P|_\Sigma=0,\qquad M|_\Sigma=M_{\rm ext},\qquad\Dt M|_\Sigma=0.
+\end{equation}
+The last condition follows from the pressure-work equation when the first holds, not from identifying effective mass with conserved rest mass. Density may jump at a pressure-free dust boundary without necessarily creating a metric thin shell. The complete EC matching also involves the spin source and contortion. If there is a smooth spin-free collar, EC reduces to GR there and a conventional shell-free junction may be applied at an outer surface after all metric and matter conditions have been checked. Setting a plotted spin scalar to zero at one point does not construct such a collar or prove a valid junction.
+
+For Model 2, $P=w\rho-q$. In ordinary dust, $P_\Sigma=-q_\Sigma$, so a nonzero homogeneous spin variance extending to a comoving vacuum interface cannot satisfy Eq.~\eqref{eq:matching}. A radial taper changes the matter problem and must be a constrained physical initial profile with compatible transport, not an imposed cosmetic spin window. At $q_\Sigma=0$, a $w>0$ fluid also needs $\rho_\Sigma=0$. Even in GR the constant-$w>0$ Euler lapse obeys
+\begin{equation}
+ \Phi=-\frac{w}{1+w}\ln\rho+f(t),
+\end{equation}
+so a finite comoving zero-density edge is not automatically a regular finite-lapse free boundary in this chart. A different surface equation of state, noncompact fluid region, specified atmosphere, moving interface or surface-layer model requires an explicit choice and analysis. No physical atmosphere or pressure floor is added here.
+
+With a comoving boundary and no interior heat flux, matching to a genuinely radiating Vaidya exterior cannot be justified by a changing $M(t)$ alone. Continuity of normal energy flux and stress imposes additional conditions; an exterior radiation flux requires interior transport, a noncomoving interface with matter flux, or a surface layer. The sign and normalization of a pressure--flux condition must be derived for that chosen interface and null normalization, not copied across conventions.
+
+For a full spinful interface, one must specify the induced coframe/metric, spin transport to the interface, jumps of connection/contortion, and whether a surface stress or surface spin current is allowed, then integrate the EC equations in an applicable junction formalism such as \cite{AKP}. A nonzero surface layer is not forbidden in principle, but its action/constitutive data and distributional regularity are absent here. In particular, a delta spin sheet cannot simply be squared in a torsion-squared source. The publisher abstract and bibliographic information for \cite{AKP} were accessible; a complete derivation of its component conditions was not independently reproduced. Thus \status{spinful surface-layer matching remains unresolved and blocks implementation of that branch}. No unsupported EC--Israel jump formula is supplied.
+
+\subsection{Null expansions and mass}
+With the outward normal aligned to increasing $r$ on the chosen star patch,
+\begin{equation}
+ \ell_\pm=u\pm n,\quad\ell_+\cdot\ell_-=-2,\qquad
+ \theta_\pm=\frac2R(U\pm\Gamma),\qquad
+ \theta_+\theta_- =\frac4{R^2}\left(\frac{2M}{R}-1\right).
+\end{equation}
+Both negative is future trapping; both positive is anti-trapping. A marginally outer trapped sphere has $\theta_+=0$, $\theta_-<0$. Compactness greater than one alone does not distinguish future from anti-trapping. A change of radial orientation also changes the coordinate labelling of outgoing and ingoing normals, so orientation must be recorded near a neck. These are local trapping diagnostics, not event horizons. A finite interior alone has no specified future null infinity or exterior causal completion from which an event horizon could be determined.
+
+\subsection{Regular bounce, shell crossing and curvature}
+For a noncentral Lagrangian shell, an areal bounce has $R>0$, $U=0$ and $\Dt U>0$; a recollapse reverses that sign. A radial proper stretch uses $B\,\dd r$, not $R'$ alone. Define the local comoving volume element and its scale by
+\begin{equation}
+ V_{\rm cell}\propto BR^2\dd r\dd\Omega,\quad
+ a_V/a_{V,i}=(BR^2/B_iR_i^2)^{1/3},\quad \Dt\ln V_{\rm cell}=\Theta.
+\end{equation}
+A volume turning point has $\Theta=0$ and $\Dt\Theta>0$ for a minimum. It need not be an areal bounce. The vorticity-free Raychaudhuri equation is
+\begin{equation}
+ \Dt\Theta=-\Theta^2/3-2\sigma^2-\frac\kap2(\eps+P_r+2P_\perp)+\nabla_\mu a^\mu,
+ \qquad \nabla_\mu a^\mu=\Dr a_r+2\Gamma a_r/R+a_r^2.
+\end{equation}
+For the averaged isotropic source, an instantaneous volume minimum therefore needs
+\begin{equation}
+ \kap(4q-\rho-3p)>4\sigma^2-2\nabla_\mu a^\mu\quad(\Theta=0).
+\end{equation}
+Unlike a geodesic homogeneous anisotropic toy model, an inhomogeneous pressured fluid also has the acceleration-divergence term. This local inequality alone proves neither regular continuation nor absence of shell crossings or a well-posed matter evolution.
+
+Metric invariants can be computed from the warped geometry:
+\begin{align}
+ \Rsc&=R_h+2(1-X)/R^2-4\Box_hR/R,\\
+ \mathcal K&=R_h^2+8H_{ab}H^{ab}/R^2+4(1-X)^2/R^4.
+\end{align}
+A Lorentzian contraction is not a positive-definite norm; do not assume every diagnostic invariant has a positive logarithm. Bounded samples of one scalar do not prove geodesic completeness. Check orthonormal curvature components in regular frames, fluid variables, invariants, convergence and continuation. Full EC model 3 additionally needs torsion/spin regularity; metric curvature is not the full connection curvature.
+
+A noncentral $R\to0$ is a shell-focusing candidate. A zero of $R'$ with $R>0$ is not automatically shell crossing: a regular closed-FLRW equator in $R=a\sin\chi$, $B=a$ has $R'=0$ and finite curvature. In a no-flux mass equation, nonzero $M'$ with $R'\to0$ forces an effective-density divergence; $M'=0$ simultaneously requires a separate regular-neck/coordinate analysis. Track $B$, the comoving particle-volume Jacobian, neighbouring material shells and ordinary density, not just one denominator. A numerical chart stopping condition is not a proven physical singularity.
+
+\subsection{Counts, e-folds and finite-interval statements}
+Count minima and maxima separately for each material shell, exclude imposed initial turning data from collapse-generated bounce counts, and require a persistent sign reversal resolved under refinement. A complete oscillation requires an actually resolved minimum--maximum--minimum (or maximum--minimum--maximum) sequence with regular evolution and consistent boundary data throughout. Different shells can be out of phase; a single universal bounce count is not automatic.
+
+Meaningful local e-folds are
+\begin{equation}
+ N_R=\ln(R/R_i),\qquad N_V=\frac13\ln(BR^2/B_iR_i^2),\qquad
+ N_{\rm acc}=\int \frac\Theta3\,\mathbf1_{\Theta>0}\mathbf1_{\Dt^2a_V/a_V>0}\,\dd\tau_r,
+\end{equation}
+where $\Dt^2a_V/a_V=\Dt\Theta/3+\Theta^2/9$. $N_R$ measures angular areal expansion, not total volume; all three reduce appropriately to FLRW e-folds only in the homogeneous isotropic limit. Center values require regular limits rather than direct $0/0$ evaluation. These are kinematic measures, not matter entropy or inflation by definition. Neither a finite count of cycles nor finite-interval expansion establishes eternal oscillation or eternal expansion.

@@ -1,0 +1,54 @@
+\section{Explicit systems, compatibility and independent data}
+\subsection{The six proposed geometry--matter combinations}
+\begin{longtable}{p{.13\textwidth}p{.19\textwidth}p{.32\textwidth}p{.25\textwidth}}
+\toprule Geometry & Matter & Consistency/closure & Implementation decision\\\midrule\endhead
+FLRW & 1: spinless $p=w\rho$ & Exact perfect-fluid limit; density constraint plus regular $(a,\dot a)$ evolution. & Supported homogeneous system; preserve existing module.\\
+FLRW & 2: unpolarized variance & Effective metric symmetry only; requires local isotropic spin statistics and conserved spin variance. Algebraically closed ODE. & Supported as the documented Hashemi closure; no proof of radial stability or exterior matching.\\
+FLRW & 3: coherent/full spin & Strong full-field FLRW symmetry excludes nonzero coherent spin. A verified flat metric-only aligned branch has non-isotropic spin/torsion; statistical variants need averaging closure. & Restricted declared-symmetry cases only; no generic full-spin switch.\\
+Spherical & 1: spinless & Exact Einstein--Euler for $0<w\leq1$ in its smooth causal domain; dust pre-caustic case separately. Gauge and boundary data required. & Candidate first PDE stage after boundary/gauge acceptance tests; no PDE implemented here.\\
+Spherical & 2: averaged variance & Conditional local effective action closes equations away from degeneracies. Dust low-spin branch has $c_{\rm eff}^2<0$; enthalpy can vanish. & General bounce-capable PDE not authorized. Restrict any future local test to a verified hyperbolic domain.\\
+Spherical & 3: full formulation & Ideal coherent $SO(3)$ radial branch is formal and its linear-spin stress cancels. Parity, center and hyperbolicity restrictions apply. A broader retained-correlation model is not closed. & No generic full-Weyssenhoff PDE authorized; no invented anisotropic stress/transport.\\\bottomrule
+\end{longtable}
+This table concerns the FLRW and general spherical metrics requested here, not the separate retained Kantowski--Sachs explorer.
+
+\subsection{Supported homogeneous equations}
+For Model 1 set $q=0$; for Model 2 use $q=\kap S_H^2/4$. The independent regular system is
+\begin{align}
+ \dot a&=v,&\dot v&=-\frac\kap6 a[(1+3w)\rho-4q],\\
+ \dot\rho&=-3(1+w)H\rho,&\dot q&=-6Hq,\qquad H=v/a,\label{eq:homogeneous}\\
+ H^2+k/a^2&=\kap(\rho-q)/3.\label{eq:homconstraint}
+\end{align}
+The last equation is an initial constraint and monitored first integral, not an independent sign-selected square-root ODE. Matter and spin can be evaluated by their exact scaling laws rather than independently evolved twice. At fixed $a_i,k,w,q_i$, either $H_i$ or $\rho_i$ is constrained by the other. A positive-scale bounce satisfies $H=0$, $\dot H>0$ and $4q>\rho+3p$. Metric curvature and a continuation test are required in addition to an instantaneous event. For Model 3, strong full-field FLRW symmetry gives its zero-spin subcase. The flat metric-only aligned example in Eq.~\eqref{eq:aligned} instead uses $q=\kap\beta^2$, $\dot\beta=-3H\beta$ in this same metric system, while explicitly breaking isotropy of spin/torsion. A statistical reduction requires the assumptions of Model 2 or a new moment closure.
+
+\subsection{Supported spherical perfect-source system}
+For Model 1 $(\eps,P)=(\rho,w\rho)$ and $q=0$. For the \emph{conditional} Model 2 use Eq.~\eqref{eq:avgsource}; for the restricted coherent Model 3 use Eq.~\eqref{eq:radresult}. On a monotone shell chart $\Gamma\ne0$ with $h=\eps+P\ne0$:
+\begin{align}
+ \Dt R&=U,&\Dt U&=-\frac{\Gamma}{h}\Dr P-\frac{M}{R^2}-\frac\kap2 PR,\\
+ \Dt M&=-\frac\kap2 PR^2U,&\Dt\Gamma&=-\frac U h\Dr P,\label{eq:closed}\\
+ \Dt\rho&=-(1+w)\rho\left(\frac{\Dr U}{\Gamma}+\frac{2U}{R}\right),&
+ \Dt q&=-2q\left(\frac{\Dr U}{\Gamma}+\frac{2U}{R}\right),\\
+ M'&=\frac\kap2\eps R^2R',&\Gamma^2&=1+U^2-2M/R,\\
+ B&=R'/\Gamma,&\Phi'&=-P'/h.
+\end{align}
+The displayed evolution equations include redundant quantities intentionally: one must choose a free-evolution or constrained scheme, not overwrite all evolved variables independently. In a constrained prototype, evolve $R,U,\rho,q$, solve $M'$ with a center condition, derive $\Gamma$ algebraically and $B$ kinematically, and solve the lapse-gradient constraint. Monitor the unused mass-time, $\Gamma$-time, angular Einstein and ADM identities. Alternatively evolve $M$ and monitor its radial constraint; the scheme specification must select one. The divided form above is forbidden at a neck $\Gamma=0$ or enthalpy zero. The undivided metric equations remain the starting point for any alternative formulation there.
+
+For general retained flux/anisotropy, use Eqs.~\eqref{eq:EFE}, \eqref{eq:energy}--\eqref{eq:Gamma}, not Eq.~\eqref{eq:closed}. Unless a validated spin formulation supplies $Q,P_r,P_\perp$ and their transport, that is an underdetermined system. No source function is to be inferred merely from a desired bounce.
+
+\subsection{Independent initial variables and gauge}
+For a smooth monotone, comoving no-flux patch, independent profiles can be chosen as $R_i(r),U_i(r),\rho_i(r)$ plus $q_i(r)$ for Model 2. A radial relabelling can fix $R_i=r$; then Model 1 has two free profiles $(U_i,\rho_i)$ and Model 2 has three $(U_i,\rho_i,q_i)$, apart from constants, domain and boundary choices. For coherent Model 3 use signed $b_i$ rather than $q_i$ and impose center/parity conditions; $q_i=\kap b_i^2$ is not independent.
+
+Integrate $M_i'=\kap\eps_iR_i^2R_i'/2$ with $M_i(0)=0$. Choose the outward branch
+\begin{equation}
+ \Gamma_i=+\sqrt{1+U_i^2-2M_i/R_i},\quad B_i=R_i'/\Gamma_i>0,
+ \quad H_{r,i}=U_i'/R_i',\quad H_{\perp,i}=U_i/R_i.
+\end{equation}
+These solve the Hamiltonian/mass and momentum constraints; arbitrary independent choices of $B_i,M_i,H_{r,i}$ would over-specify initial data. In Model 2 require $\rho_i,q_i\geq0$, real geometry and a declared principal-symbol domain, not an unexamined positive effective density assumption. Integrate $\Phi_i'=-P_i'/h_i$ and fix a single lapse normalization, e.g. $\Phi(t,0)=0$. This sets central proper time, not all shell proper times.
+
+The unknowns may be stored as $(R,U,M,\Gamma,B,\Phi,\rho,q)$, but $M,\Gamma,B,\Phi$ above are constraint/gauge variables in the constrained scheme. Number density/composition is an alternative representation. Spin current, scalar variance, effective density and geometric mass are different objects and must not be counted as additional independent data when derived. Canonical spin/torsion components are algebraic once the appropriate spin source is fixed.
+
+Regular-center conditions include $R=\ell(t)r+O(r^3)$, $B=\ell(t)+O(r^2)$, $U=O(r)$, $M=O(r^3)$, $\Phi'=0$, and even smooth scalar density/variance profiles. Then $\Gamma=1+O(r^2)$ and $H_r-H_\perp=O(r^2)$. The coherent radial spin magnitude instead is odd to leading order, $b=O(r)$, so its variance vanishes at the center. Ensemble variance in Model 2 need not vanish there.
+
+\subsection{Constraint propagation and clocks}
+The contracted Bianchi identity, verified symbolically, enforces propagation of Einstein constraints provided the selected matter equations and consistent boundary/gauge conditions hold. This is not a stability proof of a discrete scheme, nor does it supply missing matter closure. Near $h=0$, division of a formally valid equation does not prove its continuation exists.
+
+In general $\dd\tau_r=A(t,r)\dd t$: comoving shells do not share one proper-time coordinate when pressure gradients require $\Phi'\ne0$. Spherical plots must use a common declared coordinate time $t$ or explicitly record shell proper times. A future code must export $A(t,r)$, the lapse normalization and $\tau_r(t)$, rather than silently applying the FLRW common-proper-time assumption.

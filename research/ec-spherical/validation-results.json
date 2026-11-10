@@ -1,0 +1,111 @@
+{
+  "audit_version": 1,
+  "baseline_commit": "6d9e7ff95b11160afa869d6cd9f6da73bb2dc8e4",
+  "python": "3.12.14",
+  "sympy": "1.14.0",
+  "node": "v24.19.0",
+  "tests_run": 23,
+  "success": true,
+  "tests": [
+    {
+      "test": "test_analytical.AnalyticalAudit.test_11_effective_sound_speed_and_hyperbolicity_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_12_local_conservation_and_advected_composition",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_13_LTB_inhomogeneous_dust",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_14_shell_neck_is_not_automatically_shell_crossing",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_15_matching_pressure_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_16_original_FLRW_solver_is_unchanged_and_matches_spherical_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_17_direct_Riemann_Kretschmann_Schwarzschild",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_01_independent_einstein_components",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_02_warped_product_derivation",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_03_FLRW_limit_all_curvatures",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_04_vacuum_Schwarzschild_and_Minkowski",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_05_general_spherical_conservation_including_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_06_Misner_Sharp_mass_identities_with_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_07_ADM_and_radial_evolution",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_08_spherical_polarized_spin_derivative_vanishes",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_09_unpolarized_covariance_and_effective_action",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_10_Cartan_contortion_and_elimination_coefficient",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_18_contracted_Bianchi_identity",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_19_nonradial_spin_terms_are_not_identically_discarded",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_20_rotation_invariance_of_radial_spin",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_21_Raychaudhuri_acceleration_divergence",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_22_warped_Kretschmann_FLRW_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_23_metric_FLRW_with_noninheriting_aligned_spin",
+      "status": "passed"
+    }
+  ],
+  "elapsed_seconds": 14.404,
+  "existing_flrw_files_checked": 24,
+  "existing_flrw_files_unchanged": true,
+  "limitations": [
+    "Not a spherical PDE simulation or proof of discrete stability.",
+    "Microscopic averaging and general retained-correlation closure are not validated.",
+    "Spinful junction conditions and a complete exterior construction are not implemented."
+  ]
+}

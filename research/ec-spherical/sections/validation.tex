@@ -1,0 +1,36 @@
+\section{Validation, literature audit and implementation decision}
+\subsection{Independent checks performed}
+The reproducible Python suite builds the Levi--Civita connection and four-dimensional Ricci tensor directly from the diagonal spherical metric. It compares them to the Hessian/warped-product derivation and explicit components above. Further checks cover spherical stress conservation including flux and anisotropic pressures, geometric mass laws including flux, ADM constraints and evolution identities, contracted Bianchi identities, and the exact FLRW reduction for arbitrary $k$. Minkowski and Schwarzschild have zero Einstein tensor. Direct coordinate Riemann contraction gives $\mathcal K=48M_0^2/R^6$ in a Schwarzschild exterior test.
+
+An inhomogeneous parabolic LTB dust solution
+\begin{equation}
+ R(t,r)=\left(\frac92M(r)\right)^{1/3}[t_s(r)-t]^{2/3},\quad B=R',\quad\Phi=0,
+ \quad\kap\rho=\frac{2M'}{R^2R'}
+\end{equation}
+checks nontrivial spherical GR without pressure; test profiles are manufactured analytical validation data, not EC spin profiles. The tests also read the \emph{unchanged} existing FLRW simulator through a Node subprocess and compare its normalized matter/acceleration samples to the spherical Einstein equations. Separate symbolic checks verify contortion, the auxiliary torsion coefficient, isotropic covariance contraction, the effective EOS derivative, spin transport, coherent radial rotation invariance, and cancellation of radial linear-spin stress with a nonspherical nonzero control case. A flat FLRW metric with homogeneous aligned spin is checked as a distinct symmetry-noninheriting example. Acoustic sign and boundary-pressure obstructions are analytical checks rather than a time-dependent PDE simulation.
+
+These tests validate algebra and stated special cases. They do not validate microscopic averaging, existence through an enthalpy-zero surface, general hyperbolicity of a full spin-moment system, a spinful junction construction or a global black-hole spacetime. The test inventory and exact reproduction commands are in \texttt{README.md}; the implementation gates are in \texttt{PDE\_SPEC.md}. No symbolic expression dump is used in place of the geometric derivation.
+
+\subsection{Literature comparison and apparent contradictions}
+\begin{longtable}{p{.18\textwidth}p{.34\textwidth}p{.37\textwidth}}
+\toprule Reference & What is taken from it & What cannot be transferred automatically\\\midrule\endhead
+Trautman \cite{Trautman} & Minimal EC variational structure, algebraic torsion and importance of source definitions. & A generic matter Lagrangian does not define a unique Weyssenhoff EOS, averaging rule or junction model.\\
+BHL \cite{BHL}, based on \cite{OK} & Specific full effective stress and spin transport; signature and connection-slot dictionary. & Their $\kap b^2$ and linear-spin stress cannot be replaced numerically by Hashemi's named spin variable without normalization/sign conversion. Their specialized constraint discussion is not a proof of the proposed spherical PDE's well-posedness.\\
+Hashemi et al. \cite{Hashemi} & The laboratory's averaged coefficient, conserved-spin homogeneous source and collapse benchmark. & Homogeneous ODE regularity has no radial acoustic principal symbol. A finite homogeneous pressure boundary is not automatically a valid vacuum junction.\\
+B\"ohmer--Bronowski \cite{BB} & Strong cosmological symmetry acts on torsion/spin as well as the metric. & Excluding a coherent exact FLRW spin tensor does not exclude a statistically isotropic effective metric sourced by spin variance.\\
+Luz--Mena--Ziaie \cite{LMZ} & An inhomogeneous EC effective-fluid derivation and explicit emphasis on source assumptions. & Their effective dust imposes $p-q=0$, with a quadratic ordinary-pressure relation in the discussed material model. It is \emph{not} the ordinary $p=0$, $P=-q$ conserved-spin closure tested here. Their non-singularity restrictions do not remove Eq.~\eqref{eq:sound}'s obstruction for that different closure.\\
+Pop\l awski \cite{Pop} & Spherical Tolman geometry and a relativistic spin-fluid/thermodynamic setting. & A synchronous comoving metric requires absent pressure gradients (or an equivalent geodesic restriction). Particle production changes the number/spin evolution and is excluded here; its bounce/cycle claims cannot be imported into fixed-$w$, conserved-spin generic inhomogeneity.\\
+AKP \cite{AKP} & Identified foundational EC junction reference. & The full spinful distributional matching calculation has not been reproduced; a publisher abstract is not a checked set of component jump conditions.\\\bottomrule
+\end{longtable}
+No novelty is claimed. The sound-speed calculation and spherical radial-spin reduction are audit deductions under the displayed assumptions. They should be reviewed against a selected microscopic fluid action and independent mathematical analysis before publication as a general physical result.
+
+\subsection{Decisions and unresolved items}
+\begin{enumerate}
+ \item \status{Verified geometry and GR reduction:} a spinless spherical prototype may be specified, with gauge, boundary problem, characteristic treatment and center regularization established first. This task supplies a specification only.
+ \item \status{Conditional averaged EC equations:} closed effective equations are written, but no generic dust or bounce-through-enthalpy-zero PDE is authorized. The acoustic obstruction is a demonstrable mathematical reason to withhold that implementation, not a reason to change the existing FLRW ODE.
+ \item \status{Specific full ideal branch:} a coherent radial $SO(3)$ branch and its restrictions are identified. It does not supply the desired general correlation-retaining source and retains the same effective-fluid obstruction when specialized to the ideal EOS.
+ \item \status{Open matter physics:} microscopic EOS at high density, collision/relaxation and moment closure, averaging/derivative commutators, coherent polarization, interface spin transport and an independently reconstructed full matter action remain separate obligations. No new laws have been invented to fill them.
+ \item \status{Open boundary physics:} finite linear-EOS vacuum interfaces, full spinful surface layers, radiative matching and global exterior causal completion must be chosen and derived. A spin-free vacuum exterior is not by itself a boundary condition for the interior.
+ \item \status{Open numerical analysis:} discrete constraint propagation, a well-posed gauge and characteristic system, shocks and material caustics, hyperbolicity-domain exit, validated error control and matching residual tolerances must precede production PDE outcomes.
+\end{enumerate}
+The appropriate next step is review of these gates, not a new ``general spherical EC bounce'' button. Existing runtime code, numerical solvers, FLRW exports and the GitHub Pages entry point remain unchanged.

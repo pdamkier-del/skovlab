@@ -1,0 +1,91 @@
+\section{Spherical geometry: derivation before matter substitution}
+Write $A=e^\Phi$, $B=e^\Lambda$, and
+\begin{equation}
+ g=h_{ab}\dd x^a\dd x^b+R^2\gamma_{ij}\dd y^i\dd y^j,
+ \quad h_{ab}=\operatorname{diag}(-A^2,B^2),\quad \gamma=\dd\theta^2+\sin^2\theta\dd\phi^2.
+\end{equation}
+Dots and primes in component expressions mean coordinate $\partial_t,\partial_r$. Set $X=h^{ab}R_{,a}R_{,b}$ and $H_{ab}=\nabla^{(h)}_a\nabla^{(h)}_bR$. The mixed Christoffel blocks, besides those intrinsic to $h$ and the unit sphere, are
+\begin{equation}
+ \Gamma^a{}_{ij}=-R R^{,a}\gamma_{ij},\qquad
+ \Gamma^i{}_{aj}=\frac{R_{,a}}R\delta^i_j.
+\end{equation}
+Inserting these blocks in the Ricci definition gives
+\begin{align}
+ R^{(4)}_{ab}&=R^{(h)}_{ab}-2H_{ab}/R,\\
+ R^{(4)}_{ij}&=[1-X-R\Box_hR]\gamma_{ij},\\
+ \Rsc&=R_h+2(1-X)/R^2-4\Box_hR/R.
+\end{align}
+Because $R^{(h)}_{ab}=\tfrac12R_hh_{ab}$ in two dimensions, the independent Einstein blocks are
+\begin{equation}\label{eq:warped}
+ G_{ab}=-2H_{ab}/R+\left[2\Box_hR/R+(X-1)/R^2\right]h_{ab},\qquad
+ G^\theta{}_\theta=\Box_hR/R-R_h/2.
+\end{equation}
+This is the documented geometric derivation. The CAS check instead constructs all four-dimensional Christoffels and Ricci components directly from the metric, without using Eq.~\eqref{eq:warped}.
+
+\subsection{Explicit independent components}
+Define $E_0=G_{tt}/A^2$, $E_1=G_{rr}/B^2$, $E_2=G_{\theta\theta}/R^2$. Direct evaluation of the Hessians gives
+\begin{align}
+ E_0={}&e^{-2\Phi}\left(\frac{2\dot R\dot\Lambda}{R}+\frac{\dot R^2}{R^2}\right)
+ -e^{-2\Lambda}\left(\frac{2R''}{R}+\frac{R'^2}{R^2}-\frac{2\Lambda'R'}R\right)+\frac1{R^2},\label{eq:E0}\\
+ E_1={}&-e^{-2\Phi}\left(\frac{2\ddot R}R+\frac{\dot R^2}{R^2}-\frac{2\dot\Phi\dot R}R\right)
+ +e^{-2\Lambda}\left(\frac{R'^2}{R^2}+\frac{2\Phi'R'}R\right)-\frac1{R^2},\label{eq:E1}\\
+ G_{tr}={}&-\frac2R(\dot R'-\Phi'\dot R-\dot\Lambda R'),\label{eq:Etr}\\
+ E_2={}&-e^{-2\Phi}\left[\ddot\Lambda+\dot\Lambda^2-\dot\Phi\dot\Lambda+
+ \frac{\ddot R+(\dot\Lambda-\dot\Phi)\dot R}{R}\right]\nonumber\\
+ &+e^{-2\Lambda}\left[\Phi''+\Phi'^2-\Phi'\Lambda'+
+ \frac{R''+(\Phi'-\Lambda')R'}R\right].\label{eq:E2}
+\end{align}
+$G_{\phi\phi}=\sin^2\theta G_{\theta\theta}$; all other off-diagonal components vanish. These are independent component equations, not four independent propagating gravitational degrees of freedom: Bianchi identities relate their constraint propagation and evolution.
+
+\subsection{General spherical source and conservation}
+Choose a comoving, vorticity-free fluid congruence $u=A^{-1}\partial_t$ and outward unit radial vector $n=B^{-1}\partial_r$. A general symmetric spherical source can be decomposed as
+\begin{equation}\label{eq:stress}
+ T_{\mu\nu}=\eps u_\mu u_\nu+P_r n_\mu n_\nu+P_\perp(g_{\mu\nu}+u_\mu u_\nu-n_\mu n_\nu)
+ +Q(u_\mu n_\nu+n_\mu u_\nu).
+\end{equation}
+Here $T_{\hat0\hat1}=-Q$; $Q>0$ is outward energy flux. Then
+\begin{equation}\label{eq:EFE}
+ E_0=\kap\eps,\quad E_1=\kap P_r,\quad E_2=\kap P_\perp,\quad G_{tr}=-\kap ABQ.
+\end{equation}
+This decomposition permits flux and anisotropy; it does not supply their constitutive laws. Define
+\begin{equation}
+ \Dt=A^{-1}\partial_t,\quad\Dr=B^{-1}\partial_r,\quad U=\Dt R,\quad\Gamma=\Dr R,
+ \quad H_r=\Dt\Lambda,\quad H_\perp=U/R,\quad a_r=\Dr\Phi.
+\end{equation}
+$\Theta=H_r+2H_\perp$ and $\sigma^2=(H_r-H_\perp)^2/3$. Projecting $\nabla_\mu T^{\mu\nu}=0$ along $u,n$ gives
+\begin{align}
+ \Dt\eps+(\eps+P_r)H_r+2(\eps+P_\perp)H_\perp+\Dr Q+2Q(\Gamma/R+a_r)&=0,\label{eq:energy}\\
+ \Dt Q+2Q(H_r+H_\perp)+\Dr P_r+(\eps+P_r)a_r+2\Gamma(P_r-P_\perp)/R&=0.\label{eq:momentum}
+\end{align}
+Both are checked against an independent four-dimensional divergence. One must not use a no-flux Euler equation if retained spin correlations give $Q\neq0$.
+
+\subsection{Constraints, mass and evolution identities}
+Use geometric mass $M=Gm_{\rm MS}$, not baryonic mass:
+\begin{equation}\label{eq:massdef}
+ M=\frac R2(1+U^2-\Gamma^2).
+\end{equation}
+Differentiating this definition and substituting Eqs.~\eqref{eq:E0}--\eqref{eq:Etr} gives the exact mass identities
+\begin{align}
+ \Dr M&=\frac\kap2R^2(\eps\Gamma+QU), &
+ \Dt M&=-\frac\kap2R^2(P_rU+Q\Gamma).\label{eq:masslaws}
+\end{align}
+The metric constraint and momentum constraint, with extrinsic-curvature convention $\mathsf K^i{}_j=-\operatorname{diag}(H_r,H_\perp,H_\perp)$, are
+\begin{align}
+ {}^{(3)}R+4H_rH_\perp+2H_\perp^2&=2\kap\eps,
+ &{}^{(3)}R&=2(1-\Gamma^2)/R^2-4\Dr\Gamma/R,\\
+ \Dr U-\Gamma H_r&=\kap RQ/2.\label{eq:ADM}
+\end{align}
+Here $\mathsf K$ denotes extrinsic curvature, not contortion $K^\rho{}_{\mu\nu}$. The radial and geometric evolution identities are
+\begin{align}
+ \Dt R&=U, &\Dt U&=\Gamma a_r-M/R^2-\kap RP_r/2,\label{eq:U}\\
+ \Dt\Gamma&=Ua_r+\kap RQ/2.\label{eq:Gamma}
+\end{align}
+The angular equation \eqref{eq:E2} is an essential independent residual even when redundant on exact constrained matter evolution. None of Eqs.~\eqref{eq:masslaws}--\eqref{eq:Gamma} invents a shear or spin force: the source must be supplied by a supported matter model.
+
+\subsection{FLRW and vacuum checks}
+Set $\Phi=0$, $R=ar$, $B=a/\sqrt{1-kr^2}$. Then $U=HR$, $\Gamma=\sqrt{1-kr^2}$, $H_r=H_\perp=H$, and
+\begin{equation}\label{eq:flrwEFE}
+ 3(H^2+k/a^2)=\kap\eps,\qquad -2\ddot a/a-H^2-k/a^2=\kap P,
+ \qquad Q=0.
+\end{equation}
+Minkowski space $(A,B,R)=(1,1,r)$ and Schwarzschild exterior $(A^2,B^{-2},R)=(1-2M_0/r,1-2M_0/r,r)$ yield $G_{\mu\nu}=0$. The Schwarzschild component check uses a regular exterior chart; its coordinate singularity is not used as an interior fluid gauge.

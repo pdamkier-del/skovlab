@@ -1,0 +1,42 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,longtable,array,hyperref,xcolor}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal,citecolor=teal,pdftitle={Einstein--Cartan spherical collapse: derivation and readiness audit}}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\Dt}{D_t}
+\newcommand{\Dr}{D_r}
+\newcommand{\eps}{\epsilon}
+\newcommand{\kap}{\kappa}
+\newcommand{\Tr}{\mathcal T}
+\newcommand{\Rsc}{\mathcal R}
+\newcommand{\Lie}{\mathcal L}
+\newcommand{\status}[1]{\textbf{#1}}
+\setlength{\emergencystretch}{3em}
+\title{Einstein--Cartan spherical collapse\\Mathematical derivation, compatibility and validation audit}
+\author{EC Collapse Laboratory research record\\\small Repository: \texttt{pdamkier-del/skovlab}}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+This is a derivation and implementation-readiness audit, not a spherical-collapse simulation. We derive the spherical metric equations, their constraints, mass laws, conservation laws and FLRW reductions. We distinguish a spinless fluid, a conditionally averaged Hashemi-normalized spin fluid and a published unaveraged Weyssenhoff formulation. The central obstruction is that the natural local extension of conserved-spin ordinary dust has negative acoustic speed squared on its low-spin branch. Exact FLRW symmetry also excludes a nonzero coherent Frenkel spin tensor. These facts prohibit an unqualified promotion of the existing homogeneous bounce model to a general spherical PDE. No application, existing numerical solver or existing model equations have been changed. No new exterior matching construction is claimed.
+\end{abstract}
+\tableofcontents
+\input{sections/conventions}
+\input{sections/geometry}
+\input{sections/matter}
+\input{sections/systems}
+\input{sections/boundaries}
+\input{sections/validation}
+\begin{thebibliography}{20}
+\bibitem{Trautman} A. Trautman, Einstein--Cartan theory (2006), \href{https://arxiv.org/abs/gr-qc/0606062}{gr-qc/0606062}, especially the variational formulation and spin source conventions.
+\bibitem{BHL} S. D. Br\'echet, M. P. Hobson and A. N. Lasenby, Weyssenhoff fluid dynamics in general relativity using a 1+3 covariant approach, Class. Quantum Grav. 24 (2007), \href{https://arxiv.org/abs/0706.2367v2}{arXiv:0706.2367v2}, Eqs. (1)--(5), (19)--(28), (60)--(63), Appendix B.
+\bibitem{Hashemi} M. Hashemi, S. Jalalzadeh and A. H. Ziaie, Collapse and dispersal of a homogeneous spin fluid in Einstein--Cartan theory (2015), \href{https://arxiv.org/html/1407.4103v2}{arXiv:1407.4103v2}, Eqs. (2), (5), (8)--(9), (16)--(22).
+\bibitem{OK} Yu. N. Obukhov and V. A. Korotky, The Weyssenhoff fluid in Einstein--Cartan theory, Class. Quantum Grav. 4 (1987) 1633--1657, \href{https://doi.org/10.1088/0264-9381/4/6/021}{doi:10.1088/0264-9381/4/6/021}. The published formulation as reproduced in \cite{BHL} is used here; its complete constrained matter-action derivation is not independently reconstructed.
+\bibitem{BB} C. G. B\"ohmer and P. Bronowski, The homogeneous and isotropic Weyssenhoff fluid, \href{https://arxiv.org/abs/gr-qc/0601089v2}{gr-qc/0601089v2}; distinction between metric symmetry and symmetry of the complete torsion configuration.
+\bibitem{Brown} J. D. Brown, Action functionals for relativistic perfect fluids, Class. Quantum Grav. 10 (1993) 1579, \href{https://arxiv.org/abs/gr-qc/9304026}{gr-qc/9304026}; conserved-current material action.
+\bibitem{MS} C. W. Misner and D. H. Sharp, Relativistic equations for adiabatic, spherically symmetric gravitational collapse, Phys. Rev. 136 (1964) B571, \href{https://doi.org/10.1103/PhysRev.136.B571}{doi:10.1103/PhysRev.136.B571}.
+\bibitem{LMZ} P. Luz, F. C. Mena and A. H. Ziaie, Influence of intrinsic spin in the formation of singularities for inhomogeneous effective dust space-times, Class. Quantum Grav. 36 (2019) 015003, \href{https://arxiv.org/abs/1811.12292v1}{arXiv:1811.12292v1}, especially Eqs. (17)--(24), (31). Their effective dust is not ordinary dust with a negative spin pressure.
+\bibitem{Pop} N. Pop\l awski, Gravitational collapse of a fluid with torsion into a universe in a black hole, JETP 132 (2021) 374, \href{https://arxiv.org/html/2008.02136v2}{arXiv:2008.02136v2}. The version inspected is the 20 March 2026 revision; particle production and thermodynamic assumptions are not imported here.
+\bibitem{AKP} W. Arkuszewski, W. Kopczy\'nski and V. N. Ponomariev, Matching conditions in the Einstein--Cartan theory of gravitation, Commun. Math. Phys. 45 (1975) 183--190, \href{https://doi.org/10.1007/BF01629248}{doi:10.1007/BF01629248}. Bibliographic/publisher abstract verified; a complete component-level reproduction of its junction formalism is not claimed.
+\end{thebibliography}
+\end{document}

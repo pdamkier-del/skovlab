@@ -1,0 +1,35 @@
+name: EC mathematical audit
+on:
+  push:
+    paths:
+      - 'research/ec-spherical/**'
+      - '.github/workflows/ec-mathematical-audit.yml'
+      - 'ec-flrw/collapse/model.mjs'
+      - 'ec-flrw/collapse/matter.mjs'
+      - 'ec-flrw/collapse/geometry.mjs'
+  pull_request:
+    paths:
+      - 'research/ec-spherical/**'
+      - '.github/workflows/ec-mathematical-audit.yml'
+      - 'ec-flrw/collapse/model.mjs'
+      - 'ec-flrw/collapse/matter.mjs'
+      - 'ec-flrw/collapse/geometry.mjs'
+permissions:
+  contents: read
+jobs:
+  derive-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: research/ec-spherical/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install -r research/ec-spherical/requirements.txt
+      - run: python -m unittest discover -s research/ec-spherical/validation -v
+      - run: npm test

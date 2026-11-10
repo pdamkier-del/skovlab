@@ -1,0 +1,54 @@
+\section{Scope, conventions and variational equations}
+\subsection{What is verified and what is conditional}
+The spherical geometry and GR perfect-fluid equations below are derived and independently checked. The averaged EC source is a \emph{specified effective matter model}, not a consequence of symmetry alone. Its local extension is algebraically closed under explicit transport assumptions, but not necessarily a well-posed Cauchy problem. For full Weyssenhoff matter we select the established Obukhov--Korotky/Br\'echet formulation \cite{OK,BHL}; we do not manufacture a new microscopic matter action. Its coherent spherically symmetric branch is distinguished from an unclosed hierarchy of averaged spin correlations. ``Verified'' below means algebraically checked identities and analytical limits, not a general existence theorem, a physical validation of a matter closure or proof of a complete black-hole spacetime.
+
+\subsection{Connection, curvature and units}
+Take $g_{ab}=\operatorname{diag}(-,+,+,+)$ in an orthonormal frame, $c=1$, $\kap=8\pi G$, and no cosmological constant or Holst term. The connection convention is
+\begin{align}
+ \widetilde\nabla_\mu V^\rho&=\partial_\mu V^\rho+\widetilde\Gamma^\rho{}_{\mu\nu}V^\nu, &
+ \Tr^\rho{}_{\mu\nu}&=2\widetilde\Gamma^\rho{}_{[\mu\nu]},\\
+ K^\rho{}_{\mu\nu}&=\widetilde\Gamma^\rho{}_{\mu\nu}-\{^\rho{}_{\mu\nu}\}, &
+ K_{abc}&=\tfrac12(\Tr_{abc}-\Tr_{bca}+\Tr_{cab}).\label{eq:contortion}
+\end{align}
+The derivative index is the \emph{first lower} connection index. Metric compatibility gives $K_{abc}=-K_{cba}$. Antisymmetrization and symmetrization have weight $1/2$. Our curvature convention is
+\begin{equation}
+ \widetilde R^\rho{}_{\sigma\mu\nu}=\partial_\mu\widetilde\Gamma^\rho{}_{\nu\sigma}-\partial_\nu\widetilde\Gamma^\rho{}_{\mu\sigma}
+ +\widetilde\Gamma^\rho{}_{\mu\lambda}\widetilde\Gamma^\lambda{}_{\nu\sigma}
+ -\widetilde\Gamma^\rho{}_{\nu\lambda}\widetilde\Gamma^\lambda{}_{\mu\sigma},
+ \qquad \widetilde R_{\sigma\nu}=\widetilde R^\rho{}_{\sigma\rho\nu}.
+\end{equation}
+Untilded curvature and $\nabla$ always use the Levi--Civita connection. The metric Ricci scalar is $\Rsc$; it is not assumed equal to $\widetilde R$. Coordinates $t,r$ can be measured in length units, $R$ is an areal length and $\Phi,\Lambda$ are dimensionless. In $R=a(t)r$ with dimensional $r$, $a$ is dimensionless and $k$ has units of inverse length squared. The simulator instead normalizes all lengths to $L_*$ and uses a dimensionless comoving radius and $k=0,\pm1$; a coordinate rescaling relates the two conventions. The equations are tensorial under that relabelling.
+
+\subsection{Gravitational variation and torsion elimination}
+Start from
+\begin{equation}\label{eq:action}
+ I=\frac1{2\kap}\int\sqrt{-g}\,\widetilde R\,\dd^4x+I_m[e,\widetilde\omega,\psi].
+\end{equation}
+An orthonormal coframe $e^a$, metric-compatible $\widetilde\omega^{ab}=-\widetilde\omega^{ba}$ and matter fields are independent. Fix orientation $\eta=e^0\wedge e^1\wedge e^2\wedge e^3$, $\epsilon_{0123}=+1$, and define the \emph{operational} spin source by
+\begin{equation}
+ \delta I_m=\int\delta e^a\wedge\Sigma_a-\frac12\int\delta\widetilde\omega^{ab}\wedge\tau_{ab}+\int E_\psi\delta\psi,
+ \qquad \tau_{ab}=\tau^\mu{}_{ab}\,\iota_{\partial_\mu}\eta.
+\end{equation}
+In these conventions the gravitational integrand is $(4\kap)^{-1}\epsilon_{abcd}e^a\wedge e^b\wedge\widetilde{\mathcal R}^{cd}$. Use $\delta\mathcal R^{ab}=\widetilde D\delta\widetilde\omega^{ab}$ and integrate once by parts. The independent equations are
+\begin{align}
+ \epsilon_{abcd}e^b\wedge\widetilde{\mathcal R}^{cd}&=-2\kap\Sigma_a,\\
+ \epsilon_{abcd}\Tr^a\wedge e^b&=\kap\tau_{cd}, & E_\psi&=0.\label{eq:cartanform}
+\end{align}
+Variations have compact support in this bulk calculation. A complete boundary variational principle requires appropriate boundary/interface terms, not supplied by dropping a total derivative. The tetrad equation is the torsionful Einstein equation in this source convention. The second equation is algebraic in torsion. It is not a wave equation. Local Lorentz variation also gives the matter spin identity $\widetilde D\tau_{ab}+2e_{[a}\wedge\Sigma_{b]}=0$ on the matter equations. The bare canonical stress need not be symmetric or Levi--Civita conserved.
+
+For an ideal convective source $\tau^\lambda{}_{\mu\nu}=u^\lambda s_{\mu\nu}$ with $s_{\mu\nu}u^\nu=0$, Eq.~\eqref{eq:cartanform} has zero torsion trace and yields $\Tr^\lambda{}_{\mu\nu}=\kap u^\lambda s_{\mu\nu}$. This fixes the normalization of $s$ \emph{here}; changing the sign in the definition of the spin variation changes its linear-sign dictionary. Let $s^2=\frac12s_{\mu\nu}s^{\mu\nu}\geq0$.
+
+There is a useful independent coefficient check. For a minimal matter coupling linear in contortion, in a local rest frame the quadratic gravitational contortion term and linear matter term evaluated at the Cartan solution are
+\begin{equation}
+ \Delta\widetilde R=-\frac{\kap^2}{2}s^2,\qquad
+ \mathcal L_{g,K}=-\frac\kap4s^2,\qquad
+ \mathcal L_{m,K}=-\tfrac12u^\mu s_{ab}K^{ab}{}_{\mu}=\frac\kap2s^2.
+\end{equation}
+The sum is $+\kap s^2/4$. The divergence in the scalar decomposition vanishes for the trace-free convective source. This can also be understood by eliminating a quadratic auxiliary variable: at its stationary value the linear term is minus twice the quadratic term. The check uses three arbitrary spatial spin components, verifies Eq.~\eqref{eq:contortion} and metric compatibility, and is reproduced symbolically. It does \emph{not} replace a constitutive matter action: spin transport, internal energy and averaging must still be specified. Nonminimal torsion couplings would invalidate this coefficient argument.
+
+\subsection{A source dictionary, not a blind coefficient transfer}
+Hashemi et al. define half-antisymmetric connection torsion and use a matter-source variation with an explicit factor two; their averaged source subtracts $\kap S_H^2/4$ \cite{Hashemi}. Br\'echet et al. use $Q=\Gamma_{[\mu\nu]}$, derivative index last, $\widetilde\Gamma=\Gamma-K_B$, and subtract $\kap b^2$ in their spin variable $b_{\mu\nu}$ \cite{BHL}. With the same geometric connection, our torsion is $\Tr^\rho{}_{\mu\nu}=-2Q_B^\rho{}_{\mu\nu}$, and $K^\rho{}_{\mu\nu}=-(K_B)^\rho{}_{\nu\mu}$. Their $Q_B=\kap u b$ corresponds to $s=-2b$ in the operational source convention above. Thus the \emph{scalar} effective correction can be aligned as
+\begin{equation}\label{eq:dictionary}
+ q\equiv\kap S_H^2/4=\kap s^2/4=\kap b^2,\qquad S_H^2=s^2=4b^2.
+\end{equation}
+This alignment requires the same ideal source and averaging assumptions. It is not a licence to identify the same numerical tensor called ``spin'' in different actions. Linear-spin terms retain their own signs and source definitions. In particular, a scalar matching does not prove equivalence of microscopic models or averaging prescriptions. The existing FLRW input remains $\overline{S_H^2}=\kap^2L_*^2 S_H^2$, and $\bar q=\overline{S_H^2}/4$.
