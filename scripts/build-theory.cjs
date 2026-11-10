@@ -1,0 +1,6 @@
+const fs = require("node:fs");
+const MarkdownIt = require("markdown-it");
+const source = fs.readFileSync("ec-flrw/collapse/THEORY.md", "utf8");
+const body = new MarkdownIt({ html: false, typographer: false }).render(source);
+const page = `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Theory & validation · EC Collapse Laboratory</title><link rel="stylesheet" href="lab.css"><link rel="icon" href="data:,"><style>article{max-width:960px;margin:0 auto;padding:32px 26px 60px;background:white}article h1{font-size:30px;margin:25px 0}article h2{margin:32px 0 14px}article p,article li{font-size:13px;line-height:1.85}article pre{padding:18px;background:#eff5f2;border-left:2px solid #9ab9ac;overflow:auto;font-size:12px;line-height:1.8}article code{font-size:12px;overflow-wrap:anywhere}article a{overflow-wrap:anywhere}article>ul{padding-left:20px}</style></head><body><article><a href="../">← Return to EC Collapse Laboratory</a>${body}<p><a href="https://github.com/pdamkier-del/skovlab/blob/main/ec-flrw/collapse/THEORY.md">Markdown source</a> · Generated from the versioned model documentation.</p></article></body></html>\n`;
+fs.writeFileSync("ec-flrw/collapse/theory.html", page);

@@ -3,7 +3,11 @@ const { chromium } = require("playwright");
 const assert = require("node:assert/strict");
 (async () => {
   const browser = await chromium.launch({
-    executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium",
+    executablePath:
+      process.env.CHROMIUM_PATH ||
+      (require("node:fs").existsSync("/usr/bin/chromium")
+        ? "/usr/bin/chromium"
+        : chromium.executablePath()),
     headless: true,
     args: ["--no-sandbox"],
   });
@@ -21,7 +25,7 @@ const assert = require("node:assert/strict");
     }));
   const settle = () => page.waitForTimeout(450);
   try {
-    await page.goto("http://127.0.0.1:8000/ec-flrw/");
+    await page.goto("http://127.0.0.1:8000/ec-flrw/geometry-lab.html");
     await page.waitForSelector("#plot .scatterlayer .trace");
     let p = await plot();
     assert.equal(p.names.length, 2);

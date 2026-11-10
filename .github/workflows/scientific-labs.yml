@@ -1,0 +1,42 @@
+name: Scientific simulator checks
+on:
+  push:
+    paths:
+      [
+        "ec-flrw/**",
+        "package*.json",
+        "scripts/**",
+        ".github/workflows/scientific-labs.yml",
+      ]
+  pull_request:
+    paths:
+      [
+        "ec-flrw/**",
+        "package*.json",
+        "scripts/**",
+        ".github/workflows/scientific-labs.yml",
+      ]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Verify generated theory documentation
+        run: |
+          npm run docs
+          git diff --exit-code -- ec-flrw/collapse/theory.html
+      - run: npx playwright install --with-deps chromium
+      - name: Serve static laboratory
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /tmp/ec-lab-server.log 2>&1 &
+          curl --retry 10 --retry-delay 1 --retry-connrefused --fail http://127.0.0.1:8000/ec-flrw/ > /dev/null
+      - run: npm run test:browser

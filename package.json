@@ -1,0 +1,15 @@
+{
+  "name": "skovlab-scientific-labs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test ec-flrw/model.test.mjs ec-flrw/collapse/model.test.mjs ec-flrw/collapse/research.test.mjs",
+    "serve": "python3 -m http.server 8000 --bind 0.0.0.0",
+    "test:browser": "node ec-flrw/collapse/browser.test.cjs && node ec-flrw/browser.test.cjs",
+    "docs": "node scripts/build-theory.cjs"
+  },
+  "devDependencies": {
+    "markdown-it": "14.1.0",
+    "playwright": "1.62.1"
+  }
+}

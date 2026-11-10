@@ -1,0 +1,744 @@
+:root {
+  font:
+    14px/1.5 Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #233b43;
+  background: #f8faf9;
+  --teal: #087f83;
+  --muted: #63767b;
+  --line: #dbe5e3;
+  --orange: #bb6d3c;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header,
+.intro,
+nav,
+.workspace,
+.scope,
+footer {
+  max-width: 1600px;
+  margin: auto;
+}
+header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--line);
+}
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+}
+.brand span {
+  font-weight: 550;
+  color: #304950;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-size: 11px;
+}
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mode select {
+  width: 105px;
+  margin: 0;
+}
+.intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 36px;
+}
+.eyebrow {
+  color: var(--teal);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  font-weight: 750;
+  margin: 0 0 7px;
+}
+h1 {
+  font-size: 32px;
+  letter-spacing: -1.2px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.intro p:last-child {
+  color: var(--muted);
+  margin: 0;
+  font-size: 13px;
+}
+.stage {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 1px solid #c5ddcf;
+  background: #eef6ef;
+  padding: 7px 10px;
+  border-radius: 3px;
+  color: #4c7865;
+}
+h2 {
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  margin: 0;
+  font-weight: 600;
+}
+h3 {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+nav {
+  display: flex;
+  padding: 0 36px;
+  gap: 30px;
+  border-bottom: 1px solid var(--line);
+}
+nav button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #8c9c9f;
+  padding: 15px 0;
+  font-size: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+nav button span {
+  font-size: 12px;
+  font-weight: 600;
+}
+nav button[aria-pressed="true"] {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+  padding: 0 36px;
+}
+main {
+  min-width: 0;
+  padding: 0 26px 30px 0;
+  background: #fff;
+}
+aside {
+  border-left: 1px solid var(--line);
+  padding: 26px 0 25px 26px;
+}
+.overview {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  padding: 20px 0;
+  margin-bottom: 25px;
+}
+.overview span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+}
+.overview strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.plot-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.plot-head select {
+  min-width: 210px;
+}
+.plot-tools {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 18px 0 10px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.plot-tools > label:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.plot-tools select {
+  margin: 0;
+  padding: 7px;
+  max-width: 205px;
+  font-size: 10px;
+}
+#match {
+  width: auto;
+  max-width: 190px;
+}
+#resetView {
+  margin-left: auto;
+}
+#plot {
+  height: 460px;
+}
+label {
+  font-size: 11px;
+  color: #506a72;
+  font-weight: 600;
+  display: block;
+}
+select,
+input[type="number"] {
+  background: #fff;
+  border: 1px solid #c8d7d4;
+  border-radius: 4px;
+  color: #243e45;
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  padding: 9px;
+  margin-top: 6px;
+  min-width: 0;
+}
+select {
+  cursor: pointer;
+}
+button {
+  background: var(--teal);
+  border: 1px solid var(--teal);
+  color: white;
+  border-radius: 4px;
+  padding: 9px 12px;
+  font: 600 11px/1.4 inherit;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+button.quiet {
+  color: #385b63;
+  background: white;
+  border-color: #c8d7d4;
+}
+button:hover {
+  filter: brightness(0.95);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+input:disabled,
+select:disabled {
+  color: #6d8588;
+  background: #f1f5f3;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 450;
+}
+.check input {
+  accent-color: var(--teal);
+}
+:focus-visible {
+  outline: 2px solid #209ba6;
+  outline-offset: 3px;
+}
+.plot-note,
+.small {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.plot-note {
+  margin: 0 8px 12px;
+  min-height: 20px;
+}
+.note {
+  font-size: 11px;
+  padding: 9px 12px;
+  border-left: 2px solid #95a9bd;
+  background: #f1f5f9;
+  margin: 10px 0 0;
+}
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+input[type="range"] {
+  accent-color: var(--teal);
+  flex: 1;
+  min-width: 100px;
+}
+.transport output {
+  font:
+    12px ui-monospace,
+    monospace;
+  min-width: 85px;
+}
+.transport select {
+  width: auto;
+  margin: 0;
+  padding: 7px;
+}
+.live-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 16px 0 18px;
+}
+.sphere {
+  width: 155px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.sphere svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sphere svg text {
+  font:
+    9px system-ui,
+    sans-serif;
+  fill: #687c80;
+}
+.sphere > span {
+  font-size: 9px;
+  color: #718589;
+  display: block;
+}
+.live-details {
+  flex: 1;
+  min-width: 0;
+}
+.live-state {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 14px;
+  color: #08796b;
+}
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.value {
+  border-left: 2px solid var(--c);
+  padding-left: 10px;
+  min-width: 95px;
+  flex: 1;
+}
+.value span {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+}
+.value strong {
+  font:
+    16px ui-monospace,
+    monospace;
+  margin-top: 5px;
+  display: block;
+}
+.live-details .small {
+  margin: 9px 0 0;
+}
+.diagnostics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  margin-top: 16px;
+}
+.diagnostics p {
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 6px 0 10px;
+}
+.diagnostics #health {
+  color: #08796b;
+}
+#events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 180px;
+  overflow: auto;
+}
+#events button {
+  font-size: 10px;
+  white-space: normal;
+  text-align: left;
+  padding: 5px 8px;
+  max-width: 100%;
+}
+#eventCount {
+  font-weight: 400;
+  color: var(--muted);
+}
+.warning {
+  border-left: 3px solid #bd863b;
+  background: #fff7e9;
+  color: #765325;
+  padding: 10px 13px;
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 10px 0;
+}
+.warning.error {
+  border-color: #ba5c49;
+  background: #fff0ec;
+  color: #813e32;
+}
+.side-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+.side-head h2 {
+  font-size: 16px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+}
+fieldset {
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding: 14px 0 0;
+  margin: 22px 0 0;
+}
+legend {
+  padding: 0 10px 0 0;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  font-weight: 700;
+}
+fieldset label {
+  margin-bottom: 14px;
+}
+small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.constraint-note {
+  font-size: 10px;
+  line-height: 1.7;
+  background: #eff6f4;
+  padding: 9px 11px;
+  color: #3b6c63;
+}
+.side-actions {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+}
+.module-link {
+  font-size: 12px;
+  display: block;
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+}
+.module-link small {
+  font-size: 10px;
+}
+.scope {
+  padding: 34px 36px;
+  border-top: 1px solid var(--line);
+}
+.scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+.scope p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.scope-grid a {
+  font-size: 12px;
+}
+.scope-grid button {
+  display: block;
+  white-space: normal;
+  text-align: left;
+  font-size: 10px;
+  padding: 5px 8px;
+  background: #edf0ef;
+  border-color: #d5ddda;
+  color: #637c7d;
+  margin-bottom: 7px;
+}
+footer {
+  padding: 20px 36px 30px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 28px;
+}
+.sweep-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin: 20px 0;
+}
+.sweep-controls label {
+  max-width: 150px;
+}
+#sweepPlot {
+  height: 380px;
+}
+#sweepPlot:empty {
+  height: 0;
+}
+#sweepStatus {
+  font-size: 11px;
+  color: var(--muted);
+}
+body:not(.research) .research-only {
+  display: none;
+}
+[hidden] {
+  display: none !important;
+}
+@media (min-width: 1500px) {
+  #plot {
+    height: 510px;
+  }
+}
+@media (max-width: 1100px) {
+  .stage {
+    display: none;
+  }
+  .plot-head {
+    align-items: start;
+  }
+  .plot-head select {
+    min-width: 175px;
+  }
+  .live-row {
+    gap: 10px;
+  }
+  .sphere {
+    width: 130px;
+  }
+  .transport .check {
+    width: 100%;
+  }
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
+  header,
+  .intro {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .workspace,
+  nav {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  nav {
+    gap: 22px;
+  }
+  main {
+    padding-right: 20px;
+  }
+  aside {
+    padding-left: 20px;
+  }
+}
+@media (max-width: 760px) {
+  header {
+    height: 65px;
+  }
+  .header-right > a {
+    display: none;
+  }
+  .brand span {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    margin-left: 5px;
+  }
+  .header-right {
+    gap: 5px;
+  }
+  .mode {
+    font-size: 9px;
+  }
+  .mode select {
+    width: 82px;
+    padding: 7px;
+    font-size: 10px;
+  }
+  .intro {
+    padding: 24px 20px;
+  }
+  h1 {
+    font-size: 26px;
+  }
+  .intro p:last-child {
+    font-size: 12px;
+  }
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  main {
+    padding: 0 0 25px;
+  }
+  aside {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 25px 0;
+  }
+  nav {
+    padding: 0 20px;
+    gap: 0;
+    justify-content: space-between;
+  }
+  nav button {
+    gap: 4px;
+    font-size: 8px;
+  }
+  nav button span {
+    font-size: 10px;
+  }
+  .overview {
+    gap: 10px;
+  }
+  .overview span {
+    font-size: 9px;
+  }
+  .overview strong {
+    font-size: 11px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  .plot-head {
+    flex-wrap: wrap;
+  }
+  .plot-head > label {
+    width: 100%;
+  }
+  .plot-head select {
+    width: 100%;
+  }
+  .plot-tools {
+    gap: 8px;
+  }
+  .plot-tools select {
+    max-width: 165px;
+  }
+  .plot-tools #match {
+    max-width: 170px;
+  }
+  #plot {
+    height: 390px;
+  }
+  .live-row {
+    align-items: start;
+  }
+  .sphere {
+    width: 100px;
+    margin-top: 5px;
+  }
+  .value {
+    min-width: 80px;
+  }
+  .value strong {
+    font-size: 14px;
+  }
+  .values {
+    gap: 12px;
+  }
+  .diagnostics {
+    gap: 17px;
+  }
+  .scope {
+    padding: 25px 20px;
+  }
+  .scope-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  footer {
+    padding: 20px;
+    display: block;
+  }
+  footer span {
+    display: block;
+    margin-top: 7px;
+  }
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .sweep-controls label {
+    max-width: 125px;
+  }
+}
