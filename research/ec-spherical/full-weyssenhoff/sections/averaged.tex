@@ -1,0 +1,77 @@
+\section{Model A: statistically unpolarized matter in GSM}
+\subsection{Microscopic torsion versus an averaged effective source}
+Use Hashemi's spin normalization $S^H_{\mu\nu}$ with
+\begin{equation}
+ \langle S^H_{\mu\nu}\rangle=0,\qquad
+ S_H^2=\tfrac12\langle S^H_{\mu\nu}S_H^{\mu\nu}\rangle,\qquad
+ q=\kap S_H^2/4.
+\end{equation}
+For the aligned ideal minimal coupling, the microscopic source in our operational convention may be denoted $s=S^H$, satisfying Frenkel. Cartan and contortion then have the explicit forms
+\begin{equation}
+ \Tr^\rho{}_{\mu\nu}=\kap u^\rho s_{\mu\nu},\qquad
+ K_{abc}=\tfrac\kap2(u_a s_{bc}-u_b s_{ca}+u_c s_{ab}).
+\end{equation}
+In a common-velocity ensemble, $\langle\Tr\rangle=\langle K\rangle=0$, but quadratic products have nonzero average. Eliminate microscopic torsion \emph{before} averaging; setting torsion identically zero first gives a different theory. The effective averaged metric equations do not specify a unique resolved torsionful connection or its full curvature statistics. Those require microscopic/correlation information beyond $q$.
+
+For Model B the same formula uses the coherent operational spin $s=-2b$, not the same numerical tensor as Hashemi's named spin. Thus $q_B=\kap b^2$ and $q_A=\kap S_H^2/4$ align scalar corrections under the stated source assumptions; the coherent mean is not the ensemble variance.
+
+\subsection{Additional local closure assumptions}
+The homogeneous expressions in \cite{Hashemi} do not imply their arbitrary-gradient extension. We explicitly assume: a separation of averaging and resolved gradient scales; a shared resolved congruence; locally rotationally isotropic microscopic spin statistics; negligible unresolved velocity--spin, acceleration--spin, shear--spin and connection correlations; commuting averaging and covariant derivatives at retained order; negligible metric averaging backreaction; conserved particles and spin per particle with no torque, exchange or production. These are material approximations, not consequences of the spherical metric. Under them the mean linear-spin derivative source vanishes and
+\begin{equation}\label{eq:Aconstitutive}
+ T^A_{\mu\nu}=(\rho+p-2q)u_\mu u_\nu+(p-q)g_{\mu\nu},\quad
+ \eps_A=\rho-q,\quad P_A=p-q,\quad Q_A=0.
+\end{equation}
+The local isotropic covariance in Hashemi units is
+\begin{equation}
+ \langle S^H_{ij}S^H_{kl}\rangle
+ =\tfrac13S_H^2(\delta_{ik}\delta_{jl}-\delta_{il}\delta_{jk}).
+\end{equation}
+It permits nonzero smooth variance at the center. It is not the coherent radial field of Model B.
+
+A checkable reduced action uses a conserved-current perfect-fluid variational principle of Brown type \cite{Brown}, with current density $J^\mu$ and advected composition $\chi$:
+\begin{equation}
+ I_{\rm eff}=\int\left[-\sqrt{-g}\,\eps(n,\chi)
+ +J^\mu(\partial_\mu\varphi+\lambda\partial_\mu\chi+
+ \lambda_A\partial_\mu\alpha^A)\right]\dd^4x,\quad
+ n=\frac{\sqrt{-g_{\mu\nu}J^\mu J^\nu}}{\sqrt{-g}}.
+\end{equation}
+Choose, as the declared effective reference closure,
+\begin{equation}
+ \eps(n,\chi)=C n^{1+w}-\chi n^2,\qquad
+ \rho=C n^{1+w},\quad q=\chi n^2,\quad C>0,\quad\chi\geq0.
+\end{equation}
+Variation at fixed current gives $P=n\eps_n-\eps=w\rho-q$, particle conservation and $\Dt\chi=0$. It follows that
+\begin{equation}\label{eq:Atransport}
+ \Dt\rho=-(1+w)\rho\Theta,\quad\Dt q=-2q\Theta,\quad
+ \partial_t(BR^2n)=0,\quad\Dt(q/n^2)=0.
+\end{equation}
+This action verifies the conditional \emph{effective metric-fluid} theory. It is not a reconstructed microscopic Weyssenhoff matter action or proof of the averaging assumptions.
+
+\subsection{Independent spherical equations and comparison}
+Insert Eq.~\eqref{eq:Aconstitutive} in all mixed metric components in the geometry section. The equations for $R,\Phi,\Lambda$, mass and constraints are the same perfect-source equations as for the reduced coherent Model B, using $q_A$ instead of $\kap b^2$. The independent matter variables are $(\rho,q)$ or $(n,\chi)$, not both pairs. Initial profiles after $R_i=r$ are $(U_i,\rho_i,q_i)$; pressure, effective density and constrained geometry follow. In particular
+\begin{equation}
+ h=(1+w)\rho-2q,\quad
+ \Phi'=-\frac{w\rho'-q'}h,\quad
+ H_r=\Dr U/\Gamma,\quad\Dt R=U
+\end{equation}
+on a nondegenerate monotone patch. These equations retain pressure acceleration and shear. The undivided conservation equation $\Dr P+h a_r=0$ remains valid when the divided expression fails.
+
+There is a complete averaged-fluid radial pencil in $(\rho,q,v)$:
+\begin{equation}
+ A_A^0=\operatorname{diag}(1,1,h),\qquad
+ A_A^1=\begin{pmatrix}0&0&(1+w)\rho\\0&0&2q\\w&-1&0\end{pmatrix}.
+\end{equation}
+Its determinant is $\lambda[w(1+w)\rho-2q-h\lambda^2]$. Alternatively $(n,\chi,v)$ gives Eq.~\eqref{eq:pencil} with $P_\chi=-n^2$. Thus the characteristic classification and enthalpy problem apply to Model A independently of any identification with coherent spin. At zero variance the coherent variable change $q=\kap b^2$ is not invertible; the separate pencils are the correct way to compare the models there.
+
+\begin{longtable}{p{.22\textwidth}p{.33\textwidth}p{.34\textwidth}}
+\toprule Quantity & Model A: averaged GSM & Model B: full coherent GSM\\\midrule\endhead
+Spin content & Zero mean; isotropic nonzero variance. & Signed radial axial mean $b$ under proper rotations.\\
+Quadratic correction & $\kap S_H^2/4$ & $\kap b^2$ in BHL units; not a factor to copy blindly.\\
+Linear-spin terms & Vanish only under the stated averaging/commutation assumptions. & Retained first, then vanish by exact radial symmetry.\\
+Flux/anisotropy & Zero under the selected moment truncation. & Zero in the exact ideal radial branch, despite shear and gradients.\\
+Independent spin transport & $\Dt q=-2q\Theta$ & $\Dt b=-b\Theta$, hence $\Dt q=-2q\Theta$.\\
+Center & Even variance may be nonzero. & $b=O(r)$, so coherent $q=O(r^2)$.\\
+Closure status & Conditional statistical/material approximation. & Conditional selected full ideal field formulation plus EOS; not a generic correlation hierarchy.\\
+Characteristics & Contact/composition mode and acoustic pair. & Contact/polarization mode and same pair away from degeneracies.\\
+Full-connection boundary & Microscopic spin statistics/edge layer not determined by mean-zero torsion alone. & Restricted contortion-jump test available; general spinful layers unresolved.\\\bottomrule
+\end{longtable}

@@ -1,5 +1,7 @@
 # EC spherical-collapse derivation and audit
 
+**Stage 2:** [GSM + averaged versus full Weyssenhoff: equations, bounce and viability analysis](full-weyssenhoff/README.md) continues this audit. The original derivation and its recorded validation results below are preserved.
+
 This is the mathematical deliverable requested before any new spherical simulation features. It extends the prior FLRW documentation without replacing or duplicating the existing implementation. **No application or solver files were changed.**
 
 ## Deliverables

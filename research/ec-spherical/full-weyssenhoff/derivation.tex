@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,longtable,array,hyperref,xcolor}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal,citecolor=teal,pdftitle={Two Weyssenhoff fluids: spherical equations and bounce audit}}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\Dt}{D_t}
+\newcommand{\Dr}{D_r}
+\newcommand{\kap}{\kappa}
+\newcommand{\eps}{\epsilon}
+\newcommand{\Tr}{\mathcal T}
+\setlength{\emergencystretch}{3em}
+\title{Two Weyssenhoff fluids in general spherical Einstein--Cartan collapse\\\large Stage 2: equations, bounce conditions and mathematical viability}
+\author{EC Collapse Laboratory research record\\\small\texttt{pdamkier-del/skovlab}}
+\date{12 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Continuing the audit at commit \texttt{3efc961}, we compare a conditionally local averaged Hashemi-type Weyssenhoff fluid with the full ideal field formulation of Obukhov and Korotky reproduced by Br\'echet, Hobson and Lasenby. The lapse, radial metric and areal radius remain general. Proper spherical symmetry and Frenkel leave one signed coherent radial spin density in the second model. We derive the cancellation of its linear derivative stress only after symmetry reduction. Both selected closures have the same acoustic pair, with additional advected composition or polarization modes. Conserved-spin ordinary dust is nonhyperbolic on its low-spin branch; enthalpy and zero-sound-speed surfaces are degenerate. We derive distinct shell and volume turning conditions, local curvature checks, analytical constrained initial patches and necessary vacuum-interface conditions. These do not establish a causal regular finite-cloud bounce. They are conditional fluid conclusions, not a no-go theorem for minimal Einstein--Cartan gravity. No numerical evolution, plots, simulator or UI changes are made.
+\end{abstract}
+\tableofcontents
+\input{sections/formulation}
+\input{sections/averaged}
+\input{sections/symmetry}
+\input{sections/equations}
+\input{sections/characteristics}
+\input{sections/bounce}
+\input{sections/boundaries}
+\input{sections/decision}
+\begin{thebibliography}{20}
+\bibitem{audit} EC Collapse Laboratory, Stage 1 derivation and audit, repository commit \href{https://github.com/pdamkier-del/skovlab/tree/3efc96159537e834313ded3ba359624abaa8b26f/research/ec-spherical}{\texttt{3efc961}}, 10 November 2026.
+\bibitem{Trautman} A. Trautman, Einstein--Cartan theory, \href{https://arxiv.org/abs/gr-qc/0606062}{gr-qc/0606062} (2006).
+\bibitem{BHL} S. D. Br\'echet, M. P. Hobson and A. N. Lasenby, Weyssenhoff fluid dynamics in general relativity using a 1+3 covariant approach, \href{https://arxiv.org/abs/0706.2367v2}{0706.2367v2} (2007), Eqs. (19)--(28), (60)--(63), Appendix B.
+\bibitem{OK} Yu. N. Obukhov and V. A. Korotky, The Weyssenhoff fluid in Einstein--Cartan theory, Class. Quantum Grav. 4 (1987) 1633, \href{https://doi.org/10.1088/0264-9381/4/6/021}{doi:10.1088/0264-9381/4/6/021}; original full action not independently reconstructed here.
+\bibitem{Hashemi} M. Hashemi, S. Jalalzadeh and A. H. Ziaie, Collapse and dispersal of a homogeneous spin fluid in Einstein--Cartan theory, \href{https://arxiv.org/html/1407.4103v2}{1407.4103v2} (2015).
+\bibitem{BB} C. G. B\"ohmer and P. Bronowski, The homogeneous and isotropic Weyssenhoff fluid, \href{https://arxiv.org/abs/gr-qc/0601089v2}{gr-qc/0601089v2} (2006).
+\bibitem{Pop} N. Pop\l awski, Gravitational collapse of a fluid with torsion into a universe in a black hole, \href{https://arxiv.org/html/2008.02136v2}{2008.02136v2}, revision 20 March 2026.
+\bibitem{LMZ} P. Luz, F. C. Mena and A. H. Ziaie, Influence of intrinsic spin in the formation of singularities for inhomogeneous effective dust space-times, \href{https://arxiv.org/abs/1811.12292v1}{1811.12292v1} (2019).
+\bibitem{LC} P. Luz and S. Carloni, Static compact objects in Einstein--Cartan theory, \href{https://arxiv.org/abs/1907.11489}{1907.11489} (2019), Sec. V, especially the distinction between absence of a source layer and absence of distributional full curvature.
+\bibitem{AKP} W. Arkuszewski, W. Kopczy\'nski and V. N. Ponomariev, Matching conditions in the Einstein--Cartan theory of gravitation, Commun. Math. Phys. 45 (1975) 183, \href{https://doi.org/10.1007/BF01629248}{doi:10.1007/BF01629248}; full component formalism not reproduced.
+\bibitem{LWP} P. Luz and F. C. Mena, Local well-posedness of the initial value problem in Einstein--Cartan theory, \href{https://arxiv.org/abs/2505.22590v1}{2505.22590v1} (2025), introduction and Theorem 1; geometric theorem with matter supplied ab initio.
+\bibitem{Weick} N. Weickgenannt, Linearly stable and causal relativistic first-order spin hydrodynamics, \href{https://arxiv.org/abs/2307.13561v2}{2307.13561v2} (2023).
+\bibitem{Xie} X.-Q. Xie, D.-L. Wang, C. Yang and S. Pu, Causality and stability analysis for the minimal causal spin hydrodynamics, \href{https://arxiv.org/abs/2306.13880v3}{2306.13880v3} (2023).
+\bibitem{FSY} F. Finster, J. Smoller and S.-T. Yau, Particlelike solutions of the Einstein--Dirac equations, \href{https://arxiv.org/abs/gr-qc/9801079}{gr-qc/9801079}, Phys. Rev. D 59 (1999) 104020; torsion-free static comparison, not a solution of the proposed EC collapse problem.
+\bibitem{Brown} J. D. Brown, Action functionals for relativistic perfect fluids, \href{https://arxiv.org/abs/gr-qc/9304026}{gr-qc/9304026} (1993); effective conserved-current action, not a microscopic spin action.
+\end{thebibliography}
+\end{document}

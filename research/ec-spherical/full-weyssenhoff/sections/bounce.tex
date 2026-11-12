@@ -1,0 +1,58 @@
+\section{Shell bounces, volume bounces and local regularity}
+\subsection{Exact necessary shell condition for both selected models}
+At a noncentral material shell define $U=\Dt R$. A candidate areal bounce needs $R>0$, $U=0$, and
+\begin{equation}\label{eq:shellbounce}
+ \Dt U=\Gamma a_r-\frac{M}{R^2}-\frac\kap2 PR>0.
+\end{equation}
+For either selected isotropic closure, wherever $h\ne0$ this is
+\begin{equation}
+ -\frac{\Gamma}{h}(w\Dr\rho-\Dr q)-\frac{M}{R^2}
+ -\frac\kap2(w\rho-q)R>0.
+\end{equation}
+The spin term changes both the local pressure work and the constrained gravitational mass integral; $M$ cannot be replaced by an arbitrary local density. Spin-pressure gradients also affect acceleration. Ordinary pressure gradients can support a turn even without torsion. No independent spin bounce force is added. For a broader specified anisotropic source replace $P$ here by $P_r$ and use the full momentum equation including $\Dt Q$ and $P_r-P_\perp$; those terms cannot be chosen without matter closure.
+
+Spatial curvature enters through $\Gamma^2=1+U^2-2M/R$ and the Hamiltonian constraint, not as an additional freely prescribed force. At $U=0$, $\Gamma^2=1-2M/R\geq0$. If $\Gamma\ne0$, the two null expansions have opposite signs, $\theta_\pm=\pm2\Gamma/R$; that turning sphere is not future trapped. The marginal $\Gamma=0$ case requires a regular-neck/chart analysis. This local observation neither identifies an event horizon nor excludes other portions of the evolution being trapped.
+
+\subsection{Volume turning points and shear}
+The local material cell volume is proportional to $BR^2$, not $R^3$:
+\begin{equation}
+ \Dt\ln(BR^2)=\Theta,\quad a_V\propto(BR^2)^{1/3},\quad
+ \frac{\Dt^2a_V}{a_V}=\frac13\Dt\Theta+\frac19\Theta^2.
+\end{equation}
+At a shell areal extremum $H_\perp=0$, but $H_r$ need not vanish, so neither $\Theta=0$ nor a volume minimum follows. Conversely $\Theta=0$ need not imply $U=0$. The center $R=0$ is a regular limiting worldline, not a noncentral shell satisfying the stated $R>0$ bounce test.
+
+The Levi--Civita vorticity-free Raychaudhuri equation follows from the kinematic Ricci identity and $R_{\mu\nu}u^\mu u^\nu=\kap(\eps+P_r+2P_\perp)/2$:
+\begin{equation}
+ \Dt\Theta=-\frac{\Theta^2}{3}-2\sigma^2-\frac\kap2(\eps+P_r+2P_\perp)
+ +\nabla_\mu a^\mu.
+\end{equation}
+At a volume turning point for either selected model, a minimum requires
+\begin{equation}\label{eq:volumebounce}
+ \kap[4q-(1+3w)\rho]>4\sigma^2-2\nabla_\mu a^\mu,\quad
+ \nabla_\mu a^\mu=\Dr a_r+\frac{2\Gamma a_r}{R}+a_r^2.
+\end{equation}
+Shear opposes the volume minimum. Pressure/spin gradients influence the acceleration divergence with no universal sign. The geodesic inequality in the characteristic section is only a restricted comparison; geodesic motion or zero shear is not imposed on the spherical field equations.
+
+In FLRW, acceleration and shear vanish and all shells share one scale factor. At $H=0$ the constraint is $\kap(\rho-q)=3k/a^2$, and the volume/areal minimum additionally needs $4q>(1+3w)\rho$. Only for $k=0$ does the turning constraint give $q=\rho$. These are the appropriate averaged homogeneous reference conditions, not a coherent strong-symmetry FLRW solution.
+
+\subsection{Necessary regularity is more than an inequality}
+For a noncentral event with $R>0$, bounded $\rho,q,P$ keep the Ricci invariants finite:
+\begin{align}
+ \mathcal R&=\kap(\eps-3P)=\kap[(1-3w)\rho+2q],\\
+ R_{\mu\nu}R^{\mu\nu}&=\kap^2(\eps^2+3P^2).
+\end{align}
+For a spherical isotropic no-flux source the Weyl invariant is
+\begin{equation}
+ C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma}
+ =48\left(\frac{M}{R^3}-\frac{\kap\eps}{6}\right)^2,
+\end{equation}
+and the metric Kretschmann invariant is $C^2+2R_{\mu\nu}R^{\mu\nu}-\mathcal R^2/3$. These follow from the angular warped Riemann block and four-dimensional Weyl decomposition. The independent tests check the Weyl subtraction against the coordinate curvature. Bounded $M/R^3$ is therefore also needed; finite ordinary density alone does not bound all curvature. At a smooth center use regular limits and $M=O(R^3)$, not direct $0/0$ evaluation.
+
+Model B additionally needs bounded spin and its covariant derivatives: the full curvature is
+\begin{equation}
+ \widetilde R^\rho{}_{\sigma\mu\nu}
+ =R^\rho{}_{\sigma\mu\nu}
+ +2\nabla_{[\mu}K^\rho{}_{\nu]\sigma}
+ +2K^\rho{}_{[\mu|\lambda|}K^\lambda{}_{\nu]\sigma}.
+\end{equation}
+Model A's scalar variance alone does not fix full microscopic curvature statistics; bounded variance is not proof of every realization's regularity. For either model one must also maintain a nondegenerate material Jacobian, admissible characteristic domain, regular gauge and boundary, and actual local continuation. Finite samples of invariants or either inequality alone are not sufficient for nonsingular collapse, geodesic completeness, repeated oscillations or a complete exterior spacetime. No evolution or plots are produced in this theoretical stage.

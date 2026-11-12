@@ -1,0 +1,79 @@
+\section{Radial characteristic and high-density analysis}
+\subsection{Full reduced principal symbol, including polarization}
+This is a local, frozen-coefficient, high-frequency test at a noncentral regular event. The ordinary causal-fluid reference restricts $0\leq w\leq1$; the algebraic pencils remain valid for other real $w$, but no complete physical classification outside this reference range is claimed. Use a locally inertial fluid rest frame $(\tau,x)$ with $x$ radial. Curvature, spherical $1/R$ terms, background gradients and nonderivative gravity terms are lower order. For radial perturbations the spin remains in the angular plane; Frenkel is preserved under radial boosts. Choose the isentropic ordinary EOS $\rho=Cn^{1+w}$, conserved $n>0$, and independent signed $\beta=b/n$. Thus
+\begin{equation}
+ \eps=Cn^{1+w}-\kap\beta^2n^2,\quad
+ P=wCn^{1+w}-\kap\beta^2n^2,\quad h=n\eps_{,n}=(1+w)\rho-2q.
+\end{equation}
+The equality $P=n\eps_{,n}-\eps$ provides a thermodynamic cross-check on this reduced source, not a replacement microscopic Weyssenhoff action. Linearized particle, polarization and momentum equations give
+\begin{equation}
+ A^0\partial_\tau\delta W+A^1\partial_x\delta W=\text{lower order},\quad W=(n,\beta,v),
+\end{equation}
+\begin{equation}\label{eq:pencil}
+ A^0=\begin{pmatrix}1&0&0\\0&1&0\\0&0&h\end{pmatrix},\qquad
+ A^1=\begin{pmatrix}0&0&n\\0&0&0\\P_n&P_\beta&0\end{pmatrix}.
+\end{equation}
+Here $P_n=[w(1+w)\rho-2q]/n$ at fixed $\beta$ and $P_\beta=-2\kap\beta n^2$. For a covector $(-\omega,k)$,
+\begin{align}
+ \det(kA^1-\omega A^0)&=-\omega[h\omega^2-nP_n k^2],\qquad
+ \lambda=\omega/k=0,\ \pm c_{\rm eff},\nonumber\\
+ c_{\rm eff}^2&=\frac{nP_n}{h}=\frac{w(1+w)\rho-2q}{(1+w)\rho-2q}.\label{eq:charpoly}
+\end{align}
+For $h\ne0$, $c_{\rm eff}^2>0$ the three distinct eigenvalues have a complete basis. One choice is $r_\pm=(n,0,\pm c_{\rm eff})^T$, $r_0=(-P_\beta,P_n,0)^T$. The contact/polarization mode has $\delta P=0$; acoustic modes have $\delta\beta=0$. Equivalently in $(\rho,b,v)$,
+\begin{equation}
+ A^0=\operatorname{diag}(1,1,h),\quad
+ A^1=\begin{pmatrix}0&0&(1+w)\rho\\0&0&b\\w&-2\kap b&0\end{pmatrix}.
+\end{equation}
+Both pencils give Eq.~\eqref{eq:charpoly}. An independently advected entropy variable adds a contact mode; it does not change the acoustic pair at fixed entropy and polarization. Retaining ideal common-congruence spin second moments also adds contact modes and leaves the same acoustic pair. Holding $b$ fixed during compression instead of $b/n$ would violate the selected spin transport and give a different, unjustified derivative.
+
+On a fluid-comoving chart the coordinate acoustic speeds are $\dd r/\dd t=\pm(A/B)c_{\rm eff}$, and the material speed is zero. In a local Eulerian inertial frame with fluid speed $v$, the speeds are $v$ and $(v\pm c_{\rm eff})/(1\pm vc_{\rm eff})$. These expressions establish local causal acoustic cones when $0<c_{\rm eff}^2\leq1$, not global stability of collapse or well-posedness of our constrained gauge and boundary scheme. A regular hyperbolic metric gauge has light characteristics; coupling to that gravitational sector cannot remove a nonreal material acoustic pair by algebraic torsion elimination. We do not claim to have derived the characteristics of an unclosed multidimensional correlation theory.
+
+\subsection{The complete constant-$w$ domain and its endpoints}
+Let $z=q/\rho\geq0$ and $0\leq w<1$, $\rho>0$. Define
+\begin{equation}
+ z_s=\tfrac12w(1+w),\quad z_h=\tfrac12(1+w),\quad
+ c_{\rm eff}^2-1=\frac{w^2-1}{1+w-2z}.
+\end{equation}
+The state classification is
+\begin{longtable}{p{.25\textwidth}p{.27\textwidth}p{.37\textwidth}}
+\toprule Domain & Material characteristics & Interpretation\\\midrule\endhead
+$0\leq z<z_s$, $w>0$ & $h>0$, $0<c_{\rm eff}^2\leq w\leq1$ & Candidate smooth causal radial patch; no complete boundary or gauge proof follows.\\
+$z=z_s$ & $c_{\rm eff}^2=0$, coincident eigenvalues & Primitive system is defective, not strongly hyperbolic at the endpoint.\\
+$z_s<z<z_h$ & $h>0$, $c_{\rm eff}^2<0$ & Nonreal acoustic pair; high-frequency growth.\\
+$z=z_h$ & $A^0$ singular & Euler acceleration cannot generically be evolved; undivided compatibility is required.\\
+$z>z_h$ & $h<0$, $c_{\rm eff}^2>1$ & Real acoustic pair but outside the metric light cone; a causal-fluid interpretation fails.\\\bottomrule
+\end{longtable}
+For ordinary dust $w=0$, every $0<z<1/2$ is in the nonreal domain. In a local acoustic eigenmode, $\delta\eps\propto\exp(ikx+|k|\sqrt{-c_{\rm eff}^2}\,\tau)$. There is no wavelength-independent Sobolev growth estimate for the continuum initial-value problem. Hydrodynamics has a microscopic cutoff, but no specified cutoff/completion is present here; a finite grid or viscosity cannot establish well-posedness of these continuum equations. Analytic special solutions or restricted initial data can exist despite this generic smooth-data obstruction.
+
+At $P_n=0$ and $h\ne0$, all three eigenvalues of $(A^0)^{-1}A^1$ vanish. Its rank is two when $P_\beta\ne0$, and its square is nonzero while its cube vanishes. It is a nilpotent Jordan system with only one eigenvector, not three stationary waves. For the coherent spinless dust endpoint ($w=\beta=0$), rank is one and the square vanishes. For Model A with independent variance perturbations, $P_\chi=-n^2$ remains nonzero even at $\chi=0$, so its formal three-variable pencil has rank two there; the zero-variance boundary of the physical state space needs a one-sided perturbation interpretation. Restricting exactly to the GR submodel removes that variance degree of freedom. GR dust has a useful pre-caustic Lagrangian description, but the primitive acoustic system is still not strongly hyperbolic with an equal-regularity norm. A repeated real root alone is not a viability check.
+
+At $h=0$ the undivided radial Euler equation requires $\Dr P=0$, but no longer determines $a_r$. For $w<1$, $nP_n=(w-1)(1+w)\rho\ne0$ there, so generic gradients fail this constraint. Even specially tuned data satisfying it need a separate differential-algebraic continuation and cannot justify division by $h$. In the $h<0$ domain no universal ghost theorem is inferred from the fluid principal symbol; the direct conclusion is superluminal radial sound for this EOS.
+
+\paragraph{Stiff exception.} At $w=1$, numerator and denominator coincide, so $c_{\rm eff}^2=1$ wherever $h\ne0$, including the negative-$h$ branch. At $q=\rho$ the original time matrix is still singular; cancelling the ratio does not invert it. Conserved $q$ and $\rho$ then both scale as the inverse square of cell volume, so $q/\rho$ is constant along each shell. There is no compression-driven crossing from an initially positive-enthalpy state to a spin-dominated state in this fixed-$w=1$ model. Special negative-effective-energy initial branches, for example homogeneous open geometries, are not excluded by this observation; their physical admissibility and boundary data are a different problem. We do not extend the $w<1$ acausality conclusion to them.
+
+\subsection{General ordinary EOS: precisely what could change}
+Let $\rho=\rho(n,\varsigma)$, $p=n\rho_n-\rho$, with entropy $\varsigma$ advected. At fixed $(\varsigma,\beta)$ let $h_0=\rho+p>0$ and $c_0^2=n p_n/h_0$. Keeping the same ideal spin correction and transport gives
+\begin{equation}\label{eq:generalEOS}
+ c_{\rm eff}^2=\frac{c_0^2 h_0-2q}{h_0-2q},\qquad
+ c_{\rm eff}^2-1=\frac{(c_0^2-1)h_0}{h_0-2q}.
+\end{equation}
+For a subluminal ordinary EOS $0\leq c_0^2<1$, the negative-enthalpy branch is again superluminal. A positive-enthalpy causal patch requires $2q<c_0^2h_0$ (strictly for a nondegenerate acoustic pair). A microscopic high-density EOS can change $h_0,c_0$, spin susceptibilities and the source itself; no such EOS is supplied by specifying minimal EC gravity. Spin-dependent internal energy or independent polarization thermodynamics requires more derivatives and equations than Eq.~\eqref{eq:generalEOS}. We do not choose them to force a stable bounce.
+
+\subsection{Can a bounce be reached inside the approved domain?}
+For $w<1$, $\Dt\ln(q/\rho)=-(1-w)\Theta$: collapse increases $z$ along a spinning shell. A flat homogeneous bounce at $q=\rho$ has $c_{\rm eff}^2=w+2$ and passes the $z_s,z_h$ surfaces if it starts on the low-spin branch. The homogeneous ODE contains no acoustic gradients, so this does not invalidate the existing FLRW reference computations.
+
+At a spherical volume turning point, the vorticity-free Raychaudhuri equation gives
+\begin{equation}
+ \Dt\Theta=-2\sigma^2-\tfrac\kap2[(1+3w)\rho-4q]+\nabla_\mu a^\mu
+ \quad(\Theta=0).
+\end{equation}
+In a geodesic patch $\nabla_\mu a^\mu=0$, a volume minimum requires
+\begin{equation}
+ q>\tfrac14(1+3w)\rho+\sigma^2/\kap.
+\end{equation}
+For $0\leq w<1$ this lies above the positive-enthalpy causal bound because
+\begin{equation}
+ \frac{1+3w}{4}\rho-\frac{w(1+w)}2\rho
+ =\frac{(1-w)(1+2w)}4\rho>0.
+\end{equation}
+Thus this selected closure has no geodesic, torsion-driven volume minimum inside that causal branch; shear makes the necessary spin threshold larger. This is a conditional inequality, not a theorem forbidding all spherical areal bounces. Inhomogeneous pressure gives $\nabla_\mu a^\mu=\Dr a_r+2\Gamma a_r/R+a_r^2$, which can alter a volume minimum, and $U=0$ is a distinct areal turning condition. A causal pressure-driven bounce, a shell-specific turn, or another microscopic EC source is not ruled out.

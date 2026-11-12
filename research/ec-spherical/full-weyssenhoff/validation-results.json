@@ -1,0 +1,300 @@
+{
+  "stage": 2,
+  "task_date": "2026-11-12",
+  "models_compared": [
+    "GSM + local averaged Weyssenhoff",
+    "GSM + full ideal radial Weyssenhoff"
+  ],
+  "previous_audit_commit": "3efc96159537e834313ded3ba359624abaa8b26f",
+  "python": "3.12.14",
+  "sympy": "1.14.0",
+  "node": "v24.19.0",
+  "research_tests_run": 44,
+  "research_tests": [
+    {
+      "test": "test_analytical.AnalyticalAudit.test_11_effective_sound_speed_and_hyperbolicity_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_12_local_conservation_and_advected_composition",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_13_LTB_inhomogeneous_dust",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_14_shell_neck_is_not_automatically_shell_crossing",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_15_matching_pressure_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_16_original_FLRW_solver_is_unchanged_and_matches_spherical_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_17_direct_Riemann_Kretschmann_Schwarzschild",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_01_independent_einstein_components",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_02_warped_product_derivation",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_03_FLRW_limit_all_curvatures",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_04_vacuum_Schwarzschild_and_Minkowski",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_05_general_spherical_conservation_including_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_06_Misner_Sharp_mass_identities_with_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_07_ADM_and_radial_evolution",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_08_spherical_polarized_spin_derivative_vanishes",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_09_unpolarized_covariance_and_effective_action",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_10_Cartan_contortion_and_elimination_coefficient",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_18_contracted_Bianchi_identity",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_19_nonradial_spin_terms_are_not_identically_discarded",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_20_rotation_invariance_of_radial_spin",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_21_Raychaudhuri_acceleration_divergence",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_22_warped_Kretschmann_FLRW_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_23_metric_FLRW_with_noninheriting_aligned_spin",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_01_mixed_Einstein_components_and_flux_sign",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_02_full_derivative_decomposition_with_nonradial_controls",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_03_radial_cancellation_separately_for_each_linear_term",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_04_spin_particle_transport_and_Frenkel_preservation",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_05_characteristic_determinant_and_complete_eigenbasis",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_06_density_spin_pencil_and_change_of_variables",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_07_zero_sound_Jordan_structure_and_enthalpy_degeneracy",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_08_all_sound_domains_and_stiff_exception",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_09_general_ordinary_EOS_derivative",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_10_extra_ideal_spin_moments_add_contacts_only",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_11_regular_center_and_constrained_initial_geometry",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_12_full_connection_boundary_delta_and_zero_Ricci_delta",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_13_vacuum_edge_and_pressure_conditions",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_14_geodesic_volume_bounce_bound_vs_causal_domain",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_15_numeric_mode_residual_growth_and_causal_boost",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_16_averaged_pencil_independent_of_coherent_identification",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_17_analytic_initial_patches_satisfy_all_radial_constraints",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_18_shell_and_volume_conditions_remain_distinct",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_19_coordinate_Weyl_subtraction_and_curvature_invariants",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_20_nonzero_density_pressure_free_edge_is_noncausal",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_21_full_spin_equation_preserves_Frenkel_for_arbitrary_acceleration",
+      "status": "passed"
+    }
+  ],
+  "application_tests_run": 24,
+  "application_tests_exit_code": 0,
+  "existing_flrw_files": [
+    {
+      "path": "ec-flrw/MODEL.md",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/app.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/browser.test.cjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/THEORY.md",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/app.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/browser.test.cjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/geometry.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/lab.css",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/matter.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/model.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/model.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/plot.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/research.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/research.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/solver.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/sweep-worker.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/theory.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/geometry-lab.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/index.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/model.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/model.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/style.css",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/vendor/LICENSE.plotly",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/vendor/plotly.min.js",
+      "unchanged": true
+    }
+  ],
+  "success": true,
+  "elapsed_seconds": 16.144,
+  "limitations": [
+    "No spherical PDE time evolution or full coupled well-posedness proof.",
+    "Full microscopic action and dense-matter EOS not independently established.",
+    "Generic retained correlations and spinful surface layers remain unclosed.",
+    "The full-Riemann interface test assumes Darmois metric matching and bounded contortion.",
+    "No regular finite exterior construction or global bounce outcome computed."
+  ]
+}

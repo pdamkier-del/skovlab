@@ -1,0 +1,75 @@
+\section{General spherical gravitational and matter equations}
+\subsection{Documented metric derivation and mixed components}
+Write $g=h_{ab}\dd x^a\dd x^b+R^2\gamma_{ij}\dd y^i\dd y^j$, with $h=\operatorname{diag}(-A^2,B^2)$ and $\gamma$ the unit sphere. The mixed Christoffels are $\Gamma^a{}_{ij}=-RR^{,a}\gamma_{ij}$ and $\Gamma^i{}_{aj}=R_{,a}\delta^i_j/R$. Defining $X=h^{ab}R_{,a}R_{,b}$ and $H_{ab}=\nabla^{(h)}_a\nabla^{(h)}_bR$, insertion in the Ricci definition gives
+\begin{align}
+ R^{(4)}_{ab}&=\tfrac12R_hh_{ab}-2H_{ab}/R,&
+ R^{(4)}_{ij}&=(1-X-R\Box_hR)\gamma_{ij},\\
+ G_{ab}&=-2H_{ab}/R+[2\Box_hR/R+(X-1)/R^2]h_{ab},&
+ G^\theta{}_\theta&=\Box_hR/R-R_h/2.
+\end{align}
+Using the two-dimensional Christoffels to expand these Hessians yields the requested mixed components (dots/primes are coordinate derivatives):
+\begin{align}
+ G^t{}_t={}&-A^{-2}\left(2\dot R\dot\Lambda/R+\dot R^2/R^2\right)
+ +B^{-2}\left(2R''/R+R'^2/R^2-2\Lambda'R'/R\right)-R^{-2},\label{eq:Gtt}\\
+ G^r{}_r={}&-A^{-2}\left(2\ddot R/R+\dot R^2/R^2-2\dot\Phi\dot R/R\right)
+ +B^{-2}\left(R'^2/R^2+2\Phi'R'/R\right)-R^{-2},\\
+ G^t{}_r={}&\frac{2}{A^2R}(\dot R'-\Phi'\dot R-\dot\Lambda R'),\\
+ G^\theta{}_\theta={}&-A^{-2}\left[\ddot\Lambda+\dot\Lambda^2-\dot\Phi\dot\Lambda+
+ (\ddot R+(\dot\Lambda-\dot\Phi)\dot R)/R\right]\nonumber\\
+ &+B^{-2}\left[\Phi''+\Phi'^2-\Phi'\Lambda'+(R''+(\Phi'-\Lambda')R')/R\right].\label{eq:Gangle}
+\end{align}
+For the coherent radial source their right-hand sides are respectively $-\kap\eps$, $\kap P$, $0$, $\kap P$. For a general outward energy flux $Q$ with $T_{\hat0\hat1}=-Q$, instead $G^t{}_r=\kap(B/A)Q$. Raising the first time index changes the sign; the covariant $G_{tr}$ must not be mistaken for $G^t{}_r$. The CAS independently constructs the full four-dimensional metric connection and checks this conversion as well as Stage 1's components.
+
+\subsection{Undivided conservation and spin equations}
+Let $\Dt=A^{-1}\partial_t$, $\Dr=B^{-1}\partial_r$, $U=\Dt R$, $\Gamma=\Dr R$, $H_r=\Dt\Lambda$, $H_\perp=U/R$ and $a_r=\Dr\Phi$. Then
+\begin{equation}
+ \Theta=H_r+2H_\perp,\qquad \sigma^2=\tfrac13(H_r-H_\perp)^2.
+\end{equation}
+Before adopting a perfect source, the spherical Bianchi/conservation projections read
+\begin{align}
+ \Dt\eps+(\eps+P_r)H_r+2(\eps+P_\perp)H_\perp
+ +\Dr Q+2Q(\Gamma/R+a_r)&=0,\label{eq:generalenergy}\\
+ \Dt Q+2Q(H_r+H_\perp)+\Dr P_r+(\eps+P_r)a_r
+ +2\Gamma(P_r-P_\perp)/R&=0.\label{eq:generalmomentum}
+\end{align}
+For Eq.~\eqref{eq:radsource} these reduce, without division by enthalpy, to
+\begin{equation}
+ \Dt\eps+h\Theta=0,\quad \Dr P+h a_r=0,\quad h=\eps+P=\rho+p-2q.
+\end{equation}
+Together with $\Dt q=-2q\Theta$ from the full spin equation, they imply
+\begin{equation}
+ \Dt\rho=-(\rho+p)\Theta,\quad \Dt b=-b\Theta,\quad
+ \Dt n=-n\Theta,\quad \Dt(b/n)=0.\label{eq:material}
+\end{equation}
+The $n$ equation is used only with a declared conserved-particle material interpretation; for fixed $p=w\rho$ the independent pair $\rho,b$ already suffices, and $n$ must not be counted as an additional arbitrary thermodynamic profile. Equivalently use $\rho=C n^{1+w}$ and advected $\beta=b/n$, with fixed $C>0$ in the isentropic case. An independent entropy variable requires its EOS and ideal advection equation. Effective conservation by itself would not evolve an arbitrary separate spin variance.
+
+\subsection{Constraints, mass and candidate evolution system}
+Define geometric Misner--Sharp mass $M=Gm_{\rm MS}=R(1+U^2-\Gamma^2)/2$. Differentiating it and using the metric equations gives, for the radial coherent branch,
+\begin{align}
+ \Dr M&=\tfrac\kap2\eps R^2\Gamma,&\Dt M&=-\tfrac\kap2 P R^2U,\\
+ \Dr U-\Gamma H_r&=0,&\Dt\Gamma&=U a_r,\\
+ \Dt R&=U,&\Dt U&=\Gamma a_r-M/R^2-\tfrac\kap2 PR.\label{eq:gravityevolution}
+\end{align}
+The ADM Hamiltonian constraint, with $\mathsf K^i{}_j=-\operatorname{diag}(H_r,H_\perp,H_\perp)$, is
+\begin{equation}
+ {}^{(3)}R+4H_rH_\perp+2H_\perp^2=2\kap\eps,\quad
+ {}^{(3)}R=2(1-\Gamma^2)/R^2-4\Dr\Gamma/R.
+\end{equation}
+For retained flux the exact identities become $\Dr M=\kap R^2(\eps\Gamma+QU)/2$, $\Dt M=-\kap R^2(P_rU+Q\Gamma)/2$, $\Dr U-\Gamma H_r=\kap RQ/2$ and $\Dt\Gamma=Ua_r+\kap RQ/2$. They are verified geometry identities, not a full-correlation constitutive theory.
+
+On a monotone material chart with $\Gamma\ne0$ and $h\ne0$, a possible constrained state is $(R,U,\rho,b)$, with
+\begin{align}
+ \Theta&=\Dr U/\Gamma+2U/R,& a_r&=-\Dr P/h,\\
+ M'&=\tfrac\kap2\eps R^2R',&\Gamma^2&=1+U^2-2M/R,\\
+ B&=R'/\Gamma,&\Phi'&=-P'/h.
+\end{align}
+Evolve $R,U,\rho,b$ using Eqs.~\eqref{eq:material}, \eqref{eq:gravityevolution}; for Model A replace $b$ by $q$ and its variance transport. In coordinate form $\partial_tR=AU$ and $\partial_t\Lambda=A\,\Dr U/\Gamma$, while $\partial_r\Phi=-\partial_rP/h$ fixes the lapse up to one time normalization. Thus no independent material evolution law for $\Phi$ is missing: it is a constrained gauge variable in this split. Integrate the radial mass and lapse constraints, and monitor the unused mass-time, angular and ADM equations. This is a formal continuum split, not a tested numerical algorithm. Do not independently overwrite all redundant fields. Neither the $h=0$ nor $\Gamma=0$ surfaces can be crossed by this divided scheme; the undivided equations are the correct starting point for any separate analysis there. Bianchi identities establish continuum constraint compatibility conditional on matter evolution, not discrete stability or a regular free boundary.
+
+\subsection{Reference limits}
+With $b=0$, the equations reduce to spherical GR Einstein--Euler and pre-caustic LTB dust. With $R=ar$, $B=a/\sqrt{1-kr^2}$, $A=1$, the metric equations become
+\begin{equation}
+ H^2+k/a^2=\kap(\rho-q)/3,\quad
+ \ddot a/a=-\kap[(1+3w)\rho-4q]/6,\quad
+ \dot\rho=-3(1+w)H\rho,\quad\dot q=-6Hq.
+\end{equation}
+For nonzero coherent radial spin this is only a metric-source limit; a regular full-field FLRW spin configuration does not result. Model A uses ensemble variance instead, $q=\kap S_H^2/4$, with its existing implementation and coefficients preserved.

@@ -1,0 +1,57 @@
+\section{Selected formulation, action and evidence status}
+\paragraph{Scope.} Model A here is the conditionally local, statistically unpolarized Hashemi-type fluid in general spherical geometry. Its homogeneous FLRW reference module is preserved unchanged. Model B is the ideal, neutral, minimally coupled, convective Frenkel fluid in \cite{BHL,OK}, with all fields inheriting proper spherical rotations. It does not mean a new dissipative spin theory, arbitrary spin moments, or a merely spherical metric with nonsymmetric hidden sources. We distinguish \emph{literature-established field equations}, \emph{derived consequences}, \emph{conditional material assumptions}, and \emph{unresolved physics}. The last three categories are not promoted to microscopic predictions by a symbolic check.
+
+\subsection{Conventions and bulk variation}
+Use $c=1$, $\kap=8\pi G$, signature $(-+++)$, weight-$1/2$ brackets, and the derivative index first:
+\begin{align}
+ \widetilde\nabla_\mu V^\rho&=\partial_\mu V^\rho+\widetilde\Gamma^\rho{}_{\mu\nu}V^\nu,&
+ \Tr^\rho{}_{\mu\nu}&=2\widetilde\Gamma^\rho{}_{[\mu\nu]},\\
+ K^\rho{}_{\mu\nu}&=\widetilde\Gamma^\rho{}_{\mu\nu}-\Gamma^\rho{}_{\mu\nu},&
+ K_{abc}&=\tfrac12(\Tr_{abc}-\Tr_{bca}+\Tr_{cab}).
+\end{align}
+Here $K_{abc}=-K_{cba}$, untilded $\nabla$ is Levi--Civita, and
+\begin{equation}
+ \widetilde R^\rho{}_{\sigma\mu\nu}=\partial_\mu\widetilde\Gamma^\rho{}_{\nu\sigma}-\partial_\nu\widetilde\Gamma^\rho{}_{\mu\sigma}
+ +\widetilde\Gamma^\rho{}_{\mu\lambda}\widetilde\Gamma^\lambda{}_{\nu\sigma}
+ -\widetilde\Gamma^\rho{}_{\nu\lambda}\widetilde\Gamma^\lambda{}_{\mu\sigma},\quad
+ \widetilde R_{\sigma\nu}=\widetilde R^\rho{}_{\sigma\rho\nu}.
+\end{equation}
+The action has no Holst term, cosmological constant, nonminimal spin coupling or propagating torsion term:
+\begin{equation}
+ I=\frac1{2\kap}\int\sqrt{-g}\,\widetilde R\,\dd^4x+I_m[e,\widetilde\omega,\psi].
+\end{equation}
+With $\epsilon_{0123}=+1$, $\eta=e^0\wedge e^1\wedge e^2\wedge e^3$, define sources by
+\begin{equation}
+ \delta I_m=\int\delta e^a\wedge\Sigma_a-\tfrac12\int\delta\widetilde\omega^{ab}\wedge\tau_{ab}+\int E_\psi\delta\psi.
+\end{equation}
+Varying the gravitational 4-form $(4\kap)^{-1}\epsilon_{abcd}e^a\wedge e^b\wedge\widetilde{\mathcal R}^{cd}$, using $\delta\mathcal R=\widetilde D\delta\omega$ and one integration by parts for compactly supported variations, gives
+\begin{equation}
+ \epsilon_{abcd}e^b\wedge\widetilde{\mathcal R}^{cd}=-2\kap\Sigma_a,
+ \qquad \epsilon_{abcd}\Tr^a\wedge e^b=\kap\tau_{cd},\qquad E_\psi=0.
+\end{equation}
+Local Lorentz invariance yields $\widetilde D\tau_{ab}+2e_{[a}\wedge\Sigma_{b]}=0$. These are bulk variational equations; interface terms still require a boundary problem. The convective source $\tau^\lambda{}_{\mu\nu}=u^\lambda s_{\mu\nu}$, $s_{\mu\nu}u^\nu=0$, gives trace-free algebraic torsion $\Tr^\lambda{}_{\mu\nu}=\kap u^\lambda s_{\mu\nu}$. There is no independent torsion characteristic cone. The Stage 1 rest-frame auxiliary-variable calculation checks the quadratic coefficient: $\Delta\widetilde R=-\kap^2s^2/2$ and the on-shell sum of gravitational and linear material contortion terms is $+\kap s^2/4$.
+
+This variation alone does not specify $I_m$, its thermodynamics, or its director constraints. We identify the established full effective equations of \cite{BHL}, rather than invent the original constrained action of \cite{OK}. An independent reconstruction of that full action remains an open reproducibility requirement; the calculations below have field-formulation status.
+
+\subsection{Full effective field equations before symmetry reduction}
+Retain the BHL spin variable $b_{\mu\nu}$ and $b^2=\tfrac12b_{\mu\nu}b^{\mu\nu}$. BHL use signature $+---$, derivative index last, half-torsion $Q_B$, and $\widetilde\Gamma_B=\Gamma_B-K_B$. For the same geometric connection our dictionary is
+\begin{equation}
+ \Tr=-2Q_B,\quad K^\rho{}_{\mu\nu}=-(K_B)^\rho{}_{\nu\mu},\quad s_{\mu\nu}=-2b_{\mu\nu},\quad
+ q=\kap b^2=\kap s^2/4.
+\end{equation}
+Appendix B of \cite{BHL} gives $g_B=-g$, $u_B^\mu=u^\mu$, $(u_B)_\mu=-u_\mu$, $(b_B)_{\mu\nu}=b_{\mu\nu}$. Transforming their Eq. (24) therefore yields
+\begin{align}
+ G_{\mu\nu}&=\kap T^{\rm eff}_{\mu\nu},\label{eq:fullEFE}\\
+ T^{\rm eff}_{\mu\nu}&=(\rho+p-2q)u_\mu u_\nu+(p-q)g_{\mu\nu}+\mathcal D_{\mu\nu},\label{eq:fullT}\\
+ \mathcal D_{\mu\nu}&=-2(g^{\alpha\beta}-u^\alpha u^\beta)\nabla_\alpha[u_{(\mu}b_{\nu)\beta}].\label{eq:D}
+\end{align}
+The factor $g^{\alpha\beta}-u^\alpha u^\beta$ in this transformed expression is not the spatial projector. The spin current in BHL units is $u^\lambda b_{\mu\nu}$; the operational source used in the bulk variation is $-2u^\lambda b_{\mu\nu}$. Hashemi's existing input subtracts $q=\kap S_H^2/4$; aligning scalar corrections gives $S_H^2=4b^2$ only for the same coupling/source assumptions. It does not identify coherent spin with ensemble variance.
+
+Let $h_\mu{}^\nu=\delta_\mu^\nu+u_\mu u^\nu$ and $a_\mu=u^\lambda\nabla_\lambda u_\mu$. The ideal spin equation and Frenkel constraint are
+\begin{align}
+ h_\mu{}^\alpha h_\nu{}^\beta\nabla_\lambda(u^\lambda b_{\alpha\beta})&=0,
+ &b_{\mu\nu}u^\nu&=0,\label{eq:spinproject}\\
+ \Dt b_{\mu\nu}+\Theta b_{\mu\nu}&=-2u_{[\mu}b_{\nu]\lambda}a^\lambda,
+ &\Dt b^2&=-2\Theta b^2.\label{eq:spintransport}
+\end{align}
+The second line follows by differentiating Frenkel and projecting the first. Its contraction proves the scalar law, with no relaxation or torque term. In addition impose $\nabla_\mu T^{\mu\nu}_{\rm eff}=0$; do not replace this by a guessed bare canonical conservation law. Particle conservation $\nabla_\mu(nu^\mu)=0$ and an ordinary material EOS are explicitly stated ideal material assumptions when $n$ is used below.

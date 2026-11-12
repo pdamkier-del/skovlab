@@ -1,0 +1,85 @@
+\section{Initial data, regular center and exterior consistency}
+\subsection{Independent initial data and physical restrictions}
+After a radial relabelling $R_i=r$ on a monotone patch, independent profiles for the ideal constant-$w$ coherent branch are $U_i(r)$, $\rho_i(r)$ and signed $b_i(r)$. With fixed isentropic $C$, $n_i=(\rho_i/C)^{1/(1+w)}$ and $\beta_i=b_i/n_i$ are derived alternatives, not extra profiles. Entropy-dependent $C$ adds a declared advected entropy profile and its EOS. A microscopic finite spin per particle would bound $|\beta|$ by a material constant; neither its numerical value nor a polarization preparation is selected here.
+
+Compute $\eps_i=\rho_i-\kap b_i^2$, $P_i=w\rho_i-\kap b_i^2$, then solve
+\begin{align}
+ M_i(r)&=\tfrac\kap2\int_0^r\eps_i(s)s^2\,\dd s,&
+ \Gamma_i&=+\sqrt{1+U_i^2-2M_i/r},\\
+ B_i&=1/\Gamma_i,&H_{r,i}&=U_i',\quad H_{\perp,i}=U_i/r,\\
+ \Phi_i'&=-P_i'/h_i.
+\end{align}
+Set $M_i(0)=0$ and one lapse normalization, such as $\Phi(t,0)=0$. Require positive $B_i$, real $\Gamma_i$, smooth center limits, the chosen EOS and a declared characteristic domain. Collapse means $U_i<0$ for the desired noncentral shells; an initially trapped sphere is characterized by both null-expansion signs, not by the sign of $U$ alone. Do not independently prescribe mass, radial metric or extrinsic curvature after these constraints have fixed them. No manufactured spin profile is supplied as physical initial data.
+
+At each later time, a smooth regular center requires
+\begin{align}
+ R&=\ell(t)r+O(r^3),& B&=\ell(t)+O(r^2),&
+ U&=u_1(t)r+O(r^3),\\
+ \rho&=\rho_c(t)+\rho_2(t)r^2+O(r^4),&
+ b&=b_1(t)r+O(r^3),&
+ \Phi&=\Phi_c(t)+\Phi_2(t)r^2+O(r^4).
+\end{align}
+Consequently $q=O(r^2)$, $M=\kap\rho_c\ell^3r^3/6+O(r^5)$, $\Gamma=1+O(r^2)$ and $\sigma^2=O(r^4)$. A coherent radial fluid can be regular, but cannot have nonzero coherent radial spin density exactly at the center. In ordinary dust the neighboring shells with nonzero $b$ still have the acoustic obstruction even if the center itself has $q=0$. Nor does $q_c=0$ prove absence of central volume reversal: the finite acceleration divergence can contain spin-pressure gradients. For example, at $R_i=r$, $a_r=2\kap b_1^2r/\rho_c+O(r^3)$ in the dust branch, yielding $\nabla_\mu a^\mu=6\kap b_1^2/\rho_c+O(r^2)$ at the center. This formal coefficient is not a viable bounce construction on a nonhyperbolic neighboring domain.
+
+Particle and spin conservation imply $nBR^2$ and $bBR^2$ are material invariants. A finite-particle Jacobian must be tracked; a vanishing $R'$ alone is not shell crossing. At a regular closed-FLRW equator $R=a\sin\chi$, $B=a$, one has $R'=0$ without divergent matter or curvature. The divided monotone chart fails there and must not classify the event as a singularity.
+
+\subsection{Analytical constraint-satisfying patches for both models}
+As an analytical check, not a proposed astrophysical preparation, choose on $0\leq r<L$
+\begin{equation}
+ R_i=r,\quad U_i=-H_0r,\quad\rho_i=\rho_0>0,\quad q_i=q_0+q_2r^2,\quad H_0>0.
+\end{equation}
+Model A permits $q_0,q_2\geq0$. Model B requires $q_0=0$, $q_2=\kap b_1^2$ and signed $b_i=b_1r$. No new transport law is selected: these are only initial profiles subject to the already specified matter equations. The constraints integrate exactly:
+\begin{align}
+ M_i&=\kap\left[(\rho_0-q_0)r^3/6-q_2r^5/10\right],\\
+ \Gamma_i^2&=1+\left[H_0^2-\kap(\rho_0-q_0)/3\right]r^2+\kap q_2r^4/5,\\
+ B_i&=\Gamma_i^{-1},\qquad H_{r,i}=H_{\perp,i}=-H_0,\\
+ h_i&=h_c-2q_2r^2,\quad h_c=(1+w)\rho_0-2q_0,\qquad
+ \Phi_i=-\tfrac12\ln(h_i/h_c)
+\end{align}
+for a central lapse normalized to one and $h_c,h_i>0$. The last expression follows directly from $\Phi_i'=2q_2r/h_i$. These data are center regular. For $0<w<1$ a sufficiently small patch with $q_0+q_2L^2<w(1+w)\rho_0/2$ and $\Gamma_i^2>0$ also passes the local material characteristic test. Its initial zero shear is a feature of this example, not an assumption in the general equations, and it need not remain zero.
+
+This is a constrained interior patch, not a matched finite star, proof of an evolution theorem or bounce. For example, a positive-density surface with $P_\Sigma=0$ would require $q_\Sigma=w\rho_\Sigma$, outside the nondegenerate causal low-spin domain for $0<w<1$. More generally at any such surface
+\begin{equation}
+ h_\Sigma=(1-w)\rho_\Sigma,\qquad
+ c_{\rm eff,\Sigma}^2=-w\quad(0<w<1,\ \rho_\Sigma>0).
+\end{equation}
+This algebraic boundary obstruction applies to both selected closures even before the stronger coherent-contortion condition below. At $w=1$ the same cancellation instead gives $h=0$; at $w=0$ it forces $q=0$ and the pressureless endpoint.
+
+\subsection{Metric traction and the vacuum exterior}
+A source-free exterior in minimal EC has zero torsion by Cartan's algebraic equation. A locally spherical vacuum region is then a GR Schwarzschild region. For a timelike comoving material surface $\Sigma$, a source-layer-free effective metric junction has continuous induced metric and Levi--Civita extrinsic curvature. Projecting the Einstein equation onto the normal gives the necessary conditions
+\begin{equation}
+ P_\Sigma=0,\qquad M_\Sigma=M_{\rm ext},\qquad
+ \Dt M_\Sigma=-\tfrac\kap2P_\Sigma R_\Sigma^2 U_\Sigma=0.
+\end{equation}
+These are necessary metric conditions, not the whole EC matching construction. In ordinary dust $P_\Sigma=-\kap b_\Sigma^2$, so metric vacuum matching itself requires $b_\Sigma=0$. With $w>0$ a cancellation $w\rho_\Sigma=\kap b_\Sigma^2$ can make metric pressure zero but leaves nonzero torsion; it is not a regular full-connection vacuum matching.
+
+\subsection{A stronger boundary result derived from the full connection}
+We can sharpen Stage 1's sufficient spin-free-collar discussion without claiming a general spinful shell formalism. Assume a non-null comoving boundary, continuous induced metric, a Darmois metric matching with no distributional Levi--Civita curvature, piecewise smooth bounded contortion, no singular spin sheet, and demand that the \emph{full} Riemann tensor have no Dirac delta. In Gaussian normal distance $\ell$ with outward spacelike normal $N_\mu$, the singular coefficient due to contortion alone is
+\begin{equation}
+ (\widetilde R^\rho{}_{\sigma\mu\nu})_{\rm sing}
+ =\big(N_\mu[K^\rho{}_{\nu\sigma}]-N_\nu[K^\rho{}_{\mu\sigma}]\big)\delta(\ell),
+ \qquad [K]=K_{\rm out}-K_{\rm in}.\label{eq:singular}
+\end{equation}
+This follows by differentiating a step in $\widetilde\Gamma=\Gamma+K$; bounded quadratic connection products add no delta. Work at a boundary point in an orthonormal frame with $u=e_{\hat0}$, $N=e_{\hat1}$ and $b_{\hat2\hat3}=b_\Sigma$. Our source dictionary gives $\Tr^{\hat0}{}_{\hat2\hat3}=-2\kap b_\Sigma$ and
+\begin{equation}
+ K^{\hat0}{}_{\hat2\hat3}=-\kap b_\Sigma.
+\end{equation}
+For a torsion-free exterior, Eq.~\eqref{eq:singular} has
+\begin{equation}
+ (\widetilde R^{\hat0}{}_{\hat3\hat1\hat2})_{\rm sing}
+ =\kap b_\Sigma\delta(\ell).
+\end{equation}
+Hence $b_\Sigma=0$ is necessary for this stronger curvature-regular boundary. It is also sufficient to remove this contortion-jump delta within the stated radial branch, since all contortion components are proportional to $b$. Bounded one-sided derivatives and a compatible metric solution are still required. A whole spin-free collar is sufficient but not mathematically necessary for eliminating this delta; continuous $b\to0$ at the surface can suffice. Arbitrarily tapering $b$ during evolution would violate Eq.~\eqref{eq:radtransport}; any vanishing boundary value must be part of the initial-boundary problem and transported.
+
+Importantly, direct contraction of this radial contortion-jump coefficient gives \emph{zero singular Ricci tensor}, even when its full Riemann coefficient is nonzero. Thus a source-layer-free effective Einstein equation alone need not detect this full-curvature singularity. This is exactly why we state the stronger boundary regularity assumption, rather than presenting $b_\Sigma=0$ as a universal theorem for all distributional EC matchings. This distinction agrees with the finite-curvature junction discussion in Sec. V of \cite{LC}; their static stellar solutions do not provide our dynamical existence result. A general interface with metric/contortion distributional cancellations or surface spin/stress remains a separate model. A delta spin sheet would make naive spin-squared products undefined without a regularized theory.
+
+\subsection{Model A interface statistics and a remaining compact-edge obstruction}
+For Model A, zero mean microscopic spin does not prove a regular spin-free junction: a finite variance or unresolved derivative/correlation layer may remain at the surface. Effective metric Darmois conditions and $P_\Sigma=0$ are necessary. A smooth microscopic spin-free collar satisfying the fluid equations is a sufficient route to ordinary GR matching, but this stage constructs no such collar. Vanishing nonnegative variance implies vanishing spin in the mean-square sense; it does not by itself bound microscopic derivatives or provide a full interface correlation model. Do not apply the coherent jump coefficient to an ensemble merely by replacing $b$ with $\sqrt{\langle b^2\rangle}$. Both models' material spin composition, when defined, is advected; a genuinely spin-free material outer region stays spin-free during smooth ideal evolution, but its pressure/EOS and metric matching still need to be solved.
+
+For the stronger vacuum boundary with $w>0$, $b_\Sigma=0$ and $P_\Sigma=0$ require $\rho_\Sigma=0$. In an exact spin-free collar, Euler integrates to
+\begin{equation}
+ \Phi=-\frac{w}{1+w}\ln\rho+f(t).
+\end{equation}
+Thus a finite comoving zero-density edge is not automatically a regular finite-lapse boundary. If instead $\rho=Cn^{1+w}$ with bounded $\beta$ and $0<w<1$, then $q/\rho=(\kap\beta^2/C)n^{1-w}\to0$ at a vacuum edge. For regular polarization/entropy asymptotics the same leading logarithmic ordinary-fluid obstruction persists; a rapid singular composition variation would require its own analysis, not cure it. At $w=1$ a nondegenerate effective stiff coefficient has the analogous logarithmic issue. We have not constructed a finite isolated spinning star satisfying all these conditions. Possible alternatives are a microscopic EOS with a suitable surface, a specified non-vacuum exterior, or a derived interface model; none is selected ad hoc.
+
+A Vaidya exterior contains null radiation. The selected radial coherent ideal interior has $Q=0$, so a comoving shell-free surface cannot be assigned an arbitrary radiating exterior merely because its interior mass has pressure work. Radiation needs a justified flux, noncomoving matter transfer or a specified layer. Full spinful junction laws, the surface action and global exterior causal completion are unresolved. A finite interior is therefore not a complete black-hole or baby-universe spacetime.

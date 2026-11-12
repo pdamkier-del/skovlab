@@ -1,0 +1,58 @@
+\section{Spin gradients, shear, acceleration and spherical symmetry}
+\subsection{Retaining the linear terms until after reduction}
+For a hypersurface-orthogonal congruence write
+\begin{equation}
+ \nabla_\alpha u_\mu=-u_\alpha a_\mu+\tfrac13\Theta h_{\alpha\mu}+\sigma_{\alpha\mu},\qquad
+ \mathsf D_\alpha b_{\mu\nu}=h_\alpha{}^\lambda h_\mu{}^\rho h_\nu{}^\sigma\nabla_\lambda b_{\rho\sigma}.
+\end{equation}
+Expanding the product in Eq.~\eqref{eq:D} and using the differentiated Frenkel condition gives
+\begin{align}
+ J_\mu&=\mathsf D^\lambda b_{\mu\lambda}+2b_{\mu\lambda}a^\lambda,\\
+ \mathcal D_{\mu\nu}&=-2u_{(\mu}J_{\nu)}-2\sigma_{(\mu}{}^\lambda b_{\nu)\lambda}.\label{eq:decomp}
+\end{align}
+These equations are restricted to zero vorticity, as required by the comoving spherical geometry, not a general rotating-fluid decomposition. In a local orthonormal rest frame with diagonal expansion rates $H_i$,
+\begin{equation}
+ \mathcal D_{\hat0\hat0}=0,\quad
+ \mathcal D_{\hat0\hat i}=\mathsf D^j b_{ij}+2b_{ij}a^j,\quad
+ \mathcal D_{\hat i\hat j}=(H_i-H_j)b_{ij}\quad(i\ne j).
+\end{equation}
+For example, $b_{12}\ne0$ with $H_1\ne H_2$ has nonzero shear stress. The cancellation below cannot be obtained by deleting all spin--shear terms at the outset. In our convention an effective energy flux is $Q_i=-\mathcal D_{\hat0\hat i}=-J_i$.
+
+\subsection{Exact coherent spherical branch}
+Set $A=e^\Phi$, $B=e^\Lambda$, $u=A^{-1}\partial_t$. An invariant two-form under the three proper rotations has only the two possible blocks
+\begin{equation}
+ b=f(t,r)\,\dd t\wedge\dd r+g(t,r)\sin\theta\,\dd\theta\wedge\dd\phi.
+\end{equation}
+The Frenkel condition kills $f$. Parametrize the remaining block as
+\begin{equation}
+ b_{\theta\phi}=R^2\sin\theta\,b(t,r),\quad b_{\phi\theta}=-b_{\theta\phi},\quad b^2=b(t,r)^2.\label{eq:radial}
+\end{equation}
+The signed scalar on the right is an axial radial polarization, not an unpolarized spin magnitude. $SO(3)$ permits it. Requiring also parity invariance forces its mean to zero: an axial vector transforms differently from the polar radial direction. At a regular center, smooth Cartesian components require the axial vector $\bm b=F(t,r^2)\bm x$, hence $b=O(r)$. A nonzero constant radial magnitude is not smooth there.
+
+On each spatial slice, $b_{ij}$ is dual to the radial vector $b n^i$. Its spatial divergence is the curl of that radial vector, which vanishes for arbitrary radial $b(t,r)$; this remains true for the curved spherical spatial metric. The acceleration is radial, so $b_{ij}a^j=0$. Finally the angular expansion eigenvalues coincide, $H_\theta=H_\phi=H_\perp$, while the only spin plane is the angular plane. Each term in Eq.~\eqref{eq:decomp} therefore vanishes separately:
+\begin{equation}
+ \mathcal D_{\mu\nu}=0,\quad Q=0,\quad P_r=P_\perp=P=p-q,\quad \eps=\rho-q,\quad q=\kap b^2.\label{eq:radsource}
+\end{equation}
+This derivation permits arbitrary $b'$, $\Phi'$, inhomogeneous density and radial shear. It is not a homogeneous approximation. Direct four-dimensional covariant evaluation and separate spatial-divergence, acceleration and shear tests independently check it.
+
+The angular component of Eq.~\eqref{eq:spinproject} now becomes
+\begin{equation}
+ \partial_t b+(\partial_t\Lambda+2\partial_tR/R)b=0,
+ \qquad \partial_t(BR^2b)=0.\label{eq:radtransport}
+\end{equation}
+Particle conservation gives $\partial_t(BR^2n)=0$, so the signed spin per particle $\beta=b/n$ is advected, $\Dt\beta=0$. Extra coherent transverse spin modes are forbidden in this exact symmetry class. Nonspherical perturbations of the same background require a different, multidimensional principal analysis; our radial calculation makes no assertion of stability against them.
+
+\subsection{Coherent means, variance and correlations are different data}
+An ensemble with common resolved velocity and metric may have mean axial spin $m_i=b n_i$ and raw second moment
+\begin{equation}
+ C_{ij}=C_\parallel n_i n_j+C_\perp(h_{ij}-n_i n_j),\quad
+ C_\perp\geq0,\quad C_\parallel\geq b^2.
+\end{equation}
+The total squared spin is $\langle b^2\rangle=C_\parallel+2C_\perp$; the central variance is this trace minus $b^2$. Smooth isotropic statistics at the center have $C_\parallel=C_\perp$ there and may have nonzero variance, unlike the coherent radial mean.
+
+Under \emph{common congruence, commuting derivatives and averaging, no unresolved metric/velocity correlations, and the same ideal transport and ordinary EOS}, Fermi--Walker components obey $\Dt C_{ij}=-2\Theta C_{ij}$. Averaging Eq.~\eqref{eq:fullT} retains only $q=\kap\langle b^2\rangle$ and the linear derivative of the mean, which still cancels for a radial mean. Even retaining $C_\parallel,C_\perp$ under these assumptions introduces only advected composition modes; the BHL algebraic quadratic term depends on their trace and does not create an anisotropic pressure. Isotropy of the second moment is not needed for this specific algebraic statement. A spin-dependent ordinary internal energy would instead require a new, specified material EOS.
+
+If velocities, shear, acceleration or geometry fluctuate, averages such as $\langle\delta u\,\delta b\rangle$, $\langle\delta\sigma\,\delta b\rangle$ and connection--spin terms need not vanish. Averaging the convective spin equation then produces flux and higher moments, not a transport law for their trace alone. Spherical symmetry allows scalar radial flux and pressure anisotropy, but supplies no evolution or susceptibility for them. An exact source decomposition with symbols $Q,P_r,P_\perp$ is not closure. No characteristic determinant can be assigned to this unclosed hierarchy. We have not established that all possible microscopic theories fail; we have established that naming these correlations does not repair the selected ideal system.
+
+\subsection{Relation to FLRW}
+Full-field FLRW invariance excludes any nonzero coherent convective Frenkel two-form, since its spatial dual selects a direction. A statistically isotropic mean-zero variance supports Model A under its documented averaging assumptions. Stage 1 also checked a weaker, flat FLRW \emph{metric} with homogeneous Cartesian aligned spin, $b_{xy}=a^2\beta_0(t)$, $\dot\beta_0=-3H\beta_0$: its effective derivative source vanishes although its spin/torsion is not isotropic. That example does not evade the strong-symmetry restriction and is not a radial center-smooth full-field FLRW limit of Eq.~\eqref{eq:radial}.
