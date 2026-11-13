@@ -1,0 +1,77 @@
+{
+  "success": true,
+  "parameters": {
+    "half_width": 4,
+    "duration": 0.01,
+    "dt": 0.005,
+    "seed": "seed_spinor defaults, no additional spin twist",
+    "mass": 0.1,
+    "kappa": 1
+  },
+  "common_nodes": "Cartesian product of {-1,0,1} in each axis; exact shared grid nodes",
+  "runs": [
+    {
+      "n": 9,
+      "initial": {
+        "converged": true,
+        "max_absolute_residual": 1.308241414593501e-13,
+        "evaluations": 19,
+        "preconditioner": "flat principal scalar/vector Laplacian blocks",
+        "tolerance": 2e-08,
+        "boundary": "finite-cube chi=1, W=0; not an asymptotic exterior",
+        "seed_amplitude_max": 0.025
+      },
+      "seconds": 32.16272685000149,
+      "hamiltonian_common_max": 1.5065333654436036e-07,
+      "gauge_common_max": 7.555714022652003e-10
+    },
+    {
+      "n": 17,
+      "initial": {
+        "converged": true,
+        "max_absolute_residual": 1.2216262230285905e-12,
+        "evaluations": 19,
+        "preconditioner": "flat principal scalar/vector Laplacian blocks",
+        "tolerance": 2e-08,
+        "boundary": "finite-cube chi=1, W=0; not an asymptotic exterior",
+        "seed_amplitude_max": 0.025
+      },
+      "seconds": 21.885566201002803,
+      "hamiltonian_common_max": 2.684689148384446e-07,
+      "gauge_common_max": 1.341571797717437e-09
+    },
+    {
+      "n": 33,
+      "initial": {
+        "converged": true,
+        "max_absolute_residual": 1.1949307662890305e-11,
+        "evaluations": 18,
+        "preconditioner": "flat principal scalar/vector Laplacian blocks",
+        "tolerance": 2e-08,
+        "boundary": "finite-cube chi=1, W=0; not an asymptotic exterior",
+        "seed_amplitude_max": 0.025
+      },
+      "seconds": 93.28241170399997,
+      "hamiltonian_common_max": 7.053282246145958e-08,
+      "gauge_common_max": 3.5150683828488044e-10
+    }
+  ],
+  "common_node_state_differences": [
+    [
+      6.823274881380906e-05,
+      0.0005499736338506154,
+      0.0002563247463254032
+    ],
+    [
+      1.1523139956024688e-05,
+      0.00013741744162454125,
+      5.650019162729644e-05
+    ]
+  ],
+  "refinement_ratios": [
+    5.921367706562886,
+    4.002211272083501,
+    4.536705787057318
+  ],
+  "scope": "Short weak-field convergence evidence on 27 shared nodes, not a global-norm convergence or strong-collapse theorem."
+}

@@ -1,0 +1,29 @@
+{
+  "records": [
+    {
+      "n": 9,
+      "stress_divergence_L2_common": 1.8228336307444708e-06,
+      "stress_divergence_max_common": 7.528951776743443e-06
+    },
+    {
+      "n": 17,
+      "stress_divergence_L2_common": 3.525993542456783e-06,
+      "stress_divergence_max_common": 1.3427861099246182e-05
+    },
+    {
+      "n": 33,
+      "stress_divergence_L2_common": 9.269736772122745e-07,
+      "stress_divergence_max_common": 3.517651753339837e-06
+    }
+  ],
+  "scope": "Finite-difference covariant divergence of complete effective stress at t=.005; no global energy integral imposed.",
+  "parameters": {
+    "half_width": 4,
+    "dt": 0.005,
+    "time_of_divergence": 0.005,
+    "mass": 0.1,
+    "kappa": 1,
+    "seed": "seed_spinor defaults",
+    "shared_nodes": "{-1,0,1} cubed"
+  }
+}

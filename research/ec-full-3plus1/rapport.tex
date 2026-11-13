@@ -1,0 +1,130 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
+\usepackage[provide=*,danish]{babel}
+\usepackage{lmodern,amsmath,amssymb,geometry,hyperref,microtype}
+\geometry{margin=25mm}\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}\setlength{\emergencystretch}{3em}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\title{Generel klassisk Einstein--Cartan--Dirac i 3+1\\\large Implementering, kontrol og åbne problemer}
+\author{Skovlab}\date{13. november 2026}
+\begin{document}\maketitle
+\textbf{Status.} Vi har implementeret den fulde lokale, neutrale klassiske ECD-feltmotor på et tredimensionalt gitter. Rumlig homogenitet, sfærisk symmetri, diagonal metrik og en perfekt-væske-lukning er ikke antaget i udviklingen. Der udvikles ti metrikkomponenter, deres ti tidsafledte og fire komplekse spinorkomponenter. Det er en forskningsprototype: stærkt kollaps, fysisk ydre randbehandling og et eventuelt globalt bounce er endnu ikke valideret.
+
+\section{Hvad er forskellen fra vores tidligere model?}
+Den gamle Bianchi I-model havde kun to rumlige skalafaktorer og en bestemt ensrettet spinor. Dens energi og tryk kunne skrives som to funktioner af én homogen tæthed. Den nye motor beregner stress, energiflux og spin direkte fra alle feltkomponenter og deres rumlige afledte. En begrænset familie af begyndelsesfelter bruges til demonstration, men begrænser ikke de efterfølgende feltligninger til den familie.
+
+Metrikken kan altid skrives som
+\[
+ ds^2=-N^2dt^2+\gamma_{ij}(dx^i+\beta^idt)(dx^j+\beta^jdt).
+\]
+$N$ er lapse, $\beta^i$ er shift, og $\gamma_{ij}$ måler rumlige afstande. Vi udvikler hele $g_{\mu\nu}$ i harmoniske koordinater. $t$ er derfor koordinattid, ikke en fælles egentid for alle stofelementer.
+
+\section{Action, torsion og en nødvendig fortegnskontrol}
+Vi bruger $(-+++)$, $\epsilon_{0123}=1$, fuld torsion $T^a{}_{bc}=2\widetilde\Gamma^a{}_{[bc]}$ og negativ Clifford-konvention $\{\gamma^a,\gamma^b\}=-2\eta^{ab}$. Desuden er $\bar\psi=\psi^\dagger\gamma^0$ og $\gamma_5=-i\gamma^0\gamma^1\gamma^2\gamma^3$.
+
+Den geometriske frameforbindelse defineres nu entydigt ved
+\[
+ W_\mu{}^a{}_b=e^a{}_\nu\widetilde\nabla_\mu e_b{}^\nu,
+ \qquad \widetilde D_\mu=\partial_\mu-\tfrac18W_\mu{}^{ab}[\gamma_a,\gamma_b].
+\]
+Minusset er nødvendigt for gamma-matricernes kovarians med vores Clifford-fortegn. Tidligere rapporter fastlagde ikke konsekvent, om deres spinforbindelse var $W$ eller $-W$. Det korrigeres her ved en direkte test af $\nabla\gamma=0$.
+
+Den fælles gravitations- og stofaction er
+\[
+ S=\int e\left[\frac{\widetilde R}{2\kappa}
+ +\frac i2\bar\psi\gamma^\mu\overleftrightarrow{\widetilde D}_\mu\psi-m\bar\psi\psi\right]d^4x.
+\]
+For $J_5^a=\bar\psi\gamma_5\gamma^a\psi$ og $q^d=\epsilon^{abcd}T_{abc}$ er de algebraiske torsionsled
+\[
+ \mathcal L_{\rm aux}=\frac{q^2}{48\kappa}-\frac18q\cdot J_5.
+\]
+Variation giver $q=3\kappa J_5$ og dermed
+\[
+ T_{abc}=-\frac\kappa2\epsilon_{abcd}J_5^d.
+\]
+Dette præciserer og korrigerer den tidligere skrevne geometriske torsionsorientering. Et direkte tjek med $T_{012}=s$ giver $\widetilde R-R=3s^2/2$ og $\Delta\mathcal L_D=3sJ_5^3/4$ og verificerer resultatet uden blot at genbruge et fortegn fra en artikel.
+
+Ved elimination bliver den effektive action uændret:
+\[
+ S_{\rm eff}=\int e\left[\frac R{2\kappa}+\mathcal L_D^\circ-G_AJ_5^2\right]d^4x,
+ \qquad G_A=3\kappa/16.
+\]
+Den tidligere Bianchi I-udvikling og dens begrænsede no-bounce-resultat ændres derfor ikke af præciseringen.
+
+\section{Den fulde Dirac-ligning og gravitationens kilde}
+Variation af den effektive action giver
+\[
+ i\gamma^\mu D_\mu^\circ\psi-m\psi-2G_AJ_{5a}\gamma_5\gamma^a\psi=0.
+\]
+Tetradevariation giver på løsninger den komplette stress
+\[
+ T_{\mu\nu}=-\frac i4\left[\bar\psi\gamma_\mu\overleftrightarrow D_\nu^\circ\psi+
+ \bar\psi\gamma_\nu\overleftrightarrow D_\mu^\circ\psi\right]+G_Ag_{\mu\nu}J_5^2.
+\]
+Ingen del af afledningsleddet udelades. Derfor påtvinges heller ikke $E=mn+G_A n^2$ eller et bestemt væsketryk. Spinets retning og størrelse udvikles af selve Dirac-ligningen.
+
+En normaltilpasset tetrade beregnes fra $g$. For $\gamma=LL^T$ bruges den rumlige frame $L^{-T}$ og tidsframen $n^\mu=(1,-\beta^i)/N$. Afledte af Cholesky-faktoren beregnes algebraisk. Denne regel fastlægger også tetradens rotationsgauge. Med $\Omega_\mu=-W_\mu{}^{ab}[\gamma_a,\gamma_b]/8$ og $B=mI+2G_AJ_{5a}\gamma_5\gamma^a$ bliver den faktiske tidsudvikling
+\[
+ \partial_t\psi=-\Omega_t\psi-(\gamma^t)^{-1}
+ [\gamma^i(\partial_i+\Omega_i)\psi+iB\psi],\qquad
+ (\gamma^t)^{-1}=N^2\gamma^t.
+\]
+Den fulde stress og spinforbindelse genberegnes i hvert integrationsstadium. Strømmen $j^\mu=\bar\psi\gamma^\mu\psi$ opfylder i kontinuummet $\nabla_\mu j^\mu=0$, og den komplette stress opfylder $\nabla_\mu T^{\mu\nu}=0$.
+
+\section{Harmoniske Einstein-ligninger og constraints}
+Sæt $\mathcal C^\mu=g^{\alpha\beta}\Gamma^\mu{}_{\alpha\beta}$ og vælg harmoniske koordinater $\mathcal C=0$. Den reducerede Ricci-tensor er
+\[
+ \mathcal R_{\mu\nu}=R_{\mu\nu}-\nabla_{(\mu}\mathcal C_{\nu)}
+ =-\tfrac12g^{\alpha\beta}\partial_\alpha\partial_\beta g_{\mu\nu}+Q_{\mu\nu}(g,\partial g).
+\]
+Lad $\mathcal R^{(0)}$ betegne udtrykket med $\partial_t^2g=0$, men med rumlige og blandede afledte bevaret. Så udvikles $p=\partial_tg$ ved
+\[
+ \partial_t p_{\mu\nu}=\frac2{g^{00}}\left[\mathcal R^{(0)}_{\mu\nu}
+ -\kappa(T_{\mu\nu}-\tfrac12g_{\mu\nu}T)\right].
+\]
+Der er ingen bouncekraft eller ekstra stofkilde. En gyldig Einstein-løsning kræver, at gaugeconstraints og gravitationsconstraints er opfyldt, ikke blot at de reducerede ligninger er integreret.
+
+Derfor kontrolleres ADM-uafhængigt
+\begin{align*}
+ K_{ij}&=-\frac{\partial_t\gamma_{ij}-\mathcal L_\beta\gamma_{ij}}{2N},\\
+ \mathcal H&={}^{(3)}R+K^2-K_{ij}K^{ij}-2\kappa E,\\
+ \mathcal M_i&=D_j(K^j{}_i-\delta^j_iK)-\kappa j_i.
+\end{align*}
+Her er $E=T_{nn}$ og $j_i=-T_{in}$. Med $H=-K/3$ og $\sigma_{ij}=-K_{ij}-H\gamma_{ij}$ gælder også uden nul residual
+\[
+ 6H^2=2\kappa E-{}^{(3)}R+\sigma_{ij}\sigma^{ij}+\mathcal H.
+\]
+På constraints er det den ønskede generaliserede Friedmann-identitet. Den lukker ikke alene udviklingen.
+
+\section{Hvordan bliver begyndelsesfelterne gyldige?}
+På en endelig kube vælges et glat kompakt komplekst spinorfelt $\Psi(x)$ og en middelkrumningsprofil $K_*(x)$. Fire ukendte konforme funktioner konstruerer
+\[
+ \gamma_{ij}=\chi^4\delta_{ij},\quad
+ K_{ij}=\chi^{-2}(LW)_{ij}+\gamma_{ij}K_*/3,\quad
+ \psi=\chi^{-3}\Psi,
+\]
+\[
+ (LW)_{ij}=\partial_iW_j+\partial_jW_i-\tfrac23\delta_{ij}\partial_kW^k.
+\]
+En ikke-lineær Newton--Krylov-løser finder $\log\chi,W^i$ fra alle fire constraints. Kilden er den fulde ECD-stress i hver iteration. En Laplace-baseret præconditioner forbedrer konditioneringen. Randværdierne er $\chi=1,W=0$ på kuben, ikke betingelser ved uendelig.
+
+Ved start vælges $N=1,\beta=0$ og $p_{ij}=-2K_{ij}$. De fire $p_{0\mu}$ løses fra harmonisk gauge. Data, der ikke konvergerer, afvises. Amplitude, fase, rumlig spinrotation og $K_*$ er feltdata; de er ikke uafhængige fysiske masser, radier og kollapshastigheder for en isoleret sky. En ADM-masse kræver en asymptotisk flad konstruktion, som ikke er gennemført her.
+
+\section{Numeriske resultater og begrænsninger}
+Motoren bruger centralt andenordens rumligt differensskema og RK4 i tid. Andenafledte dannes ved sammensætning af de samme førsteafledte operatorer. Vi kontrollerer analytisk vakuumbølge, Minkowski, tetradekovarians, en boostet ikke-lineær Dirac-løsning, den tidligere LRS-grænse, startconstraints, strømbevarelse og udvikling af rumligt varierende stof. Vakuumbølgen viser andenordens rumlig konvergens og RK4-testen fjerdeordens tidskonvergens.
+
+Den fuldt koblede test på $9^3$, $17^3$ og $33^3$ punkter viser faldende feltforskelle på 27 fælles fysiske punkter: faktorer cirka $5{,}92$, $4{,}00$ og $4{,}54$ for metrik, metrik-hastighed og spinor. Hamilton-fejlen falder fra $17^3$ til $33^3$, men ikke monotont på det groveste gitter. Det er begrænset svagfeltskonvergensevidens, ikke en validering af stærkt kollaps eller en global fejlnorm. Metrikkens hastighed på randen foreskrives konstant, så randmetrikken udvikles lineært; det ydre spinorfelt holdes nul. Det er ikke constraint-bevarende udgående randbetingelser. Udeladelse af yderste gitterlag er heller ikke et bevis for fuld kausal isolation.
+
+En separat kontrol af den fulde stress måler den numeriske kovariante divergens. På de fælles punkter falder RMS-residualen fra cirka $3{,}53\cdot10^{-6}$ til $9{,}27\cdot10^{-7}$ ved $17^3$ til $33^3$. Det er begrænset konvergensevidens; den groveste opløsning er ikke i et rent monotont forløb.
+
+Browseren kan køre nye beregninger gennem den lokale Python-server. GitHub Pages viser en faktisk gemt 3D-kørsel og mærker dette tydeligt. Grafer viser energitæthed, central normalekspansion og constraintfejl; et rumligt udsnit viser inhomogeniteten. De viser ikke et opdigtet fulgt stofvolumen.
+
+Et lokalt volumenbounce kræver $H=0$ og $\partial_nH>0$ for den erklærede kongruens samt regelmæssig fortsættelse. Den lokale ADM-rate er ikke automatisk en hel skys volumenrate. Prototypen leverer intet globalt bounce-resultat, ingen begivenhedshorisont og ingen bevist vakuummatching. Der mangler desuden fuld torsionskrumningskontrol, stærkfeltskonvergens og dokumentation af langtidsstabilitet. Klassisk ECD er ikke en kvantestatistisk fermiongas eller en fuld Standard Model-beskrivelse.
+
+\begin{thebibliography}{9}
+\bibitem{HD} Hehl og Datta (1971), doi:10.1063/1.1665738.
+\bibitem{S} Shaposhnikov m.fl., \href{https://arxiv.org/abs/2008.11686}{arXiv:2008.11686}.
+\bibitem{G} Gourgoulhon, \href{https://arxiv.org/abs/gr-qc/0703035}{gr-qc/0703035}.
+\bibitem{L} Lindblom m.fl., \href{https://arxiv.org/abs/gr-qc/0512093}{gr-qc/0512093}; harmoniske formuleringer og constraints.
+\bibitem{M} M\"uller og Nowaczyk, \href{https://arxiv.org/abs/1504.01034}{arXiv:1504.01034}; torsionsfri Einstein--Dirac Cauchy-analyse.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,31 @@
+name: General classical ECD field prototype
+on:
+  push:
+    paths:
+      - 'research/ec-full-3plus1/**'
+      - '.github/workflows/ec-full-3plus1.yml'
+  pull_request:
+    paths:
+      - 'research/ec-full-3plus1/**'
+      - '.github/workflows/ec-full-3plus1.yml'
+permissions:
+  contents: read
+jobs:
+  field-and-regression-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: python -m pip install -r research/ec-full-3plus1/requirements.txt -r research/ec-spherical/requirements.txt
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: python research/ec-full-3plus1/validation/run_checks.py
+      - name: Coupled 3D shared-node refinement experiment
+        run: python research/ec-full-3plus1/coupled_convergence.py
