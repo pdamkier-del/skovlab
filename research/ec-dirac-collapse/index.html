@@ -1,0 +1,17 @@
+<!doctype html><html lang="da"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dirac · Kollapslaboratorium</title><link rel="stylesheet" href="style.css">
+<body><main><header><span class="eyebrow">SKOVLAB / KLASSISK EINSTEIN–CARTAN–DIRAC</span><h1>Hvad standser et kollaps?</h1><p>Følg volumen, kontraktion og shear i en beregnet feltløsning.</p><div class="scope"><strong>Reduceret model · LRS Bianchi I</strong><br>Homogen, aksialsymmetrisk rumtid med ét ensrettet klassisk Dirac-felt. Ingen rumlige profiler, begrænset stofsky eller vakuumyderside. Dette er ikke en fuld 3+1-kollapssolver.</div></header>
+<section class="workspace"><form id="controls"><h2>Gyldige startdata</h2><p>Enheder: c = ℏ = κ = 1 (reducerede Planck-enheder).</p>
+<label>Restenergiindhold Mᵣₑₛₜ <input id="mass" type="number" min="0.000001" max="1" step="any" value="0.001" required><small>m n₀ L₀³; ikke ADM-masse.</small></label>
+<label>Startlængde L₀ <input id="length" type="number" min="0.01" max="100" step="any" value="1" required><small>Et fulgt koordinatvolumens sidelængde, ikke skyradius.</small></label>
+<label>Dirac-masse m <input id="particle" type="number" min="0.000001" max="1" step="any" value="0.1" required><small>Feltets masseparameter.</small></label>
+<label>Anisotropi r <input id="anisotropy" type="range" min="-2" max="2" step="0.05" value="0.7"><small>D₀ = r √E₀; <output id="anisotropy-value">0.7</output></small></label>
+<label>Ensartet spinretning <select id="spin"><option value="1">+z</option><option value="-1">−z</option></select><small>Styrken følger n₀; ingen fri spintrykparameter.</small></label>
+<div class="derived">Kollapshastighed H₀<output id="h0">—</output><small>Afledt af Hamilton-begrænsningen; kan ikke vælges frit.</small></div>
+<button type="submit">Beregn udviklingen</button><p id="error" role="alert"></p><button type="button" id="export" class="secondary">Eksportér løsning (JSON)</button></form>
+<div class="evolution"><div class="plot-head"><h2>Udvikling i egentid τ</h2><span id="interval"></span></div>
+<figure><figcaption><strong>01 · Størrelse</strong><span>aᵥ = (V/V₀)⅓</span></figcaption><canvas id="size" role="img" aria-label="Beregnet relativ volumenstørrelse mod egentid"></canvas></figure>
+<figure><figcaption><strong>02 · Kollapshastighed</strong><span>Hᵥ = HADM = −K/3</span></figcaption><canvas id="rate" role="img" aria-label="Beregnet ekspansionsrate mod egentid"></canvas></figure>
+<figure><figcaption><strong>03 · Ændring</strong><span>dHᵥ/dτ</span></figcaption><canvas id="accel" role="img" aria-label="Beregnet ændring i ekspansionsrate mod egentid"></canvas></figure>
+<p class="caption">Volumenet følger Dirac-strømmen. Her er u = n, N = 1 og β = 0, så lokal og volumenbaseret ekspansion er ens. Kurverne stopper før demonstrationsgrænsen.</p></div></section>
+<section class="results" aria-live="polite"><h2>Hvad viser løsningen?</h2><p id="outcome"></p><div id="metrics"></div><p id="stop"></p><p>H = 0 er kun et vendepunktskandidat; et volumenbounce kræver også dH/dτ &gt; 0 og regelmæssig fortsættelse. Ingen global skybounce eller horisont er undersøgt her.</p></section>
+<footer><a href="rapport.pdf">Dansk rapport (PDF)</a><a href="rapport.tex">LaTeX-kilde</a><a href="README.md">Model, metode og begrænsninger</a><a href="STATUS.md">Vejen til fuld 3+1</a></footer></main><script type="module" src="app.mjs"></script></body></html>

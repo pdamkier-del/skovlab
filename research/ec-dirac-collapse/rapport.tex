@@ -1,0 +1,175 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[provide=*,danish]{babel}
+\usepackage{lmodern,amsmath,amssymb,geometry,hyperref,microtype}
+\setlength{\emergencystretch}{2em}
+\geometry{margin=26mm}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\title{Kan Dirac-spin standse et kollaps?\\\large En verificeret, reduceret Einstein--Cartan-model}
+\author{Skovlab · matematisk og numerisk audit}
+\date{13. november 2026}
+\begin{document}
+\maketitle
+\textbf{Hovedresultat.} Vi har implementeret en homogen, aksialsymmetrisk klassisk Einstein--Cartan--Dirac-model (ECD). Den har to forskellige længdeskalaer og dermed ægte anisotropi. For den valgte feltgren kan volumenet ikke bounce: den afledte ekspansionsrate er ikke positiv. Det er ikke et bevis imod bounce i alle ECD-tilstande. En generel rumligt varierende 3+1-solver, en begrænset stofsky og dens vakuumyderside er ikke leveret.
+
+\section{Rumtid opdelt i rum og tid}
+ADM-formen er en måde at følge rumlige snit gennem rumtiden:
+\begin{equation}
+ ds^2=-N^2dt^2+\gamma_{ij}(dx^i+\beta^idt)(dx^j+\beta^jdt).
+\end{equation}
+$\gamma_{ij}$ måler afstande på et snit. Lapse $N$ omregner koordinattid til egentid for snittets normalobservatører, og shift $\beta^i$ flytter koordinaterne mellem snittene. Normalen er $n^\mu=(1,-\beta^i)/N$. Vi vælger fortegnet
+\begin{equation}
+ K_{ij}=-\frac1{2N}(\partial_t-\mathcal L_\beta)\gamma_{ij},\qquad H_{\rm ADM}=-K/3.
+\end{equation}
+Ved kontraktion er $H_{\rm ADM}<0$. Normalobservatørerne følger ikke nødvendigvis stoffet. For en skalar er den geometriske tidsafledte
+$\partial_n=N^{-1}(\partial_t-\beta^i\partial_i)$.
+
+Vi bruger signaturen $(-+++)$, $\kappa=8\pi G$ og naturlige enheder $c=\hbar=1$. Krumningens fortegn er
+$R^\rho{}_{\sigma\mu\nu}=\partial_\mu\Gamma^\rho{}_{\nu\sigma}-\partial_\nu\Gamma^\rho{}_{\mu\sigma}+\Gamma^\rho{}_{\mu\lambda}\Gamma^\lambda{}_{\nu\sigma}-\Gamma^\rho{}_{\nu\lambda}\Gamma^\lambda{}_{\mu\sigma}$.
+Ricci kontraherer første og tredje indeks. Forbindelsens afledningsindeks står først: $\nabla_\mu V^\rho=\partial_\mu V^\rho+\Gamma^\rho{}_{\mu\nu}V^\nu$.
+
+\section{Fra spin til torsion og tilbage til stof}
+Et klassisk Dirac-felt $\psi$ har fire komplekse komponenter. Det er ikke automatisk en kvantestatistisk fermiongas. Start fra samme action for stof og geometri:
+\begin{equation}
+ S=\int e\,d^4x\left[\frac{\widetilde R}{2\kappa}
+ +\frac i2\bar\psi\gamma^\mu\overleftrightarrow{\widetilde D}_\mu\psi
+ -m\bar\psi\psi\right].
+\end{equation}
+Her er $e=\sqrt{-g}$. Tilde betyder forbindelse med torsion, $T^\rho{}_{\mu\nu}=2\widetilde\Gamma^\rho{}_{[\mu\nu]}$. Vi bruger projektets Clifford-konvention $\{\gamma^a,\gamma^b\}=-2\eta^{ab}$, $\bar\psi=\psi^\dagger\gamma^0$, $\gamma_5=-i\gamma^0\gamma^1\gamma^2\gamma^3$ og $\epsilon_{0123}=1$.
+
+Spinforbindelsen indgår gennem
+$\widetilde D_\mu=\partial_\mu+\widetilde\omega_\mu{}^{ab}[\gamma_a,\gamma_b]/8$.
+Variation defineret ved $\delta S_m=-\frac12\int e s^\lambda{}_{ab}\delta\widetilde\omega_\lambda{}^{ab}$ giver
+$s^\lambda{}_{ab}=-i\bar\psi\{\gamma^\lambda,[\gamma_a,\gamma_b]\}\psi/8$.
+Det er en totalt antisymmetrisk spinstrøm; ingen Frenkel-væskelukning antages.
+
+Lad $J_5^a=\bar\psi\gamma_5\gamma^a\psi$ være den aksiale strøm. For den aksiale torsion $q^d=\epsilon^{abcd}T_{abc}$ bliver forbindelsens ekstra action
+\begin{equation}
+ \mathcal L_q=\frac{q^2}{48\kappa}+\frac18q\cdot J_5.
+\end{equation}
+Torsion har her ingen selvstændig bølgeligning. Variation giver
+$q/(24\kappa)+J_5/8=0$, altså $q=-3\kappa J_5$ og
+\begin{equation}
+ T_{abc}=\frac\kappa2\epsilon_{abcd}J_5^d,\qquad
+ C_{abc}=T_{abc}/2.
+\end{equation}
+$C$ er contortion, ikke ADM's $K$. Indsættelse i \emph{hele} actionen giver
+\begin{equation}
+ S_{\rm eff}=\int e\,d^4x\left[\frac R{2\kappa}+\mathcal L_D^\circ-G_AJ_5^2\right],
+ \qquad G_A=\frac{3\kappa}{16}.
+\end{equation}
+Cirklen betyder Levi--Civita-forbindelsen. Spin skaber derfor en lokal, algebraisk selvvekselvirkning. Den har ikke på forhånd et frastødende fortegn som et væsketryk.
+
+Feltvariation giver Hehl--Datta-ligningen
+\begin{equation}
+ i\gamma^\mu D^\circ_\mu\psi-m\psi
+ -2G_AJ_{5\mu}\gamma_5\gamma^\mu\psi=0.
+\end{equation}
+Variation af tetraden giver på løsninger
+\begin{align}
+ T_{\mu\nu}^{\rm eff}={}&-\frac i4\left[
+ \bar\psi\gamma_\mu\overleftrightarrow D^\circ_\nu\psi+
+ \bar\psi\gamma_\nu\overleftrightarrow D^\circ_\mu\psi\right]
+ +G_Ag_{\mu\nu}J_5^2.
+\end{align}
+Det sidste led alene bestemmer ikke trykket: det første led ændres også af den ikke-lineære Dirac-ligning. Feltligningerne sikrer $\nabla_\mu T^{\mu\nu}=0$ og bevaret vektorstrøm $\nabla_\mu(\bar\psi\gamma^\mu\psi)=0$.
+
+\section{Gravitationens ligninger og en lokal Friedmann-identitet}
+Projektér $T_{\mu\nu}$ langs og på tværs af $n$: $E=T_{nn}$, $j_i=-T_{in}$ og $S_{ij}=T_{ij}$ med rumlig projektion. Gauss--Codazzi-identiteterne giver begrænsningerne
+\begin{align}
+ {}^{(3)}R+K^2-K_{ij}K^{ij}&=2\kappa E,\\
+ D_j(K^j{}_i-\delta^j_i K)&=\kappa j_i.
+\end{align}
+De seks rumlige udviklingsligninger er
+\begin{align}
+ (\partial_t-\mathcal L_\beta)K_{ij}={}&-D_iD_jN
+ +N({}^{(3)}R_{ij}+KK_{ij}-2K_{ik}K^k{}_j)\nonumber\\
+ &-\kappa N\left[S_{ij}-\tfrac12\gamma_{ij}(S-E)\right].
+\end{align}
+Sammen med metrikudviklingen og Dirac-ligningen er den klassiske teori formelt lukket efter gaugevalg og gyldige startdata. Det er ikke i sig selv en numerisk stabil 3+1-formulering. Bevarelsen af den fulde stress og Bianchi-identiteten er nødvendige for constraint propagation.
+
+Skriv $K_{ij}=-H\gamma_{ij}-\sigma_{ij}$, hvor shear $\sigma$ er sporfri. Så er $K^2=9H^2$ og $K_{ij}K^{ij}=3H^2+\sigma_{ij}\sigma^{ij}$. Dermed
+\begin{equation}
+ \boxed{6H_{\rm ADM}^2=2\kappa E-{}^{(3)}R+\sigma_{ij}\sigma^{ij}}.
+\end{equation}
+Dette er en constraint-identitet, ikke en selvstændig lukket Friedmann-model. Raychaudhuri-ligningen for normalerne giver
+\begin{equation}
+ \partial_n H=-H^2-\frac{\sigma_{ij}\sigma^{ij}}3
+ -\frac\kappa6(E+S)+\frac{D_iD^iN}{3N}.
+\end{equation}
+Ved $H=0$ kræver et lokalt volumenminimum en positiv højreside samt regelmæssig fortsættelse. Nul ekspansion alene kan også betyde maksimum eller et statisk øjeblik. Et retningsbestemt minimum er ikke det samme som et volumenminimum. Et globalt skybounce kræver kontrol i hele skyen og dens yderside.
+
+\section{Den implementerede, anisotrope delmodel}
+Vi vælger en diagonal, ikke-roterende tetrade for
+\begin{equation}
+ ds^2=-d\tau^2+a(\tau)^2(dx^2+dy^2)+b(\tau)^2dz^2.
+\end{equation}
+Det er LRS Bianchi I: rumligt homogen, men med to forskellige kontraktionsretninger. Sæt $A=\dot a/a$, $B=\dot b/b$, $H=(2A+B)/3$, $D=B-A$, $v=a^2b$ og $a_0=b_0=1$. Nu følger normalerne stoffets strøm, og $\tau$ er egentid. Den ortonormale spinforbindelse er $\Omega_{\hat i}=H_i\gamma^0\gamma^i/2$, $\Omega_{\hat0}=0$.
+
+En direkte verificeret spinorgren er
+\begin{equation}
+ \psi=\sqrt{n_0/v}\,e^{-i\theta}(0,0,1,0)^T,
+ \quad \dot\theta=m+2G_A n,\quad n=n_0/v.
+\end{equation}
+Den giver $j^{\hat a}=(n,0,0,0)$ og $J_5^{\hat a}=(0,0,0,n)$. Torsionens størrelse vokser ved kompression. Fuld stressberegning giver
+\begin{equation}
+ E=mn+G_A n^2,\qquad P=G_A n^2,\qquad j_i=0.
+\end{equation}
+Dette er en udledt feltgren, ikke en antaget tilstandsligning for en gas. En generisk diagonal Bianchi I-metrik ville have $T_{\hat x\hat y}=n(H_y-H_x)/4$, selv om $G_{xy}=0$. Derfor er den valgte LRS-restriktion nødvendig; vilkårlig triaxialitet må ikke tilføjes.
+
+En uafhængig koordinatberegning giver
+\begin{align}
+ G_{00}&=A^2+2AB,\\
+ G_{xx}/a^2&=-(\dot A+\dot B+A^2+B^2+AB),\\
+ G_{zz}/b^2&=-(2\dot A+3A^2).
+\end{align}
+Differensen og sporet af de rumlige ligninger giver det faktiske ODE-system:
+\begin{align}
+ \dot{\log v}&=3H,& \dot H&=-3H^2+\tfrac\kappa2(E-P),\\
+ \dot D&=-3HD,& \dot{\log a}&=H-D/3,\\
+ \dot{\log b}&=H+2D/3,& \dot\theta&=m+2G_A n.
+\end{align}
+Hamilton-fejlen $C=6H^2-2\kappa E-2D^2/3$ opfylder $\dot C=-6HC$. Den overvåges uden at blive sat til nul efter hvert skridt. Momentum-begrænsningerne er identisk nul. På $C=0$ fås
+\begin{equation}
+ \boxed{\dot H=-\tfrac\kappa2(E+P)-D^2/3\leq0.}
+\end{equation}
+Der er derfor intet volumenbounce for denne gren med $m,n\geq0$. Positiv energi og shear udelukker også $H=0$ via den flade Hamilton-begrænsning. Torsionens vækst er ikke tilstrækkelig til at vende kollapset.
+
+\section{Hvad kan vælges som startdata?}
+Den generelle teori kræver $\gamma_{ij}$, $K_{ij}$, alle spinorkomponenter, gauge, topologi og rand-/asymptotiske data, med fire gravitationsbegrænsninger. Masse, størrelse og kollapshastighed kan ikke vælges vilkårligt og uafhængigt.
+
+I appen vælges et restenergiindhold $M_{\rm rest}$, en cellelængde $L_0$, feltmassen $m>0$, anisotropien $r$ og spinretningen. Herfra beregnes
+\begin{align}
+ n_0&=\frac{M_{\rm rest}}{m L_0^3},& E_0&=mn_0+G_A n_0^2,\\
+ D_0&=r\sqrt{E_0},& H_0&=-\sqrt{(\kappa E_0+D_0^2/3)/3}.
+\end{align}
+Formlen for $r$ bruges i appens enheder $\kappa=1$. Større indhold eller mindre celle øger tæthed og kontraktionsrate. Shear øger også $|H_0|$. Spinretningens fortegn ændrer torsionen, men ikke denne grens volumenudvikling. Negativ tæthed, ugyldige tal, inkonsistent $H_0$ og for stærke startdata afvises.
+
+Cellen kan ses som en periodisk rumlig geometri med kompatibel spinstruktur eller som et fulgt volumen i det homogene rum. $M_{\rm rest}=m n v L_0^3$ er bevaret. Den er ikke en isoleret skys ADM-masse, som kræver asymptotisk flad geometri og et overfladeintegral ved uendelig. Cellelængden er ikke en skyradius. Stoffets samlede energi i cellen ændres ved arbejde: $d(EV)=-P\,dV$.
+
+\section{Grafer, numerik og kontrol}
+De tre grafer viser $a_V=(V/V_0)^{1/3}=v^{1/3}$, $H_V=\dot a_V/a_V=H$ og $\dot H_V$. Ligheden med $H_{\rm ADM}$ gælder her, fordi $u=n$ og løsningen er homogen. I en generel rumtid behøver den ikke gælde.
+
+Klassisk RK4 integrerer de seks ODE'er med skridt bundet af udviklingens tidsskalaer. Amplituden rekonstrueres fra $n=n_0/v$, fasen integreres. Strømbevarelse er derfor indbygget, mens en separat matrixberegning tester selve Dirac-ligningen. Et præcist analytisk benchmark følger af $\ddot v=3\kappa mn_0/2$:
+\begin{equation}
+ v=1+3H_0\tau+\tfrac34\kappa mn_0\tau^2,\qquad H=\dot v/(3v).
+\end{equation}
+Appen bruger ikke denne formel til at tegne kurver. Skridthalvering tester fjerdeordens konvergens mod den. Vi tester også vacuum Kasner, Minkowski, masseløs og isotrop grænse, constraints, shear-integralet $Dv=D_0$, ugyldige data, eksport samt mobil- og desktopvisning. Den spinløse grænse for denne enkeltspinor er vakuum; $m=0$ er ikke spinløst stof.
+
+Appen stopper før $E$, $n$ eller kvadratroden af Levi--Civita-Kretschmann når $0{,}1$ i deres respektive reducerede Planck-enheder. Det er en valgt demonstrationsgrænse, ikke en bevist fysisk overgang eller garanti for små kvantekorrektioner. Numeriske fejl og tringrænser rapporteres særskilt. Den fulde torsionsfulde krumning er ikke særskilt kontrolleret som invariant, og ingen fysisk fortsættelse gennem den formelle nulvolumen-grænse hævdes.
+
+\section{Hvad mangler før en realistisk sky kan undersøges?}
+Der mangler en verificeret hyperbolsk 3+1-formulering med tetradegauge, en solver til rumligt varierende constraints, kompakte stofdata, konvergerende PDE-numerik og passende ydre randbetingelser. En glat vakuumkrave med $\psi=0$ giver lokalt nul torsion og $G_{\mu\nu}=0$. Dette beviser ikke global matching. Den homogene app har slet ingen sådan krave eller yderside; Schwarzschild påtvinges ikke.
+
+Klassisk ECD indeholder her hverken degenerationsstatistik, stærke eller svage vekselvirkninger. En klassisk spinoramplitude er ikke en fysisk neutronstjerne-tilstand. Tidligere estimater advarer mod at ekstrapolere minimal EC til vilkårlige Planck-tætheder. Vi har ikke vist en babyuniversdannelse, en begivenhedshorisont eller en generel stabilitetssætning.
+
+\begin{thebibliography}{9}
+\bibitem{HD} F. W. Hehl og B. K. Datta, J. Math. Phys. \textbf{12}, 1334 (1971), doi:10.1063/1.1665738.
+\bibitem{S} M. Shaposhnikov m.fl., \href{https://arxiv.org/abs/2008.11686}{arXiv:2008.11686v2}, minimal torsionselimineret action; konventioner kontrolleret i projektets tidligere audit.
+\bibitem{G} E. Gourgoulhon, \href{https://arxiv.org/abs/gr-qc/0703035}{arXiv:gr-qc/0703035}, ADM og Gauss--Codazzi.
+\bibitem{M} O. M\"uller og N. Nowaczyk, \href{https://arxiv.org/abs/1504.01034}{arXiv:1504.01034}, torsionsfri Einstein--Dirac Cauchy-formulering.
+\end{thebibliography}
+\end{document}
