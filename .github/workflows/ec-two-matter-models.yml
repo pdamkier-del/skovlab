@@ -1,0 +1,30 @@
+name: EC two-matter-model comparison
+on:
+  push:
+    paths:
+      - 'research/ec-two-matter-models/**'
+      - '.github/workflows/ec-two-matter-models.yml'
+  pull_request:
+    paths:
+      - 'research/ec-two-matter-models/**'
+      - '.github/workflows/ec-two-matter-models.yml'
+permissions:
+  contents: read
+jobs:
+  verify-and-regress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install -r research/ec-spherical/requirements.txt
+      - run: python -m unittest discover -s research/ec-two-matter-models/validation -v
+      - run: python -m unittest discover -s research/ec-spherical/validation -v
+      - run: python -m unittest discover -s research/ec-spherical/full-weyssenhoff/validation -v
+      - run: python -m unittest discover -s research/ec-matter-models/validation -v
+      - run: npm test

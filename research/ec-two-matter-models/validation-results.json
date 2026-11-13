@@ -1,0 +1,390 @@
+{
+  "task_date": "2026-11-13",
+  "baseline_commit": "7e1fc4ad3e608cd488dde0b17eed2e7c32641686",
+  "python": "3.12.14",
+  "sympy": "1.14.0",
+  "node": "v24.19.0",
+  "new_checks_run": 10,
+  "mathematical_tests_run": 67,
+  "mathematical_tests": [
+    {
+      "test": "test_analytical.AnalyticalAudit.test_11_effective_sound_speed_and_hyperbolicity_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_12_local_conservation_and_advected_composition",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_13_LTB_inhomogeneous_dust",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_14_shell_neck_is_not_automatically_shell_crossing",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_15_matching_pressure_obstruction",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_16_original_FLRW_solver_is_unchanged_and_matches_spherical_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_analytical.AnalyticalAudit.test_17_direct_Riemann_Kretschmann_Schwarzschild",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_01_independent_einstein_components",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_02_warped_product_derivation",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_03_FLRW_limit_all_curvatures",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_04_vacuum_Schwarzschild_and_Minkowski",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_05_general_spherical_conservation_including_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_06_Misner_Sharp_mass_identities_with_flux",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_07_ADM_and_radial_evolution",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_08_spherical_polarized_spin_derivative_vanishes",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_09_unpolarized_covariance_and_effective_action",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_10_Cartan_contortion_and_elimination_coefficient",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_18_contracted_Bianchi_identity",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_19_nonradial_spin_terms_are_not_identically_discarded",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_20_rotation_invariance_of_radial_spin",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_21_Raychaudhuri_acceleration_divergence",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_22_warped_Kretschmann_FLRW_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_symbolic.SymbolicAudit.test_23_metric_FLRW_with_noninheriting_aligned_spin",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_01_mixed_Einstein_components_and_flux_sign",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_02_full_derivative_decomposition_with_nonradial_controls",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_03_radial_cancellation_separately_for_each_linear_term",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_04_spin_particle_transport_and_Frenkel_preservation",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_05_characteristic_determinant_and_complete_eigenbasis",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_06_density_spin_pencil_and_change_of_variables",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_07_zero_sound_Jordan_structure_and_enthalpy_degeneracy",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_08_all_sound_domains_and_stiff_exception",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_09_general_ordinary_EOS_derivative",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_10_extra_ideal_spin_moments_add_contacts_only",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_11_regular_center_and_constrained_initial_geometry",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_12_full_connection_boundary_delta_and_zero_Ricci_delta",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_13_vacuum_edge_and_pressure_conditions",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_14_geodesic_volume_bounce_bound_vs_causal_domain",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_15_numeric_mode_residual_growth_and_causal_boost",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_16_averaged_pencil_independent_of_coherent_identification",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_17_analytic_initial_patches_satisfy_all_radial_constraints",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_18_shell_and_volume_conditions_remain_distinct",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_19_coordinate_Weyl_subtraction_and_curvature_invariants",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_20_nonzero_density_pressure_free_edge_is_noncausal",
+      "status": "passed"
+    },
+    {
+      "test": "test_full_weyssenhoff.FullWeyssenhoffAudit.test_21_full_spin_equation_preserves_Frenkel_for_arbitrary_acceleration",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_01_negative_Clifford_sign_and_canonical_time_coefficient",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_02_chirality_and_antisymmetric_spin_variation",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_03_full_axial_torsion_reconstruction_and_contortion",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_04_scalar_curvature_auxiliary_coefficient",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_05_Dirac_contortion_coupling_with_explicit_gamma_matrices",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_06_algebraic_Cartan_elimination_including_material_term",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_07_Dirac_principal_cone",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_08_Wick_exchange_in_nonrelativistic_normal_state",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_09_independent_Fock_space_contact_factor",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_10_state_dependent_thermodynamics",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_11_total_current_requires_cross_species",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_12_physical_scales_and_invalid_nonrelativistic_extrapolation",
+      "status": "passed"
+    },
+    {
+      "test": "test_ec_matter.ECMatterChecks.test_13_previous_Weyssenhoff_sound_formula_as_conditional_limit",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_01_classical_single_spinor_Fierz_identities",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_02_on_shell_Dirac_stress_and_Hamiltonian_check",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_03_ADM_normal_and_projector_for_general_spatial_metric",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_04_source_projection_with_tilt_and_focusing_trace",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_05_equal_one_body_data_do_not_fix_pair_contact",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_06_two_beam_moments_allow_anisotropic_stress",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_07_spin_curvature_force_is_mass_shell_tangent",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_08_regular_full_curvature_boundary_for_Dirac_contortion",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_09_electromagnetic_exterior_is_not_GR_vacuum",
+      "status": "passed"
+    },
+    {
+      "test": "test_two_matter.TwoMatterChecks.test_10_current_compression_and_directional_volume_distinction",
+      "status": "passed"
+    }
+  ],
+  "application_tests_run": 24,
+  "application_tests_exit_code": 0,
+  "previous_research_and_runtime_unchanged": true,
+  "flrw_file_hashes": [
+    {
+      "path": "ec-flrw/MODEL.md",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/app.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/browser.test.cjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/THEORY.md",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/app.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/browser.test.cjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/geometry.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/lab.css",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/matter.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/model.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/model.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/plot.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/research.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/research.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/solver.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/sweep-worker.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/collapse/theory.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/geometry-lab.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/index.html",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/model.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/model.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/style.css",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/vendor/LICENSE.plotly",
+      "unchanged": true
+    },
+    {
+      "path": "ec-flrw/vendor/plotly.min.js",
+      "unchanged": true
+    }
+  ],
+  "success": true,
+  "elapsed_seconds": 17.834,
+  "limitations": [
+    "No time evolution, unrestricted ADM expansion or global exterior construction.",
+    "The on-shell stress check uses a fixed-background classical matter solution.",
+    "No complete dense curved-EC quantum kinetic/collision closure is derived.",
+    "Classical compact support does not prove compact renormalized quantum stress.",
+    "The full-curvature jump test assumes a smooth metric junction and bounded contortion.",
+    "No causal regular bounce is established."
+  ]
+}
