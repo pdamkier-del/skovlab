@@ -1,0 +1,159 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
+\usepackage[provide=*,danish]{babel}
+\usepackage{lmodern,amsmath,amssymb,geometry,hyperref,microtype}
+\geometry{margin=25mm}\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}\setlength{\emergencystretch}{3em}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\title{Kan klassisk ECD give et bounce?\\\large En analytisk undersøgelse med konsistente startdata}
+\author{Skovlab}\date{13. november 2026}
+\begin{document}\maketitle
+\textbf{Svar.} Vi kan analytisk konstruere et \emph{lokalt}, regulært volumenbounce inden for klassisk Einstein--Cartan--Dirac (ECD). Det er ikke en afgrænset kollapset sky, og eksemplet bouncer også uden torsion. Torsionsleddet dæmper faktisk vendingen i den undersøgte familie. Det beviser derfor ikke, at torsion vender et sort-hul-kollaps.
+
+Undersøgelsen bruger ingen tidsintegration eller søgning efter parametre, der giver en ønsket kurve. Vi udleder betingelser, konstruerer feltdata, løser constraints analytisk lokalt og kontrollerer resultatet med symbolsk algebra.
+
+\section{Hvad mener vi med et bounce?}
+Hvor Dirac-strømmen $j^\mu=\bar\psi\gamma^\mu\psi$ er timelig og ikke nul, defineres stoffets hastighed ved $u^\mu=j^\mu/n$, $n=\sqrt{-j^2}$. Dens ekspansion er $\Theta=\nabla_\mu u^\mu$. Et fulgt, infinitesimalt hvilevolumen opfylder $\dot v/v=\Theta$, med prik som afledt langs $u$ i egentid.
+
+Et regulært lokalt minimum kræver
+\[
+ \Theta=0,\qquad\dot\Theta>0.
+\]
+Med $H_u=\Theta/3$ er det samme kriterium $H_u=0$, $\dot H_u>0$. Det er en lokal størrelse. En hel sky kan ikke erklæres bouncet, blot fordi ét stofområde vender.
+
+\section{Den fulde kilde giver ingen universel fortegnsregel}
+Vi bruger projektets korrigerede konventioner: $(-+++)$, $\epsilon_{0123}=1$, $\{\gamma^a,\gamma^b\}=-2\eta^{ab}$, $\bar\psi=\psi^\dagger\gamma^0$ og $\gamma_5=-i\gamma^0\gamma^1\gamma^2\gamma^3$. For geometrisk frameforbindelse $W$ er spinforbindelsen $D=\partial-W^{ab}[\gamma_a,\gamma_b]/8$. Torsion er algebraisk, $T_{abc}=-\kappa\epsilon_{abcd}J_5^d/2$.
+
+Efter elimination er actionen
+\[
+ S=\int e\left[\frac R{2\kappa}+\mathcal L_D^\circ-G_AJ_5^2\right]d^4x,
+ \quad G_A=3\kappa/16,\quad J_5^a=\bar\psi\gamma_5\gamma^a\psi.
+\]
+Den giver Dirac-ligningen og den komplette stress
+\begin{align*}
+ i\gamma^\mu D_\mu\psi-m\psi-2G_AJ_{5a}\gamma_5\gamma^a\psi&=0,\\
+ T_{\mu\nu}&=\mathcal K_{\mu\nu}+G_Ag_{\mu\nu}J_5^2,\\
+ \mathcal K_{\mu\nu}&=-\frac i4[\bar\psi\gamma_\mu\overleftrightarrow D_\nu\psi+
+ \bar\psi\gamma_\nu\overleftrightarrow D_\mu\psi].
+\end{align*}
+For én regulær, klassisk, kommuterende spinor er $J_5^2=n^2$. Lad $S=\bar\psi\psi$ og lad $\mathcal G$ være den rumlige trace af $\mathcal K$ i strømrammen. Dirac-ligningen giver
+\[
+ \mathcal K^\mu{}_{\mu}=-(mS+2G_A n^2),\qquad
+ T^\mu{}_{\mu}=-mS+2G_A n^2.
+\]
+Herfra følger uden væskelukning
+\[
+ \boxed{\epsilon=mS+G_A n^2+\mathcal G,\quad
+ P=G_A n^2+\mathcal G/3,\quad
+ \epsilon+3P=mS+4G_A n^2+2\mathcal G.}
+\]
+$P$ er middelspændingen, ikke en påtvunget termodynamisk tilstandsligning. $\mathcal G$ bestemmes af spinorfeltets kovariante rumlige afledte og kan være negativ. Den tidligere homogene model havde $S=n$ og $\mathcal G=0$; disse begrænsninger gælder ikke generelt.
+
+Ved nul ekspansion er Raychaudhuri-ligningen
+\[
+ \dot\Theta=-\sigma_{\mu\nu}\sigma^{\mu\nu}+\omega_{\mu\nu}\omega^{\mu\nu}
+ -\frac\kappa2(mS+4G_A n^2+2\mathcal G)+\nabla_\mu a^\mu.
+\]
+Shear bidrager negativt; rotation og accelerationsdivergens kan bidrage positivt. Hverken disse størrelser eller gradientspændingen kan vælges frit og uafhængigt af feltligningerne.
+
+Et betinget no-bounce-resultat fås, hvis kildeparentesen er ikke-negativ, og $\omega_{\mu\nu}\omega^{\mu\nu}+\nabla\cdot a\leq\sigma_{\mu\nu}\sigma^{\mu\nu}$. Det omfatter den geodætiske, rotationsfri klasse med $S,\mathcal G\geq0$. Der er ikke vist, at alle klassiske ECD-data opfylder disse antagelser.
+
+\section{En konkret, analytisk constraint-konstruktion}
+På et åbent lokalt rumligt område vælges
+\[
+ \gamma_{ij}=\chi(z)^4\delta_{ij},\quad K_{ij}=0,\quad\chi(0)=1,\quad\chi'(0)=0,
+\]
+\[
+ \psi(z)=\sqrt{n_*}\,\chi^{-3}
+ \begin{pmatrix}i\sin(cz)\\0\\\cos(cz)\\0\end{pmatrix},\qquad m,n_*,c>0.
+\]
+Der er rumlig variation langs $z$ og translationer langs $x,y$. Ét konsistent specialtilfælde er nok til at undersøge en generel påstand om umulighed. Det er ikke en homogen eller FLRW-konstruktion.
+
+Den fysiske tæthed er $n=n_*\chi^{-6}$. Bilinearne giver $j^{\hat a}=(n,0,0,0)$, $J_5^{\hat a}=(0,0,0,n)$ og $S=n\cos(2cz)$. Dirac-ligningen fastlægger tidsafledningen. Direkte beregning af hele stressen giver
+\begin{align*}
+ \epsilon&=mn_*\chi^{-6}\cos(2cz)+G_A n_*^2\chi^{-12}-cn_*\chi^{-8},\\
+ P_x=P_y&=G_A n_*^2\chi^{-12},\qquad
+ P_z=G_A n_*^2\chi^{-12}-cn_*\chi^{-8},\\
+ T_{0i}&=0.
+\end{align*}
+Det negative gradientled er dermed udledt fra feltet. Alle tre momentum-constraints holder, fordi $K_{ij}=0$ og den faktiske impulsdensitet er nul.
+
+Den rumlige Ricci-skalar er $R^{(3)}=-8\chi^{-5}\chi''$. Hamilton-constrainten reduceres præcist til
+\[
+ \boxed{\chi''=-\frac\kappa4\left[mn_*\chi^{-1}\cos(2cz)
+ +G_A n_*^2\chi^{-7}-cn_*\chi^{-3}\right].}
+\]
+Med de angivne startværdier findes en positiv analytisk løsning lokalt, fordi højresiden er analytisk nær $\chi=1$. Det definerer eksakte lokale constrainedata; ingen numerisk residual bruges som erstatning for constrainten.
+
+\section{Både normalvolumen og stofvolumen kontrolleres}
+Brug Gaussisk normaltid på startfladen: $N=1$, shift nul. Stoffets hastighed er her lig normalen, og begge har $\Theta=0$, nul shear og nul rotation. Sæt ved $z=0$
+\[
+ E_0=mn_*+G_A n_*^2-cn_*,\qquad F_0=mn_*+4G_A n_*^2-2cn_*.
+\]
+Normalernes ekspansionsafledte bliver
+\[
+ \partial_n\Theta_n(0)=-\kappa F_0/2.
+\]
+Stoffet kan accelerere væk fra normalerne. Den faktiske Dirac-ligning giver på startfladen
+\[
+ a^z=2\chi^{-5}\chi'+2m\chi^{-2}\sin(2cz).
+\]
+Ved centrum er $a^\mu=0$, men
+\[
+ \nabla\cdot a=2\chi''(0)+4mc=-\kappa E_0/2+4mc.
+\]
+Derfor er den \emph{materielle} afledte
+\[
+ \boxed{\dot\Theta_u(0)=4mc-\kappa mn_*+\frac32\kappa cn_*
+ -\frac52\kappa G_A n_*^2.}
+\]
+Resultatet er også kontrolleret ved at differentiere Dirac-ligningen og den korrekte strømtæthed to gange. Det er ikke kun en indsættelse i Raychaudhuri.
+
+Der findes et åbent parameterinterval med positiv energi og begge vendinger:
+\[
+ 0<G_A n_*<m/2,\qquad m/2+2G_A n_*<c<m+G_A n_*.
+\]
+Med $b=G_A n_*$ og $d=c-m/2-2b>0$ fås
+\[
+ \partial_n\Theta_n=\kappa n_*d>0,\quad
+ \dot\Theta_u=2m^2+\tfrac{20}{3}mb+\tfrac83b^2+(4m+8b)d>0.
+\]
+Det er altså ikke et isoleret fintunet datapunkt.
+
+Et enkelt eksakt eksempel er $c=3m/4$, $n_*=m/(3\kappa)$. Da er
+\[
+ E_0=\frac{5m^2}{48\kappa}>0,\qquad
+ \partial_n\Theta_n=\frac{m^2}{24}>0,\qquad
+ \dot\Theta_u=\frac{287m^2}{96}>0.
+\]
+For $H=\Theta/3$ divideres begge ekspansionsafledte med tre. En fulgt lokal hvilevolumen har derfor $v(\tau)=v(0)[1+\dot\Theta_u(0)\tau^2/2+O(\tau^3)]$ i en regulær lokal fortsættelse.
+
+\section{Hvorfor er dette mere end en formel ulighed?}
+De analytiske data opfylder alle gravitationsconstraints på hele det lokale område. En analytisk lokal ECD-fortsættelse kan konstrueres i bølgegauge. Den reducerede Einstein-ligning er af anden orden i tid; Dirac er af første orden. Man differentierer derfor Dirac én gang og substituerer de oprindelige tidsligninger, så begge får analytisk andenordens normalform. Cauchy--Kowalevski giver en lokal løsning.
+
+Defekten $Z=\partial_t\psi-D[\psi,g]$ opfylder en homogen førsteordens ligning med nul startdata, så den oprindelige Dirac-ligning bevares. Stressbevarelse og Bianchi propagérer derefter gaugeconstraints fra nul. Den fulde argumentation står i det separate eksistensdokument. Der påstås ingen generel langtidsstabilitetssætning.
+
+I et tilstrækkeligt lille område er metrik, spinor, strømramme og også den fulde torsionskrumning regulære. Positiv $\dot\Theta_u$ giver kontraktion lige før og ekspansion lige efter startøjeblikket. Det er lokal eksistens, ikke en eksplicit løsning for alle tider eller et bevis for en komplet nonsingulær rumtid.
+
+\section{Er det torsion, der giver bouncet?}
+Sammenlign med den særskilte torsionsfri Einstein--Dirac-action ved samme $m,n_*,c,\kappa$, og løs constraint-ODE'en igen for den action. Forskellene bliver præcist
+\[
+ \Delta(\partial_n\Theta_n)=-2\kappa G_A n_*^2,\qquad
+ \Delta(\dot\Theta_u)=-\tfrac52\kappa G_A n_*^2.
+\]
+Begge er negative. Den torsionsfri reference bouncer også. Vendingen i denne familie kommer fra den sammenhængende Dirac-tilstand og dens gradientspændinger; torsion er ikke den udløsende årsag.
+
+Der er en væsentlig fysisk begrænsning: eksemplet har
+\[
+ E_0+P_{z,0}=-m^2/(8\kappa)<0.
+\]
+Den longitudinale nulenergibetingelse brydes, selv om $E_0>0$. En beslægtet periodisk profil i fladt rum har desuden stor negativfrekvent andel. Det er ikke en konstrueret kvantestatistisk tilstand af realistiske fermioner. En positivfrekvent projektion på den faktiske lokale geometri er ikke etableret.
+
+\textbf{Konklusion.} Et generelt matematisk forbud mod lokale bounces i klassisk ECD holder ikke. Det viste lokale eksempel beviser hverken et realistisk torsionsudløst skybounce eller vending af et sort-hul-kollaps. Der mangler stadig fysisk begrundede tilstandskrav, en afgrænset sky, en konsistent yderside og en dokumenteret kollapsfortid.
+
+\begin{thebibliography}{9}
+\bibitem{HD} Hehl--Datta (1971), doi:10.1063/1.1665738; minimal ikke-lineær Dirac-teori.
+\bibitem{G} Gourgoulhon, \href{https://arxiv.org/abs/gr-qc/0703035}{gr-qc/0703035}; ADM og constraints.
+\bibitem{M} M\"uller--Nowaczyk, \href{https://arxiv.org/abs/1504.01034}{arXiv:1504.01034v3}, lemma 3.20; torsionsfri lokal Cauchy-ramme, ikke en global ECD-sætning.
+\bibitem{F} Finster--Hainzl, \href{https://arxiv.org/abs/1101.1872}{arXiv:1101.1872v2}, J. Math. Phys. 52, 042501 (2011), sætning 1.1. Analytiske bounces i en særlig torsionsfri kosmologisk flertilstandsmodel; ikke vores lokale enkeltspinoreksempel.
+\end{thebibliography}
+\end{document}

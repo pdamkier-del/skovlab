@@ -1,0 +1,12 @@
+# Primary sources and how they are used
+
+All sources were checked on 13 November 2026. No coefficients are transferred from a different Clifford, torsion or signature convention.
+
+- **Hehl–Datta (1971),** [doi:10.1063/1.1665738](https://doi.org/10.1063/1.1665738). Foundational nonlinear Dirac theory. Our action/coefficient is taken from the repository's independently checked, corrected-convention effective action, not an unexamined equation-number transfer.
+- **Shaposhnikov et al.,** [arXiv:2008.11686v2](https://arxiv.org/abs/2008.11686). Minimal effective contact reference; the geometric spin-connection sign is fixed by the existing [convention audit](../ec-full-3plus1/CONVENTION_AUDIT.md).
+- **Müller–Nowaczyk,** [arXiv:1504.01034v3](https://arxiv.org/html/1504.01034v3), §3.3, especially Lemma 3.20. Torsion-free local Einstein–Dirac Cauchy framework. We supply a separate analytic prolongation/defect argument for the algebraic nonlinear ECD contact; their global extension results are not claimed for it.
+- **Finster–Hainzl,** [arXiv:1101.1872v2](https://arxiv.org/html/1101.1872), Theorem 1.1, §4 and §4.3; J. Math. Phys. 52, 042501 (2011). Published analytic bouncing solutions already exist for a particular **torsion-free**, coherent filled-shell Einstein–Dirac cosmology. Their metric/Clifford convention differs from ours; none of their numerical coefficients or state closures are substituted here. It is context establishing that Dirac-wave effects and torsion-induced reversal must be distinguished, not proof of a finite-cloud ECD bounce.
+- **Finster–Hainzl,** [arXiv:0809.1693v4](https://arxiv.org/abs/0809.1693), Found. Phys. 40, 116–124 (2010), [doi:10.1007/s10701-009-9380-z](https://doi.org/10.1007/s10701-009-9380-z). Earlier cosmological analysis; not our single-spinor local construction.
+- **Gourgoulhon,** [gr-qc/0703035](https://arxiv.org/abs/gr-qc/0703035). ADM sign/constraint comparison. The planar scalar curvature is independently derived from its metric rather than borrowed.
+
+The local constrained family, its two distinct expansion derivatives, the full energy-condition check and the contact-removal comparison are derived explicitly in this report. No originality claim for the general fact that classical Dirac energy conditions may fail is made. Published cosmological bounces cannot by themselves establish a bounce inside a matched black-hole spacetime.
