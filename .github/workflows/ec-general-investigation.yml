@@ -1,0 +1,31 @@
+name: General ECD and covariant e-fold audit
+on:
+  push:
+    paths:
+      - 'research/ec-general-investigation/**'
+      - 'research/ec-full-3plus1/ecd.py'
+      - '.github/workflows/ec-general-investigation.yml'
+  pull_request:
+    paths:
+      - 'research/ec-general-investigation/**'
+      - 'research/ec-full-3plus1/ecd.py'
+      - '.github/workflows/ec-general-investigation.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: python -m pip install -r research/ec-general-investigation/requirements.txt
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: python research/ec-general-investigation/validation/run_checks.py

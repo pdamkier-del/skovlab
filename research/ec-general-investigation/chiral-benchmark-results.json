@@ -1,0 +1,10 @@
+{
+  "model": "Exact six independent massless same-chirality classical Dirac fields; flat torus FLRW metric",
+  "method": "Analytic field/action solution; not a numerical time integration",
+  "accelerated_post_bounce_efolds": 0.34657359027997264,
+  "post_bounce_nec_violating_efolds": 0.2027325540540822,
+  "total_future_scale_expansion": "unbounded; asymptotically decelerated radiation-like",
+  "one_particle_per_fundamental_mode_classical_density_kappa_squared": 1175.9417526158152,
+  "physical_status": "Pauli-normalized amplitude illustration uses the classical source; not a renormalized quantum prediction. Bounce curvature is outside controlled classical/EFT scales.",
+  "scope": "Special global cosmological benchmark, no bounded cloud, exterior matching or general perturbative stability proof."
+}
