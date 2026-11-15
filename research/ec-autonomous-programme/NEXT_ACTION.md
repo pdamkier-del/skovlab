@@ -1,9 +1,9 @@
-# Exact next action after cycle 04
+# Exact next action after cycle 05
 
-Completed: C01 harmonic homogeneous strong-field benchmark; C02 continuum planar data/evolution; C03 finite planar mode/amplitude continuation; C04 genuinely 3D periodic conformal constraint construction. Read their JSON records and do not repeat the completed parameter sweeps without a new uncertainty.
+Completed: C01–C05. The original full-grid engine now has a short convergent high-curvature three-coordinate test. Do not repeat prior weak-field audits, planar sweeps or the unchanged C04 parameter family merely to count another cycle.
 
-Next C05: use construct() from code/periodic_3d_data.py without changing the seed family (n0=4, epsilon=.1, L=8, mass0, kappa1). Evolve with the original full-grid ecd.rk4, not PlanarGrid, at n=9,17,33 to harmonic t=.2 with 40 steps. Refine time separately at n=17 with 20/40/80 steps. All timesteps must satisfy characteristic_step(). Reject >5% relative Hamiltonian or lapse<.1, and label coordinate/numerical exits as inconclusive.
+Next C06: build a diagnostic for the full affine connection Gamma_tilde=Gamma_LC+C, using corrected T_abc=-epsilon_abcd A^d/2, C=T/2 at kappa1. Compute full Riemann from derivatives of that same connection. Validate metric/torsion index ordering and tangent time differencing against an independently constructed exact connection for n0=4,D0=0,m=0 in harmonic time.
 
-Measure every-step constraints, normal/current expansion, current frame validity, charge, slice volume and source conservation. Compare the smooth final fields on shared physical points via documented interpolation, accounting for unequal odd-grid spacing ratios. Include metric curvature at the endpoint; state that g_tt comes from the evolution RHS and that metric invariants alone do not certify full torsionful regularity. Initial spectral/oversampled constraints from C04 are independent of the FD evolution residual.
+On this exact isotropic branch, v=exp(-3t), a=exp(-t), metric R=-6/v² and metric Kretschmann=60/v⁴. Derive the full-connection contractions independently rather than assuming its zero scalar means zero curvature. Test multiple difference steps and finite compression levels. A symbolic component calculation is an appropriate independent check.
 
-If convergent, next investigate stronger/independent transverse seeds or a principled multi-species bounce benchmark. Do not interpret one resolved focusing family as a universal no-bounce or stability result. No finite-cloud or quantum applicability conclusion follows from these periodic high-curvature classical calculations.
+After that, apply the validated diagnostic to existing spatially varying data and distinguish full scalar cancellation, growing full curvature and current-frame failure. Do not infer singularity from numerical failure. A later full 3D continuation should vary the seed/polarization independently and budget for the 33³ cost (~317 seconds for C05 here).

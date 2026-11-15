@@ -1,6 +1,6 @@
 # Prioritized open questions
 
-1. Evolve the C04 genuinely three-coordinate constrained periodic data, with independent spatial/time refinement and conservation diagnostics. Initial constraint satisfaction does not establish dynamical convergence or transverse stability.
+1. Validate full torsionful curvature diagnostics, then apply them to spatially varying strong-curvature data with error control. C05 establishes one short convergent 3D trajectory, not long-time or arbitrary-perturbation stability.
 2. Does that result survive transverse perturbations? A planar reduction cannot answer general 3D stability.
 3. Can a state other than the known focusing one-field branch produce a validated regular material-volume turn? Normal expansion alone is insufficient; include acceleration divergence and current-frame conditioning.
 4. Can any candidate turn be attributed to torsion after resolving constraints for both actions? Do not hold invalid geometry fixed.

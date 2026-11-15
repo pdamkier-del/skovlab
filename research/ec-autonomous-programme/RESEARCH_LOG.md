@@ -43,3 +43,13 @@ For n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], solved the zero-mean vector elliptic p
 9³/17³/33³ independent FD Hamiltonian maxima are .0355067/.0104393/.00280839; momentum maxima .00046010/.00014408/.000039155. The 33³ oversampled scalar residual is 4.91e-11. Initial gauge is near roundoff. Tightening the 17³ scalar solve to 1e-12 reduces its nonlinear residual to 2.22e-15 without changing the finite-difference truncation error. Numerical initial-data existence is supported for this seed family, not proved for arbitrary data or for a finite isolated body.
 
 Artifacts: code/periodic_3d_data.py, tests/test_periodic_3d.py, results/cycle04_3d_initial.json. Ten research tests pass. Decision: proceed to actual full 3D evolution of the same data, rather than identifying a planar lift with transverse stability.
+
+## 2026-11-15 — cycle 05: actual full-grid three-dimensional evolution
+
+Evolved the C04 data using the existing general 3+1 RHS and RK4, not the compressed planar adapter. Grid sizes 9³,17³,33³, harmonic duration .2, 40 time steps. Every-step current frame, constraints, lapse, positive spatial metric, charge and normal/current expansion were monitored. Explicit 5% relative-Hamiltonian and lapse .1 stops were not reached; timesteps obey the characteristic bound.
+
+Spatial state orders are 1.9464,1.9204,1.9629. A separate 17³ 20/40/80-step sequence gives ratios 14.8297,17.2460,16.5839. The finest endpoint has relative Hamiltonian .00038310, slice-volume ratio .54890902 and metric R between -20.55495 and -19.08540. No sampled local normal/material turn occurs. Charge drift is small but not monotonically ordered by resolution; no spatial charge-convergence claim is made. Evolved stress divergence retains the documented centered-time diagnostic floor.
+
+The full 33³ run took 316.9 seconds; continuing much deeper at comparable validation cost is a substantive computational task. This short result is a validated nonlinear trajectory for one high-curvature three-coordinate family, not arbitrary-perturbation stability. It establishes neither a finite body nor oscillations. Artifacts: code/full_3d_contraction.py and results/cycle05_full3d.json.
+
+Decision: strengthen the regularity diagnostics by testing full torsionful Riemann contractions, rather than calling finite metric invariants or a vanishing full scalar a complete regularity check.

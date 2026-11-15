@@ -49,3 +49,15 @@ Grid sizes 9³,17³,33³; n0=4, epsilon=.1, length8, mass0, kappa1. The vector/s
 17³ tolerances 1e-9/1e-11/1e-12 give K values agreeing within 1e-12. The tightest spectral nonlinear residual is 2.22e-15, while FD relative Hamiltonian remains .00169023514. This explicitly rules out elliptic tolerance as the dominant observed FD error in this case. On 33³, energy-source formula agrees within 4.45e-15; initial gauge within 4.45e-16.
 
 Ten programme tests pass, including arbitrary-jet source scaling, uniform limit, positivity/input rejection, nonzero three-axis variation, oversampling and independent constraint refinement. A spectral return flag alone is not the validation.
+
+## Cycle 05 reproduction
+
+```sh
+python research/ec-autonomous-programme/code/full_3d_contraction.py --output research/ec-autonomous-programme/results/cycle05_full3d.json
+```
+
+Spatial runs: n=9,17,33, duration .2, 40 steps. Separate same-grid n17 temporal test: 20/40/80 steps; the 40-step result is reused rather than recomputed. Final fields are resampled to 17³ common physical points only for comparison; evolution remains second-order FD in the original engine. Data files are checkpointed after each resolution.
+
+All runs finish within their declared lapse, spacelike-metric, current-frame, CFL and 5%-constraint controls. Passing a 5% stop is not the accuracy criterion: independent refinement is the evidence. Charge drift is below 3e-10 across these runs but is nonmonotonic with spatial resolution. Source divergence uses evolved snapshots at the same final time, plus the separate tangent diagnostic; fixed-dt floors remain visible. Metric time-second jets in curvature come from the RHS, so the curvature trace check is not an independent off-shell Einstein test.
+
+No browser/frontend tests were rerun; the weak-field public API limits are not raised. Strong-curvature research drivers bypass those operational frontend restrictions without changing the physical equations.

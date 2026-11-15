@@ -62,3 +62,11 @@ Periodicity implies K²=(3/2) integral(Q chi^-7)/integral(chi⁵). Use u=log chi
 K=2.99909273989 for the tested family. Exact conformal scaling keeps initial total classical Dirac charge integral(n_s)=n0 L³ while geometry is solved; total charge and a chosen free collapse rate were not assigned independently. Numerical positivity, spectral/oversampled constraints, full-source matching and FD convergence support these data. Uniqueness and existence for arbitrary amplitudes are not established.
 
 All three axes have nonzero source variation. Therefore these are genuinely 3D initial data, unlike a transverse lift of the planar test. Their evolution and stability require separate validation.
+
+## C05 — full 3D strong-curvature trajectory (numerically supported within one finite family)
+
+The C04 seed is evolved without spatial symmetry reduction. All metric components, metric velocities and complex spinor components remain active. State differences on common physical points converge with spatial orders 1.92–1.96; separate temporal ratios are near16. This validates a finite high-curvature contraction interval with truly x/y/z-dependent fields, extending the earlier weak-field prototype evidence.
+
+At 33³ and t=.2: volume ratio .5489090168; relative Hamiltonian .0003830955; metric R range [-20.55495,-19.08540]. Normal and material expansion are negative at all sampled points/times. No resolved local volume bounce is found in this interval. This is not a universal no-bounce theorem or an assertion about untested later evolution.
+
+The topology is a 3-torus, there is no finite cloud or exterior. The seed is deliberately a mathematically specified commuting field at uncontrolled reduced-Planck scales. A numerical bound over a finite interval does not establish geodesic completeness, and metric curvature tests do not yet monitor every torsionful component. These restrictions remain even though spatial/time refinement works.

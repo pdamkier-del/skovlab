@@ -2,7 +2,7 @@
 
 Updated 2026-11-15. Starting research baseline: d069bfac8398cc71793c542ad93d650cc511794c; inherited audit: 770122a9d1e69bbea123a132e98e717a300a9699. No previous ec-autonomous-programme files existed on either accessible branch. This is programme initialization from verified research, not a claim that missing cycles were completed.
 
-## Completed cycles: 01–04
+## Completed cycles: 01–05
 
 The unchanged ECD evolution equations pass a new strong-curvature homogeneous harmonic-time benchmark. All tensor components, spinor, constraints and metric curvature are evaluated through the existing engine. The periodic number quadrature defect identified in the audit is corrected; no physical interaction has been added.
 
@@ -30,6 +30,12 @@ Constructed n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)] with variation along all axes. 
 
 At 33³: scalar spectral residual 4.78e-12, vector residual 4.88e-15, oversampled continuum Hamiltonian residual 4.91e-11. The engine's independent FD relative Hamiltonian is 4.55e-4 and momentum max 3.92e-5, both decreasing under refinement. Tightening the 17³ nonlinear tolerance to 1e-12 changes K by less than 1e-12 and leaves FD errors essentially unchanged. This distinguishes elliptic-solve tolerance from spatial discretization error. Ten research tests now pass.
 
+## Cycle 05 — short full 3D high-curvature evolution
+
+The original full-grid engine evolves the C04 three-coordinate seed to harmonic t=.2. Spatial refinement 9³/17³/33³ gives state orders 1.946,1.920,1.963 (metric/velocity/spinor). Separate 17³ time refinement 20/40/80 steps gives ratios 14.83,17.25,16.58, compatible with RK4 on this test. The 33³ endpoint relative Hamiltonian is 3.83e-4; charge drift remains below 8e-11 on that run. Current and normal expansion stay negative, volume ratio is .5489090, and metric R ranges from -20.55 to -19.09.
+
+This establishes more than a planar lift: the evolving data vary along all axes. It still does not establish stability against arbitrary perturbations, long-time collapse, a bounce, or physical ultra-dense fermion applicability. The largest run took about 317 seconds in this environment. Full torsionful curvature remains the next regularity diagnostic.
+
 ## Immediate next investigation
 
-Cycle 05: evolve these same genuinely 3D periodic data using the existing full-grid engine, with 9³/17³/33³ spatial tests and separate temporal refinement. C04 is only an initial-data result. Do not claim transverse dynamical stability until evolution has been checked. Read NEXT_ACTION.md.
+Cycle 06: independently validate a full-affine-curvature diagnostic on the exact massless isotropic branch, where the full scalar vanishes but other full curvature components need not. Do not use vanishing scalar curvature to classify regularity. Then define the next spatially varying regularity test without repeating completed contraction sweeps.
