@@ -1,0 +1,380 @@
+{
+  "spatial_initial_data_checks": [
+    {
+      "n": 9,
+      "initial_data": {
+        "n": 9,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11
+        },
+        "Ktrace": 2.9990927398856035,
+        "mean_log_chi": 1.2971939480510472e-13,
+        "scalar_spectral_residual_max": 2.8687506188578283e-12,
+        "vector_spectral_residual_max": 3.0531133177191805e-16,
+        "oversampled_continuum_Hamiltonian_max": 5.322297038645729e-07,
+        "oversample_n": 19,
+        "FD_Hamiltonian_max": 0.03550666525114998,
+        "FD_Hamiltonian_relative": 0.005755369283876743,
+        "FD_momentum_max": 0.00046009651723627823,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 3.1086244689504383e-15,
+        "seed_momentum_mean": [
+          3.9977166524568395e-19,
+          -3.236246813893632e-19,
+          0.0
+        ],
+        "initial_H_min": -0.999697579961868,
+        "initial_H_max": -0.9996975799618676,
+        "source_variation_each_axis": [
+          0.7758770483143631,
+          0.7758770483143631,
+          0.7758770483143631
+        ],
+        "chi_range": [
+          0.9858596566587833,
+          1.012730812996563
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.07388833100003467,
+        "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+      },
+      "curvature_probes": [
+        {
+          "delta": 0.0001,
+          "full_R_min": -0.034839589735731424,
+          "full_R_max": 0.026301372228823894,
+          "full_K_min": 121.72701209763946,
+          "full_K_max": 132.5419679887129,
+          "full_orthonormal_component_max_abs": 3.110543359039278,
+          "torsion2_min": -24.67724554225869,
+          "torsion2_max": -23.062964112222154,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        },
+        {
+          "delta": 5e-05,
+          "full_R_min": -0.03483641052840647,
+          "full_R_max": 0.02630465138381588,
+          "full_K_min": 121.7269909559981,
+          "full_K_max": 132.54194515086905,
+          "full_orthonormal_component_max_abs": 3.110543653535467,
+          "torsion2_min": -24.67724554225869,
+          "torsion2_max": -23.062964112222154,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "initial_data": {
+        "n": 17,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11
+        },
+        "Ktrace": 2.9990927398869855,
+        "mean_log_chi": 5.290330926346556e-14,
+        "scalar_spectral_residual_max": 3.546997212363758e-12,
+        "vector_spectral_residual_max": 7.632783294297951e-16,
+        "oversampled_continuum_Hamiltonian_max": 2.8398616791491804e-11,
+        "oversample_n": 35,
+        "FD_Hamiltonian_max": 0.0104392689688666,
+        "FD_Hamiltonian_relative": 0.0016902351410873861,
+        "FD_momentum_max": 0.00014407612742916177,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.440892098500626e-15,
+        "seed_momentum_mean": [
+          -2.1185306036761332e-20,
+          5.649414943136355e-21,
+          0.0
+        ],
+        "initial_H_min": -0.9996975799623288,
+        "initial_H_max": -0.9996975799623282,
+        "source_variation_each_axis": [
+          0.7931892398735605,
+          0.7931892398735605,
+          0.7931892398735605
+        ],
+        "chi_range": [
+          0.9858596561055938,
+          1.0133024535995039
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.3133398439999837,
+        "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+      },
+      "curvature_probes": [
+        {
+          "delta": 0.0001,
+          "full_R_min": -0.010224722373429751,
+          "full_R_max": 0.008014214116145002,
+          "full_K_min": 121.3236285191922,
+          "full_K_max": 133.03573767109214,
+          "full_orthonormal_component_max_abs": 3.1121788049805676,
+          "torsion2_min": -24.704891562367266,
+          "torsion2_max": -23.062964267516364,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        },
+        {
+          "delta": 5e-05,
+          "full_R_min": -0.010221550584618821,
+          "full_R_max": 0.008017500516611431,
+          "full_K_min": 121.32360752372779,
+          "full_K_max": 133.0357146912634,
+          "full_orthonormal_component_max_abs": 3.11217826893138,
+          "torsion2_min": -24.704891562367266,
+          "torsion2_max": -23.062964267516364,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        }
+      ]
+    },
+    {
+      "n": 33,
+      "initial_data": {
+        "n": 33,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11
+        },
+        "Ktrace": 2.9990927398927774,
+        "mean_log_chi": -2.690545478051746e-13,
+        "scalar_spectral_residual_max": 4.775021719974299e-12,
+        "vector_spectral_residual_max": 4.884981308350689e-15,
+        "oversampled_continuum_Hamiltonian_max": 4.912870110729273e-11,
+        "oversample_n": 67,
+        "FD_Hamiltonian_max": 0.002808392526070236,
+        "FD_Hamiltonian_relative": 0.000454564511098378,
+        "FD_momentum_max": 3.915521468467664e-05,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.440892098500626e-15,
+        "seed_momentum_mean": [
+          -2.1625514573771033e-20,
+          -4.2478689341335955e-21,
+          0.0
+        ],
+        "initial_H_min": -0.9996975799642595,
+        "initial_H_max": -0.9996975799642588,
+        "source_variation_each_axis": [
+          0.7981887690292342,
+          0.7981887690292342,
+          0.7981887690292342
+        ],
+        "chi_range": [
+          0.9858596561052728,
+          1.0134673188722723
+        ],
+        "field_evaluations": 20,
+        "seconds": 2.0984655069996734,
+        "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+      },
+      "curvature_probes": [
+        {
+          "delta": 0.0001,
+          "full_R_min": -0.002752035050049395,
+          "full_R_max": 0.00217433660734212,
+          "full_K_min": 121.20047619641029,
+          "full_K_max": 133.18596333057832,
+          "full_orthonormal_component_max_abs": 3.1126129143929036,
+          "torsion2_min": -24.712818158938383,
+          "torsion2_max": -23.06296426760645,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        },
+        {
+          "delta": 5e-05,
+          "full_R_min": -0.0027488655498812964,
+          "full_R_max": 0.0021776252276093366,
+          "full_K_min": 121.2004552456584,
+          "full_K_max": 133.1859403062458,
+          "full_orthonormal_component_max_abs": 3.112612378259305,
+          "torsion2_min": -24.712818158938383,
+          "torsion2_max": -23.06296426760645,
+          "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+        }
+      ]
+    }
+  ],
+  "hypothesis": "The full-connection scalar vanishes on the exact massless isotropic branch while full curvature nevertheless grows; an independent full-Riemann diagnostic must detect it.",
+  "parameters": {
+    "n0": 4.0,
+    "mass": 0.0,
+    "D0": 0.0,
+    "kappa": 1.0
+  },
+  "records": [
+    {
+      "delta": 0.001,
+      "full_R_min": -0.0004320155523411806,
+      "full_R_max": -0.0004320155523411806,
+      "full_K_min": 128.0029522710433,
+      "full_K_max": 128.0029522710433,
+      "full_orthonormal_component_max_abs": 3.0000675020454013,
+      "torsion2_min": -24.0,
+      "torsion2_max": -24.0,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 1.0,
+      "harmonic_time": -0.0,
+      "exact_full_R": 0.0,
+      "exact_full_K": 128.0,
+      "exact_metric_R": -6.0,
+      "exact_metric_K": 60.0,
+      "full_K_relative_error": 2.306461752588085e-05
+    },
+    {
+      "delta": 0.0005,
+      "full_R_min": -0.00010800097217611437,
+      "full_R_max": -0.00010800097217611437,
+      "full_K_min": 128.00073801693512,
+      "full_K_max": 128.00073801693512,
+      "full_orthonormal_component_max_abs": 3.000016875127632,
+      "torsion2_min": -24.0,
+      "torsion2_max": -24.0,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 1.0,
+      "harmonic_time": -0.0,
+      "exact_full_R": 0.0,
+      "exact_full_K": 128.0,
+      "exact_metric_R": -6.0,
+      "exact_metric_K": 60.0,
+      "full_K_relative_error": 5.765757305598029e-06
+    },
+    {
+      "delta": 0.00025,
+      "full_R_min": -2.7000062196691488e-05,
+      "full_R_max": -2.7000062196691488e-05,
+      "full_K_min": 128.00018450109383,
+      "full_K_max": 128.00018450109383,
+      "full_orthonormal_component_max_abs": 3.0000042187589013,
+      "torsion2_min": -24.0,
+      "torsion2_max": -24.0,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 1.0,
+      "harmonic_time": -0.0,
+      "exact_full_R": 0.0,
+      "exact_full_K": 128.0,
+      "exact_metric_R": -6.0,
+      "exact_metric_K": 60.0,
+      "full_K_relative_error": 1.4414147955221779e-06
+    },
+    {
+      "delta": 0.001,
+      "full_R_min": -0.0017280622091790931,
+      "full_R_max": -0.0017280622091790931,
+      "full_K_min": 2048.047236336831,
+      "full_K_max": 2048.047236336831,
+      "full_orthonormal_component_max_abs": 12.000270008182175,
+      "torsion2_min": -96.00000000000004,
+      "torsion2_max": -96.00000000000004,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.5,
+      "harmonic_time": 0.23104906018664842,
+      "exact_full_R": 0.0,
+      "exact_full_K": 2048.0,
+      "exact_metric_R": -24.0,
+      "exact_metric_K": 960.0,
+      "full_K_relative_error": 2.3064617593160364e-05
+    },
+    {
+      "delta": 0.0005,
+      "full_R_min": -0.00043200388677533397,
+      "full_R_max": -0.00043200388677533397,
+      "full_K_min": 2048.0118082708946,
+      "full_K_max": 2048.0118082708946,
+      "full_orthonormal_component_max_abs": 12.000067500510246,
+      "torsion2_min": -96.00000000000004,
+      "torsion2_max": -96.00000000000004,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.5,
+      "harmonic_time": 0.23104906018664842,
+      "exact_full_R": 0.0,
+      "exact_full_K": 2048.0,
+      "exact_metric_R": -24.0,
+      "exact_metric_K": 960.0,
+      "full_K_relative_error": 5.765757272735428e-06
+    },
+    {
+      "delta": 0.00025,
+      "full_R_min": -0.00010800025180923711,
+      "full_R_max": -0.00010800025180923711,
+      "full_K_min": 2048.002952017366,
+      "full_K_max": 2048.002952017366,
+      "full_orthonormal_component_max_abs": 12.000016875035291,
+      "torsion2_min": -96.00000000000004,
+      "torsion2_max": -96.00000000000004,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.5,
+      "harmonic_time": 0.23104906018664842,
+      "exact_full_R": 0.0,
+      "exact_full_K": 2048.0,
+      "exact_metric_R": -24.0,
+      "exact_metric_K": 960.0,
+      "full_K_relative_error": 1.4414147295749302e-06
+    },
+    {
+      "delta": 0.001,
+      "full_R_min": -0.02764899535034715,
+      "full_R_max": -0.02764899535034715,
+      "full_K_min": 524300.0925021659,
+      "full_K_max": 524300.0925021659,
+      "full_orthonormal_component_max_abs": 192.00432013089502,
+      "torsion2_min": -1535.9999999999986,
+      "torsion2_max": -1535.9999999999986,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.125,
+      "harmonic_time": 0.6931471805599453,
+      "exact_full_R": 0.0,
+      "exact_full_K": 524288.0,
+      "exact_metric_R": -384.0,
+      "exact_metric_K": 245760.0,
+      "full_K_relative_error": 2.306461747347832e-05
+    },
+    {
+      "delta": 0.0005,
+      "full_R_min": -0.006912062219782911,
+      "full_R_max": -0.006912062219782911,
+      "full_K_min": 524291.0229173988,
+      "full_K_max": 524291.0229173988,
+      "full_orthonormal_component_max_abs": 192.00108000817556,
+      "torsion2_min": -1535.9999999999986,
+      "torsion2_max": -1535.9999999999986,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.125,
+      "harmonic_time": 0.6931471805599453,
+      "exact_full_R": 0.0,
+      "exact_full_K": 524288.0,
+      "exact_metric_R": -384.0,
+      "exact_metric_K": 245760.0,
+      "full_K_relative_error": 5.765757367770519e-06
+    },
+    {
+      "delta": 0.00025,
+      "full_R_min": -0.001728003981099846,
+      "full_R_max": -0.001728003981099846,
+      "full_K_min": 524288.7557163928,
+      "full_K_max": 524288.7557163928,
+      "full_orthonormal_component_max_abs": 192.00027000054126,
+      "torsion2_min": -1535.9999999999986,
+      "torsion2_max": -1535.9999999999986,
+      "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel.",
+      "volume": 0.125,
+      "harmonic_time": 0.6931471805599453,
+      "exact_full_R": 0.0,
+      "exact_full_K": 524288.0,
+      "exact_metric_R": -384.0,
+      "exact_metric_K": 245760.0,
+      "full_K_relative_error": 1.441414628544635e-06
+    }
+  ],
+  "classification": "Analytical exact benchmark with numerical diagnostic validation; not a proof that arbitrary ECD data reach unlimited compression or that finite invariants certify completeness."
+}

@@ -53,3 +53,15 @@ Spatial state orders are 1.9464,1.9204,1.9629. A separate 17³ 20/40/80-step seq
 The full 33³ run took 316.9 seconds; continuing much deeper at comparable validation cost is a substantive computational task. This short result is a validated nonlinear trajectory for one high-curvature three-coordinate family, not arbitrary-perturbation stability. It establishes neither a finite body nor oscillations. Artifacts: code/full_3d_contraction.py and results/cycle05_full3d.json.
 
 Decision: strengthen the regularity diagnostics by testing full torsionful Riemann contractions, rather than calling finite metric invariants or a vanishing full scalar a complete regularity check.
+
+## 2026-11-15 — cycle 06: independent full-affine curvature validation
+
+The remaining regularity gap was that metric invariants and the algebraic torsion norm do not themselves monitor the full torsionful Riemann tensor. Implemented Gamma_tilde=Gamma_LC+C from corrected T_abc=-epsilon_abcd A^d/2 at kappa1, transforming with the same frame/coframe. Time derivatives of the full connection are centered differences along the actual state RHS; spatial derivatives use the declared FD operator. No field equations were changed.
+
+Independently specified the exact isotropic connection for n0=4,D0=0,m=0 and contracted it symbolically without importing the numerical engine. Result: full R=0, full K=128 exp(12t)=128/v⁴. The direct geometric numerical connection matches every reference component. Difference steps .001/.0005/.00025 give approximately factor-four reduction of full-scalar cancellation error and full-K error. At v=.125 the exact full K is 524288; the smallest-step relative K error is 1.44e-6.
+
+Also evaluated C04 spatial initial data with n=9,17,33 and delta1e-4/5e-5. The 33³ full-scalar range at the smaller delta is [-.00274887,.00217763], decreasing under grid refinement toward the massless zero-scalar identity. Full K range is approximately [121.20046,133.18594]. These checks are at the initial slice, not a post hoc claim about all evolved C05 points. Finite Lorentzian contractions alone are not a global regularity theorem.
+
+Artifacts: torsion_curvature.py, check_torsion_symbolic.py, cycle06_torsion_curvature.json, cycle06_symbolic.json, and independent connection/symbolic tests. Thirteen programme tests pass; the existing 16 full-field tests passed after the only production change (periodic diagnostic quadrature). Added reproducible requirements and a standalone SVG summarizing the recorded convergence/perturbation evidence.
+
+Decision at execution handoff: preserve six validated cycles and their boundaries. The next distinct question is spin-orientation perturbations of constrained 3D data, not more fixed-polarization density scans. A genuine bounce or oscillation question still requires a new admissible state family, full diagnostics through a turn, matched-action constraints and long-time convergence.

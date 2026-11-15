@@ -1,9 +1,9 @@
-# Prioritized open questions
+# Prioritized unresolved questions after cycle 06
 
-1. Validate full torsionful curvature diagnostics, then apply them to spatially varying strong-curvature data with error control. C05 establishes one short convergent 3D trajectory, not long-time or arbitrary-perturbation stability.
-2. Does that result survive transverse perturbations? A planar reduction cannot answer general 3D stability.
-3. Can a state other than the known focusing one-field branch produce a validated regular material-volume turn? Normal expansion alone is insufficient; include acceleration divergence and current-frame conditioning.
-4. Can any candidate turn be attributed to torsion after resolving constraints for both actions? Do not hold invalid geometry fixed.
-5. Does a genuine bounce remain regular and stable beyond its first turn, and does it recollapse or oscillate? No oscillatory candidate has yet been validated.
-6. Can the exact six-species bounce be implemented without replacing species by a one-field sum? Its state/scale interpretation and perturbations remain separate issues.
-7. What physically admissible fermionic state, if any, realizes a controlled bounce? High classical curvature tests do not answer this.
+1. **Change the state, not only density amplitude.** Derive a constraint-consistent periodic spin-orientation texture and test it independently before evolution. Does continued contraction depend on the fixed-polarization choice? Exact next parameters and source checks are in NEXT_ACTION.md.
+2. **Evolved full-curvature control.** C06 validates the diagnostic on an exact branch and 3D initial data, not the whole evolving C05 trajectory. Add full field checkpoints and measure full-connection curvature with space/time diagnostic refinement on the next new run.
+3. **General nonlinear 3D stability.** C05 is one short convergent trajectory; C03's finite planar mode tests are not an arbitrary-perturbation theorem. Independent transverse polarization, longer intervals and properly defined perturbation norms remain open.
+4. **A regular bounce in a new admissible state.** None was found in the tested focusing families. A candidate requires resolved current-volume expansion through zero, frame conditioning, full curvature control and continuation. Do not assume it exists.
+5. **Torsion attribution.** A candidate needs separately constrained ECD/Einstein–Dirac comparisons at matched free data. No new candidate was identified in these cycles.
+6. **Post-bounce expansion, recollapse and oscillations.** Still unanswered; no validated bounce/oscillatory candidate exists here. Phase oscillation of a spinor is not a material-volume oscillation.
+7. **Physical fermion interpretation and finite bodies.** Commuting fields at high reduced-Planck curvature are mathematical probes. Quantum statistics/correlations/EFT validity and a finite cloud/exterior remain separate unsolved problems. The known six-species cosmological bounce has not become a one-field or finite-body result.

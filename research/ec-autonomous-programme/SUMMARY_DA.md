@@ -1,21 +1,17 @@
-# Status på det autonome ECD-program
+# Status efter seks forskningscyklusser
 
-Programloggen fandtes ikke på repositoryets tilgængelige branches. Den er nu oprettet fra den tidligere verificerede forskning.
+De tidligere autonome statusfiler fandtes ikke på repositoryets tilgængelige branches. Programmet er derfor startet fra den verificerede forskning og audit; der er ikke opfundet en tidligere log.
 
-Første nye resultat: Den eksisterende feltmotor kan følge en kendt, stærkt kontraherende klassisk énfeltsløsning med stor krumning. Når tidssteppet halveres, falder fejlene mod den forventede fjerde orden. Beregningen er kontrolleret mod en eksakt løsning i de samme harmoniske koordinater.
+**Det stærkeste nye resultat er en kontrolleret, kort 3D-beregning med stærk krumning og rumligt varierende spinorfelter.** Startdata opfylder gravitationens bindingsligninger under uafhængig kontrol. Rumfejlene falder omtrent med anden orden, og separat tidsforfinelse er forenelig med RK4. Kontraktionen fortsætter gennem det beregnede interval, også målt langs materialestrømmen.
 
-Løsningen bouncer ikke; det følger også analytisk for netop denne gren. Det udelukker ikke bounces for andre feltdata. Den store krumning bruges som matematisk belastningstest, ikke som realistisk fermionfysik.
+Arbejdet omfatter seks trin: en eksakt stærkkrumningstest; periodiske plane startdata og udvikling; større plane forstyrrelser; egentlige tredimensionale startdata; deres 3D-udvikling; og en uafhængig kontrol af den fulde torsionskrumning. Kode, parametre, fejlmål og begrænsninger er gemt.
 
-En tidligere identificeret fejl i beregningen af partikelantallet på periodiske gitre er rettet uden at ændre feltligningerne.
+For de undersøgte familier ses ingen lokal volumenvending i de beregnede intervaller. Nogle tæthedskontraster vokser, andre falder. Det udelukker en påstand om, at alle de målte forstyrrelser blot dæmpes; det afgør ikke generel eller langsigtet stabilitet. Der er ikke påvist et bounce eller fysiske volumenoscillationer.
 
-Næste skridt er at undersøge rumligt varierende, bindingskonsistente data. En homogen test kan ikke vise, om rumlige forstyrrelser vokser eller om en generel 3D-beregning er stabil. Hverken et endeligt legemes bounce eller fysiske oscillationer er endnu påvist.
+En vigtig matematisk kontrol viser, hvorfor én krumningsskalar ikke er nok: Den fulde forbindelses Ricci-skalar kan være præcis nul, mens dens anden krumningsinvariant vokser som 1/volumen⁴. Det er verificeret symbolsk og numerisk. Et endeligt numerisk forløb beviser stadig ikke global regularitet eller fravær af en senere singularitet.
 
-Anden cyklus tilføjer rumligt varierende data, der opfylder de kontinuerte bindingsligninger. For netop denne plane, periodiske forstyrrelse falder rumfejlene med omtrent anden orden, og kontraktionen fortsætter gennem det beregnede interval. Materialestrømmens ekspansion forbliver også negativ. Det er stadig ikke en test af vilkårlige 3D-forstyrrelser.
+Fejlen i partikelantallet på periodiske gitre er rettet. 13 nye forskningstests og 16 eksisterende feltmotortests består. Energimomentum-kontrollen har en dokumenteret tidsdiskretiseringsgrænse, som ikke skjules af flere rumlige gitterpunkter.
 
-Kontrollen af energimomentum-bevarelse viste en tidsdiskretiseringsgrænse i selve fejlmålingen. Den er adskilt fra rumfejlen og dokumenteret. Det næste forsøg undersøger større forstyrrelser og stærkere kontraktion; negative resultater bevares som forskningsresultater.
+**Den største hindring er nu at undersøge andre bindingskonsistente spintilstande og følge hele torsionskrumningen gennem længere udvikling.** Den klassiske models fysiske gyldighed ved disse store krumninger er heller ikke etableret. En periodisk geometri er ikke en afgrænset stjerne med vakuum udenfor.
 
-Tredje cyklus undersøger større plane forstyrrelser og kortere bølgelængder gennem en kraftigere kontraktion. De fire undersøgte familier fortsætter med negativ volumenekspansion og viser rumlig konvergens. Tæthedskontrasten vokser for nogle bølgelængder og falder for andre. Derfor kaldes resultatet ikke generel stabilitet. Ingen fysisk oscillation er påvist.
-
-Fjerde cyklus løser et vigtigt forberedende problem: Startdata varierer nu i alle tre rumretninger og opfylder gravitationens bindingsligninger under uafhængig kontrol. Spinets rumlige variation giver et momentumfelt, som også skal med i geometrien. En meget præcis startdataberegning fjerner dog ikke automatisk fejlene i den efterfølgende rumdiskretisering. Det næste trin er en egentlig 3D-udvikling af disse data.
-
-Femte cyklus gennemfører en egentlig 3D-udvikling af de nye data. Gitter- og tidsforfinelse understøtter den beregnede korte kontraktion; der ses ingen lokal volumenvending i intervallet. Det stærkeste nye resultat er derfor en kontrolleret stærkkrumningstest af en rumligt varierende 3D-feltløsning. Det er ikke en generel udelukkelse af bounces. Den fulde torsionskrumning skal nu kontrolleres særskilt.
+Det næste konkrete forsøg ændrer spinets retning rumligt, løser bindingerne igen og tester udviklingen med de samme kontroller. Fremtidige dyre beregninger skal gemme de fulde felter som checkpoints, så nye målinger ikke kræver unødvendige gentagelser. NEXT_ACTION.md beskriver præcis, hvad der skal udledes, testes og gemmes.

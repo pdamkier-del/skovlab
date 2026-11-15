@@ -61,3 +61,23 @@ Spatial runs: n=9,17,33, duration .2, 40 steps. Separate same-grid n17 temporal 
 All runs finish within their declared lapse, spacelike-metric, current-frame, CFL and 5%-constraint controls. Passing a 5% stop is not the accuracy criterion: independent refinement is the evidence. Charge drift is below 3e-10 across these runs but is nonmonotonic with spatial resolution. Source divergence uses evolved snapshots at the same final time, plus the separate tangent diagnostic; fixed-dt floors remain visible. Metric time-second jets in curvature come from the RHS, so the curvature trace check is not an independent off-shell Einstein test.
 
 No browser/frontend tests were rerun; the weak-field public API limits are not raised. Strong-curvature research drivers bypass those operational frontend restrictions without changing the physical equations.
+
+## Cycle 06 and final reproducibility
+
+```sh
+python -m pip install -r research/ec-autonomous-programme/requirements.txt
+python research/ec-autonomous-programme/code/check_torsion_symbolic.py --output research/ec-autonomous-programme/results/cycle06_symbolic.json
+python research/ec-autonomous-programme/code/torsion_curvature.py --output research/ec-autonomous-programme/results/cycle06_torsion_curvature.json
+python -m unittest discover -s research/ec-autonomous-programme/tests -v
+# Optional figure:
+python -m pip install -r research/ec-autonomous-programme/requirements-plot.txt
+python research/ec-autonomous-programme/code/plot_validation.py
+```
+
+The 13 new tests cover arbitrary-jet spin momentum, periodic scalar/vector data, independent FD/oversampled constraints, full-grid lifts, exact harmonic RHS/invariants, time refinement, charge quadrature, every independent reference affine-connection component, symbolic full curvature and O(delta²) cancellation error. The existing 16 full-field tests also passed after the sole production-file edit. These 29 relevant tests are the current session's unit/regression executions; the earlier audit's larger test inventory was not all rerun.
+
+Full-affine numerical probes use delta=.001/.0005/.00025 on exact volumes1/.5/.125, plus delta=.0001/.00005 on 9³/17³/33³ constrained initial data. The symbolic checker imports only SymPy and the standard library. Numerical full Riemann lacks the usual torsion-free pair-exchange symmetries, so its contractions are formed without assuming them. Full scalar residual and full-K error both decrease by about four under delta halving on the exact branch. Small nonzero full-scalar residuals are truncation error, not a new physical stress.
+
+The figure in figures/validation.svg is generated solely from committed JSON. It displays exact-reference temporal error, independent 3D constraint refinement and mode-dependent contrast response. The plot does not present a physical bounce or stability theorem.
+
+Remaining evidence gap: full torsion curvature has not been measured throughout the evolved C05 trajectory. Complete endpoint fields were not saved in C05; its JSON contains diagnostics and common-grid state differences only. Future runs must add full NPZ checkpoint/output persistence before expensive extension, recording data/coordinate/matter validity stops separately. No plot or unit test compensates for that missing record.

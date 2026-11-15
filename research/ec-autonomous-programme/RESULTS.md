@@ -70,3 +70,22 @@ The C04 seed is evolved without spatial symmetry reduction. All metric component
 At 33³ and t=.2: volume ratio .5489090168; relative Hamiltonian .0003830955; metric R range [-20.55495,-19.08540]. Normal and material expansion are negative at all sampled points/times. No resolved local volume bounce is found in this interval. This is not a universal no-bounce theorem or an assertion about untested later evolution.
 
 The topology is a 3-torus, there is no finite cloud or exterior. The seed is deliberately a mathematically specified commuting field at uncontrolled reduced-Planck scales. A numerical bound over a finite interval does not establish geodesic completeness, and metric curvature tests do not yet monitor every torsionful component. These restrictions remain even though spatial/time refinement works.
+
+## C06 — full-affine curvature benchmark (analytically established; diagnostic numerically validated)
+
+For n0=4,D0=0,kappa1,m0, v=exp(-3t) and a_i=exp(-t). The independent Levi–Civita connection has Gamma^0_00=-3, Gamma^i_0i=Gamma^i_i0=-1 and Gamma^0_ii=-exp(4t). Corrected axial contortion adds C^0_12=exp(4t), C^0_21=-exp(4t), C^1_02=1, C^1_20=-1, C^2_01=-1, C^2_10=1; other components vanish.
+
+Direct symbolic Riemann construction yields full scalar R_tilde=0 and full K_tilde=128 exp(12t)=128/v⁴. Metric R=-6/v², metric K=60/v⁴, and torsion contraction=-24/v². Thus a vanishing full scalar does not make the connection regular at unlimited compression. This is an explicit benchmark of the prior conditional invariant obstruction, not a new claim that all clouds reach that limit.
+
+At v=.125, K_tilde=524288 and metric K=245760, both finite at this chosen endpoint and unbounded only in the limiting exact collapse. The full normal-tetrad component maximum is 3/v² (192 at this endpoint); its value depends on the specified frame, unlike a scalar contraction. The new numerical diagnostic approaches the exact values with its declared O(delta²) time-difference error. Scalar cancellation error must not be reclassified as physical nonzero R_tilde.
+
+The same diagnostic is sampled on C04 three-coordinate initial data. Its smaller-step full scalar residual falls from about .03484 to .01022 to .00275 under spatial refinement. The massless zero-scalar continuum identity is approached; the nonzero full K remains. This initial-slice check does not certify the complete evolving 3D full connection or general regularity.
+
+## Current classification of the programme's central questions
+
+- **Analytically established:** exact reference branch has no volume bounce; its full scalar vanishes despite divergent full curvature under unlimited compression. The minimal action and corrected conventions are unchanged.
+- **Numerically supported/conditional:** resolved finite-time planar contractions and one genuinely 3D high-curvature trajectory; periodic constrained initial data for specified seeds; the implemented convergence and curvature diagnostics.
+- **Falsified as a blanket description of the measured tests:** every planar density contrast decays. Some tested contrasts increase over the interval. This is not an asymptotic instability theorem.
+- **Unresolved:** regular bounce for a new admissible state, torsion attribution of such a bounce, its perturbative/nonlinear stability, post-bounce recollapse/oscillations, arbitrary 3D stability, finite-body matching and controlled quantum interpretation.
+
+The numerical examples constrain specific finite families. They neither demonstrate singularity avoidance nor a universal absence of bounces.

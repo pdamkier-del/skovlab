@@ -2,7 +2,7 @@
 
 Updated 2026-11-15. Starting research baseline: d069bfac8398cc71793c542ad93d650cc511794c; inherited audit: 770122a9d1e69bbea123a132e98e717a300a9699. No previous ec-autonomous-programme files existed on either accessible branch. This is programme initialization from verified research, not a claim that missing cycles were completed.
 
-## Completed cycles: 01–05
+## Completed cycles: 01–06
 
 The unchanged ECD evolution equations pass a new strong-curvature homogeneous harmonic-time benchmark. All tensor components, spinor, constraints and metric curvature are evaluated through the existing engine. The periodic number quadrature defect identified in the audit is corrected; no physical interaction has been added.
 
@@ -34,8 +34,28 @@ At 33³: scalar spectral residual 4.78e-12, vector residual 4.88e-15, oversample
 
 The original full-grid engine evolves the C04 three-coordinate seed to harmonic t=.2. Spatial refinement 9³/17³/33³ gives state orders 1.946,1.920,1.963 (metric/velocity/spinor). Separate 17³ time refinement 20/40/80 steps gives ratios 14.83,17.25,16.58, compatible with RK4 on this test. The 33³ endpoint relative Hamiltonian is 3.83e-4; charge drift remains below 8e-11 on that run. Current and normal expansion stay negative, volume ratio is .5489090, and metric R ranges from -20.55 to -19.09.
 
-This establishes more than a planar lift: the evolving data vary along all axes. It still does not establish stability against arbitrary perturbations, long-time collapse, a bounce, or physical ultra-dense fermion applicability. The largest run took about 317 seconds in this environment. Full torsionful curvature remains the next regularity diagnostic.
+This establishes more than a planar lift: the evolving data vary along all axes. It still does not establish stability against arbitrary perturbations, long-time collapse, a bounce, or physical ultra-dense fermion applicability. The largest run took about 317 seconds in this environment. C06 below adds a validated full torsionful curvature diagnostic.
 
-## Immediate next investigation
+## Cycle 06 — full torsionful curvature and scalar cancellation
 
-Cycle 06: independently validate a full-affine-curvature diagnostic on the exact massless isotropic branch, where the full scalar vanishes but other full curvature components need not. Do not use vanishing scalar curvature to classify regularity. Then define the next spatially varying regularity test without repeating completed contraction sweeps.
+An independent component-level symbolic calculation gives full scalar R_tilde=0 but full Kretschmann=128/v⁴ on the exact n0=4,D0=0,m=0 branch. The metric counterparts are R=-6/v² and K=60/v⁴. At v=1/8 the full Kretschmann is 524288 despite the identically zero full scalar. The corrected geometric torsion orientation is checked against the complete independent connection components.
+
+The new full-affine diagnostic converges at second order in its tangent time-difference step on this reference. Applying it to C04 initial spatially varying data at 9³/17³/33³ also exposes decreasing spatial scalar residuals; this is not a test of full torsion curvature throughout the evolved C05 trajectory. Thirteen new research tests and the 16 existing full-field tests pass in this session. No frontend/browser suite was run.
+
+## Exact continuation
+
+Read NEXT_ACTION.md. The next new physical-state perturbation is a periodic spatial spin texture of the lower two spinor components, with its momentum source derived from the same action and all constraints resolved. Do not repeat the already completed real fixed-polarization density sweeps as a new cycle. Save full endpoint fields/checkpoints during future evolution so new diagnostics do not force redundant reruns.
+
+No bounce, regular finite-cloud reversal, physical oscillation, arbitrary-perturbation stability or controlled quantum-matter realization has been established by these six cycles. Their strongest new result is a constrained, spatially/time-convergent short genuinely 3D strong-curvature trajectory, plus the regularity diagnostics and initial-data infrastructure needed to ask a better next question.
+
+## Record entry points
+
+- [Chronological decisions and findings](RESEARCH_LOG.md)
+- [Equations, results and limitations](RESULTS.md)
+- [Reproduction and validation](VALIDATION.md)
+- [Prioritized open questions](OPEN_QUESTIONS.md)
+- [Exact next investigation](NEXT_ACTION.md)
+- [Short Danish explanation](SUMMARY_DA.md)
+- [Recorded convergence figure](figures/validation.svg)
+
+The engine's only production change is periodic charge quadrature; all field equations, the weak-field frontend and its limits are preserved. Research drivers, initial-data construction and additional diagnostics live in this programme directory.
