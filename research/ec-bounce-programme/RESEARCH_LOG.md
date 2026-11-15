@@ -26,3 +26,11 @@ Compared the same microscopic massless symmetric ensemble against a universal sp
 ## Final validation and handoff
 
 The four small computation scripts and separate source-scale arithmetic completed with assertions passing. The integration validator reruns independent reference computations and checks the sharp bound, operator error, thermal symmetric cancellation, conservation, massive sign and positive-rest-energy result. No new spatial/time evolution occurred, so no checkpoints or spatial refinement are claimed. B1–B7 matrix, model registry, negative findings, Danish report and exact continuation are updated. Meaningful commits separate the quantum-source milestone from the cold-gas/matching/acceptance handoff. Stop classification is C; no accepted Level B or universal scientific obstruction is claimed.
+
+
+## P05 — Full covariance dynamics before gravity
+
+Continued from c4192f9 on the actual programme branch; main and PR #2/#3 remain at their reviewed heads. Read the saved status, registry, acceptance matrix and continuation. Revisited the actual local Hartree/Fock source equations. Derived a fixed-Minkowski vacuum-Wick Hamiltonian functional and its matrix variational self-energy; generic matrix directional differences check the gradient independently. Prepared the predeclared m=.1,T=.001,mu=m state and verified full covariance eigenvalues against FD occupations at 48/96/192 radial nodes and independent adaptive integrals.
+
+Added one fixed coherent eigenvector rotation of amplitude .05 (no occupation retuning), then evolved both helicity Bloch vectors at fixed geometry. Independent DOP853 reference and RK4 64/128/256 give error ratios 15.9846/15.9970; charge, full energy and occupation drift are recorded separately. Momentum quadrature converges; finite cutoff dependence is preserved as a limitation, not called renormalized away. Initial and final mode arrays are retained in JSON. This is a finite-cutoff Gaussian matter validation, not full cosmological backreaction or a quantum bounce.
+
