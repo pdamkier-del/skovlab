@@ -1,0 +1,14 @@
+{
+  "primary_source": "https://arxiv.org/html/1512.06074v1",
+  "location": "Figure 5 caption and Section VI",
+  "printed_approximate_parameters": {
+    "xi": 1000.0,
+    "T0_over_printed_MP": 0.001,
+    "mass_over_T0": 100.0
+  },
+  "derived_mass_over_printed_MP": 0.1,
+  "quoted_relativistic_scale_over_same_MP": 0.001,
+  "mass_over_quoted_scale": 100.0,
+  "precision": "Order-of-magnitude parameters and cutoff estimate; not an exact unitarity calculation.",
+  "conclusion": "Printed parameters do not demonstrate m << MP/xi. A separately matched heavy-particle EFT or different stated regime must be audited; no universal heavy-state exclusion is inferred."
+}
