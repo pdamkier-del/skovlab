@@ -1,0 +1,53 @@
+{
+  "main": "d069bfac8398cc71793c542ad93d650cc511794c",
+  "branches": [
+    {
+      "name": "codex/ec-autonomous-programme",
+      "sha": "a3421e7c06b89b2c6c4edc7412de1c6545092358"
+    },
+    {
+      "name": "codex/ec-multifield-critical-audit",
+      "sha": "47167c304c4c5bf8700066f2bfa94ba48864d3e0"
+    },
+    {
+      "name": "codex/ec-research-audit",
+      "sha": "770122a9d1e69bbea123a132e98e717a300a9699"
+    },
+    {
+      "name": "main",
+      "sha": "d069bfac8398cc71793c542ad93d650cc511794c"
+    }
+  ],
+  "issue4": {
+    "title": "Research: critically test semiclassical Einstein–Cartan bounce with quantized fermion matter",
+    "url": "https://github.com/pdamkier-del/skovlab/issues/4",
+    "updated_at": "2026-11-15T14:06:47Z"
+  },
+  "verified_branch_documents": [
+    {
+      "path": "research/ec-autonomous-programme/MASTER_STATUS.md",
+      "remote_matches_local": true,
+      "sha256": "c6bb5c91e4cb05389c5b1b323b5de7185510d19bf4747522c55ae376e6214fc3"
+    },
+    {
+      "path": "research/ec-autonomous-programme/NEXT_ACTION.md",
+      "remote_matches_local": true,
+      "sha256": "959f9ddcaf2b5d9d877f1aeba7e2f895524c89332d775f4b629b993a415161d9"
+    },
+    {
+      "path": "research/ec-multifield-critical-audit/MASTER_STATUS.md",
+      "remote_matches_local": true,
+      "sha256": "7f13ed199a7097f468e125f7652bc85f25e52be7fe6c39956e3c36c1b0456168"
+    },
+    {
+      "path": "research/ec-multifield-critical-audit/NEXT_ACTION.md",
+      "remote_matches_local": true,
+      "sha256": "2068a2fda10cadec3765f2b3e22d8a755b9450dfa28bdcc24a43c1c9b7c69c45"
+    },
+    {
+      "path": "research/ec-multifield-critical-audit/FERMION_STATE_VALIDITY.md",
+      "remote_matches_local": true,
+      "sha256": "c599dd61ab4ca257cd040a29aa7b80517a6cb2861662a44528d6c5b56866bc5e"
+    }
+  ]
+}

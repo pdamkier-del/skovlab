@@ -1,0 +1,139 @@
+{
+  "state": "Independent gauge-invariant isotropic massless Weyl Gaussian channels, particles and antiparticles; Minkowski vacuum Wick ordering; leading contact only.",
+  "thermal_checks": [
+    {
+      "T": 0.2,
+      "mu": 0.0,
+      "one_Weyl": {
+        "charge": 0.0,
+        "rho": 0.0009211630774350071,
+        "total_particles_and_antiparticles": 0.0014615259388028772,
+        "free_total_energy_variance_per_volume": 0.0007369304619480057
+      },
+      "unpolarized_Dirac_A2": -0.0,
+      "Dirac_total_density": 0.0029230518776057544,
+      "relative_contact_at_fixed_free_charges": 0.0
+    },
+    {
+      "T": 0.2,
+      "mu": 0.1,
+      "one_Weyl": {
+        "charge": 0.0006835535306070563,
+        "rho": 0.0010224295922305364,
+        "total_particles_and_antiparticles": 0.0016030379945309397,
+        "free_total_energy_variance_per_volume": 0.000817943673784429
+      },
+      "unpolarized_Dirac_A2": -9.344908584107443e-07,
+      "Dirac_total_density": 0.0032060759890618793,
+      "relative_contact_at_fixed_free_charges": 8.568660242401652e-05
+    },
+    {
+      "T": 0.2,
+      "mu": 0.4,
+      "one_Weyl": {
+        "charge": 0.0037474259588516036,
+        "rho": 0.002845390865090488,
+        "total_particles_and_antiparticles": 0.00396325261041783,
+        "free_total_energy_variance_per_volume": 0.0022763126920723902
+      },
+      "unpolarized_Dirac_A2": -2.8086402634149727e-05,
+      "Dirac_total_density": 0.00792650522083566,
+      "relative_contact_at_fixed_free_charges": 0.0009253914037809356
+    },
+    {
+      "T": 0.2,
+      "mu": 2.0,
+      "one_Weyl": {
+        "charge": 0.14842824485645037,
+        "rho": 0.2435635303621106,
+        "total_particles_and_antiparticles": 0.14842831845562665,
+        "free_total_energy_variance_per_volume": 0.19485082428968847
+      },
+      "unpolarized_Dirac_A2": -0.04406188774233277,
+      "Dirac_total_density": 0.2968566369112533,
+      "relative_contact_at_fixed_free_charges": 0.01695985425117773
+    },
+    {
+      "T": 1.0,
+      "mu": 0.0,
+      "one_Weyl": {
+        "charge": 0.0,
+        "rho": 0.5757269233968794,
+        "total_particles_and_antiparticles": 0.18269074235035965,
+        "free_total_energy_variance_per_volume": 2.3029076935875175
+      },
+      "unpolarized_Dirac_A2": -0.0,
+      "Dirac_total_density": 0.3653814847007193,
+      "relative_contact_at_fixed_free_charges": 0.0
+    },
+    {
+      "T": 1.0,
+      "mu": 0.5,
+      "one_Weyl": {
+        "charge": 0.08544419132588205,
+        "rho": 0.639018495144085,
+        "total_particles_and_antiparticles": 0.20037974931636737,
+        "free_total_energy_variance_per_volume": 2.55607398057634
+      },
+      "unpolarized_Dirac_A2": -0.01460141966266787,
+      "Dirac_total_density": 0.40075949863273475,
+      "relative_contact_at_fixed_free_charges": 0.002142165060600412
+    },
+    {
+      "T": 1.0,
+      "mu": 2.0,
+      "one_Weyl": {
+        "charge": 0.4684282448564504,
+        "rho": 1.778369290681555,
+        "total_particles_and_antiparticles": 0.4954065763022287,
+        "free_total_energy_variance_per_volume": 7.113477162726219
+      },
+      "unpolarized_Dirac_A2": -0.4388500411585892,
+      "Dirac_total_density": 0.9908131526044573,
+      "relative_contact_at_fixed_free_charges": 0.023134785094523373
+    },
+    {
+      "T": 1.0,
+      "mu": 10.0,
+      "one_Weyl": {
+        "charge": 18.553530607056295,
+        "rho": 152.22720647631908,
+        "total_particles_and_antiparticles": 18.553539806953328,
+        "free_total_energy_variance_per_volume": 608.9088259052763
+      },
+      "unpolarized_Dirac_A2": -688.4669959739498,
+      "Dirac_total_density": 37.107079613906656,
+      "relative_contact_at_fixed_free_charges": 0.4239963562794434
+    }
+  ],
+  "cutoff_bound": "GA B / rho0 <= (g+1) kappa Lambda^2/(24 pi^2); B=(sum s_i d_i)^2+sum d_i^2. Sharp for full aligned zero-temperature seas.",
+  "cutoff_checks": [
+    {
+      "Weyl_channels": 1,
+      "sharp_ratio_bound_coefficient": 0.008443431970194815,
+      "formal_saturated_bounce_p_in_Mbar": 10.882796185405306,
+      "species_loop_proxy_at_formal_equality": 0.7499999999999999
+    },
+    {
+      "Weyl_channels": 2,
+      "sharp_ratio_bound_coefficient": 0.012665147955292222,
+      "formal_saturated_bounce_p_in_Mbar": 8.885765876316732,
+      "species_loop_proxy_at_formal_equality": 1.0
+    },
+    {
+      "Weyl_channels": 6,
+      "sharp_ratio_bound_coefficient": 0.02955201189568185,
+      "formal_saturated_bounce_p_in_Mbar": 5.817099247982434,
+      "species_loop_proxy_at_formal_equality": 1.285714285714286
+    },
+    {
+      "Weyl_channels": 24,
+      "sharp_ratio_bound_coefficient": 0.10554289962743518,
+      "formal_saturated_bounce_p_in_Mbar": 3.078119592388474,
+      "species_loop_proxy_at_formal_equality": 1.4400000000000002
+    }
+  ],
+  "random_distributions_tested": 800,
+  "maximum_random_fraction_of_bound": 0.17928881982094674,
+  "scope": "Conditional theorem in stated Gaussian cutoff class. No anomalous pairing, cross-channel coherence or non-Gaussian correlations. Thermal tails are not compact support; no hard-cutoff bound is applied to untruncated Fermi-Dirac tails."
+}

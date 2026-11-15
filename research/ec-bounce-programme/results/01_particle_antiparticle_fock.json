@@ -1,0 +1,264 @@
+{
+  "normal_order": "Full quartic Wick polynomial relative to a,b vacuum; all pair creation/annihilation terms retained.",
+  "channels": 2,
+  "Fock_dimension": 256,
+  "max_independent_error": 3.552713678800501e-15,
+  "samples": [
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "net_charges": [
+        0.0,
+        0.0
+      ],
+      "Fock_A2": 2.949029909160572e-17,
+      "coincident_Wick_A2": -0.0,
+      "finite_mode_Q_variance": 191.9999999999999
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8,
+        0.1,
+        0.8,
+        0.1
+      ],
+      "net_charges": [
+        1.4000000000000001,
+        1.4000000000000001
+      ],
+      "Fock_A2": -3.9200000000000013,
+      "coincident_Wick_A2": -3.920000000000001,
+      "finite_mode_Q_variance": 65.9328
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8,
+        0.1,
+        0.1,
+        0.8
+      ],
+      "net_charges": [
+        1.4000000000000001,
+        -1.4000000000000001
+      ],
+      "Fock_A2": -11.760000000000005,
+      "coincident_Wick_A2": -11.760000000000002,
+      "finite_mode_Q_variance": 193.88159999999996
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "net_charges": [
+        2,
+        0
+      ],
+      "Fock_A2": -8.0,
+      "coincident_Wick_A2": -8.0,
+      "finite_mode_Q_variance": 96.0
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "net_charges": [
+        0,
+        0
+      ],
+      "Fock_A2": 0.0,
+      "coincident_Wick_A2": -0.0,
+      "finite_mode_Q_variance": 192.0
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8168450676039928,
+        0.03173058872672685,
+        0.6085861259290118,
+        0.868904647004219
+      ],
+      "net_charges": [
+        1.5702289577545319,
+        -0.5206370421504143
+      ],
+      "Fock_A2": -7.108402538988526,
+      "coincident_Wick_A2": -7.108402538988527,
+      "finite_mode_Q_variance": 179.91845196133144
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.3099207580500797,
+        0.7952895574842972,
+        0.05828912233179151,
+        0.5016342167654202
+      ],
+      "net_charges": [
+        -0.970737598868435,
+        -0.8866901888672574
+      ],
+      "Fock_A2": -1.735614944018214,
+      "coincident_Wick_A2": -1.7356149440182131,
+      "finite_mode_Q_variance": 128.96220121292345
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.6966527846484066,
+        0.5616186508872791,
+        0.9893503625850995,
+        0.9114799812835556
+      ],
+      "net_charges": [
+        0.270068267522255,
+        0.15574076260308778
+      ],
+      "Fock_A2": -0.11026283263970568,
+      "coincident_Wick_A2": -0.11026283263970584,
+      "finite_mode_Q_variance": 188.53965401275093
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.11110637974487492,
+        0.641194869154809,
+        0.05340437029955658,
+        0.4678809727164569
+      ],
+      "net_charges": [
+        -1.0601769788198683,
+        -0.8289532048338006
+      ],
+      "Fock_A2": -1.8646030758802126,
+      "coincident_Wick_A2": -1.8646030758802126,
+      "finite_mode_Q_variance": 127.05682742785757
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.20405077380251613,
+        0.9632822014907854,
+        0.1950675253534886,
+        0.20844271544420745
+      ],
+      "net_charges": [
+        -1.5184628553765385,
+        -0.026750380181437716
+      ],
+      "Fock_A2": -4.531651134650818,
+      "coincident_Wick_A2": -4.531651134650816,
+      "finite_mode_Q_variance": 150.43273171585366
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8475290039544248,
+        0.27707743125343176,
+        0.8726390010154796,
+        0.5823682799095286
+      ],
+      "net_charges": [
+        1.140903145401986,
+        0.5805414422119022
+      ],
+      "Fock_A2": -1.9526935917157129,
+      "coincident_Wick_A2": -1.952693591715712,
+      "finite_mode_Q_variance": 137.95197729798966
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8894995022131383,
+        0.5307868719352205,
+        0.37387373996717277,
+        0.5067048139316837
+      ],
+      "net_charges": [
+        0.7174252605558358,
+        -0.26566214792902176
+      ],
+      "Fock_A2": -1.5517362340473433,
+      "coincident_Wick_A2": -1.5517362340473435,
+      "finite_mode_Q_variance": 197.5437537848061
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.4812826465123695,
+        0.7205466670726027,
+        0.7772324621642913,
+        0.1469250311979977
+      ],
+      "net_charges": [
+        -0.47852804112046643,
+        1.2606148619325872
+      ],
+      "Fock_A2": -4.842756953503709,
+      "coincident_Wick_A2": -4.842756953503709,
+      "finite_mode_Q_variance": 196.97670123846117
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.749920456523196,
+        0.9760103973373767,
+        0.5200111231427904,
+        0.9410215487405412
+      ],
+      "net_charges": [
+        -0.4521798816283613,
+        -0.8420208511955016
+      ],
+      "Fock_A2": -1.065441740750484,
+      "coincident_Wick_A2": -1.065441740750484,
+      "finite_mode_Q_variance": 160.92903498323736
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.7803922033142707,
+        0.29856856003618104,
+        0.697273179468537,
+        0.5828120455963429
+      ],
+      "net_charges": [
+        0.9636472865561794,
+        0.22892226774438806
+      ],
+      "Fock_A2": -1.520842350824308,
+      "coincident_Wick_A2": -1.5208423508243076,
+      "finite_mode_Q_variance": 168.30441997182328
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.22925107130348032,
+        0.1919027235140004,
+        0.5736574786182543,
+        0.5222833670591239
+      ],
+      "net_charges": [
+        0.07469669557895986,
+        0.10274822311826082
+      ],
+      "Fock_A2": -0.016923681881663984,
+      "coincident_Wick_A2": -0.01692368188166387,
+      "finite_mode_Q_variance": 191.38012912272515
+    },
+    {
+      "occupations_by_channel_particle_antiparticle": [
+        0.8805452219387955,
+        0.1021517402358244,
+        0.3460866110691593,
+        0.2625509185156517
+      ],
+      "net_charges": [
+        1.5567869634059421,
+        0.16707138510701514
+      ],
+      "Fock_A2": -4.382807885718992,
+      "coincident_Wick_A2": -4.382807885718992,
+      "finite_mode_Q_variance": 137.3447457109968
+    }
+  ],
+  "limitation": "Finite-mode variance does not certify spacetime-smeared renormalized stress noise or interacting evolution."
+}
