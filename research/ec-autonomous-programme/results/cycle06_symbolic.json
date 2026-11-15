@@ -1,0 +1,7 @@
+{
+  "full_R": "0",
+  "full_K": "128*exp(12*t)",
+  "full_Ricci_coordinate_components": "Matrix([[4, 0, 0, 0], [0, 2*exp(4*t), -2*exp(4*t), 0], [0, 2*exp(4*t), 2*exp(4*t), 0], [0, 0, 0, 0]])",
+  "sympy": "1.14.0",
+  "classification": "Exact symbolic contraction from independently specified connection components; no numerical engine imports."
+}

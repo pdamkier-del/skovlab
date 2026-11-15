@@ -1,0 +1,9 @@
+{
+  "axial": "(0,n sin(theta),0,n cos(theta))",
+  "energy": "G_A n\u00b2",
+  "momentum": "curl(n sin(theta),0,n cos(theta))/4",
+  "spatial_stress": "G_A n\u00b2 I + [K,E_spin]/4, E_spin_ij=epsilon_ijk S_k",
+  "restrictions": "m=0, real lower two-component spinor, Gaussian/Fermi tetrad point, arbitrary real symmetric K and first n/theta jets; conformal scaling independently tested numerically. Complex phases are outside this identity.",
+  "symbolic_residuals": "All 4 axial and all 16 full stress components vanish against the formulas.",
+  "sympy": "1.14.0"
+}

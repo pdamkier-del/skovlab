@@ -1,0 +1,580 @@
+{
+  "hypothesis": "Identify which current-Raychaudhuri terms dominate the observed spin-texture contraction, with a separately measured geometric identity and Einstein-source replacement.",
+  "records": [
+    {
+      "n": 9,
+      "time": 0.2,
+      "checkpoint": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00040_completed.npz",
+      "file_sha256": "5d4e05876bac34f46baf5037f69c096e84e36b353a0ca7953a54b47c2552d801",
+      "probes": [
+        {
+          "delta": 0.0001,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.465190381064456,
+              "max": -29.07673666888917,
+              "mean": -29.84443455433656,
+              "RMS": 29.845486118958387
+            },
+            "volume_focusing": {
+              "min": -10.060407280944707,
+              "max": -9.79681717011228,
+              "mean": -9.944318990438884,
+              "RMS": 9.944432443752277
+            },
+            "shear_focusing": {
+              "min": -0.029182130266759358,
+              "max": -0.0001814799345582254,
+              "mean": -0.0061100794140575045,
+              "RMS": 0.008082714796188464
+            },
+            "vorticity_defocusing": {
+              "min": 3.7433240212203484e-08,
+              "max": 0.000227565942464479,
+              "mean": 0.00011037464588759166,
+              "RMS": 0.00013499701120566512
+            },
+            "acceleration_divergence": {
+              "min": -0.13430152484097252,
+              "max": 0.09086054964267662,
+              "mean": -0.0015112803420194955,
+              "RMS": 0.040630758483792426
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.491114035095237,
+              "max": -19.14063371511243,
+              "mean": -19.892596336292552,
+              "RMS": 19.894086042878175
+            },
+            "effective_source_focusing": {
+              "min": -20.533683815453433,
+              "max": -19.07931555317938,
+              "mean": -19.89212397914148,
+              "RMS": 19.893850742701616
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.50857674494976,
+              "max": -19.079239671401606,
+              "mean": -19.883892739707054,
+              "RMS": 19.88556085714171
+            },
+            "other_source_identity": {
+              "min": -0.02856839544611134,
+              "max": 0.0020532862933961837,
+              "mean": -0.008231239434427613,
+              "RMS": 0.010644598202544873
+            },
+            "geometric_identity_residual": {
+              "min": -0.00422220112398719,
+              "max": 0.0035088336132389486,
+              "mean": -8.242494931584154e-06,
+              "RMS": 0.0019879762217884043
+            },
+            "effective_source_balance_residual": {
+              "min": -0.06554036305703903,
+              "max": 0.03968964510906048,
+              "mean": -0.0004805996460046899,
+              "RMS": 0.018886999890339345
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.04258244546261025,
+              "max": 0.06131816193304829,
+              "mean": 0.00047235715107303756,
+              "RMS": 0.018694214481508657
+            }
+          },
+          "Theta_current": {
+            "min": -5.493743882165797,
+            "max": -5.421296109818836,
+            "mean": -5.461939825826735,
+            "RMS": 5.461955416452669
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.0000045695747277,
+            "max": 1.0005250944922446,
+            "mean": 1.0001543914376432,
+            "RMS": 1.00015439871451
+          }
+        },
+        {
+          "delta": 5e-05,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.465185139818384,
+              "max": -29.076731895151287,
+              "mean": -29.844429520708182,
+              "RMS": 29.84548108479944
+            },
+            "volume_focusing": {
+              "min": -10.060407280944707,
+              "max": -9.79681717011228,
+              "mean": -9.944318990438884,
+              "RMS": 9.944432443752277
+            },
+            "shear_focusing": {
+              "min": -0.029182130266759358,
+              "max": -0.0001814799345582254,
+              "mean": -0.0061100794140575045,
+              "RMS": 0.008082714796188464
+            },
+            "vorticity_defocusing": {
+              "min": 3.7433240212203484e-08,
+              "max": 0.000227565942464479,
+              "mean": 0.00011037464588759166,
+              "RMS": 0.00013499701120566512
+            },
+            "acceleration_divergence": {
+              "min": -0.13430152647862956,
+              "max": 0.0908605483400684,
+              "mean": -0.0015112810593204313,
+              "RMS": 0.04063075865321203
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.491114035095237,
+              "max": -19.14063371511243,
+              "mean": -19.892596336292552,
+              "RMS": 19.894086042878175
+            },
+            "effective_source_focusing": {
+              "min": -20.533683815453433,
+              "max": -19.07931555317938,
+              "mean": -19.89212397914148,
+              "RMS": 19.893850742701616
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.50857674494976,
+              "max": -19.079239671401606,
+              "mean": -19.883892739707054,
+              "RMS": 19.88556085714171
+            },
+            "other_source_identity": {
+              "min": -0.02856839544611134,
+              "max": 0.0020532862933961837,
+              "mean": -0.008231239434427613,
+              "RMS": 0.010644598202544873
+            },
+            "geometric_identity_residual": {
+              "min": -0.00421742574845041,
+              "max": 0.0035138621230288436,
+              "mean": -3.208149256983326e-06,
+              "RMS": 0.0019879620712359714
+            },
+            "effective_source_balance_residual": {
+              "min": -0.0655355876814987,
+              "max": 0.03969488666157872,
+              "mean": -0.0004755653003301427,
+              "RMS": 0.01888695575302738
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.04258244546261025,
+              "max": 0.06131816193304829,
+              "mean": 0.00047235715107303756,
+              "RMS": 0.018694214481508657
+            }
+          },
+          "Theta_current": {
+            "min": -5.493743882165797,
+            "max": -5.421296109818836,
+            "mean": -5.461939825826735,
+            "RMS": 5.461955416452669
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.0000045695747277,
+            "max": 1.0005250944922446,
+            "mean": 1.0001543914376432,
+            "RMS": 1.00015439871451
+          }
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "time": 0.2,
+      "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+      "file_sha256": "3cf45e9d286dcecfb51c62c16296cfa4b176f87bba9cc6b390b7053d0a5c41cc",
+      "probes": [
+        {
+          "delta": 0.0001,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.52484777858552,
+              "max": -29.035368343978305,
+              "mean": -29.84382204065397,
+              "RMS": 29.844995653167494
+            },
+            "volume_focusing": {
+              "min": -10.07216632632559,
+              "max": -9.785630500944558,
+              "mean": -9.94354495997077,
+              "RMS": 9.943676301700126
+            },
+            "shear_focusing": {
+              "min": -0.03046019382570303,
+              "max": -0.0001682940751888034,
+              "mean": -0.006165537526357338,
+              "RMS": 0.008146436772361711
+            },
+            "vorticity_defocusing": {
+              "min": 5.267389913445943e-09,
+              "max": 0.000293765908011647,
+              "mean": 0.00014017654208735658,
+              "RMS": 0.0001714779645814852
+            },
+            "acceleration_divergence": {
+              "min": -0.15702949770930758,
+              "max": 0.10217472875763334,
+              "mean": -0.0017452757623235035,
+              "RMS": 0.04586712240452918
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.552837721782534,
+              "max": -19.09054712171406,
+              "mean": -19.89249888569985,
+              "RMS": 19.89418794657698
+            },
+            "effective_source_focusing": {
+              "min": -20.565736990437678,
+              "max": -19.07252493737807,
+              "mean": -19.892360296546563,
+              "RMS": 19.894121362927216
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.53637736017963,
+              "max": -19.072377191241777,
+              "mean": -19.883094234054102,
+              "RMS": 19.884788958174912
+            },
+            "other_source_identity": {
+              "min": -0.03258424191769649,
+              "max": 0.002688973827911667,
+              "mean": -0.009266062492458775,
+              "RMS": 0.012062754192189266
+            },
+            "geometric_identity_residual": {
+              "min": -0.0014409127751271456,
+              "max": 0.0011706110017399851,
+              "mean": -7.558236749256828e-06,
+              "RMS": 0.0006451216346498441
+            },
+            "effective_source_balance_residual": {
+              "min": -0.019412673089192367,
+              "max": 0.011828211019370372,
+              "mean": -0.00014614739003946894,
+              "RMS": 0.005548388844746916
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.012899268655143459,
+              "max": 0.018022184335990232,
+              "mean": 0.00013858915329020632,
+              "RMS": 0.0054803992332194676
+            }
+          },
+          "Theta_current": {
+            "min": -5.496953608952578,
+            "max": -5.418200024254704,
+            "mean": -5.461724790324781,
+            "RMS": 5.4617428427116845
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.000001437645635,
+            "max": 1.000589919893835,
+            "mean": 1.0001739640799052,
+            "RMS": 1.0001739733228299
+          }
+        },
+        {
+          "delta": 5e-05,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.524842518249855,
+              "max": -29.03536358359472,
+              "mean": -29.84381700702809,
+              "RMS": 29.844990618952654
+            },
+            "volume_focusing": {
+              "min": -10.07216632632559,
+              "max": -9.785630500944558,
+              "mean": -9.94354495997077,
+              "RMS": 9.943676301700126
+            },
+            "shear_focusing": {
+              "min": -0.03046019382570303,
+              "max": -0.0001682940751888034,
+              "mean": -0.006165537526357338,
+              "RMS": 0.008146436772361711
+            },
+            "vorticity_defocusing": {
+              "min": 5.267389913445943e-09,
+              "max": 0.000293765908011647,
+              "mean": 0.00014017654208735658,
+              "RMS": 0.0001714779645814852
+            },
+            "acceleration_divergence": {
+              "min": -0.15702949956678008,
+              "max": 0.10217472728331786,
+              "mean": -0.0017452765684904685,
+              "RMS": 0.04586712260155626
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.552837721782534,
+              "max": -19.09054712171406,
+              "mean": -19.89249888569985,
+              "RMS": 19.89418794657698
+            },
+            "effective_source_focusing": {
+              "min": -20.565736990437678,
+              "max": -19.07252493737807,
+              "mean": -19.892360296546563,
+              "RMS": 19.894121362927216
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.53637736017963,
+              "max": -19.072377191241777,
+              "mean": -19.883094234054102,
+              "RMS": 19.884788958174912
+            },
+            "other_source_identity": {
+              "min": -0.03258424191769649,
+              "max": 0.002688973827911667,
+              "mean": -0.009266062492458775,
+              "RMS": 0.012062754192189266
+            },
+            "geometric_identity_residual": {
+              "min": -0.0014361289355200313,
+              "max": 0.0011756450951310171,
+              "mean": -2.523804707470419e-06,
+              "RMS": 0.0006450828561132912
+            },
+            "effective_source_balance_residual": {
+              "min": -0.01940791084813398,
+              "max": 0.011833472452387639,
+              "mean": -0.00014111295799767168,
+              "RMS": 0.005548345965458818
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.012899268655143459,
+              "max": 0.018022184335990232,
+              "mean": 0.00013858915329020632,
+              "RMS": 0.0054803992332194676
+            }
+          },
+          "Theta_current": {
+            "min": -5.496953608952578,
+            "max": -5.418200024254704,
+            "mean": -5.461724790324781,
+            "RMS": 5.4617428427116845
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.000001437645635,
+            "max": 1.000589919893835,
+            "mean": 1.0001739640799052,
+            "RMS": 1.0001739733228299
+          }
+        }
+      ]
+    },
+    {
+      "n": 33,
+      "time": 0.2,
+      "checkpoint": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00040_completed.npz",
+      "file_sha256": "b070524aaf9cc08c193e95f6e33349f5d54e0bbf25a1dc52018cd3a2efa11966",
+      "probes": [
+        {
+          "delta": 0.0001,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.542951266395544,
+              "max": -29.02306671440826,
+              "mean": -29.843637386601596,
+              "RMS": 29.844849409978874
+            },
+            "volume_focusing": {
+              "min": -10.075512901172333,
+              "max": -9.78232042055245,
+              "mean": -9.943309821486114,
+              "RMS": 9.943446965840018
+            },
+            "shear_focusing": {
+              "min": -0.030824767055330608,
+              "max": -0.00012379732226064724,
+              "mean": -0.00618328146653185,
+              "RMS": 0.008166917931583514
+            },
+            "vorticity_defocusing": {
+              "min": 5.9937601493669515e-09,
+              "max": 0.00031514703273100123,
+              "mean": 0.0001499537962347959,
+              "RMS": 0.00018342175303010227
+            },
+            "acceleration_divergence": {
+              "min": -0.16419491176762746,
+              "max": 0.10522788606537163,
+              "mean": -0.0018184712354378785,
+              "RMS": 0.04745919692104111
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.57157797804122,
+              "max": -19.075387330837728,
+              "mean": -19.892468789697972,
+              "RMS": 19.894220780087384
+            },
+            "effective_source_focusing": {
+              "min": -20.57507791824804,
+              "max": -19.07053987308813,
+              "mean": -19.892431736400543,
+              "RMS": 19.89420328788904
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.54416980458683,
+              "max": -19.070352656437116,
+              "mean": -19.882851507234033,
+              "RMS": 19.884554396873934
+            },
+            "other_source_identity": {
+              "min": -0.03368064098452095,
+              "max": 0.0029422321084879854,
+              "mean": -0.009580229166513259,
+              "RMS": 0.012500197959182344
+            },
+            "geometric_identity_residual": {
+              "min": -0.00040517352928404193,
+              "max": 0.0003216653904551947,
+              "mean": -6.976511780712184e-06,
+              "RMS": 0.0001785601031335172
+            },
+            "effective_source_balance_residual": {
+              "min": -0.005237800456797004,
+              "max": 0.0031894079034167078,
+              "mean": -4.40298092067566e-05,
+              "RMS": 0.001492532058386272
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.003499940206822316,
+              "max": 0.00484745774959805,
+              "mean": 3.70532974260463e-05,
+              "RMS": 0.001473234017408946
+            }
+          },
+          "Theta_current": {
+            "min": -5.497866741156701,
+            "max": -5.417283568510823,
+            "mean": -5.461659413250962,
+            "RMS": 5.461678264458493
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.000000394436189,
+            "max": 1.0006123909266258,
+            "mean": 1.0001799149592199,
+            "RMS": 1.0001799248466732
+          }
+        },
+        {
+          "delta": 5e-05,
+          "terms": {
+            "material_theta_dot": {
+              "min": -30.54294600028203,
+              "max": -29.023061958181366,
+              "mean": -29.84363235297231,
+              "RMS": 29.844844375742298
+            },
+            "volume_focusing": {
+              "min": -10.075512901172333,
+              "max": -9.78232042055245,
+              "mean": -9.943309821486114,
+              "RMS": 9.943446965840018
+            },
+            "shear_focusing": {
+              "min": -0.030824767055330608,
+              "max": -0.00012379732226064724,
+              "mean": -0.00618328146653185,
+              "RMS": 0.008166917931583514
+            },
+            "vorticity_defocusing": {
+              "min": 5.9937601493669515e-09,
+              "max": 0.00031514703273100123,
+              "mean": 0.0001499537962347959,
+              "RMS": 0.00018342175303010227
+            },
+            "acceleration_divergence": {
+              "min": -0.1641949137430785,
+              "max": 0.10522788433557044,
+              "mean": -0.0018184720645724804,
+              "RMS": 0.047459197128593804
+            },
+            "metric_Ricci_focusing": {
+              "min": -20.57157797804122,
+              "max": -19.075387330837728,
+              "mean": -19.892468789697972,
+              "RMS": 19.894220780087384
+            },
+            "effective_source_focusing": {
+              "min": -20.57507791824804,
+              "max": -19.07053987308813,
+              "mean": -19.892431736400543,
+              "RMS": 19.89420328788904
+            },
+            "explicit_contact_source_identity": {
+              "min": -20.54416980458683,
+              "max": -19.070352656437116,
+              "mean": -19.882851507234033,
+              "RMS": 19.884554396873934
+            },
+            "other_source_identity": {
+              "min": -0.03368064098452095,
+              "max": 0.0029422321084879854,
+              "mean": -0.009580229166513259,
+              "RMS": 0.012500197959182344
+            },
+            "geometric_identity_residual": {
+              "min": -0.0004004091759988171,
+              "max": 0.0003267013080190395,
+              "mean": -1.9420533615714505e-06,
+              "RMS": 0.00017843495690956254
+            },
+            "effective_source_balance_residual": {
+              "min": -0.005233042254452869,
+              "max": 0.003194675468986219,
+              "mean": -3.899535078761172e-05,
+              "RMS": 0.0014924807286273679
+            },
+            "Einstein_Ricci_source_mismatch": {
+              "min": -0.003499940206822316,
+              "max": 0.00484745774959805,
+              "mean": 3.70532974260463e-05,
+              "RMS": 0.001473234017408946
+            }
+          },
+          "Theta_current": {
+            "min": -5.497866741156701,
+            "max": -5.417283568510823,
+            "mean": -5.461659413250962,
+            "RMS": 5.461678264458493
+          },
+          "interpretation": "Pointwise Levi-Civita current-Raychaudhuri balance on a saved semidiscrete state; tangent and spatial finite-difference errors are separate. Contact splitting is an on-shell source identity, not causal torsion attribution.",
+          "normal_frame_lorentz_factor": {
+            "min": 1.000000394436189,
+            "max": 1.0006123909266258,
+            "mean": 1.0001799149592199,
+            "RMS": 1.0001799248466732
+          }
+        }
+      ]
+    }
+  ],
+  "no_re_evolution": true,
+  "scope": "Massless kappa1, single regular commuting spinor, C08 finite-time periodic family. No global turn, quantum state or matched torsion-free comparison.",
+  "geometric_residual_observed_orders": [
+    1.7696641818815304,
+    1.9375332788221207
+  ],
+  "source_balance_residual_observed_orders": [
+    1.9260900773591485,
+    1.9796044810499045
+  ],
+  "averaging": "Arithmetic coordinate-grid means and RMS; no proper-volume weighting."
+}

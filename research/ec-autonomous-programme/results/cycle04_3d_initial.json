@@ -1,0 +1,254 @@
+{
+  "tolerance_study": [
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-09
+      },
+      "Ktrace": 2.9990927398869855,
+      "mean_log_chi": 5.290330926346556e-14,
+      "scalar_spectral_residual_max": 3.546997212363758e-12,
+      "vector_spectral_residual_max": 7.632783294297951e-16,
+      "oversampled_continuum_Hamiltonian_max": 2.8398616791491804e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.0104392689688666,
+      "FD_Hamiltonian_relative": 0.0016902351410873861,
+      "FD_momentum_max": 0.00014407612742916177,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.440892098500626e-15,
+      "seed_momentum_mean": [
+        -2.1185306036761332e-20,
+        5.649414943136355e-21,
+        0.0
+      ],
+      "initial_H_min": -0.9996975799623288,
+      "initial_H_max": -0.9996975799623282,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858596561055938,
+        1.0133024535995039
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.2249421369999709,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11
+      },
+      "Ktrace": 2.9990927398869855,
+      "mean_log_chi": 5.290330926346556e-14,
+      "scalar_spectral_residual_max": 3.546997212363758e-12,
+      "vector_spectral_residual_max": 7.632783294297951e-16,
+      "oversampled_continuum_Hamiltonian_max": 2.8398616791491804e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.0104392689688666,
+      "FD_Hamiltonian_relative": 0.0016902351410873861,
+      "FD_momentum_max": 0.00014407612742916177,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.440892098500626e-15,
+      "seed_momentum_mean": [
+        -2.1185306036761332e-20,
+        5.649414943136355e-21,
+        0.0
+      ],
+      "initial_H_min": -0.9996975799623288,
+      "initial_H_max": -0.9996975799623282,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858596561055938,
+        1.0133024535995039
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.22168688500005373,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-12
+      },
+      "Ktrace": 2.9990927398879306,
+      "mean_log_chi": -1.1295157766559672e-16,
+      "scalar_spectral_residual_max": 2.222375324453394e-15,
+      "vector_spectral_residual_max": 7.632783294297951e-16,
+      "oversampled_continuum_Hamiltonian_max": 2.7640112421067897e-12,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.010439268977127547,
+      "FD_Hamiltonian_relative": 0.0016902351424282153,
+      "FD_momentum_max": 0.00014407612743014622,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 3.552713678800501e-15,
+      "seed_momentum_mean": [
+        -2.1185306036761332e-20,
+        5.649414943136355e-21,
+        0.0
+      ],
+      "initial_H_min": -0.9996975799626439,
+      "initial_H_max": -0.9996975799626432,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.985859656105618,
+        1.0133024535996604
+      ],
+      "field_evaluations": 54,
+      "seconds": 0.2779856940001082,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    }
+  ],
+  "hypothesis": "A real polarized seed with variation in all three coordinates admits a periodic conformal constraint solution in this small-amplitude family.",
+  "records": [
+    {
+      "n": 9,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11
+      },
+      "Ktrace": 2.9990927398856035,
+      "mean_log_chi": 1.2971939480510472e-13,
+      "scalar_spectral_residual_max": 2.8687506188578283e-12,
+      "vector_spectral_residual_max": 3.0531133177191805e-16,
+      "oversampled_continuum_Hamiltonian_max": 5.322297038645729e-07,
+      "oversample_n": 19,
+      "FD_Hamiltonian_max": 0.03550666525114998,
+      "FD_Hamiltonian_relative": 0.005755369283876743,
+      "FD_momentum_max": 0.00046009651723627823,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 3.1086244689504383e-15,
+      "seed_momentum_mean": [
+        3.9977166524568395e-19,
+        -3.236246813893632e-19,
+        0.0
+      ],
+      "initial_H_min": -0.999697579961868,
+      "initial_H_max": -0.9996975799618676,
+      "source_variation_each_axis": [
+        0.7758770483143631,
+        0.7758770483143631,
+        0.7758770483143631
+      ],
+      "chi_range": [
+        0.9858596566587833,
+        1.012730812996563
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.06721318399991105,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11
+      },
+      "Ktrace": 2.9990927398869855,
+      "mean_log_chi": 5.290330926346556e-14,
+      "scalar_spectral_residual_max": 3.546997212363758e-12,
+      "vector_spectral_residual_max": 7.632783294297951e-16,
+      "oversampled_continuum_Hamiltonian_max": 2.8398616791491804e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.0104392689688666,
+      "FD_Hamiltonian_relative": 0.0016902351410873861,
+      "FD_momentum_max": 0.00014407612742916177,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.440892098500626e-15,
+      "seed_momentum_mean": [
+        -2.1185306036761332e-20,
+        5.649414943136355e-21,
+        0.0
+      ],
+      "initial_H_min": -0.9996975799623288,
+      "initial_H_max": -0.9996975799623282,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858596561055938,
+        1.0133024535995039
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.2692566440000519,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    },
+    {
+      "n": 33,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11
+      },
+      "Ktrace": 2.9990927398927774,
+      "mean_log_chi": -2.690545478051746e-13,
+      "scalar_spectral_residual_max": 4.775021719974299e-12,
+      "vector_spectral_residual_max": 4.884981308350689e-15,
+      "oversampled_continuum_Hamiltonian_max": 4.912870110729273e-11,
+      "oversample_n": 67,
+      "FD_Hamiltonian_max": 0.002808392526070236,
+      "FD_Hamiltonian_relative": 0.000454564511098378,
+      "FD_momentum_max": 3.915521468467664e-05,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.440892098500626e-15,
+      "seed_momentum_mean": [
+        -2.1625514573771033e-20,
+        -4.2478689341335955e-21,
+        0.0
+      ],
+      "initial_H_min": -0.9996975799642595,
+      "initial_H_max": -0.9996975799642588,
+      "source_variation_each_axis": [
+        0.7981887690292342,
+        0.7981887690292342,
+        0.7981887690292342
+      ],
+      "chi_range": [
+        0.9858596561052728,
+        1.0134673188722723
+      ],
+      "field_evaluations": 20,
+      "seconds": 1.7742929569999433,
+      "scope": "Genuinely x/y/z-varying constrained data on a torus, not a finite body; only initial data, not a validated evolution."
+    }
+  ],
+  "classification": "Numerically supported initial-data existence for these seeds; no general existence/uniqueness or dynamical stability theorem."
+}

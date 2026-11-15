@@ -1,0 +1,99 @@
+{
+  "schema": "skovlab-ecd-checkpoint-index-v1",
+  "report": "results/cycle08_spin_evolution.json",
+  "root": "research/ec-autonomous-programme",
+  "encoding": "Lossless NumPy NPZ; g,p,psi and JSON metadata; allow_pickle=False.",
+  "files": [
+    {
+      "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00000_initial.npz",
+      "bytes": 451760,
+      "sha256": "31fdab497ccd206fd0f0f209319a6cf3caccb59f5a0764350227b7279391cae4",
+      "git_blob_sha": "c9d648465d75d281af4ef381dbc3b632c41d64a2"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00010_checkpoint.npz",
+      "bytes": 1141014,
+      "sha256": "e537813308d4fc4717b6550f4a036d69d95d1605057414731301b6adbd1e1212",
+      "git_blob_sha": "4824dad96fa5e892e727b4f313172d0becb71c15"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00020_completed.npz",
+      "bytes": 1158233,
+      "sha256": "abc795ebce9a678b405339485abae36be715b33646101f1436582bae7a3bf879",
+      "git_blob_sha": "606f69b5763607d74acc81d184b5ee61fa474983"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00000_initial.npz",
+      "bytes": 451762,
+      "sha256": "71325ba21c05afcafb2126e841642a1b393d6b6fed3825e37a76922e7451d710",
+      "git_blob_sha": "e929e334c7b2dedde922852fc9ec2c40e1c98f6a"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00020_checkpoint.npz",
+      "bytes": 1139603,
+      "sha256": "85b333eadaffe1070e52f2d66a7e661a1a3b983f368432ed71b436a89e795ec6",
+      "git_blob_sha": "f5297702e589defe4020187c8bcc97f090793afb"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+      "bytes": 1157168,
+      "sha256": "3cf45e9d286dcecfb51c62c16296cfa4b176f87bba9cc6b390b7053d0a5c41cc",
+      "git_blob_sha": "c6cb2be5818319fc70e95d184128d4f190397cbf"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00000_initial.npz",
+      "bytes": 451763,
+      "sha256": "ab48846390c49950c5bc6d27e2460f8e2fc33001afea5ccbcfaa45003488132d",
+      "git_blob_sha": "e2d55d6a2945860519e83e09cbeb8f754de91736"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00040_checkpoint.npz",
+      "bytes": 1139716,
+      "sha256": "810c49db49bb7c3822b6b5ee9a428319cceb8bb294ae0f7f8a2f5fc5601d4049",
+      "git_blob_sha": "7dee9c5018f4a501f077a08a4b635c501a117fbe"
+    },
+    {
+      "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00080_completed.npz",
+      "bytes": 1157446,
+      "sha256": "181840f2d981774b97dea9aa0ff5f90dbf67bfdea2254d443688a6edc2129aae",
+      "git_blob_sha": "f4a332ab493adfcb463d1f708aed66650bfda0d5"
+    },
+    {
+      "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00000_initial.npz",
+      "bytes": 3593731,
+      "sha256": "4ee4aed16958f91012a7b435b0588a03a20f7bb55855665055eb158a424e443d",
+      "git_blob_sha": "99f5e5449baaec20228b95ece0c0ddbab1f81c3e"
+    },
+    {
+      "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00020_checkpoint.npz",
+      "bytes": 8455827,
+      "sha256": "d31caf701487496f5bf61d19e37d479e320e59facd5af7f2a10193536afac54a",
+      "git_blob_sha": "a08fd1de9b6f9b23cade82879e85a9e92f969fd6"
+    },
+    {
+      "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00040_completed.npz",
+      "bytes": 8594636,
+      "sha256": "b070524aaf9cc08c193e95f6e33349f5d54e0bbf25a1dc52018cd3a2efa11966",
+      "git_blob_sha": "ff61295b69a1a67f048dbac68cb26cd1bd9f56a0"
+    },
+    {
+      "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00000_initial.npz",
+      "bytes": 63755,
+      "sha256": "73fa4473a0ce9ad67aa4a8464c9c7c3a370c2cc2815cd4d59bf24c9372696cbe",
+      "git_blob_sha": "23461a58c4a8e20786548891b33a67bd1b3f78f6"
+    },
+    {
+      "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00020_checkpoint.npz",
+      "bytes": 158163,
+      "sha256": "dff13e29411a7d0dda180e8a284f5f34caf6e88ff0ca0665f2a6f32221a05bb4",
+      "git_blob_sha": "01d5c602914bf51804068e19231d5cea0ebf7798"
+    },
+    {
+      "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00040_completed.npz",
+      "bytes": 160579,
+      "sha256": "5d4e05876bac34f46baf5037f69c096e84e36b353a0ca7953a54b47c2552d801",
+      "git_blob_sha": "65cabc349ba3c2098fa025a94be811a25b935587"
+    }
+  ],
+  "total_bytes": 29275156
+}

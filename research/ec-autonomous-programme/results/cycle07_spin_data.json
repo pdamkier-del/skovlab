@@ -1,0 +1,284 @@
+{
+  "tolerance_study": [
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-09,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.0021657720920881945,
+      "axial_formula_max_error": 4.440892098500626e-15,
+      "spatial_stress_formula_max_error": 5.773159728050814e-15,
+      "Ktrace": 2.9991155262553555,
+      "mean_log_chi": 1.354288773589555e-13,
+      "scalar_spectral_residual_max": 3.41025373309578e-12,
+      "vector_spectral_residual_max": 8.049116928532385e-16,
+      "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.010408973122697063,
+      "FD_Hamiltonian_relative": 0.0016853397141546472,
+      "FD_momentum_max": 0.0009375205043588956,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.884981308350689e-15,
+      "seed_momentum_mean": [
+        2.54223672441136e-20,
+        1.446250225442907e-18,
+        -1.2358095188110778e-21
+      ],
+      "initial_H_min": -0.9997051754184522,
+      "initial_H_max": -0.9997051754184515,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858606377238854,
+        1.01330311822232
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.36319177999985186,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.0021657720920881945,
+      "axial_formula_max_error": 4.440892098500626e-15,
+      "spatial_stress_formula_max_error": 5.773159728050814e-15,
+      "Ktrace": 2.9991155262553555,
+      "mean_log_chi": 1.354288773589555e-13,
+      "scalar_spectral_residual_max": 3.41025373309578e-12,
+      "vector_spectral_residual_max": 8.049116928532385e-16,
+      "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.010408973122697063,
+      "FD_Hamiltonian_relative": 0.0016853397141546472,
+      "FD_momentum_max": 0.0009375205043588956,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.884981308350689e-15,
+      "seed_momentum_mean": [
+        2.54223672441136e-20,
+        1.446250225442907e-18,
+        -1.2358095188110778e-21
+      ],
+      "initial_H_min": -0.9997051754184522,
+      "initial_H_max": -0.9997051754184515,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858606377238854,
+        1.01330311822232
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.34730540300006396,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-12,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.0021657720920869317,
+      "axial_formula_max_error": 3.552713678800501e-15,
+      "spatial_stress_formula_max_error": 4.440892098500626e-15,
+      "Ktrace": 2.9991155262577847,
+      "mean_log_chi": -8.636119388198967e-17,
+      "scalar_spectral_residual_max": 2.1340848553683236e-15,
+      "vector_spectral_residual_max": 8.049116928532385e-16,
+      "oversampled_continuum_Hamiltonian_max": 8.704148513061227e-12,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.010408973131096566,
+      "FD_Hamiltonian_relative": 0.0016853397155157817,
+      "FD_momentum_max": 0.0009375205043596416,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.440892098500626e-15,
+      "seed_momentum_mean": [
+        2.54223672441136e-20,
+        1.446250225442907e-18,
+        -1.2358095188110778e-21
+      ],
+      "initial_H_min": -0.9997051754192618,
+      "initial_H_max": -0.9997051754192613,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858606377238287,
+        1.0133031182223855
+      ],
+      "field_evaluations": 54,
+      "seconds": 0.3974131390000366,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    }
+  ],
+  "hypothesis": "The proposed real spin-texture source identities permit a constrained periodic 3D family, with independent source/FD validation.",
+  "records": [
+    {
+      "n": 9,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.007549355193494797,
+      "axial_formula_max_error": 2.6645352591003757e-15,
+      "spatial_stress_formula_max_error": 4.440892098500626e-15,
+      "Ktrace": 2.9991155262565283,
+      "mean_log_chi": 7.682426844504431e-14,
+      "scalar_spectral_residual_max": 2.886243632259003e-12,
+      "vector_spectral_residual_max": 3.7470027081099033e-16,
+      "oversampled_continuum_Hamiltonian_max": 1.4691036671621305e-05,
+      "oversample_n": 19,
+      "FD_Hamiltonian_max": 0.035451118928765624,
+      "FD_Hamiltonian_relative": 0.00574639000797615,
+      "FD_momentum_max": 0.0030264730757639594,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 3.9968028886505635e-15,
+      "seed_momentum_mean": [
+        0.0,
+        3.655055225103396e-18,
+        1.7846949341325176e-20
+      ],
+      "initial_H_min": -0.9997051754188431,
+      "initial_H_max": -0.9997051754188425,
+      "source_variation_each_axis": [
+        0.7758770483143631,
+        0.7758770483143631,
+        0.7758770483143631
+      ],
+      "chi_range": [
+        0.9858606395248857,
+        1.0127314973607693
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.10350700499975574,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    },
+    {
+      "n": 17,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.0021657720920881945,
+      "axial_formula_max_error": 4.440892098500626e-15,
+      "spatial_stress_formula_max_error": 5.773159728050814e-15,
+      "Ktrace": 2.9991155262553555,
+      "mean_log_chi": 1.354288773589555e-13,
+      "scalar_spectral_residual_max": 3.41025373309578e-12,
+      "vector_spectral_residual_max": 8.049116928532385e-16,
+      "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+      "oversample_n": 35,
+      "FD_Hamiltonian_max": 0.010408973122697063,
+      "FD_Hamiltonian_relative": 0.0016853397141546472,
+      "FD_momentum_max": 0.0009375205043588956,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 4.884981308350689e-15,
+      "seed_momentum_mean": [
+        2.54223672441136e-20,
+        1.446250225442907e-18,
+        -1.2358095188110778e-21
+      ],
+      "initial_H_min": -0.9997051754184522,
+      "initial_H_max": -0.9997051754184515,
+      "source_variation_each_axis": [
+        0.7931892398735605,
+        0.7931892398735605,
+        0.7931892398735605
+      ],
+      "chi_range": [
+        0.9858606377238854,
+        1.01330311822232
+      ],
+      "field_evaluations": 20,
+      "seconds": 0.55399384500015,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    },
+    {
+      "n": 33,
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "mass": 0.0,
+        "kappa": 1.0,
+        "tolerance": 1e-11,
+        "spin_amplitude": 0.2,
+        "texture": "theta=spin_amplitude sin(kx); real lower pair"
+      },
+      "momentum_formula_FD_error": 0.0005834248247394286,
+      "axial_formula_max_error": 3.552713678800501e-15,
+      "spatial_stress_formula_max_error": 6.217248937900877e-15,
+      "Ktrace": 2.9991155262526283,
+      "mean_log_chi": 2.8698826729252314e-13,
+      "scalar_spectral_residual_max": 6.0288397060489075e-12,
+      "vector_spectral_residual_max": 6.022959908591474e-15,
+      "oversampled_continuum_Hamiltonian_max": 4.8691717324800265e-11,
+      "oversample_n": 67,
+      "FD_Hamiltonian_max": 0.002798541114735542,
+      "FD_Hamiltonian_relative": 0.00045297302506225404,
+      "FD_momentum_max": 0.000255276417324167,
+      "harmonic_max": 4.440892098500626e-16,
+      "energy_formula_max_error": 5.773159728050814e-15,
+      "seed_momentum_mean": [
+        -1.6605305833431328e-20,
+        -3.9543798077752743e-19,
+        2.4135618943940883e-23
+      ],
+      "initial_H_min": -0.9997051754175431,
+      "initial_H_max": -0.9997051754175424,
+      "source_variation_each_axis": [
+        0.7981887690292342,
+        0.7981887690292342,
+        0.7981887690292342
+      ],
+      "chi_range": [
+        0.9858606377240394,
+        1.0134680145107173
+      ],
+      "field_evaluations": 20,
+      "seconds": 2.816978231000121,
+      "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+    }
+  ],
+  "classification": "Numerically supported initial-data existence for these seeds; no general existence/uniqueness or dynamical stability theorem."
+}

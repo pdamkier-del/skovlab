@@ -1,0 +1,2 @@
+-r ../ec-full-3plus1/requirements.txt
+-r ../ec-spherical/requirements.txt
