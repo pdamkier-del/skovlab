@@ -1,0 +1,38 @@
+{
+  "anisotropic_paired_source_error": 2.7755575615628914e-17,
+  "volume_convexity_residual": 0.0,
+  "unbalanced_pair_momentum_constraint_violation": 0.003084415584415583,
+  "conservation": [
+    {
+      "case": "exact",
+      "energy_conservation_over_fixed_rho_b": [
+        -1.8440957129678897e-10,
+        -8.773230180727037e-11
+      ]
+    },
+    {
+      "case": "pair_amplitude_minus_2percent",
+      "energy_conservation_over_fixed_rho_b": [
+        -2.07606702047182e-10,
+        -1.4252163068144831e-11
+      ]
+    },
+    {
+      "case": "mass_1percent_pb",
+      "energy_conservation_over_fixed_rho_b": [
+        -1.7232491261059914e-10,
+        -3.9393667062511076e-11
+      ]
+    },
+    {
+      "case": "opposite_chirality_1percent",
+      "energy_conservation_over_fixed_rho_b": [
+        -2.013694713287962e-10,
+        4.0323702395000243e-11
+      ]
+    }
+  ],
+  "bounce_offshell_energy_error_over_rho_b": 7.727414083895316e-12,
+  "bounce_phase_frequency": -14.848874658217891,
+  "scope": "Source/ODE checks; no quantum-state closure or spatial stability claim."
+}
