@@ -1,0 +1,25 @@
+{
+  "primary_source": "https://arxiv.org/html/2406.14982v2",
+  "equation": "27, with row adjoint bar_p=psi^dagger i gamma_p^0 and h.c. of the Hermitian scalar density",
+  "explicit_map": "gamma_p=-i gamma_here; gamma5_p=-gamma5_here; V_p=V_here; A_p=-A_here; compatible spin representation fixed explicitly.",
+  "derived_source": "-q.A/8 + t.(-alpha_p V + beta_N,p A)/2",
+  "own_trace_parameter_map": "J=-(a_N V+nu_N A)/2: a_N=alpha_p, nu_N=-beta_N,p, agreeing with independently matched effective formulas.",
+  "checks": [
+    {
+      "alpha_p": 0.0,
+      "beta_nonminimal_p": 0.0,
+      "max_connection_source_error": 1.3877787807814457e-17
+    },
+    {
+      "alpha_p": 0.2,
+      "beta_nonminimal_p": -0.4,
+      "max_connection_source_error": 4.440892098500626e-16
+    },
+    {
+      "alpha_p": -0.3,
+      "beta_nonminimal_p": 0.5,
+      "max_connection_source_error": 2.220446049250313e-16
+    }
+  ],
+  "limit": "Intermediate printed torsion/trace symbol signs in Eq29 still need their own derivative-index dictionary; this action-level test does not assume those labels. No quantum state or nonminimal cutoff certified."
+}

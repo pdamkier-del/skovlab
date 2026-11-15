@@ -1,0 +1,21 @@
+{
+  "Legendre_equation": "2c(Rprime-z)=0",
+  "torsion_reduced_action": "3*J**2/(4*M**2) - 12*(A/8 + J*(beta + 2*c*z)/M**2 + u)**2/(M**2*(1 + (beta + 2*c*z)*(16*beta + 32*c*z)/M**4))",
+  "K_z": "96*M**2*c**2/(M**4 + 16*beta**2 + 64*beta*c*z + 64*c**2*z**2)",
+  "canonical_omega": "sqrt(6)*M*(-asinh(4*beta/M**2) + asinh((4*beta + 8*c*z)/M**2))/2",
+  "inverse_z": "(M**2*sinh(asinh(4*beta/M**2) + sqrt(6)*w/(3*M))/4 - beta)/(2*c)",
+  "canonical_potential": "(M**2*sinh(asinh(4*beta/M**2) + sqrt(6)*w/(3*M))/4 - beta)**2/(4*c)",
+  "mass_squared_at_vacuum": "(M**4 + 16*beta**2)/(48*M**2*c)",
+  "residuals": {
+    "full_auxiliary_elimination": "0",
+    "canonical_kinetic": "0",
+    "potential_inverse": "0",
+    "mass": "0",
+    "independent_closed_deSitter_constraint": "0",
+    "independent_closed_deSitter_evolution": "0",
+    "tuned_nonminimal_gamma_independence": "0"
+  },
+  "linear_Holst_contact": "-3/[16 M^2(1+16 beta^2/M^4)] A^2 = -3/(16 M^2) gamma^2/(1+gamma^2) A^2",
+  "minimal_derivative_coupling": "-sqrt(3/8)/(M cosh(X)) partial(omega).A",
+  "nonminimal_convention": "J couples as +t.J in this declared action; J=2B A removes linear-Holst dependence of the AA coefficient at constant B. It is a changed matter coupling, not a mere notation change."
+}
