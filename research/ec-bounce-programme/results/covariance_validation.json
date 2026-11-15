@@ -1,0 +1,18 @@
+{
+  "status": "PASS P05-P07 within declared finite-cutoff Gaussian assumptions",
+  "parent_programme_head": "c4192f955e579ba67058b0e3375e38ec8e18c4f4",
+  "new_gravitational_evolutions": 0,
+  "new_fixed_background_matter_evolution": true,
+  "Level_B_accepted": false,
+  "checkpoint_spectral_error": 2.4424906541753444e-15,
+  "sha256": {
+    "code/covariance_hf.py": "98cb10437d2d5e3a20bad6650dd11ffd600cf484d656a8faf954206b53650623",
+    "code/component_consistency.py": "264164c42c6b39373141beba9eac50cfc0efe92b66361e510b885242e7b46ebe",
+    "code/coherent_pauli_bound.py": "17a3e30cb7ab9055f51552c59bc44d151dc853b757eb7af9fcb56e41e89f1c8e",
+    "code/validate_covariance_cycles.py": "e1d5977b029951203f716edfcb8c5f29bb3cf1dd3fdacc5c205b2d9cf5b1ad75",
+    "results/06_covariance_hf.json": "1ffbabfa29774c913eeb5838cdcc0f9b9cd2253d2738738c0250d9f3432387a6",
+    "results/06_covariance_modes.json": "93ff8f32ae7285eb8c2fdf1a24bd652677fa5cb82b644d1707cba1b712c44325",
+    "results/07_component_consistency.json": "a90bb06c39c891742f958f283f9d805ec2f9461fa0a7e2da6465919d2283a759",
+    "results/08_coherent_pauli_bound.json": "2d36aa40ace84ece78e8d38ac250dcd33ff4738837d662032dfa508347fb2a19"
+  }
+}

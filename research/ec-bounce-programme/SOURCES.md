@@ -7,3 +7,5 @@ Repository baseline main d069bfac8398cc71793c542ad93d650cc511794c; branch heads 
 3. [Current collapse theory on main](https://github.com/pdamkier-del/skovlab/blob/d069bfac8398cc71793c542ad93d650cc511794c/ec-flrw/collapse/THEORY.md): inspected the declared minimal averaged spinfluid action/closure. It explicitly omits Holst terms. This is retained conditional fluid provenance, not a microscopic quantum derivation.
 
 The new correlators, sharp bounds, ensemble transformation and cold-rest-energy diagnostic are original calculations in these scripts, not quotations or universal claims attributed to the papers. No primary source inspected establishes all B1–B7 for the candidate in this run.
+
+P05–P07 revisit the local Hartree/Fock and equal-time component equations in source 2. The new matrix-functional construction, squared-length derivative, subtraction identity and coherent-covariance inequality are independently derived here; no full published quantum bounce is imported or declared disproven.

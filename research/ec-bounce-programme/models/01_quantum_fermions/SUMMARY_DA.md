@@ -5,3 +5,5 @@ Ingen specificeret tilstand har her leveret et faktisk bounce under dokumenteret
 En masseløs ladningssymmetrisk termisk gas har nul kontaktforventning i første orden i den valgte vakuum-Wick-ordning, men ikke nul fluktuationer eller nul højereordenseffekter. For den kolde massive gas forsvinder et tilsyneladende lavtemperatur-bounce, når fermionernes hvileenergi medregnes.
 
 Resultaterne er betingede begrænsninger. De udelukker ikke alle korrelerede, kohærente eller dynamiske kvantetilstande. Se programmets samlede danske konklusion og næste trin i topmappen.
+
+Continuation P05–P07: see `HARTREE_FOCK_COVARIANCE.md`, `COHERENT_STATE_BOUND.md` and the updated top-level programme records. Regulated fixed-background HF is validated, coherent-sector contact bounded, full curved-space quantum bounce unresolved. The highest-priority next task is connected-source/error and subtraction control; no additional weak coherent trajectory is needed.

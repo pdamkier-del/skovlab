@@ -21,7 +21,7 @@ Its derivative vanishes by the commutator and variational self-energy. This is n
 
 ## Explicit helicity representation and preparation
 
-For helicity h=±1, h0=b_h·σ, b_h=(m,0,hp). Define
+Use the helicity-block label h=±1 operationally defined by h0=b_h·σ, b_h=(m,0,hp); a sign change of the gamma/helicity convention only swaps the two labels. Define
 
 R_h=[(1+q)I+r_h·σ]/2,
 r_vac,h=−b_h/E_p,

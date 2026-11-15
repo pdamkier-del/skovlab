@@ -13,3 +13,5 @@ A separate parameter consistency check: the printed Figure 5 values ξ≈1000, m
 Next gate: translate the actual action and renormalized covariance/stress consistently, then audit Pauli eigenvalues, energy bookkeeping, masses, cutoff, omitted diagrams and noise before numerical reproduction. Ghost/gradient spectra, full torsionful regularity, independently constrained attribution and genuine inhomogeneous robustness remain unchecked. No acceptance by citation and no tuning ξ until a bounce appears.
 
 Arithmetic provenance: `code/source_scale_check.py` and `results/05_nonminimal_source_scale.json`; this records approximate printed parameters, not an exact unitarity bound.
+
+P06 adds `COMPONENT_CONSISTENCY.md`: the printed component generator has a generic norm defect under a full-covariance interpretation. Regular/subtracted currents require their own reference map, so this is not a refutation of the physical 2PI solution. The full theory remains INCONCLUSIVE.

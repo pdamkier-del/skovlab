@@ -1,0 +1,38 @@
+{
+  "state_class": "One isotropic parity-even Dirac Gaussian state, full equal-time covariance 0<=R_h(p)<=1, arbitrary momentum-dependent particle/antiparticle coherence. Vacuum is instantaneous free Minkowski projector. Fixed physical cutoff Lambda.",
+  "proof_variables": "R=( (1+q)I+r.sigma )/2, |r|<=1-|q|; n=b/E, delta=r+n, e=1+n.r. Then q^2<=e and |delta|^2<=2e.",
+  "bound": "B=D^2/2+S^2 <= (5/2) I rho_free; I=2 int d^3p/(2pi)^3 /E <= Lambda^2/(2pi^2). Thus G B/rho_free <=5 G Lambda^2/(4 pi^2)=15 kappa Lambda^2/(64 pi^2).",
+  "scope": "Gaussian Wick source Q=-D^2/2-S^2; no independent species axial Hartree term in this parity-even state. This is nonperturbative in covariance/coherence amplitude, not in omitted interaction diagrams or curved-space renormalization.",
+  "random_admissible_covariances_tested": 1200,
+  "tests": [
+    {
+      "mass": 0.0,
+      "cutoff": 0.1,
+      "I": 0.000506605918211689,
+      "sharpness": "This Cauchy bound is sufficient, not claimed sharp.",
+      "contact_fraction_bound": 0.00023747152416172922,
+      "maximum_random_fraction_of_bound": 0.020403054950667694
+    },
+    {
+      "mass": 0.1,
+      "cutoff": 0.1,
+      "I": 0.0002699398849738803,
+      "sharpness": "This Cauchy bound is sufficient, not claimed sharp.",
+      "contact_fraction_bound": 0.00012653432108150639,
+      "maximum_random_fraction_of_bound": 0.3130014897298794
+    },
+    {
+      "mass": 0.5,
+      "cutoff": 0.1,
+      "I": 6.675381783651134e-05,
+      "sharpness": "This Cauchy bound is sufficient, not claimed sharp.",
+      "contact_fraction_bound": 3.129085211086469e-05,
+      "maximum_random_fraction_of_bound": 0.44101294934123303
+    }
+  ],
+  "predeclared_coherent_state": {
+    "actual_contact_fraction": 2.0817157415035805e-07,
+    "bound": 0.00012653432108150666
+  },
+  "conclusion": "Particle-antiparticle coherence alone in this state class cannot force a flat positive-free-energy cancellation while the stated contact bound is below one and omitted stress terms remain sufficiently small."
+}

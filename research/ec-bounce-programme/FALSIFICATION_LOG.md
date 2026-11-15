@@ -13,3 +13,9 @@ P04: tested universal spinfluid matching against the same quantum ensemble. It f
 P04: examined a published nonminimal quantum mechanism rather than accepting its abstract. Recorded the distinct action, unverified dynamical assumptions and a printed parameter/cutoff hierarchy tension. No claim of refuting its full 2PI dynamics. A complete stability/inhomogeneity/renormalization audit remains open.
 
 Unperformed: no new bounce evolution, no inhomogeneous quantum stability calculation, no Holst-action variation, no ultraviolet completion. These absences are recorded as missing evidence rather than negative experimental results.
+
+P05: tested Pauli and energy consistency of a genuine dynamical Gaussian covariance rather than assuming a scalar EOS. The correctly derived finite-cutoff matrix generator passes; small energy error alone was much less sensitive than mode endpoint error. Cutoff dependence remains resolved and unremoved.
+
+P06: tested whether the printed equal-time components are an exact full-covariance HF generator. Their generic Bloch norm derivative is nonzero; a direct occupation interpretation fails this algebraic gate. Subtracted currents are different objects, so no actual published physical state or bounce is declared refuted. The reference commutator/projector derivative must be derived.
+
+P07: tried arbitrary particle–antiparticle coherence as an escape from the old no-coherence Gaussian bound. A new covariance-positivity bound blocks cancellation in the stated weak parity-even sector independently of coherence amplitude. This leaves non-Gaussian connected source, parity-breaking cases and curvature/vacuum matching unresolved.
