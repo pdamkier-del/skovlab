@@ -65,3 +65,17 @@ Also evaluated C04 spatial initial data with n=9,17,33 and delta1e-4/5e-5. The 3
 Artifacts: torsion_curvature.py, check_torsion_symbolic.py, cycle06_torsion_curvature.json, cycle06_symbolic.json, and independent connection/symbolic tests. Thirteen programme tests pass; the existing 16 full-field tests passed after the only production change (periodic diagnostic quadrature). Added reproducible requirements and a standalone SVG summarizing the recorded convergence/perturbation evidence.
 
 Decision at execution handoff: preserve six validated cycles and their boundaries. The next distinct question is spin-orientation perturbations of constrained 3D data, not more fixed-polarization density scans. A genuine bounce or oscillation question still requires a new admissible state family, full diagnostics through a turn, matched-action constraints and long-time convergence.
+
+## 2026-11-15 — cycle 07: spin-texture source, constraints and persistence
+
+Resumed from a712a14 on codex/ec-autonomous-programme, without repeating the completed C01–C06 sweeps. The highest-priority new question was whether the proposed spatial spin texture permits reuse of the conformal constraint construction.
+
+For Psi=sqrt(n)(0,0,cos(theta/2),sin(theta/2)), independently derived A=(0,n sin theta,0,n cos theta), E=GA n², j=curl(S)/4 and Sij=GA n² deltaij+[K,E_spin]ij/4 in a local Fermi frame, with arbitrary symmetric K and real first density/angle jets. All 4 axial and 16 stress components were verified symbolically with no numerical-engine import. Arbitrary conformal-jet checks verify j=chi^-6 j_seed. Complex phases are explicitly outside this shortcut.
+
+Constructed theta=.2 sin(kx), n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], L8,m0,kappa1 at 9³/17³/33³. Used the complete Fourier vector inverse, including its longitudinal block, rather than presuming sampled source divergence is exactly zero. The continuum curl has zero mean; finite-grid source zero-mode error is checked. The same scalar equation is justified by the full source identity, not assumed as a fluid closure.
+
+At 33³, K=2.99911552625, relative FD Hamiltonian=.0004529730, momentum max=.0002552764. All complete stress/axial source projections match their formulas within 7e-15. Initial FD errors decrease and harmonic gauge is near roundoff. Coarse 9³ scalar oversampling reveals 1.47e-5 alias/truncation error despite its small collocation residual; 17³/33³ oversampled residuals are below 5e-11. No evolution/turn claim is made yet.
+
+Added full lossless checkpoint storage with hashes, deterministic metadata, atomic writes and safe reload. Exact restart equivalence, rejected-state handling and corruption detection are tested. A tiny 5³ two-step smoke run exercised the new evolving checkpoint/full-curvature path; it is infrastructure validation, not a physical result. All 18 programme tests passed.
+
+Artifacts: spin_texture_source.py, spin_texture_data.py, checkpoints.py, test_spin_texture.py, cycle07_source_symbolic.json and cycle07_spin_data.json. Decision: execute the C08 full texture evolution at the predeclared parameters and retain its raw fields for later diagnostics.

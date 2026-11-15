@@ -89,3 +89,18 @@ The same diagnostic is sampled on C04 three-coordinate initial data. Its smaller
 - **Unresolved:** regular bounce for a new admissible state, torsion attribution of such a bounce, its perturbative/nonlinear stability, post-bounce recollapse/oscillations, arbitrary 3D stability, finite-body matching and controlled quantum interpretation.
 
 The numerical examples constrain specific finite families. They neither demonstrate singularity avoidance nor a universal absence of bounces.
+
+## C07 — real spin-texture source identities and constrained data
+
+For a real lower two-component spinor, in a local orthonormal Fermi frame,
+
+A=(0,n sin theta,0,n cos theta), E=GA n², j=(curl S)/4,
+S_ij=GA n² delta_ij+[K,E_spin]_ij/4, (E_spin)_ij=epsilon_ijk S_k.
+
+All first density and angle derivatives and symmetric extrinsic-curvature components are arbitrary in the independent symbolic check. This is a restricted source identity, not an EOS for arbitrary Dirac fields. The commutator is symmetric and tracefree and must be kept in evolution. A zero spatial particle current does not imply zero stress momentum.
+
+For the conformal seed Psi and psi=chi^-3 Psi, momentum scales as chi^-6 j_seed and E=GA n_seed² chi^-12. Hence the periodic conformal vector/scalar constraint construction remains valid after the source is changed consistently. The vector Fourier inverse is W_i=-j_i/k²+k_i(k dot j)/(4 k⁴) at nonzero wave number; its zero mode is fixed by meanW=0 after checking source compatibility.
+
+The selected smooth periodic theta=.2 sin(kx) has been independently checked at 9³/17³/33³. Initial source projections agree to roundoff, FD constraints converge, and oversampled scalar residuals expose the coarse-grid alias error rather than hiding it. The zero-texture limit reproduces C04. Numerical existence for this family is supported; arbitrary-spin initial-data existence and dynamical stability are not proved.
+
+Checkpoint persistence preserves the full metric, metric velocity and complex spinor without resampling or lossy packing, and distinguishes harmonic time from proper time. Hash and restart tests establish reproducible storage, not physical correctness of a trajectory.

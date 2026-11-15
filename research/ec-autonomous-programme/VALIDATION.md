@@ -81,3 +81,17 @@ Full-affine numerical probes use delta=.001/.0005/.00025 on exact volumes1/.5/.1
 The figure in figures/validation.svg is generated solely from committed JSON. It displays exact-reference temporal error, independent 3D constraint refinement and mode-dependent contrast response. The plot does not present a physical bounce or stability theorem.
 
 Remaining evidence gap: full torsion curvature has not been measured throughout the evolved C05 trajectory. Complete endpoint fields were not saved in C05; its JSON contains diagnostics and common-grid state differences only. Future runs must add full NPZ checkpoint/output persistence before expensive extension, recording data/coordinate/matter validity stops separately. No plot or unit test compensates for that missing record.
+
+## Cycle 07 reproduction
+
+```sh
+python research/ec-autonomous-programme/code/spin_texture_source.py --output research/ec-autonomous-programme/results/cycle07_source_symbolic.json
+python research/ec-autonomous-programme/code/spin_texture_data.py --output research/ec-autonomous-programme/results/cycle07_spin_data.json
+python -m unittest discover -s research/ec-autonomous-programme/tests -v
+```
+
+Source derivation uses SymPy only, fixed negative-Clifford conventions, arbitrary real first density/angle jets and arbitrary symmetric K. Numerical tests cover the independent conformal momentum scaling, all spatial stress components, theta=0 recovery, grid refinement, exact checkpoint/restart equivalence, corrupted field rejection and rejection-state access policy. Eighteen programme tests passed in this session; the earlier 16 engine tests were not rerun because no production engine code changed.
+
+The 33³ initial energy/stress/axial formula errors are below 7e-15, scalar spectral residual 6.03e-12, vector spectral residual 6.03e-15, and oversampled scalar residual 4.87e-11. Initial FD relative Hamiltonian=.0004529730 and momentum max=.0002552764. Their finite values, rather than elliptic-solver tolerance, must be accounted for in the next evolution. The coarse oversampling error is 1.47e-5 and is not presented as continuum constraint satisfaction at machine precision.
+
+Full checkpoint format is skovlab-ecd-fields-v1, allow_pickle=False, with g/p/psi arrays, units/grid/time/config/status metadata and SHA256 hashes. Rejected states cannot silently become restart data. The small smoke run tested this path but is not part of the scientific convergence evidence.

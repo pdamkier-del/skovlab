@@ -15,3 +15,9 @@ Fejlen i partikelantallet på periodiske gitre er rettet. 13 nye forskningstests
 **Den største hindring er nu at undersøge andre bindingskonsistente spintilstande og følge hele torsionskrumningen gennem længere udvikling.** Den klassiske models fysiske gyldighed ved disse store krumninger er heller ikke etableret. En periodisk geometri er ikke en afgrænset stjerne med vakuum udenfor.
 
 Det næste konkrete forsøg ændrer spinets retning rumligt, løser bindingerne igen og tester udviklingen med de samme kontroller. Fremtidige dyre beregninger skal gemme de fulde felter som checkpoints, så nye målinger ikke kræver unødvendige gentagelser. NEXT_ACTION.md beskriver præcis, hvad der skal udledes, testes og gemmes.
+
+## Fortsættelse: syvende cyklus
+
+Spinets retning må nu variere rumligt i startdata. Kildetermerne er kontrolleret uafhængigt, også de spændinger der ville forsvinde ved en forkert perfekt-fluid-erstatning. Bindingerne er løst på tre opløsninger med konvergerende kontrolfejl. Det er endnu ikke en dynamisk stabilitetstest.
+
+De fulde felter kan nu gemmes og genindlæses uden tab, med kontrolsummer og korrekt tids-/gittermetadata. Det næste forsøg udvikler den nye spintilstand og gemmer checkpoints undervejs, så den fulde torsionskrumning kan kontrolleres uden at gentage dyre beregninger.
