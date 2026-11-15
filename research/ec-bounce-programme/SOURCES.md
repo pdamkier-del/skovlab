@@ -1,0 +1,9 @@
+# Sources and precise use
+
+Repository baseline main d069bfac8398cc71793c542ad93d650cc511794c; branch heads and refetched-document hashes in `results/provenance.json`. Reviewed main's full 3+1 formulation/convention audit, general ECD/regularity/chiral benchmark, local analytical existence/scope, prior matter derivation and full Weyssenhoff consistency/bounce records. Actual PR #2/#3 status/continuation documents were refetched; local copies match. [Issue #4](https://github.com/pdamkier-del/skovlab/issues/4) supplies the quantum-audit mandate; this newer master programme governs structure and hierarchy.
+
+1. [Diakonov, Tumanov, Vladimirov, arXiv:1104.2432v4](https://arxiv.org/html/1104.2432): inspected Sec. VIII and associated equations for microscopic direct/exchange averaging and stress. Used as conceptual independent comparison; our coefficients are derived from explicit matrices in the repository conventions. No numerical bounce result imported.
+2. [Lucat and Prokopec, arXiv:1512.06074v1](https://arxiv.org/html/1512.06074v1): inspected generalized action, effective coupling, 2PI/renormalization discussion, stress/backreaction and Sec. VI validity including Fig. 5/its printed parameters. Preliminary critique in Model 3; neither full reproduction nor reliance on the abstract as acceptance evidence. State/control questions remain open.
+3. [Current collapse theory on main](https://github.com/pdamkier-del/skovlab/blob/d069bfac8398cc71793c542ad93d650cc511794c/ec-flrw/collapse/THEORY.md): inspected the declared minimal averaged spinfluid action/closure. It explicitly omits Holst terms. This is retained conditional fluid provenance, not a microscopic quantum derivation.
+
+The new correlators, sharp bounds, ensemble transformation and cold-rest-energy diagnostic are original calculations in these scripts, not quotations or universal claims attributed to the papers. No primary source inspected establishes all B1–B7 for the candidate in this run.

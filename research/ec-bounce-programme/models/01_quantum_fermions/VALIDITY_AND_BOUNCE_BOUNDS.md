@@ -33,12 +33,12 @@ then ρ≥ρ0(1−r_bound−|δρ|/ρ0)>0, and H²=κρ/3 cannot vanish. This is
 
 ## Massive low-momentum class
 
-For unpolarized independent Dirac species, Q_f=−D_f²/2−S_f², |D_f|≤n_f,total and 0≤S_f≤n_f,total. If populated physical p≤P≪m_f and antiparticles are negligible, Pauli gives n_f≤P³/(3π²), ρ0,f≥m_fn_f. Therefore
+For unpolarized independent Dirac species, Q_f=−D_f²/2−S_f², |D_f|≤n_f,total and 0≤S_f≤n_f,total. For the exact bound set antiparticle occupation to zero and populated physical p≤P≪m_f; Pauli gives n_f≤P³/(3π²), ρ0,f≥m_fn_f. Therefore
 
 |Δρ_f|/ρ0,f≤G_A P³/(2π²m_f)
 =(G_A m_f²)(P/m_f)³/(2π²).
 
-A many-species sum is bounded by the largest such ratio because the unpolarized interspecies axial Hartree term is zero. This is tiny when G_A m_f² and P/m_f are both small. The contact cannot cancel the rest energy in that controlled weak free-gas regime. It is not a bound for a coherently polarized/correlated 2PI state. The nonrelativistic numerical checks use genuine integrals, not the bound as their implementation.
+A many-species sum is bounded by the largest such ratio because the unpolarized interspecies axial Hartree term is zero. This is tiny when G_A m_f² and P/m_f are both small. Applying it to a thermal state with exponentially suppressed antiparticles requires including their small remainder in the error budget. The contact cannot cancel the rest energy in that controlled weak free-gas regime. It is not a bound for a coherently polarized/correlated 2PI state. The nonrelativistic numerical checks use genuine integrals, not the bound as their implementation.
 
 ## Missing control criteria
 

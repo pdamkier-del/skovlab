@@ -13,3 +13,16 @@ Hypothesis: replacing a classical squared current by a genuine fermion correlato
 ## P02 — Sharp occupation bound and conserved order-G stress
 
 Hypothesis: temperature, charge imbalance or species may permit a small-contact controlled bounce. Derived the sharp continuum compact-support Pauli bound r≤(g+1)κΛ²/(24π²); verified 800 arbitrary shell spectra and saturation. Eight thermal quadratures match independent analytic expressions. Derived grand-canonical and fixed-entropy/charge stress from one potential; susceptibility inversion and adiabatic conservation pass symbolic checks. The formal source turns only at order-one correction, with unresolved higher-order control; this is a restricted no-bounce result where the explicit positive-energy/remainder inequality holds. No dynamics launched. Results 02–03 and stress/bound documents are the first milestone.
+
+
+## P03 — Massive matter and rest-energy loophole
+
+Derived the full unpolarized massive Wick trace using fresh SymPy gamma matrices. Verified massive thermal integrals and a Pauli low-momentum inequality, recovering the prior nonrelativistic coefficient only as a limit. Investigated a specific cold μ=m gas plus photons: an apparent radiation-only cancellation at m=0.1,T/m≈4.03579e−5 omits fermion positive energy ≈1.42739e10 times the radiation. With the full source the contact fraction is ≈7.00582e−11, so there is no turn at that point. This does not refute an unspecified nonequilibrium correlated state. Artifacts: result 04, cold-gas document, massive section in result 03. No expensive evolution justified.
+
+## P04 — Matched spinfluid gate and published action triage
+
+Compared the same microscopic massless symmetric ensemble against a universal spin-variance ∝n_total² fluid closure; the first-order mismatch prevents that identification from serving as a universal minimal-ECD derivation. Preserved prior conditional fluid mathematics without rerunning it. Motivated by the missing correlations, inspected Lucat–Prokopec's actual generalized action and 2PI/validity sections, translated coefficient magnitude, and recorded a printed parameter/cutoff hierarchy tension. Did not reproduce its dynamical solution or declare it refuted. Full minimal quantum-state question remains higher priority; Holst/extra actions were not scanned or fabricated.
+
+## Final validation and handoff
+
+The four small computation scripts and separate source-scale arithmetic completed with assertions passing. The integration validator reruns independent reference computations and checks the sharp bound, operator error, thermal symmetric cancellation, conservation, massive sign and positive-rest-energy result. No new spatial/time evolution occurred, so no checkpoints or spatial refinement are claimed. B1–B7 matrix, model registry, negative findings, Danish report and exact continuation are updated. Meaningful commits separate the quantum-source milestone from the cold-gas/matching/acceptance handoff. Stop classification is C; no accepted Level B or universal scientific obstruction is claimed.
