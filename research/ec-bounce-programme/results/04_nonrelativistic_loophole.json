@@ -1,0 +1,78 @@
+{
+  "question": "Can cold Pauli-compatible fermions cancel radiation below cutoff when their rest energy is retained?",
+  "assumptions": "Unpolarized equilibrium free massive Dirac gas with mu=m and T<<m; negligible antiparticles exp(-2m/T); leading normal-ordered contact, plus photons.",
+  "cold_examples": [
+    {
+      "mass": 0.01,
+      "T_over_m": 0.0001,
+      "n_over_mT_power3half": 0.09718458232941793,
+      "contact_over_fermion_energy": 2.732232391561205e-12,
+      "fermion_energy_over_photon_energy": 1477279672.0586803
+    },
+    {
+      "mass": 0.01,
+      "T_over_m": 0.001,
+      "n_over_mT_power3half": 0.09737051109813633,
+      "contact_over_fermion_energy": 8.625774454871885e-11,
+      "fermion_energy_over_photon_energy": 4687675.728454339
+    },
+    {
+      "mass": 0.01,
+      "T_over_m": 0.01,
+      "n_over_mT_power3half": 0.09923837109702757,
+      "contact_over_fermion_energy": 2.683082134430413e-09,
+      "fermion_energy_over_photon_energy": 15341.91933448544
+    },
+    {
+      "mass": 0.1,
+      "T_over_m": 0.0001,
+      "n_over_mT_power3half": 0.09718458232941794,
+      "contact_over_fermion_energy": 2.732232391561206e-10,
+      "fermion_energy_over_photon_energy": 1477279672.058681
+    },
+    {
+      "mass": 0.1,
+      "T_over_m": 0.001,
+      "n_over_mT_power3half": 0.09737051109813633,
+      "contact_over_fermion_energy": 8.625774454871881e-09,
+      "fermion_energy_over_photon_energy": 4687675.728454339
+    },
+    {
+      "mass": 0.1,
+      "T_over_m": 0.01,
+      "n_over_mT_power3half": 0.09923837109702756,
+      "contact_over_fermion_energy": 2.683082134430412e-07,
+      "fermion_energy_over_photon_energy": 15341.919334485438
+    },
+    {
+      "mass": 1.0,
+      "T_over_m": 0.0001,
+      "n_over_mT_power3half": 0.09718458232941793,
+      "contact_over_fermion_energy": 2.732232391561205e-08,
+      "fermion_energy_over_photon_energy": 1477279672.0586805
+    },
+    {
+      "mass": 1.0,
+      "T_over_m": 0.001,
+      "n_over_mT_power3half": 0.09737051109813634,
+      "contact_over_fermion_energy": 8.625774454871884e-07,
+      "fermion_energy_over_photon_energy": 4687675.72845434
+    },
+    {
+      "mass": 1.0,
+      "T_over_m": 0.01,
+      "n_over_mT_power3half": 0.09923837109702754,
+      "contact_over_fermion_energy": 2.6830821344304122e-05,
+      "fermion_energy_over_photon_energy": 15341.919334485434
+    }
+  ],
+  "false_radiation_only_turn": {
+    "m": 0.1,
+    "GA_m_squared": 0.0018750000000000004,
+    "T_over_m": 4.035793925958657e-05,
+    "contact_over_radiation": 1.0000000000000016,
+    "contact_over_full_positive_energy": 7.005817365811317e-11,
+    "omitted_fermion_energy_over_radiation": 14273851967.79442
+  },
+  "conclusion": "Radiation-only balance is spurious in this state: positive fermion rest energy dominates. Not a no-go for non-equilibrium coherent or correlated 2PI states."
+}
