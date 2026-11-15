@@ -184,8 +184,12 @@ def diagnostics(grid,state,mass=.1,kappa=1.):
     H=-trace/3;shear=norm-trace*trace/3
     friedmann=6*H*H-2*kappa*src['E']+R-shear
     weight=np.sqrt(-np.linalg.det(g))*src['current'][...,0]
-    number=weight
-    for axis in [2,1,0]: number=np.trapezoid(number,dx=grid.dx,axis=axis)
+    if grid.boundary=='periodic':
+        # Periodic grids omit the repeated endpoint: include every wrapped cell.
+        number=np.sum(weight)*grid.dx**3
+    else:
+        number=weight
+        for axis in [2,1,0]: number=np.trapezoid(number,dx=grid.dx,axis=axis)
     det=np.linalg.det(spatial)
     return {'hamiltonian':ham,'momentum':momentum,'harmonic':gauge,'H':H,'shear2':shear,'R3':R,'E':src['E'],'axial2':src['axial2'],'current':src['current'],'number':float(number),'lapse':N,'det_spatial':det,'friedmann_residual':friedmann,'K':K}
 

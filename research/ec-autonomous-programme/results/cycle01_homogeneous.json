@@ -1,0 +1,189 @@
+{
+  "hypothesis": "The existing harmonic ECD engine converges on a strong-curvature massless LRS solution, without a volume bounce.",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "parameters": {
+    "n0": 4.0,
+    "D0": 0.15,
+    "kappa": 1.0,
+    "mass": 0.0,
+    "target_volume": 0.125
+  },
+  "records": [
+    {
+      "steps": 20,
+      "dt": 0.034614118388541455,
+      "harmonic_end_time": 0.6922823677708291,
+      "exact": {
+        "v": 0.12500000000000003,
+        "n": 31.999999999999993,
+        "H": -8.009993757800313,
+        "H0": -1.0012492197250393,
+        "R": -383.99999999999983,
+        "torsion2": -1535.9999999999993,
+        "Kretschmann": 246303.19100164773,
+        "proper_time": 0.29130276550603806
+      },
+      "state_relative_errors": [
+        1.7511845517398035e-06,
+        2.299863902862967e-06,
+        2.3821672748187335e-06
+      ],
+      "max_scaled_Hamiltonian": 4.9758594044399595e-05,
+      "momentum_max": 0.0,
+      "max_harmonic": 0.0052310332427083495,
+      "relative_charge_drift": 1.147891879105245e-06,
+      "R_relative_error": 0.0001301889491340802,
+      "Kretschmann_relative_error": 0.00016219373463910447,
+      "final_lapse": 0.12500302210646133,
+      "max_dt_over_characteristic_bound": 0.2596058879140609,
+      "compression": 0.125,
+      "domain": "periodic 3-torus; homogeneous fields",
+      "storage": "translation-invariant compressed grid"
+    },
+    {
+      "steps": 40,
+      "dt": 0.017307059194270728,
+      "harmonic_end_time": 0.6922823677708291,
+      "exact": {
+        "v": 0.12500000000000003,
+        "n": 31.999999999999993,
+        "H": -8.009993757800313,
+        "H0": -1.0012492197250393,
+        "R": -383.99999999999983,
+        "torsion2": -1535.9999999999993,
+        "Kretschmann": 246303.19100164773,
+        "proper_time": 0.29130276550603806
+      },
+      "state_relative_errors": [
+        1.0336508101731309e-07,
+        1.5774227456051751e-07,
+        1.0186418165041733e-07
+      ],
+      "max_scaled_Hamiltonian": 2.9251865313900425e-06,
+      "momentum_max": 0.0,
+      "max_harmonic": 0.00026894562310531,
+      "relative_charge_drift": 6.365973637123545e-08,
+      "R_relative_error": 7.059340975668071e-06,
+      "Kretschmann_relative_error": 9.07102320779618e-06,
+      "final_lapse": 0.12500017823888432,
+      "max_dt_over_characteristic_bound": 0.12980294395703046,
+      "compression": 0.125,
+      "domain": "periodic 3-torus; homogeneous fields",
+      "storage": "translation-invariant compressed grid"
+    },
+    {
+      "steps": 80,
+      "dt": 0.008653529597135364,
+      "harmonic_end_time": 0.6922823677708291,
+      "exact": {
+        "v": 0.12500000000000003,
+        "n": 31.999999999999993,
+        "H": -8.009993757800313,
+        "H0": -1.0012492197250393,
+        "R": -383.99999999999983,
+        "torsion2": -1535.9999999999993,
+        "Kretschmann": 246303.19100164773,
+        "proper_time": 0.29130276550603806
+      },
+      "state_relative_errors": [
+        6.272158135141908e-09,
+        1.018561967823031e-08,
+        5.025873305690583e-09
+      ],
+      "max_scaled_Hamiltonian": 1.7720849364571637e-07,
+      "momentum_max": 0.0,
+      "max_harmonic": 1.5206205475237766e-05,
+      "relative_charge_drift": 3.781035928795973e-09,
+      "R_relative_error": 4.1086257229761003e-07,
+      "Kretschmann_relative_error": 5.363312741701876e-07,
+      "final_lapse": 0.12500001081055145,
+      "max_dt_over_characteristic_bound": 0.06490147197851523,
+      "compression": 0.125,
+      "domain": "periodic 3-torus; homogeneous fields",
+      "storage": "translation-invariant compressed grid"
+    },
+    {
+      "steps": 160,
+      "dt": 0.004326764798567682,
+      "harmonic_end_time": 0.6922823677708291,
+      "exact": {
+        "v": 0.12500000000000003,
+        "n": 31.999999999999993,
+        "H": -8.009993757800313,
+        "H0": -1.0012492197250393,
+        "R": -383.99999999999983,
+        "torsion2": -1535.9999999999993,
+        "Kretschmann": 246303.19100164773,
+        "proper_time": 0.29130276550603806
+      },
+      "state_relative_errors": [
+        3.8615159241022766e-10,
+        6.452583753914321e-10,
+        2.743426183622186e-10
+      ],
+      "max_scaled_Hamiltonian": 1.0902058512422014e-08,
+      "momentum_max": 0.0,
+      "max_harmonic": 9.032012826537539e-07,
+      "relative_charge_drift": 2.3088020384420815e-10,
+      "R_relative_error": 2.4776567575379715e-08,
+      "Kretschmann_relative_error": 3.260163172758013e-08,
+      "final_lapse": 0.12500000066540118,
+      "max_dt_over_characteristic_bound": 0.032450735989257615,
+      "compression": 0.125,
+      "domain": "periodic 3-torus; homogeneous fields",
+      "storage": "translation-invariant compressed grid"
+    }
+  ],
+  "time_refinement_ratios": [
+    [
+      16.941742167710288,
+      14.579882972212554,
+      23.385720438946596
+    ],
+    [
+      16.47998644010184,
+      15.486762665766868,
+      20.267956523114268
+    ],
+    [
+      16.242735387916486,
+      15.785335094722985,
+      18.31969577200305
+    ]
+  ],
+  "full_grid_crosscheck": {
+    "steps": 40,
+    "dt": 0.017307059194270728,
+    "harmonic_end_time": 0.6922823677708291,
+    "exact": {
+      "v": 0.12500000000000003,
+      "n": 31.999999999999993,
+      "H": -8.009993757800313,
+      "H0": -1.0012492197250393,
+      "R": -383.99999999999983,
+      "torsion2": -1535.9999999999993,
+      "Kretschmann": 246303.19100164773,
+      "proper_time": 0.29130276550603806
+    },
+    "state_relative_errors": [
+      1.0336508101731313e-07,
+      1.577422745605176e-07,
+      1.0186418165041742e-07
+    ],
+    "max_scaled_Hamiltonian": 2.9251865313900425e-06,
+    "momentum_max": 0.0,
+    "max_harmonic": 0.00026894562310531,
+    "relative_charge_drift": 6.365973681532466e-08,
+    "R_relative_error": 7.059340975668071e-06,
+    "Kretschmann_relative_error": 9.07102320779618e-06,
+    "final_lapse": 0.12500017823888432,
+    "max_dt_over_characteristic_bound": 0.12980294395703046,
+    "compression": 0.125,
+    "domain": "periodic 3-torus; homogeneous fields",
+    "storage": "full 5\u00b3"
+  },
+  "classification": "Restricted homogeneous verification; no spatial stability, physical EFT or general bounce conclusion."
+}
