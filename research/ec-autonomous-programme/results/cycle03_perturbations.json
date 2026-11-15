@@ -1,0 +1,870 @@
+{
+  "hypothesis": "Continued contraction of the selected planar branch persists under larger constraint-consistent seed variations over t in [0,.8].",
+  "duration": 0.8,
+  "spatial_steps": 400,
+  "criterion": "No sampled current/normal turn; all data remain finite and spacelike; errors must decrease with resolution. This is not a general or asymptotic stability theorem.",
+  "cases": [
+    {
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "tolerance": 1e-11,
+        "Ktrace": 2.9933027176399114,
+        "BVP_nodes": 1563,
+        "max_BVP_RMS_residual": 9.998830780977458e-12,
+        "mode": 1
+      },
+      "runs": [
+        {
+          "n": 65,
+          "steps": 400,
+          "initial_density_contrast": 0.006540447583374992,
+          "final_density_contrast": 0.012598831743257112,
+          "density_contrast_amplification": 1.926295040614924,
+          "slice_volume_ratio": 0.09120467168911241,
+          "max_Theta_current_over_time": -2.993302717639911,
+          "max_Hnormal_over_time": -0.997767572546637,
+          "max_relative_Hamiltonian": 4.781868613199949e-05,
+          "max_momentum": 0.00021632442822172582,
+          "max_harmonic": 0.0017991998537354448,
+          "max_charge_drift": 3.441907869827787e-10,
+          "final_lapse_min": 0.09046255010061972,
+          "max_CFL_ratio": 0.2013158147127055,
+          "curvature": {
+            "metric_R_min": -733.9389622136827,
+            "metric_R_max": -697.858712827431,
+            "metric_Kretschmann_max_abs": 900734.0665039951,
+            "torsion2_min": -2935.74285608109,
+            "torsion2_max": -2791.453785471325,
+            "trace_identity_max_abs": 0.004733540400252423,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 24.666572035114683,
+            "stress_divergence_relative_RMS": 4.7775910574270224e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.006539237780050826,
+                "stress_divergence_relative_RMS": 1.2666249887609064e-08
+              },
+              {
+                "stress_divergence_RMS": 0.006439053968960495,
+                "stress_divergence_relative_RMS": 1.24721977542059e-08
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 129,
+          "steps": 400,
+          "initial_density_contrast": 0.006542257027162413,
+          "final_density_contrast": 0.012616008935901975,
+          "density_contrast_amplification": 1.9283878458951258,
+          "slice_volume_ratio": 0.09120467488003392,
+          "max_Theta_current_over_time": -2.993302717639911,
+          "max_Hnormal_over_time": -0.997767572546637,
+          "max_relative_Hamiltonian": 1.2153610516064963e-05,
+          "max_momentum": 5.509500151024138e-05,
+          "max_harmonic": 0.00045731234740742366,
+          "max_charge_drift": 7.905709420441553e-11,
+          "final_lapse_min": 0.09046130352862611,
+          "max_CFL_ratio": 0.39953446304521556,
+          "curvature": {
+            "metric_R_min": -733.9670135461945,
+            "metric_R_max": -697.8432621093211,
+            "metric_Kretschmann_max_abs": 900818.0586586187,
+            "torsion2_min": -2935.8647536577746,
+            "torsion2_max": -2791.3778626718818,
+            "trace_identity_max_abs": 0.0012035586493084338,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 24.666605586609858,
+            "stress_divergence_relative_RMS": 4.7775972860200144e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.002030765290002708,
+                "stress_divergence_relative_RMS": 3.933513360165892e-09
+              },
+              {
+                "stress_divergence_RMS": 0.001662323441225171,
+                "stress_divergence_relative_RMS": 3.2198558389277375e-09
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 257,
+          "steps": 400,
+          "initial_density_contrast": 0.006542717599065539,
+          "final_density_contrast": 0.012620385780604102,
+          "density_contrast_amplification": 1.9289210621602562,
+          "slice_volume_ratio": 0.09120467569669664,
+          "max_Theta_current_over_time": -2.9933027176399105,
+          "max_Hnormal_over_time": -0.997767572546637,
+          "max_relative_Hamiltonian": 3.0629190670901003e-06,
+          "max_momentum": 1.3892428900041942e-05,
+          "max_harmonic": 0.0001152966059407845,
+          "max_charge_drift": 1.1269096766852726e-11,
+          "final_lapse_min": 0.09046098585923588,
+          "max_CFL_ratio": 0.7959717597102355,
+          "curvature": {
+            "metric_R_min": -733.9741639462131,
+            "metric_R_max": -697.8393282812419,
+            "metric_Kretschmann_max_abs": 900839.4681640613,
+            "torsion2_min": -2935.8958264008897,
+            "torsion2_max": -2791.358528606617,
+            "trace_identity_max_abs": 0.00030387041226731526,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 24.666614380065848,
+            "stress_divergence_relative_RMS": 4.7775989180047994e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.0012794105968522425,
+                "stress_divergence_relative_RMS": 2.4781685139274404e-09
+              },
+              {
+                "stress_divergence_RMS": 0.000510360691501334,
+                "stress_divergence_relative_RMS": 9.885487909565538e-10
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        }
+      ],
+      "successive_RMS_differences": [
+        [
+          7.41367665214623e-07,
+          8.026238726587106e-07,
+          5.295456998075947e-05
+        ],
+        [
+          1.889093432643503e-07,
+          2.0446846476180956e-07,
+          1.3486347958954936e-05
+        ]
+      ],
+      "observed_spatial_orders": [
+        1.9985116217209378,
+        1.9988655859852331,
+        1.9992792971665818
+      ]
+    },
+    {
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.3,
+        "length": 8.0,
+        "tolerance": 1e-11,
+        "Ktrace": 2.9390501354689893,
+        "BVP_nodes": 2641,
+        "max_BVP_RMS_residual": 9.941639893826053e-12,
+        "mode": 1
+      },
+      "runs": [
+        {
+          "n": 65,
+          "steps": 400,
+          "initial_density_contrast": 0.023067274934991923,
+          "final_density_contrast": 0.042526800390807445,
+          "density_contrast_amplification": 1.8435988000600962,
+          "slice_volume_ratio": 0.09524732823888502,
+          "max_Theta_current_over_time": -2.9390501354689884,
+          "max_Hnormal_over_time": -0.9796833784896629,
+          "max_relative_Hamiltonian": 0.00021089072144077096,
+          "max_momentum": 0.0010226734773532975,
+          "max_harmonic": 0.00801175133673837,
+          "max_charge_drift": 3.3417721367889897e-08,
+          "final_lapse_min": 0.09342089989795092,
+          "max_CFL_ratio": 0.2157487630733555,
+          "curvature": {
+            "metric_R_min": -668.947068228163,
+            "metric_R_max": -564.2239136924471,
+            "metric_Kretschmann_max_abs": 751677.3482016382,
+            "torsion2_min": -2675.763069338028,
+            "torsion2_max": -2256.973458951229,
+            "trace_identity_max_abs": 0.019451045360142416,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 18.753030542036306,
+            "stress_divergence_relative_RMS": 4.6022708640254543e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.11165062007267991,
+                "stress_divergence_relative_RMS": 2.7401973558529247e-07
+              },
+              {
+                "stress_divergence_RMS": 0.1116797723546135,
+                "stress_divergence_relative_RMS": 2.7409128335296253e-07
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 129,
+          "steps": 400,
+          "initial_density_contrast": 0.02306907065762875,
+          "final_density_contrast": 0.04255624592061088,
+          "density_contrast_amplification": 1.8447316995207121,
+          "slice_volume_ratio": 0.09524737390602667,
+          "max_Theta_current_over_time": -2.9390501354689884,
+          "max_Hnormal_over_time": -0.9796833784896629,
+          "max_relative_Hamiltonian": 5.35919029501585e-05,
+          "max_momentum": 0.00026114401536614373,
+          "max_harmonic": 0.0020367082433665473,
+          "max_charge_drift": 8.506278792452804e-09,
+          "final_lapse_min": 0.09341859438665198,
+          "max_CFL_ratio": 0.42817831440712095,
+          "curvature": {
+            "metric_R_min": -668.998816180797,
+            "metric_R_max": -564.2194520608346,
+            "metric_Kretschmann_max_abs": 751814.7686100325,
+            "torsion2_min": -2675.9888671232766,
+            "torsion2_max": -2256.897596778481,
+            "trace_identity_max_abs": 0.004947133785663027,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 18.756600148284903,
+            "stress_divergence_relative_RMS": 4.603144938707543e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.02841678439457354,
+                "stress_divergence_relative_RMS": 6.974216915961052e-08
+              },
+              {
+                "stress_divergence_RMS": 0.028435370932366727,
+                "stress_divergence_relative_RMS": 6.97877854692685e-08
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 257,
+          "steps": 400,
+          "initial_density_contrast": 0.0230695274179399,
+          "final_density_contrast": 0.04256371597681268,
+          "density_contrast_amplification": 1.8450189813473692,
+          "slice_volume_ratio": 0.09524738558681234,
+          "max_Theta_current_over_time": -2.939050135468988,
+          "max_Hnormal_over_time": -0.9796833784896629,
+          "max_relative_Hamiltonian": 1.350555314137983e-05,
+          "max_momentum": 6.587524057399818e-05,
+          "max_harmonic": 0.0005133469259135381,
+          "max_charge_drift": 2.1371289182781084e-09,
+          "final_lapse_min": 0.09341800757934818,
+          "max_CFL_ratio": 0.8530374170746519,
+          "curvature": {
+            "metric_R_min": -669.0119933423185,
+            "metric_R_max": -564.218384949732,
+            "metric_Kretschmann_max_abs": 751849.7577311874,
+            "torsion2_min": -2676.046363590469,
+            "torsion2_max": -2256.878529202908,
+            "trace_identity_max_abs": 0.0012473509949586514,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 18.75757370263097,
+            "stress_divergence_relative_RMS": 4.603383342495453e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.007188141980874329,
+                "stress_divergence_relative_RMS": 1.7641565291566684e-08
+              },
+              {
+                "stress_divergence_RMS": 0.0071651450096361854,
+                "stress_divergence_relative_RMS": 1.7585124787785992e-08
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        }
+      ],
+      "successive_RMS_differences": [
+        [
+          2.519875153529435e-06,
+          2.682004777894935e-06,
+          0.00016475008295771868
+        ],
+        [
+          6.422158918626089e-07,
+          6.835113049126672e-07,
+          4.196587412697183e-05
+        ]
+      ],
+      "observed_spatial_orders": [
+        1.998235835276031,
+        1.9982890601886893,
+        1.9990119263793207
+      ]
+    },
+    {
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.1,
+        "length": 8.0,
+        "tolerance": 1e-11,
+        "Ktrace": 2.9997348820316962,
+        "BVP_nodes": 11009,
+        "max_BVP_RMS_residual": 9.996838371549609e-12,
+        "mode": 4
+      },
+      "runs": [
+        {
+          "n": 65,
+          "steps": 400,
+          "initial_density_contrast": 0.05260404649444652,
+          "final_density_contrast": 0.05120832485607937,
+          "density_contrast_amplification": 0.9734674092322061,
+          "slice_volume_ratio": 0.09088798524555332,
+          "max_Theta_current_over_time": -2.9997348820316954,
+          "max_Hnormal_over_time": -0.9999116273438986,
+          "max_relative_Hamiltonian": 0.0047350742864430955,
+          "max_momentum": 0.0774677078156234,
+          "max_harmonic": 0.13139796546704474,
+          "max_charge_drift": 4.578975421054565e-08,
+          "final_lapse_min": 0.08624076468875218,
+          "max_CFL_ratio": 0.19812416014809398,
+          "curvature": {
+            "metric_R_min": -806.8796778884562,
+            "metric_R_max": -656.5626044818732,
+            "metric_Kretschmann_max_abs": 1122122.6127372305,
+            "torsion2_min": -3225.8582929797367,
+            "torsion2_max": -2627.90362155169,
+            "trace_identity_max_abs": 0.4151046435219996,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 25.82348959832938,
+            "stress_divergence_relative_RMS": 4.7835880975736066e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 1.5920825003218975,
+                "stress_divergence_relative_RMS": 2.949342583046702e-06
+              },
+              {
+                "stress_divergence_RMS": 1.5921372528335802,
+                "stress_divergence_relative_RMS": 2.949444017646638e-06
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 129,
+          "steps": 400,
+          "initial_density_contrast": 0.052631460376155424,
+          "final_density_contrast": 0.05108446661024257,
+          "density_contrast_amplification": 0.9706070522296638,
+          "slice_volume_ratio": 0.09089464522296674,
+          "max_Theta_current_over_time": -2.9997348820316954,
+          "max_Hnormal_over_time": -0.9999116273438986,
+          "max_relative_Hamiltonian": 0.0012243636927541928,
+          "max_momentum": 0.020136428476353885,
+          "max_harmonic": 0.0334008052112722,
+          "max_charge_drift": 1.0926649141040912e-08,
+          "final_lapse_min": 0.08620051203729259,
+          "max_CFL_ratio": 0.3932057371402957,
+          "curvature": {
+            "metric_R_min": -806.887834993869,
+            "metric_R_max": -657.4545022060123,
+            "metric_Kretschmann_max_abs": 1124299.1552384344,
+            "torsion2_min": -3227.1256929854335,
+            "torsion2_max": -2630.2422946877195,
+            "trace_identity_max_abs": 0.10641174751060589,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 25.843149924337308,
+            "stress_divergence_relative_RMS": 4.786585401023299e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.4182441942246888,
+                "stress_divergence_relative_RMS": 7.746955975906084e-07
+              },
+              {
+                "stress_divergence_RMS": 0.4182953297888698,
+                "stress_divergence_relative_RMS": 7.747903151562197e-07
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 257,
+          "steps": 400,
+          "initial_density_contrast": 0.05263844061365881,
+          "final_density_contrast": 0.05105566177069182,
+          "density_contrast_amplification": 0.969931122113137,
+          "slice_volume_ratio": 0.09089637735085959,
+          "max_Theta_current_over_time": -2.9997348820316954,
+          "max_Hnormal_over_time": -0.9999116273438986,
+          "max_relative_Hamiltonian": 0.0003099232734281817,
+          "max_momentum": 0.005101955320371054,
+          "max_harmonic": 0.008416969394204443,
+          "max_charge_drift": 2.7056680229620156e-09,
+          "final_lapse_min": 0.08619027747107301,
+          "max_CFL_ratio": 0.783366147834225,
+          "curvature": {
+            "metric_R_min": -806.8764649368784,
+            "metric_R_max": -657.6653061263437,
+            "metric_Kretschmann_max_abs": 1124822.6143121077,
+            "torsion2_min": -3227.3983561408168,
+            "torsion2_max": -2630.7684170871726,
+            "trace_identity_max_abs": 0.026875901674202396,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 25.856392115145603,
+            "stress_divergence_relative_RMS": 4.7888814541280684e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 0.10645912314172223,
+                "stress_divergence_relative_RMS": 1.9718317133439885e-07
+              },
+              {
+                "stress_divergence_RMS": 0.10650394321442681,
+                "stress_divergence_relative_RMS": 1.9726618724787342e-07
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        }
+      ],
+      "successive_RMS_differences": [
+        [
+          6.268673503865692e-05,
+          7.751255573999454e-05,
+          0.0013708626550178798
+        ],
+        [
+          1.6130630758546197e-05,
+          2.0076197350329965e-05,
+          0.0003420731742173416
+        ]
+      ],
+      "observed_spatial_orders": [
+        1.984237346498204,
+        1.9747331881489618,
+        2.0290156566307718
+      ]
+    },
+    {
+      "parameters": {
+        "n0": 4.0,
+        "epsilon": 0.3,
+        "length": 8.0,
+        "tolerance": 1e-11,
+        "Ktrace": 2.998550139718952,
+        "BVP_nodes": 15937,
+        "max_BVP_RMS_residual": 9.99172661300818e-12,
+        "mode": 4
+      },
+      "runs": [
+        {
+          "n": 65,
+          "steps": 400,
+          "initial_density_contrast": 0.16609238679397548,
+          "final_density_contrast": 0.14970451338572424,
+          "density_contrast_amplification": 0.9013327839729397,
+          "slice_volume_ratio": 0.09221780705408178,
+          "max_Theta_current_over_time": -2.998550139718951,
+          "max_Hnormal_over_time": -0.9995167132396504,
+          "max_relative_Hamiltonian": 0.012334072750231457,
+          "max_momentum": 0.2532570132121208,
+          "max_harmonic": 0.35342008946776104,
+          "max_charge_drift": 3.835982896993606e-06,
+          "final_lapse_min": 0.07885731081801087,
+          "max_CFL_ratio": 0.20447204229129434,
+          "curvature": {
+            "metric_R_min": -974.9824487303276,
+            "metric_R_max": -531.3516161222559,
+            "metric_Kretschmann_max_abs": 1731915.692400058,
+            "torsion2_min": -3894.2997963594808,
+            "torsion2_max": -2130.083641255325,
+            "trace_identity_max_abs": 1.407499640457445,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 33.050912446921245,
+            "stress_divergence_relative_RMS": 5.481520814090464e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 26.291580362446776,
+                "stress_divergence_relative_RMS": 4.360688148721938e-05
+              },
+              {
+                "stress_divergence_RMS": 26.291896493672674,
+                "stress_divergence_relative_RMS": 4.360740589749098e-05
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 129,
+          "steps": 400,
+          "initial_density_contrast": 0.16621283742536616,
+          "final_density_contrast": 0.14989873189514255,
+          "density_contrast_amplification": 0.9018481016091849,
+          "slice_volume_ratio": 0.09227795092044977,
+          "max_Theta_current_over_time": -2.9985501397189505,
+          "max_Hnormal_over_time": -0.9995167132396504,
+          "max_relative_Hamiltonian": 0.003201853166377064,
+          "max_momentum": 0.06663174671010097,
+          "max_harmonic": 0.08992390110120141,
+          "max_charge_drift": 9.385516456239529e-07,
+          "final_lapse_min": 0.07864805096179919,
+          "max_CFL_ratio": 0.4058153414614768,
+          "curvature": {
+            "metric_R_min": -979.4554863150943,
+            "metric_R_max": -534.8106132423543,
+            "metric_Kretschmann_max_abs": 1756934.0635580635,
+            "torsion2_min": -3916.3310620008433,
+            "torsion2_max": -2140.432492912404,
+            "trace_identity_max_abs": 0.37272081488345066,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 27.75967350398124,
+            "stress_divergence_relative_RMS": 4.5894526336581386e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 7.217246176867623,
+                "stress_divergence_relative_RMS": 1.1932701484500552e-05
+              },
+              {
+                "stress_divergence_RMS": 7.2175563857050955,
+                "stress_divergence_relative_RMS": 1.193321439282802e-05
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        },
+        {
+          "n": 257,
+          "steps": 400,
+          "initial_density_contrast": 0.16624351390419614,
+          "final_density_contrast": 0.15002918954888764,
+          "density_contrast_amplification": 0.902466424256091,
+          "slice_volume_ratio": 0.09229357403325442,
+          "max_Theta_current_over_time": -2.998550139718951,
+          "max_Hnormal_over_time": -0.9995167132396504,
+          "max_relative_Hamiltonian": 0.0008112967067817255,
+          "max_momentum": 0.01697329282504967,
+          "max_harmonic": 0.022650165810830458,
+          "max_charge_drift": 2.3443324759231388e-07,
+          "final_lapse_min": 0.07859312778483443,
+          "max_CFL_ratio": 0.8084934407655591,
+          "curvature": {
+            "metric_R_min": -980.6058757162559,
+            "metric_R_max": -535.5254155009926,
+            "metric_Kretschmann_max_abs": 1763422.4238518057,
+            "torsion2_min": -3922.0432334171473,
+            "torsion2_max": -2142.4104229345244,
+            "trace_identity_max_abs": 0.09506736196908605,
+            "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+          },
+          "conservation": {
+            "stress_divergence_RMS": 28.440911174917645,
+            "stress_divergence_relative_RMS": 4.6983554974259033e-05
+          },
+          "tangent_conservation": {
+            "deltas": [
+              1e-05,
+              5e-06
+            ],
+            "records": [
+              {
+                "stress_divergence_RMS": 1.8494898525828753,
+                "stress_divergence_relative_RMS": 3.0554489920872866e-06
+              },
+              {
+                "stress_divergence_RMS": 1.8497978773280654,
+                "stress_divergence_relative_RMS": 3.05595786978936e-06
+              }
+            ],
+            "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+          },
+          "status": "completed; finite-interval evidence only"
+        }
+      ],
+      "successive_RMS_differences": [
+        [
+          0.00020195110462422987,
+          0.000251619503605152,
+          0.00731645269894183
+        ],
+        [
+          5.181713295668655e-05,
+          6.653380065328593e-05,
+          0.0018532484775656093
+        ]
+      ],
+      "observed_spatial_orders": [
+        1.988424974973436,
+        1.9445858658595843,
+        2.007187506134075
+      ]
+    }
+  ],
+  "separate_time_test": {
+    "parameters": {
+      "n0": 4.0,
+      "epsilon": 0.3,
+      "length": 8.0,
+      "tolerance": 1e-11,
+      "Ktrace": 2.998550139718952,
+      "BVP_nodes": 15937,
+      "max_BVP_RMS_residual": 9.99172661300818e-12,
+      "mode": 4
+    },
+    "n": 129,
+    "runs": [
+      {
+        "n": 129,
+        "steps": 200,
+        "initial_density_contrast": 0.16621283742536616,
+        "final_density_contrast": 0.14989873174332696,
+        "density_contrast_amplification": 0.9018481006958042,
+        "slice_volume_ratio": 0.09227795093174217,
+        "max_Theta_current_over_time": -2.9985501397189505,
+        "max_Hnormal_over_time": -0.9995167132396504,
+        "max_relative_Hamiltonian": 0.003201853166377064,
+        "max_momentum": 0.06663205534800198,
+        "max_harmonic": 0.0899248626471092,
+        "max_charge_drift": 9.383599890444572e-07,
+        "final_lapse_min": 0.07864805146876526,
+        "max_CFL_ratio": 0.8116306829229536,
+        "curvature": {
+          "metric_R_min": -979.4554661912034,
+          "metric_R_max": -534.8106059854663,
+          "metric_Kretschmann_max_abs": 1756934.006271121,
+          "torsion2_min": -3916.3310596500833,
+          "torsion2_max": -2140.4324929573017,
+          "trace_identity_max_abs": 0.37270127868259806,
+          "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+        },
+        "conservation": {
+          "stress_divergence_RMS": 113.71934418581266,
+          "stress_divergence_relative_RMS": 0.00018798306609545592
+        },
+        "tangent_conservation": {
+          "deltas": [
+            1e-05,
+            5e-06
+          ],
+          "records": [
+            {
+              "stress_divergence_RMS": 7.21724605119587,
+              "stress_divergence_relative_RMS": 1.1932701423758642e-05
+            },
+            {
+              "stress_divergence_RMS": 7.217556066663138,
+              "stress_divergence_relative_RMS": 1.1933214012376359e-05
+            }
+          ],
+          "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+        },
+        "status": "completed; finite-interval evidence only"
+      },
+      {
+        "n": 129,
+        "steps": 400,
+        "initial_density_contrast": 0.16621283742536616,
+        "final_density_contrast": 0.14989873189514255,
+        "density_contrast_amplification": 0.9018481016091849,
+        "slice_volume_ratio": 0.09227795092044977,
+        "max_Theta_current_over_time": -2.9985501397189505,
+        "max_Hnormal_over_time": -0.9995167132396504,
+        "max_relative_Hamiltonian": 0.003201853166377064,
+        "max_momentum": 0.06663174671010097,
+        "max_harmonic": 0.08992390110120141,
+        "max_charge_drift": 9.385516456239529e-07,
+        "final_lapse_min": 0.07864805096179919,
+        "max_CFL_ratio": 0.4058153414614768,
+        "curvature": {
+          "metric_R_min": -979.4554863150943,
+          "metric_R_max": -534.8106132423543,
+          "metric_Kretschmann_max_abs": 1756934.0635580635,
+          "torsion2_min": -3916.3310620008433,
+          "torsion2_max": -2140.432492912404,
+          "trace_identity_max_abs": 0.37272081488345066,
+          "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+        },
+        "conservation": {
+          "stress_divergence_RMS": 27.75967350398124,
+          "stress_divergence_relative_RMS": 4.5894526336581386e-05
+        },
+        "tangent_conservation": {
+          "deltas": [
+            1e-05,
+            5e-06
+          ],
+          "records": [
+            {
+              "stress_divergence_RMS": 7.217246176867623,
+              "stress_divergence_relative_RMS": 1.1932701484500552e-05
+            },
+            {
+              "stress_divergence_RMS": 7.2175563857050955,
+              "stress_divergence_relative_RMS": 1.193321439282802e-05
+            }
+          ],
+          "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+        },
+        "status": "completed; finite-interval evidence only"
+      },
+      {
+        "n": 129,
+        "steps": 800,
+        "initial_density_contrast": 0.16621283742536616,
+        "final_density_contrast": 0.1498987319050385,
+        "density_contrast_amplification": 0.9018481016687226,
+        "slice_volume_ratio": 0.09227795091974406,
+        "max_Theta_current_over_time": -2.9985501397189505,
+        "max_Hnormal_over_time": -0.9995167132396504,
+        "max_relative_Hamiltonian": 0.003201853166377064,
+        "max_momentum": 0.0666317276098134,
+        "max_harmonic": 0.08992384216045934,
+        "max_charge_drift": 9.38563495145317e-07,
+        "final_lapse_min": 0.07864805093041215,
+        "max_CFL_ratio": 0.2029076707307384,
+        "curvature": {
+          "metric_R_min": -979.4554875512767,
+          "metric_R_max": -534.8106136885021,
+          "metric_Kretschmann_max_abs": 1756934.0670924322,
+          "torsion2_min": -3916.3310621516266,
+          "torsion2_max": -2140.4324929081395,
+          "trace_identity_max_abs": 0.3727220133700939,
+          "interpretation": "Finite endpoint only; no regularity/completeness theorem. Time-second metric jets use the evolution RHS."
+        },
+        "conservation": {
+          "stress_divergence_RMS": 8.683951929182578,
+          "stress_divergence_relative_RMS": 1.4357521937120819e-05
+        },
+        "tangent_conservation": {
+          "deltas": [
+            1e-05,
+            5e-06
+          ],
+          "records": [
+            {
+              "stress_divergence_RMS": 7.217246279711576,
+              "stress_divergence_relative_RMS": 1.1932701645443332e-05
+            },
+            {
+              "stress_divergence_RMS": 7.217556131407789,
+              "stress_divergence_relative_RMS": 1.1933213963274574e-05
+            }
+          ],
+          "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+        },
+        "status": "completed; finite-interval evidence only"
+      }
+    ],
+    "successive_RMS_differences": [
+      [
+        2.2620661202514092e-11,
+        7.72132999738813e-11,
+        1.3707795669726828e-09
+      ],
+      [
+        1.4072857018445097e-12,
+        4.808133741711778e-12,
+        8.66640587521283e-11
+      ]
+    ],
+    "ratios": [
+      16.07396506115674,
+      16.058891894798258,
+      15.817163270569983
+    ]
+  },
+  "interpretation": "Only bounded-amplitude selected modes on a periodic planar classical branch; no transverse perturbations, bounce candidate, oscillations, global regularity or fermionic quantum validity established."
+}

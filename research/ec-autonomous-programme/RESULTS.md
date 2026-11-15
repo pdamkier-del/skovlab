@@ -31,3 +31,16 @@ For n_seed=4[1+.02 cos(2 pi z/8)], K=2.999732467797363. The independent grid Ham
 At t=.45 the final relative Hamiltonian residual decreases from 5.88e-5 to 1.04e-6, while state differences give near-second-order spatial convergence. R remains finite at the endpoint, around -89.55 to -88.91. Both sampled current and normal expansion stay negative throughout; this is no local material-volume turn within the sampled resolved interval for this family. It does not prove no later turn, global regularity or stability against arbitrary perturbations. No finite-body or exterior conclusion follows.
 
 Stress-divergence accuracy is limited by the centered temporal diagnostic at fixed dt. A tangent-source derivative provides a complementary check but has an additional chosen-delta error. Full torsionful Riemann regularity is not established by the algebraic torsion contraction or metric scalar/Kretschmann alone.
+
+## C03 — bounded-amplitude planar continuation (numerically supported, restricted)
+
+| Seed epsilon | Mode | Finest final volume ratio | Finest density-contrast amplification | Finest max relative Hamiltonian |
+|---:|---:|---:|---:|---:|
+| .1 | 1 | .09120468 | 1.92892 | 3.06e-6 |
+| .3 | 1 | .09524739 | 1.84502 | 1.35e-5 |
+| .1 | 4 | .09089638 | .96993 | 3.10e-4 |
+| .3 | 4 | .09229357 | .90247 | 8.11e-4 |
+
+Density contrast is (max n-min n)/(max n+min n) on the declared slices. It is not identical to the seed amplitude because solving the constraints changes the conformal factor and physical density. Amplification compares the same observable at endpoints; it is not a Lyapunov exponent, trajectory perturbation norm or proof of oscillation. The low modes increase and the high modes decrease over this interval, so uniform decay is not supported.
+
+Normal/current expansion remain negative throughout the sampled evolution to t=.8. State errors converge with order 1.94–2.03 in space, and a separate high-mode time test has near-16 ratios. Finite endpoint metric/torsion contractions and positive spatial metric do not establish global regularity or all torsionful curvature bounds. This is a classical high-curvature torus calculation outside a demonstrated physical EFT regime.

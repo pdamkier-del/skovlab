@@ -1,11 +1,11 @@
-# Exact next action after cycle 02
+# Exact next action after cycle 03
 
-Latest completed: C01 homogeneous high-curvature harmonic verification and periodic charge fix; C02 continuum-constrained planar perturbation with near-second-order spatial convergence. Read the JSON records; do not repeat completed audit/sweeps without a new question.
+Completed: C01 harmonic high-curvature reference, C02 continuum-constrained planar contraction, C03 finite planar amplitude/mode tests. Do not repeat those sweeps as new work.
 
-Next C03: using periodic_data()/run() in code/planar_contraction.py, test finite epsilon and higher seed mode (start epsilon=.1,.3 and modes1,4) with n=65,129,257 and duration .8. Resolve the highest seed mode adequately, verify the BVP residual and measured physical density contrast, and refine timestep independently. Compare normal/current expansion, density contrast amplification, Hamiltonian/momentum/gauge and charge errors. Every run must respect the characteristic bound and stop before lapse<.05. In this context a constraint/gauge failure is an unresolved numerical stop, not a physical singularity or oscillation.
+Next C04: solve genuinely 3D periodic conformal initial data. Use n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], k=2 pi/8, real lower spinor seed polarized along z. With psi=chi^-3 sqrt(n_seed)(0,0,1,0), direct continuum source algebra gives j_i=chi^-6(derivative_y n_seed,-derivative_x n_seed,0)/4. This source is a zero-mean curl.
 
-The C02 local tangent stress diagnostic has delta sensitivity; centered evolved-snapshot divergence has a known temporal floor. Keep both. The metric-velocity temporal ratio was 9.85 in one pair, so seek a clearer independent time-refinement sequence instead of asserting fourth order universally.
+Solve Delta W_i+(1/3)derivative_i divW=j_tilde_i on the torus, with meanW=0. Then Aij=chi^-2(LW)ij and Kij=Aij+gammaij K/3. The scalar constraint is Delta chi=K² chi⁵/12-Q chi^-7/8, Q=|LW|²+2 GA n_seed², GA=3/16. Unknown positive constant K and mean(log chi)=0 fix scalar compatibility/normalization. Derive these identities from the full ECD source and check them independently rather than treating the effective energy as a fluid assumption.
 
-Periodicity imposes a torus. PlanarGrid retains all tensor components but removes x/y dependence; its verified full-grid lift does not test transverse perturbation stability. Use a later constrained fully 3D data family for that question.
+Use Fourier derivatives for this continuum construction, oversample its residual and compare the existing independent FD Hamiltonian/momentum constraints at n=9,17,33. Inspect every component and verify variation in all axes. Check tolerance dependence before strong-field evolution.
 
-Update all seven research records at the end of each cycle, commit milestones on codex/ec-autonomous-programme, and leave exact continuation parameters and unresolved failures.
+A later dynamical C05 should first evolve these exact same families at 9³/17³/33³, with a short high-curvature interval and separate time refinement; include independent stress/current diagnostics and coordinate/constraint stops. No periodic constrained-data existence theorem or stability theorem is supplied by a Newton return flag.

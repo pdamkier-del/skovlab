@@ -13,3 +13,5 @@ Næste skridt er at undersøge rumligt varierende, bindingskonsistente data. En 
 Anden cyklus tilføjer rumligt varierende data, der opfylder de kontinuerte bindingsligninger. For netop denne plane, periodiske forstyrrelse falder rumfejlene med omtrent anden orden, og kontraktionen fortsætter gennem det beregnede interval. Materialestrømmens ekspansion forbliver også negativ. Det er stadig ikke en test af vilkårlige 3D-forstyrrelser.
 
 Kontrollen af energimomentum-bevarelse viste en tidsdiskretiseringsgrænse i selve fejlmålingen. Den er adskilt fra rumfejlen og dokumenteret. Det næste forsøg undersøger større forstyrrelser og stærkere kontraktion; negative resultater bevares som forskningsresultater.
+
+Tredje cyklus undersøger større plane forstyrrelser og kortere bølgelængder gennem en kraftigere kontraktion. De fire undersøgte familier fortsætter med negativ volumenekspansion og viser rumlig konvergens. Tæthedskontrasten vokser for nogle bølgelængder og falder for andre. Derfor kaldes resultatet ikke generel stabilitet. Ingen fysisk oscillation er påvist.

@@ -23,3 +23,13 @@ A deliberately independent stress-divergence test exposed a diagnostic time-diff
 Validation: seven new research tests pass; the existing 16 full-field tests also pass after the periodic charge fix. The inhomogeneous compressed RHS and one RK step equal a lifted full 9³ calculation. Results/code: cycle02_planar.json and planar_contraction.py.
 
 Decision: investigate finite perturbation amplitudes/modes and deeper contraction next; preserve the diagnostic-floor caveat and the absence of transverse stability evidence.
+
+## 2026-11-15 — cycle 03: finite planar amplitudes and shorter wavelengths
+
+Used the same independent periodic continuum BVP for epsilon=.1,.3 and mode1,4. Evolved each on 65/129/257 periodic z nodes to t=.8 with 400 RK steps. All timesteps satisfy the declared characteristic bound and lapse remains above .05. The finest-volume ratio is .09120,.09525,.09090,.09229 respectively. All sampled current and normal expansions stay negative. This excludes a resolved local volume turn only within these sampled, convergent finite-interval families, not generally or at later times.
+
+RMS spatial orders are 1.94–2.03. A separate worst-seed (epsilon=.3,mode4) n=129 time sequence 200/400/800 steps gives ratios 16.074,16.059,15.817. This supplies clean temporal evidence for that case; it does not erase the earlier C02 cancellation/ratio limitation.
+
+Density contrast grows by about 1.93 and 1.85 for the low mode, but changes by .970 and .902 for the higher mode. Thus “all perturbations decay” is falsified as a description of this observable over the tested interval, while continued contraction is numerically supported. No asymptotic instability rate or general stability classification follows from four finite cases. The coarse strongest run has Hamiltonian error .0123; finest error .000811 and refinement, rather than its coarse output alone, is the evidence.
+
+Artifact: results/cycle03_perturbations.json and code/perturbation_sweep.py. Next priority is genuinely three-dimensional constrained data, since the planar lift cannot test transverse physics.
