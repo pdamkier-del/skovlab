@@ -95,3 +95,15 @@ Source derivation uses SymPy only, fixed negative-Clifford conventions, arbitrar
 The 33³ initial energy/stress/axial formula errors are below 7e-15, scalar spectral residual 6.03e-12, vector spectral residual 6.03e-15, and oversampled scalar residual 4.87e-11. Initial FD relative Hamiltonian=.0004529730 and momentum max=.0002552764. Their finite values, rather than elliptic-solver tolerance, must be accounted for in the next evolution. The coarse oversampling error is 1.47e-5 and is not presented as continuum constraint satisfaction at machine precision.
 
 Full checkpoint format is skovlab-ecd-fields-v1, allow_pickle=False, with g/p/psi arrays, units/grid/time/config/status metadata and SHA256 hashes. Rejected states cannot silently become restart data. The small smoke run tested this path but is not part of the scientific convergence evidence.
+
+## Cycle 08 reproduction and raw data
+
+```sh
+python research/ec-autonomous-programme/code/spin_texture_evolution.py --output research/ec-autonomous-programme/results/cycle08_spin_evolution.json --checkpoints research/ec-autonomous-programme/checkpoints/cycle08
+```
+
+Three spatial runs at9³/17³/33³ and separate17³ time refinement use the unchanged original RK engine. Initial/midpoint/final checkpoints include full arrays, metadata, code SHA256 fingerprints, parameter/runtime versions, status and per-field hashes. Finite rejected states and the last accepted state are retained on a guard exit; no exit occurred in the reported scientific runs. A separate tiny smoke run tested the checkpoint/full-curvature integration path before expensive evolution.
+
+Fifteen raw NPZ files are committed as binary blobs (29.3MB total). checkpoints/cycle08/index.json records relative paths, byte counts, SHA256 and Git blob SHA; cycle08_spin_evolution.json references each checkpoint. Publication added blob IDs after execution, without changing fields. Git checkout or the Git blob API can retrieve these exact binary files; raw-content tools restricted to UTF-8 should not reinterpret the NPZ as text. load_checkpoint() uses allow_pickle=False and validates each field hash and status.
+
+Full torsionful curvature probes at t=0,.1,.2 use delta1e-4/5e-5 on reloaded fields. Spatial and diagnostic-step errors remain separate. Current/normal expansion and constraints are sampled every timestep. Stress divergence still has its documented centered-time diagnostic floor. No browser tests or new physical interactions were introduced.

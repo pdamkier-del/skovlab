@@ -2,7 +2,7 @@
 
 Updated 2026-11-15. Starting research baseline: d069bfac8398cc71793c542ad93d650cc511794c; inherited audit: 770122a9d1e69bbea123a132e98e717a300a9699. No previous ec-autonomous-programme files existed on either accessible branch. This is programme initialization from verified research, not a claim that missing cycles were completed.
 
-## Completed cycles: 01–07
+## Completed cycles: 01–08
 
 The unchanged ECD evolution equations pass a new strong-curvature homogeneous harmonic-time benchmark. All tensor components, spinor, constraints and metric curvature are evaluated through the existing engine. The periodic number quadrature defect identified in the audit is corrected; no physical interaction has been added.
 
@@ -50,11 +50,19 @@ The full vector conformal operator and scalar constraint have been solved at 9³
 
 Lossless NPZ checkpoints now carry full fields, grid/units/harmonic-time metadata and per-field hashes. Reload/restart, corruption detection and rejected-state policy are tested. Eighteen programme tests pass in this continuation session. Expensive spin-texture evolution is the next cycle.
 
+## Cycle 08 — evolved spin texture with full persisted fields
+
+The validated theta=.2 sin(kx) family was evolved on 9³/17³/33³ to t=.2. Spatial state orders are 1.937,1.892,1.962; separate 17³ temporal ratios are 14.83,17.25,16.58. All runs complete within the predeclared constraints/current/coordinate/CFL guards. At 33³, final relative Hamiltonian=3.82e-4, charge drift<3.8e-10, volume ratio=.5489084664, and current expansion is negative at all sampled points/times.
+
+Fifteen lossless full-field checkpoints (29,275,156 bytes) cover initial/midpoint/final states across the spatial/time tests. Every published Git blob is verified against its raw file Git SHA and SHA256; the report/index include retrievable blob IDs. No resampled comparison field replaces a raw checkpoint.
+
+The full affine curvature was measured from reloaded states at t=0,.1,.2 with two tangent difference steps. At 33³ the final full Kretschmann maximum is about1480.76. The small massless full-scalar residual decreases with spatial refinement; it is not interpreted as a physical nonzero trace. These are sampled finite-time checks, not a regularity/completeness theorem.
+
 ## Exact continuation
 
-Use NEXT_ACTION.md. Evolve the C07 texture with full 3D convergence checks, saving initial/midpoint/final fields and measuring full torsionful curvature at two diagnostic difference steps. Compare the fixed-polarization C05 records at matched density/charge with constraints resolved separately. This is not a torsion-free attribution or a physical fermion-cloud claim.
+Next C09: use the persisted C08 fields to resolve the material-current Raychaudhuri balance. Validate the kinematic identity independently of the effective Einstein-source substitution, distinguish geometric and constraint errors, and quantify whether acceleration/rotation oppose the measured focusing. No re-evolution is needed. See NEXT_ACTION.md.
 
-No bounce, oscillation, general stability theorem or physically controlled high-density matter realization has been established.
+No global bounce, oscillation, arbitrary-perturbation stability or physical fermion-cloud interpretation has been established.
 
 ## Record entry points
 

@@ -21,3 +21,9 @@ Det næste konkrete forsøg ændrer spinets retning rumligt, løser bindingerne 
 Spinets retning må nu variere rumligt i startdata. Kildetermerne er kontrolleret uafhængigt, også de spændinger der ville forsvinde ved en forkert perfekt-fluid-erstatning. Bindingerne er løst på tre opløsninger med konvergerende kontrolfejl. Det er endnu ikke en dynamisk stabilitetstest.
 
 De fulde felter kan nu gemmes og genindlæses uden tab, med kontrolsummer og korrekt tids-/gittermetadata. Det næste forsøg udvikler den nye spintilstand og gemmer checkpoints undervejs, så den fulde torsionskrumning kan kontrolleres uden at gentage dyre beregninger.
+
+## Ottende cyklus
+
+Den nye rumligt varierende spinretning er nu udviklet med den fulde 3D-feltmotor på tre opløsninger. Fejlene falder ved rum- og tidsforfinelse, og kontraktionen fortsætter gennem det undersøgte interval. Det er et afgrænset resultat for disse startdata, ikke et generelt stabilitetsbevis.
+
+Alle15 checkpoints er gemt som tabsfri felter med kontrolsummer. Den fulde torsionskrumning er målt på genindlæste felter ved tre tidspunkter. Det næste trin kan derfor undersøge, hvilke led der styrer materialestrømmens fokusering, uden at gentage den dyre evolution.

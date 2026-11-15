@@ -1,15 +1,13 @@
-# Exact continuation after cycle 07
+# Exact continuation after cycle 08
 
-Branch: codex/ec-autonomous-programme. Completed C01–C07 records are committed. Do not repeat the old density-only sweeps or source derivations as new research. C07 establishes the real spin-texture source identities and periodic constrained data; it does not establish stability or a bounce.
+Completed C01–C08. Branch codex/ec-autonomous-programme. The new theta=.2 sin(kx) family continues contracting over the resolved interval; it does not establish general stability or exclude other bounces. Do not repeat C08 to obtain fields: all15 raw checkpoints are committed with Git/SHA256 identities in checkpoints/cycle08/index.json.
 
-## Next C08 experiment
+Next C09: load the final t=.2 spatial-run checkpoints at n9/17/33. Validate hashes and rejected-state policy. Derive and evaluate the material-current Levi-Civita Raychaudhuri balance after torsion elimination:
 
-Use spin_texture_data.construct(): L8,n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], theta=.2 sin(kx), real lower pair, m0,kappa1, tolerance1e-11. Evolve the original full 3D ECD equations to harmonic t=.2 with 40 steps on n=9,17,33. Refine time separately at n17 with 20/40/80 steps. Do not impose a frozen evolving polarization. Preserve 5% relative-Hamiltonian, lapse .1, spacelike metric, timelike current and characteristic-step guards; every guard exit is inconclusive rather than a singularity/bounce result.
+u dot grad Theta = -Theta²/3 - sigma_ab sigma^ab + omega_ab omega^ab - R_LC,ab u^a u^b + div a.
 
-Before expensive runs use checkpoints.save_checkpoint/load_checkpoint for full fields at t=0,.1,.2 and any finite rejected state, with reasons and last accepted state. Save NPZ files under checkpoints/cycle08, commit them as binary blobs and put relative paths, whole-file SHA256 and field hashes in the result manifest. Record actual runtime and code hashes. A restart must reproduce arrays and the next RK step exactly; these tests already pass.
+Use two tangent difference steps1e-4/5e-5 for time derivatives of Theta and acceleration, and the declared spatial FD operator. Compare separately with the effective-source replacement Ruu=(epsilon+3P)/2 at kappa1. Record both geometric identity residual and Einstein-source mismatch; do not collapse them into a claimed conservation test.
 
-At each persisted diagnostic time evaluate torsion_curvature.measure() at delta1e-4 and5e-5, reload from disk before probing, and record full/metric curvature, current conditioning, all constraints, charge and stress divergence. Full scalar zero alone is not regularity evidence. Keep the separate spatial/time/diagnostic-step errors visible.
+For the massless regular single spinor, the on-shell source identity permits splitting -(epsilon+3P)/2=-2 GA n²-G_spatial. Confirm conventions and label this as an identity evaluated on the same state, not a causal torsion-removal experiment. Measure pointwise ranges and unweighted coordinate-grid mean/RMS, explicitly distinguishing them from proper-volume averages. Test the diagnostic on the exact homogeneous branch before using the persisted data.
 
-Use the C05 JSON as the fixed-polarization comparator at matched density seed/charge with separately resolved constraints, not as a torsion-free run. Report differences against their convergence uncertainty. A finite-time bounded response does not prove arbitrary-perturbation or long-time stability.
-
-Persist code/results/status at every completed cycle. If a numerical stop or an unverified source identity prevents progress, retain the failure evidence and select the next question; do not change the physical action to force a desired outcome.
+No re-evolution should be needed. If the identity residual does not improve with grid/diagnostic refinement, classify mechanism claims as inconclusive. A final-slice focusing result alone is neither a bounce theorem nor a global regularity result.

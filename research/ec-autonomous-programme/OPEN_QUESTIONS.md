@@ -1,6 +1,6 @@
 # Prioritized unresolved questions after cycle 06
 
-1. **Evolve the validated C07 spin texture.** Its full source and constrained initial data now pass independent checks. Determine spatial/time convergence and finite-interval response relative to C05, with actual full-field checkpoints and evolved torsionful curvature.
+1. **Explain the resolved spin-texture focusing.** C08 supplies convergent finite dynamics and reusable raw fields. Analyze the material-current Raychaudhuri terms, separating its kinematic identity, source replacement and numerical errors, before selecting a stronger texture or longer interval.
 2. **Evolved full-curvature control.** C06 validates the diagnostic on an exact branch and 3D initial data, not the whole evolving C05 trajectory. Add full field checkpoints and measure full-connection curvature with space/time diagnostic refinement on the next new run.
 3. **General nonlinear 3D stability.** C05 is one short convergent trajectory; C03's finite planar mode tests are not an arbitrary-perturbation theorem. Independent transverse polarization, longer intervals and properly defined perturbation norms remain open.
 4. **A regular bounce in a new admissible state.** None was found in the tested focusing families. A candidate requires resolved current-volume expansion through zero, frame conditioning, full curvature control and continuation. Do not assume it exists.

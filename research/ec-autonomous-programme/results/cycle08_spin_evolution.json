@@ -1,0 +1,2744 @@
+{
+  "hypothesis": "A constrained real spatial spin texture remains resolved during short full 3D contraction, with full field persistence and full torsionful curvature probes.",
+  "spatial_records": [
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00000_initial.npz",
+          "sha256": "73fa4473a0ce9ad67aa4a8464c9c7c3a370c2cc2815cd4d59bf24c9372696cbe",
+          "bytes": 63755,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "788e64818b5b86fa06c1458d05f119458a3008362a22eb71eade9be1a8d233fb",
+            "p": "a42195d84571622bd388e34d4330ea97bfbb578367b5a28897989c629f96b43c",
+            "psi": "0516495d9a7be050557ea0a3135ddeec26b6294d09e94e1d0f9f5cd11caf1389"
+          },
+          "git_blob_sha": "23461a58c4a8e20786548891b33a67bd1b3f78f6"
+        },
+        {
+          "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00020_checkpoint.npz",
+          "sha256": "dff13e29411a7d0dda180e8a284f5f34caf6e88ff0ca0665f2a6f32221a05bb4",
+          "bytes": 158163,
+          "time": 0.1,
+          "step": 20,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "23ec3012faeb389f979a1439224ced8a0f46f33e725ed4fd524d8b5bc82028ba",
+            "p": "249b06fc0cf91ef6176c22cb60923a9df08f94deba7c6e6bc25cd410d2c281af",
+            "psi": "090b7f605d0e72991f99cf5a64f81a389d3692796f4e75b7916a30d8e324cc60"
+          },
+          "git_blob_sha": "01d5c602914bf51804068e19231d5cea0ebf7798"
+        },
+        {
+          "path": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00040_completed.npz",
+          "sha256": "5d4e05876bac34f46baf5037f69c096e84e36b353a0ca7953a54b47c2552d801",
+          "bytes": 160579,
+          "time": 0.2,
+          "step": 40,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "c718557bbf76b95cefe61cc993aab370835ee4892a521041c86a6be6aa2a32f7",
+            "p": "ecbc34ff6783b0217c992d5290b06f371f7f2a51588c0bc630e5e3948638519b",
+            "psi": "89341d6ecfb7ec2d2f311da328518f4edefbeb5e877f2aa46f7f11d645bfa565"
+          },
+          "git_blob_sha": "65cabc349ba3c2098fa025a94be811a25b935587"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.03478414843921129,
+              "full_R_max": 0.02635848064930668,
+              "full_K_min": 121.385821846687,
+              "full_K_max": 132.27123523467236,
+              "full_orthonormal_component_max_abs": 3.0605467848558936,
+              "torsion2_min": -24.677140869003658,
+              "torsion2_max": -23.062688198806683,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.03478096923625573,
+              "full_R_max": 0.02636175978139743,
+              "full_K_min": 121.38580069550773,
+              "full_K_max": 132.27121238944795,
+              "full_orthonormal_component_max_abs": 3.060546257080598,
+              "torsion2_min": -24.677140869003658,
+              "torsion2_max": -23.062688198806683,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00020_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.03191249093345805,
+              "full_R_max": 0.0243036317057852,
+              "full_K_min": 400.4811370153943,
+              "full_K_max": 441.004452935212,
+              "full_orthonormal_component_max_abs": 5.595541120641771,
+              "torsion2_min": -44.97488600153919,
+              "torsion2_max": -41.98245980374656,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.03190681872707524,
+              "full_R_max": 0.024309697975650746,
+              "full_K_min": 400.48106857770813,
+              "full_K_max": 441.0043756879582,
+              "full_orthonormal_component_max_abs": 5.595540148836801,
+              "torsion2_min": -44.97488600153919,
+              "torsion2_max": -41.98245980374656,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n9_s40_e32a4ea64381/step00040_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.021668803925027902,
+              "full_R_max": 0.016289417159651265,
+              "full_K_min": 1316.5022216336176,
+              "full_K_max": 1473.7974805437705,
+              "full_orthonormal_component_max_abs": 10.218481518246957,
+              "torsion2_min": -82.03430697979903,
+              "torsion2_max": -76.3169586856064,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.021658629438581656,
+              "full_R_max": 0.016300592016754933,
+              "full_K_min": 1316.5019992315017,
+              "full_K_max": 1473.7972202904498,
+              "full_orthonormal_component_max_abs": 10.218482518781057,
+              "torsion2_min": -82.03430697979903,
+              "torsion2_max": -76.3169586856064,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 40,
+      "termination_reason": null,
+      "n": 9,
+      "steps": 40,
+      "dt": 0.005,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 9,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.007549355193494797,
+        "axial_formula_max_error": 2.6645352591003757e-15,
+        "spatial_stress_formula_max_error": 4.440892098500626e-15,
+        "Ktrace": 2.9991155262565283,
+        "mean_log_chi": 7.682426844504431e-14,
+        "scalar_spectral_residual_max": 2.886243632259003e-12,
+        "vector_spectral_residual_max": 3.7470027081099033e-16,
+        "oversampled_continuum_Hamiltonian_max": 1.4691036671621305e-05,
+        "oversample_n": 19,
+        "FD_Hamiltonian_max": 0.035451118928765624,
+        "FD_Hamiltonian_relative": 0.00574639000797615,
+        "FD_momentum_max": 0.0030264730757639594,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 3.9968028886505635e-15,
+        "seed_momentum_mean": [
+          0.0,
+          3.655055225103396e-18,
+          1.7846949341325176e-20
+        ],
+        "initial_H_min": -0.9997051754188431,
+        "initial_H_max": -0.9997051754188425,
+        "source_variation_each_axis": [
+          0.7758770483143631,
+          0.7758770483143631,
+          0.7758770483143631
+        ],
+        "chi_range": [
+          0.9858606395248857,
+          1.0127314973607693
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.09069114200019612,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.00574639000797615,
+        "Hamiltonian_max": 0.035451118928765624,
+        "momentum_max": 0.0030264730757639594,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754188431,
+        "Hnormal_max": -0.9997051754188425,
+        "Theta_current_min": -2.999115526256529,
+        "Theta_current_max": -2.999115526256527,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199507196156,
+        "density_min": 3.921112784130434,
+        "density_max": 4.056035902947906,
+        "slice_volume": 512.2203014523192
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.004842376707309905,
+        "Hamiltonian_max": 0.09945241578805053,
+        "momentum_max": 0.005969218112666333,
+        "harmonic_max": 0.012819657238114956,
+        "charge_relative": 3.066949583185874e-09,
+        "Hnormal_min": -1.8378075377979968,
+        "Hnormal_max": -1.7994031359082,
+        "Theta_current_min": -5.493743882165797,
+        "Theta_current_max": -5.421296109818836,
+        "lapse_min": 0.5474907836616112,
+        "spatial_determinant_min": 0.2551228055412177,
+        "density_min": 7.132879674932905,
+        "density_max": 7.395237520629928,
+        "slice_volume": 281.1620621961474
+      },
+      "max_Hamiltonian_relative": 0.005750907022373085,
+      "max_momentum": 0.005969218112666333,
+      "max_harmonic": 0.012819657238114956,
+      "max_charge_drift": 3.066949583185874e-09,
+      "max_Theta_current_over_time": -2.999115526256527,
+      "max_Hnormal_over_time": -0.9997051754188425,
+      "max_CFL_ratio": 0.06945007471881592,
+      "slice_volume_ratio": 0.548908470435391,
+      "metric_R_range": [
+        -20.49385418296264,
+        -19.10342967520439
+      ],
+      "metric_Kretschmann_max_abs": 698.9490100127414,
+      "conservation": {
+        "stress_divergence_RMS": 0.11880170938143322,
+        "stress_divergence_relative_RMS": 0.0002997892739455876
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.0035416311148985433,
+            "stress_divergence_relative_RMS": 8.93978035562303e-06
+          },
+          {
+            "stress_divergence_RMS": 0.0035416253762902542,
+            "stress_divergence_relative_RMS": 8.939765886057617e-06
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.00574639000797615,
+          "Hamiltonian_max": 0.035451118928765624,
+          "momentum_max": 0.0030264730757639594,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754188431,
+          "Hnormal_max": -0.9997051754188425,
+          "Theta_current_min": -2.999115526256529,
+          "Theta_current_max": -2.999115526256527,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199507196156,
+          "density_min": 3.921112784130434,
+          "density_max": 4.056035902947906,
+          "slice_volume": 512.2203014523192
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.005747742771228964,
+          "Hamiltonian_max": 0.03998051409945802,
+          "momentum_max": 0.003212577554473281,
+          "harmonic_max": 0.0007666975340678839,
+          "charge_relative": -3.445566054693927e-11,
+          "Hnormal_min": -1.062545853847179,
+          "Hnormal_max": -1.060139320923679,
+          "Theta_current_min": -3.1854828322178887,
+          "Theta_current_max": -3.1826513833117036,
+          "lapse_min": 0.9417495300696481,
+          "spatial_determinant_min": 0.7476719971044111,
+          "density_min": 4.163438907684815,
+          "density_max": 4.3068050353092495,
+          "slice_volume": 482.39941870695026
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.005720310702717042,
+          "Hamiltonian_max": 0.04486606499730872,
+          "momentum_max": 0.003408266575904354,
+          "harmonic_max": 0.0016267972122405716,
+          "charge_relative": -1.4378520596380895e-10,
+          "Hnormal_min": -1.1293217716225368,
+          "Hnormal_max": -1.1242410891388546,
+          "Theta_current_min": -3.383680921066717,
+          "Theta_current_max": -3.377213016833786,
+          "lapse_min": 0.8868359390748256,
+          "spatial_determinant_min": 0.6632584993685938,
+          "density_min": 4.420598584827574,
+          "density_max": 4.573151685654639,
+          "slice_volume": 454.31462701738644
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.005667763390635995,
+          "Hamiltonian_max": 0.050128702091612354,
+          "momentum_max": 0.0036142387977349984,
+          "harmonic_max": 0.0025874333817665907,
+          "charge_relative": -2.8891278258669217e-10,
+          "Hnormal_min": -1.2002762266263989,
+          "Hnormal_max": -1.1922371010566015,
+          "Theta_current_min": -3.594445451920847,
+          "Theta_current_max": -3.5834774066511867,
+          "lapse_min": 0.8350760373581716,
+          "spatial_determinant_min": 0.5884340146301483,
+          "density_min": 4.693495627024901,
+          "density_max": 4.8560492197903455,
+          "slice_volume": 427.86487023005384
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.005593447847405715,
+          "Hamiltonian_max": 0.05579017976558376,
+          "momentum_max": 0.0038312366447791,
+          "harmonic_max": 0.003656168032466489,
+          "charge_relative": -4.16680800974234e-10,
+          "Hnormal_min": -1.275667429846257,
+          "Hnormal_max": -1.2643677488479008,
+          "Theta_current_min": -3.818557515293257,
+          "Theta_current_max": -3.80216319809049,
+          "lapse_min": 0.786295709084855,
+          "spatial_determinant_min": 0.5220985607856669,
+          "density_min": 4.983089273682073,
+          "density_max": 5.156531563904162,
+          "slice_volume": 402.9549767414047
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.005500409473904925,
+          "Hamiltonian_max": 0.061873063769947834,
+          "momentum_max": 0.0040600500125210544,
+          "harmonic_max": 0.004841005791898834,
+          "charge_relative": -4.6362447214676195e-10,
+          "Hnormal_min": -1.355769743712864,
+          "Hnormal_max": -1.340888051908428,
+          "Theta_current_min": -4.056846461061781,
+          "Theta_current_max": -4.034033241534043,
+          "lapse_min": 0.7403295490142163,
+          "spatial_determinant_min": 0.4632802341776013,
+          "density_min": 5.290397578238429,
+          "density_max": 5.475696972473865,
+          "slice_volume": 379.4953155849433
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.005391412564366014,
+          "Hamiltonian_max": 0.06840071340675458,
+          "momentum_max": 0.004301520294720428,
+          "harmonic_max": 0.006150408415458664,
+          "charge_relative": -3.593290109904501e-10,
+          "Hnormal_min": -1.440874614719907,
+          "Hnormal_max": -1.422068564850811,
+          "Theta_current_min": -4.310192899636576,
+          "Theta_current_max": -4.279897292131368,
+          "lapse_min": 0.6970205214199637,
+          "spatial_determinant_min": 0.41111996991244437,
+          "density_min": 5.616501001997126,
+          "density_max": 5.814712030103508,
+          "slice_volume": 357.4014729416404
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.005268960169349246,
+          "Hamiltonian_max": 0.07539725785447082,
+          "momentum_max": 0.004634196134711693,
+          "harmonic_max": 0.0075933086603043876,
+          "charge_relative": -2.938427279275402e-11,
+          "Hnormal_min": -1.5312916289866012,
+          "Hnormal_max": -1.5081963405683547,
+          "Theta_current_min": -4.5795318873978434,
+          "Theta_current_max": -4.540614878905232,
+          "lapse_min": 0.6562196909165462,
+          "spatial_determinant_min": 0.36485817020240696,
+          "density_min": 5.9625462285663176,
+          "density_max": 6.174815901693929,
+          "slice_volume": 336.59394779694577
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.00513531318553353,
+          "Hamiltonian_max": 0.08288756600644298,
+          "momentum_max": 0.005058856674592785,
+          "harmonic_max": 0.009179123419275292,
+          "charge_relative": 6.020468568124215e-10,
+          "Hnormal_min": -1.6273496339249265,
+          "Hnormal_max": -1.5995759517054697,
+          "Theta_current_min": -4.865856308147801,
+          "Theta_current_max": -4.817098353113638,
+          "lapse_min": 0.6177858296766187,
+          "spatial_determinant_min": 0.3238229629027758,
+          "density_min": 6.329750212559409,
+          "density_max": 6.557324846260842,
+          "slice_volume": 316.9978655577851
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.004992508582196621,
+          "Hamiltonian_max": 0.09089720915213917,
+          "momentum_max": 0.005503500666994059,
+          "harmonic_max": 0.010917765977215055,
+          "charge_relative": 1.6100212274494652e-09,
+          "Hnormal_min": -1.7293979301219908,
+          "Hnormal_max": -1.6965305740894456,
+          "Theta_current_min": -5.170220463034673,
+          "Theta_current_max": -5.110316126383193,
+          "lapse_min": 0.5815851098106878,
+          "spatial_determinant_min": 0.2874198840621091,
+          "density_min": 6.7194044770228345,
+          "density_max": 6.963637010676194,
+          "slice_volume": 298.5427085254801
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.004842376707309905,
+          "Hamiltonian_max": 0.09945241578805053,
+          "momentum_max": 0.005969218112666333,
+          "harmonic_max": 0.012819657238114956,
+          "charge_relative": 3.066949583185874e-09,
+          "Hnormal_min": -1.8378075377979968,
+          "Hnormal_max": -1.7994031359082,
+          "Theta_current_min": -5.493743882165797,
+          "Theta_current_max": -5.421296109818836,
+          "lapse_min": 0.5474907836616112,
+          "spatial_determinant_min": 0.2551228055412177,
+          "density_min": 7.132879674932905,
+          "density_max": 7.395237520629928,
+          "slice_volume": 281.1620621961474
+        }
+      ],
+      "seconds": 7.529789010000059,
+      "status": "completed within declared finite-interval numerical controls"
+    },
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00000_initial.npz",
+          "sha256": "71325ba21c05afcafb2126e841642a1b393d6b6fed3825e37a76922e7451d710",
+          "bytes": 451762,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "f13dfcbb3e6a4b4eaeabc3f18ae9773df5812da75f528a2e2bc5ec1479a68859",
+            "p": "f9041e6769b2cf3c38dd3e8f12d35ebb0f5f546e89da655725102a7bb415f576",
+            "psi": "0e3a931cae88826f061c35a211ee172b26137e8a658672ffcdacf2e646036930"
+          },
+          "git_blob_sha": "e929e334c7b2dedde922852fc9ec2c40e1c98f6a"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00020_checkpoint.npz",
+          "sha256": "85b333eadaffe1070e52f2d66a7e661a1a3b983f368432ed71b436a89e795ec6",
+          "bytes": 1139603,
+          "time": 0.1,
+          "step": 20,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "0ef8f0628573122a953eef8274e2a7c62c8a4f7cae1c526121f57de724c9c782",
+            "p": "c0c2854574b32838853ff944badd503b5a31755d60571e849934402f3373e299",
+            "psi": "3c6ce45e228d4ba7f667d6cc8f228fb1ac31d63062f985ee93689b246184482c"
+          },
+          "git_blob_sha": "f5297702e589defe4020187c8bcc97f090793afb"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+          "sha256": "3cf45e9d286dcecfb51c62c16296cfa4b176f87bba9cc6b390b7053d0a5c41cc",
+          "bytes": 1157168,
+          "time": 0.2,
+          "step": 40,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "099efc967e8bbd2382e001c14f3b39955ca4b0febfa3972ffb8224fa7fe811dd",
+            "p": "f9cae5b78ee47bccc2d898751fb41ebe1018ac59edab3b2ae1bb6bca456f5e55",
+            "psi": "154aced53b787f622c9d3a8e156df1a7949b650161b4cd58b2a76e085e124e75"
+          },
+          "git_blob_sha": "c6cb2be5818319fc70e95d184128d4f190397cbf"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.010194502231742675,
+              "full_R_max": 0.008043200083413193,
+              "full_K_min": 120.94220639294488,
+              "full_K_max": 132.70237838757126,
+              "full_orthonormal_component_max_abs": 3.060310757583647,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.010191330458457326,
+              "full_R_max": 0.008046486477024661,
+              "full_K_min": 120.9421853874731,
+              "full_K_max": 132.7023553986302,
+              "full_orthonormal_component_max_abs": 3.060310227633827,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00020_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.009340811631423751,
+              "full_R_max": 0.007418313262859133,
+              "full_K_min": 399.09524380119393,
+              "full_K_max": 442.47541378412427,
+              "full_orthonormal_component_max_abs": 5.5955883423270905,
+              "torsion2_min": -45.027791514784234,
+              "torsion2_max": -41.97845382755156,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.009335151813843812,
+              "full_R_max": 0.007424395967694064,
+              "full_K_min": 399.0951757324523,
+              "full_K_max": 442.4753360812068,
+              "full_orthonormal_component_max_abs": 5.59558736711557,
+              "torsion2_min": -45.027791514784234,
+              "torsion2_max": -41.97845382755156,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.006326359932606884,
+              "full_R_max": 0.004968375125121938,
+              "full_K_min": 1311.7914778648305,
+              "full_K_max": 1479.2399843522523,
+              "full_orthonormal_component_max_abs": 10.219321465808216,
+              "torsion2_min": -82.14550944071851,
+              "torsion2_max": -76.28950876496705,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.006316209573954623,
+              "full_R_max": 0.004979586894592991,
+              "full_K_min": 1311.7912565351987,
+              "full_K_max": 1479.2397225227642,
+              "full_orthonormal_component_max_abs": 10.219319690253572,
+              "torsion2_min": -82.14550944071851,
+              "torsion2_max": -76.28950876496705,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 40,
+      "termination_reason": null,
+      "n": 17,
+      "steps": 40,
+      "dt": 0.005,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 17,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.0021657720920881945,
+        "axial_formula_max_error": 4.440892098500626e-15,
+        "spatial_stress_formula_max_error": 5.773159728050814e-15,
+        "Ktrace": 2.9991155262553555,
+        "mean_log_chi": 1.354288773589555e-13,
+        "scalar_spectral_residual_max": 3.41025373309578e-12,
+        "vector_spectral_residual_max": 8.049116928532385e-16,
+        "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+        "oversample_n": 35,
+        "FD_Hamiltonian_max": 0.010408973122697063,
+        "FD_Hamiltonian_relative": 0.0016853397141546472,
+        "FD_momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.884981308350689e-15,
+        "seed_momentum_mean": [
+          2.54223672441136e-20,
+          1.446250225442907e-18,
+          -1.2358095188110778e-21
+        ],
+        "initial_H_min": -0.9997051754184522,
+        "initial_H_max": -0.9997051754184515,
+        "source_variation_each_axis": [
+          0.7931892398735605,
+          0.7931892398735605,
+          0.7931892398735605
+        ],
+        "chi_range": [
+          0.9858606377238854,
+          1.01330311822232
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.3867525810001098,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.0016853397141546472,
+        "Hamiltonian_max": 0.010408973122697063,
+        "momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754184522,
+        "Hnormal_max": -0.9997051754184515,
+        "Theta_current_min": -2.999115526255357,
+        "Theta_current_max": -2.9991155262553537,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199322411537,
+        "density_min": 3.921112827109684,
+        "density_max": 4.058304057761104,
+        "slice_volume": 512.2203014525093
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.0014215334737086379,
+        "Hamiltonian_max": 0.029242604334232425,
+        "momentum_max": 0.001834522280702855,
+        "harmonic_max": 0.0037704353327381313,
+        "charge_relative": 1.0640157643848625e-09,
+        "Hnormal_min": -1.84000293114251,
+        "Hnormal_max": -1.797268896623032,
+        "Theta_current_min": -5.496953608952578,
+        "Theta_current_max": -5.418200024254704,
+        "lapse_min": 0.5474153726621651,
+        "spatial_determinant_min": 0.25526994416571613,
+        "density_min": 7.131596771409477,
+        "density_max": 7.400248168844002,
+        "slice_volume": 281.1620600790651
+      },
+      "max_Hamiltonian_relative": 0.0016869618504379252,
+      "max_momentum": 0.001834522280702855,
+      "max_harmonic": 0.0037704353327381313,
+      "max_charge_drift": 1.0640157643848625e-09,
+      "max_Theta_current_over_time": -2.9991155262553537,
+      "max_Hnormal_over_time": -0.9997051754184515,
+      "max_CFL_ratio": 0.13118347494817445,
+      "slice_volume_ratio": 0.5489084663020393,
+      "metric_R_range": [
+        -20.531962101485526,
+        -19.07951138573464
+      ],
+      "metric_Kretschmann_max_abs": 703.3763069108493,
+      "conservation": {
+        "stress_divergence_RMS": 0.11873143818874929,
+        "stress_divergence_relative_RMS": 0.000299601065444064
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.0011439686510734779,
+            "stress_divergence_relative_RMS": 2.8874991332422603e-06
+          },
+          {
+            "stress_divergence_RMS": 0.0011439626719499643,
+            "stress_divergence_relative_RMS": 2.8874840464058383e-06
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.0016853397141546472,
+          "Hamiltonian_max": 0.010408973122697063,
+          "momentum_max": 0.0009375205043588956,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754184522,
+          "Hnormal_max": -0.9997051754184515,
+          "Theta_current_min": -2.999115526255357,
+          "Theta_current_max": -2.9991155262553537,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199322411537,
+          "density_min": 3.921112827109684,
+          "density_max": 4.058304057761104,
+          "slice_volume": 512.2203014525093
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.0016862978300361657,
+          "Hamiltonian_max": 0.011742852333997966,
+          "momentum_max": 0.0009950510195253295,
+          "harmonic_max": 0.00022561160419654058,
+          "charge_relative": -2.0342616480206743e-12,
+          "Hnormal_min": -1.062713425170728,
+          "Hnormal_max": -1.0599630191916536,
+          "Theta_current_min": -3.185603076194864,
+          "Theta_current_max": -3.1824316576262643,
+          "lapse_min": 0.9417482211517026,
+          "spatial_determinant_min": 0.7476774498992849,
+          "density_min": 4.163430720455261,
+          "density_max": 4.309218119229521,
+          "slice_volume": 482.39941516874666
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.001678687134092294,
+          "Hamiltonian_max": 0.013181481300966524,
+          "momentum_max": 0.001055316940156894,
+          "harmonic_max": 0.0004786966993717279,
+          "charge_relative": -2.621691752580091e-11,
+          "Hnormal_min": -1.1296667178302935,
+          "Hnormal_max": -1.1238813767629696,
+          "Theta_current_min": -3.383957149332738,
+          "Theta_current_max": -3.3767792452375156,
+          "lapse_min": 0.8868309846348976,
+          "spatial_determinant_min": 0.6632773811320484,
+          "density_min": 4.420563928313722,
+          "density_max": 4.575729312413575,
+          "slice_volume": 454.3146144616515
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.0016635968401309314,
+          "Hamiltonian_max": 0.014730976759352643,
+          "momentum_max": 0.0011185429273513,
+          "harmonic_max": 0.000761342997098069,
+          "charge_relative": -6.0616844876904e-11,
+          "Hnormal_min": -1.200808745197859,
+          "Hnormal_max": -1.1916865945683515,
+          "Theta_current_min": -3.5949162980455633,
+          "Theta_current_max": -3.5827979950441105,
+          "lapse_min": 0.8350655068530691,
+          "spatial_determinant_min": 0.5884707306490863,
+          "density_min": 4.6934134680683615,
+          "density_max": 4.858813953878769,
+          "slice_volume": 427.8648457547734
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.001642020773829103,
+          "Hamiltonian_max": 0.016397686427461977,
+          "momentum_max": 0.0011849668251053304,
+          "harmonic_max": 0.0010757640177230243,
+          "charge_relative": -8.891887226525341e-11,
+          "Hnormal_min": -1.2763984982018999,
+          "Hnormal_max": -1.2636187054511352,
+          "Theta_current_min": -3.819264738759027,
+          "Theta_current_max": -3.8012170479065093,
+          "lapse_min": 0.786278052019893,
+          "spatial_determinant_min": 0.5221549641882566,
+          "density_min": 4.982935594015728,
+          "density_max": 5.159509163181554,
+          "slice_volume": 402.95494005190994
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.001614863642897121,
+          "Hamiltonian_max": 0.01818818482771256,
+          "momentum_max": 0.001254840882502023,
+          "harmonic_max": 0.0014243034696432844,
+          "charge_relative": -9.160372460570443e-11,
+          "Hnormal_min": -1.3567109634668275,
+          "Hnormal_max": -1.3399322827395495,
+          "Theta_current_min": -4.057835190748744,
+          "Theta_current_max": -4.032797599528567,
+          "lapse_min": 0.7403035589604808,
+          "spatial_determinant_min": 0.4633563940615822,
+          "density_min": 5.290145166725992,
+          "density_max": 5.4789166517225665,
+          "slice_volume": 379.49526883209944
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.0015829471079254229,
+          "Hamiltonian_max": 0.020109267499806904,
+          "momentum_max": 0.0013284330901104785,
+          "harmonic_max": 0.0018094394738641384,
+          "charge_relative": -4.700417832737003e-11,
+          "Hnormal_min": -1.4420383455500605,
+          "Hnormal_max": -1.4208973459315457,
+          "Theta_current_min": -4.31151188901297,
+          "Theta_current_max": -4.278347566196964,
+          "lapse_min": 0.6969853424377107,
+          "spatial_determinant_min": 0.4112147555187004,
+          "density_min": 5.616119228918564,
+          "density_max": 5.818206746752242,
+          "slice_volume": 357.401420436833
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.0015470156235941202,
+          "Hamiltonian_max": 0.022167943411220747,
+          "momentum_max": 0.0014269721297774235,
+          "harmonic_max": 0.0022337886009315966,
+          "charge_relative": 6.776512684325553e-11,
+          "Hnormal_min": -1.5326910675679697,
+          "Hnormal_max": -1.506800321068706,
+          "Theta_current_min": -4.581233782385815,
+          "Theta_current_max": -4.538724438478988,
+          "lapse_min": 0.656174739307827,
+          "spatial_determinant_min": 0.36496969007505115,
+          "density_min": 5.962000800671104,
+          "density_max": 6.1786226650164435,
+          "slice_volume": 336.59389565628254
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.0015077420291767982,
+          "Hamiltonian_max": 0.024371425360168786,
+          "momentum_max": 0.0015552245659071692,
+          "harmonic_max": 0.0027001096835723715,
+          "charge_relative": 2.759985573419499e-10,
+          "Hnormal_min": -1.6289988973496394,
+          "Hnormal_max": -1.5979450590972986,
+          "Theta_current_min": -4.867997928732845,
+          "Theta_current_max": -4.814838313626442,
+          "lapse_min": 0.6177307742973387,
+          "spatial_determinant_min": 0.3239488903946707,
+          "density_min": 6.329002907542127,
+          "density_max": 6.561485051443962,
+          "slice_volume": 316.9978213145927
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.0014657328745351788,
+          "Hamiltonian_max": 0.026727118153942797,
+          "momentum_max": 0.0016894189042346644,
+          "harmonic_max": 0.0032113073642587864,
+          "charge_relative": 6.0070370899723e-10,
+          "Hnormal_min": -1.7313121442685373,
+          "Hnormal_max": -1.694653915738529,
+          "Theta_current_min": -5.172863099787735,
+          "Theta_current_max": -5.10765511709205,
+          "lapse_min": 0.5815198387867285,
+          "spatial_determinant_min": 0.2875576943376202,
+          "density_min": 6.718412855999263,
+          "density_max": 6.968196799248142,
+          "slice_volume": 298.5426807394612
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.0014215334737086379,
+          "Hamiltonian_max": 0.029242604334232425,
+          "momentum_max": 0.001834522280702855,
+          "harmonic_max": 0.0037704353327381313,
+          "charge_relative": 1.0640157643848625e-09,
+          "Hnormal_min": -1.84000293114251,
+          "Hnormal_max": -1.797268896623032,
+          "Theta_current_min": -5.496953608952578,
+          "Theta_current_max": -5.418200024254704,
+          "lapse_min": 0.5474153726621651,
+          "spatial_determinant_min": 0.25526994416571613,
+          "density_min": 7.131596771409477,
+          "density_max": 7.400248168844002,
+          "slice_volume": 281.1620600790651
+        }
+      ],
+      "seconds": 47.43133460099989,
+      "status": "completed within declared finite-interval numerical controls"
+    },
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00000_initial.npz",
+          "sha256": "4ee4aed16958f91012a7b435b0588a03a20f7bb55855665055eb158a424e443d",
+          "bytes": 3593731,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "b045f6b50b58b19d8afbd8b3aba62fd9a74ec7526bf628c2128138d2350edfb9",
+            "p": "07ca5f2170857ff8211e345c7b1d87ea6adf2935424f595679b8052dfb5eae89",
+            "psi": "7eca388460537fb191a9390cdc7f887d6a2a1e64df80da66f5f06853f8721b27"
+          },
+          "git_blob_sha": "99f5e5449baaec20228b95ece0c0ddbab1f81c3e"
+        },
+        {
+          "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00020_checkpoint.npz",
+          "sha256": "d31caf701487496f5bf61d19e37d479e320e59facd5af7f2a10193536afac54a",
+          "bytes": 8455827,
+          "time": 0.1,
+          "step": 20,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "bde8a0362e8ac47751f65f2e36ee2f35aab8693e2f7ba9075c7eecf3e34a0be0",
+            "p": "165323997343a64e627ee67b288ce31ac77d867dd6740adccf9bf4ae31b54b73",
+            "psi": "7f39f309b6f3d39eaee881ff8e59eaacabd96311cf8c225fae5889bad6c54b0d"
+          },
+          "git_blob_sha": "a08fd1de9b6f9b23cade82879e85a9e92f969fd6"
+        },
+        {
+          "path": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00040_completed.npz",
+          "sha256": "b070524aaf9cc08c193e95f6e33349f5d54e0bbf25a1dc52018cd3a2efa11966",
+          "bytes": 8594636,
+          "time": 0.2,
+          "step": 40,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "49711f4065c6bdb604e729f4447cabf2ffd43359a6e8319b73b78909d508239c",
+            "p": "7563aff908894296575d7a013ba6d9d99bc505468c5623c44adaddb81d2b4073",
+            "psi": "51659c21534a8d81c40ae0bdc60df887ec8d254e8e8d596a34b3dcf42465c144"
+          },
+          "git_blob_sha": "ff61295b69a1a67f048dbac68cb26cd1bd9f56a0"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.0027422114230961636,
+              "full_R_max": 0.0021834170244252604,
+              "full_K_min": 120.80711802258637,
+              "full_K_max": 132.82556957089895,
+              "full_orthonormal_component_max_abs": 3.0599815315831513,
+              "torsion2_min": -24.712651393322393,
+              "torsion2_max": -23.06268870434293,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.00273904193025043,
+              "full_R_max": 0.0021867056519533357,
+              "full_K_min": 120.80709706133146,
+              "full_K_max": 132.82554653730114,
+              "full_orthonormal_component_max_abs": 3.059981001027579,
+              "torsion2_min": -24.712651393322393,
+              "torsion2_max": -23.06268870434293,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00020_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.0025138300248412904,
+              "full_R_max": 0.002011643493680104,
+              "full_K_min": 398.675739466526,
+              "full_K_max": 442.8909679614246,
+              "full_orthonormal_component_max_abs": 5.595151179181982,
+              "torsion2_min": -45.04281348544974,
+              "torsion2_max": -41.977276534993386,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.002508173982776807,
+              "full_R_max": 0.0020177312166786976,
+              "full_K_min": 398.67567150891887,
+              "full_K_max": 442.8908901194999,
+              "full_orthonormal_component_max_abs": 5.595150203067275,
+              "torsion2_min": -45.04281348544974,
+              "torsion2_max": -41.977276534993386,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n33_s40_4b015d7e7a08/step00040_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.0017062298685290855,
+              "full_R_max": 0.0013417776877604481,
+              "full_K_min": 1310.3753062638698,
+              "full_K_max": 1480.7647173034657,
+              "full_orthonormal_component_max_abs": 10.221890093778844,
+              "torsion2_min": -82.17667921834735,
+              "torsion2_max": -76.28141062574848,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.0016960868511741722,
+              "full_R_max": 0.0013530007181659087,
+              "full_K_min": 1310.375085259494,
+              "full_K_max": 1480.764455004825,
+              "full_orthonormal_component_max_abs": 10.221889271070577,
+              "torsion2_min": -82.17667921834735,
+              "torsion2_max": -76.28141062574848,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 40,
+      "termination_reason": null,
+      "n": 33,
+      "steps": 40,
+      "dt": 0.005,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 33,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.0005834248247394286,
+        "axial_formula_max_error": 3.552713678800501e-15,
+        "spatial_stress_formula_max_error": 6.217248937900877e-15,
+        "Ktrace": 2.9991155262526283,
+        "mean_log_chi": 2.8698826729252314e-13,
+        "scalar_spectral_residual_max": 6.0288397060489075e-12,
+        "vector_spectral_residual_max": 6.022959908591474e-15,
+        "oversampled_continuum_Hamiltonian_max": 4.8691717324800265e-11,
+        "oversample_n": 67,
+        "FD_Hamiltonian_max": 0.002798541114735542,
+        "FD_Hamiltonian_relative": 0.00045297302506225404,
+        "FD_momentum_max": 0.000255276417324167,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 5.773159728050814e-15,
+        "seed_momentum_mean": [
+          -1.6605305833431328e-20,
+          -3.9543798077752743e-19,
+          2.4135618943940883e-23
+        ],
+        "initial_H_min": -0.9997051754175431,
+        "initial_H_max": -0.9997051754175424,
+        "source_variation_each_axis": [
+          0.7981887690292342,
+          0.7981887690292342,
+          0.7981887690292342
+        ],
+        "chi_range": [
+          0.9858606377240394,
+          1.0134680145107173
+        ],
+        "field_evaluations": 20,
+        "seconds": 2.632072954999785,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.00045297302506225404,
+        "Hamiltonian_max": 0.002798541114735542,
+        "momentum_max": 0.000255276417324167,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754175431,
+        "Hnormal_max": -0.9997051754175424,
+        "Theta_current_min": -2.9991155262526297,
+        "Theta_current_max": -2.9991155262526266,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199322427336,
+        "density_min": 3.92111282710601,
+        "density_max": 4.0589531814103985,
+        "slice_volume": 512.2203014529749
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.00038227525861424786,
+        "Hamiltonian_max": 0.007867518794999029,
+        "momentum_max": 0.0005052479851595307,
+        "harmonic_max": 0.0010143475857296025,
+        "charge_relative": 3.779172530471442e-10,
+        "Hnormal_min": -1.8406734233292597,
+        "Hnormal_max": -1.7966194307261725,
+        "Theta_current_min": -5.497866741156701,
+        "Theta_current_max": -5.417283568510823,
+        "lapse_min": 0.5473932747198644,
+        "spatial_determinant_min": 0.255314625319678,
+        "density_min": 7.131218251498055,
+        "density_max": 7.401652032636467,
+        "slice_volume": 281.16206012251496
+      },
+      "max_Hamiltonian_relative": 0.00045343435336688193,
+      "max_momentum": 0.0005052479851595307,
+      "max_harmonic": 0.0010143475857296025,
+      "max_charge_drift": 3.779172530471442e-10,
+      "max_Theta_current_over_time": -2.9991155262526266,
+      "max_Hnormal_over_time": -0.9997051754175424,
+      "max_CFL_ratio": 0.2546502748993179,
+      "slice_volume_ratio": 0.5489084663863668,
+      "metric_R_range": [
+        -20.542973997129664,
+        -19.072272428676698
+      ],
+      "metric_Kretschmann_max_abs": 704.7179573614837,
+      "conservation": {
+        "stress_divergence_RMS": 0.11871858404753165,
+        "stress_divergence_relative_RMS": 0.0002995652098261878
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.0003160654602173013,
+            "stress_divergence_relative_RMS": 7.97773886734199e-07
+          },
+          {
+            "stress_divergence_RMS": 0.000316058554367768,
+            "stress_divergence_relative_RMS": 7.977564572429422e-07
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.00045297302506225404,
+          "Hamiltonian_max": 0.002798541114735542,
+          "momentum_max": 0.000255276417324167,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754175431,
+          "Hnormal_max": -0.9997051754175424,
+          "Theta_current_min": -2.9991155262526297,
+          "Theta_current_max": -2.9991155262526266,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199322427336,
+          "density_min": 3.92111282710601,
+          "density_max": 4.0589531814103985,
+          "slice_volume": 512.2203014529749
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.0004532797119692288,
+          "Hamiltonian_max": 0.0031575141434219134,
+          "momentum_max": 0.0002709706653452118,
+          "harmonic_max": 6.070145499581514e-05,
+          "charge_relative": 7.98139332403025e-12,
+          "Hnormal_min": -1.0627649799362902,
+          "Hnormal_max": -1.0599091286599152,
+          "Theta_current_min": -3.185629282282134,
+          "Theta_current_max": -3.1823462160717604,
+          "lapse_min": 0.9417478448896989,
+          "spatial_determinant_min": 0.7476791119991298,
+          "density_min": 4.163428313037919,
+          "density_max": 4.309908415759769,
+          "slice_volume": 482.39941409396283
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.00045127711420114136,
+          "Hamiltonian_max": 0.003544702268696298,
+          "momentum_max": 0.0002875413536362337,
+          "harmonic_max": 0.0001287941141971949,
+          "charge_relative": 1.0016432128168162e-11,
+          "Hnormal_min": -1.1297727997569311,
+          "Hnormal_max": -1.1237714419193334,
+          "Theta_current_min": -3.384021251363061,
+          "Theta_current_max": -3.3765941109299322,
+          "lapse_min": 0.8868295553728719,
+          "spatial_determinant_min": 0.6632831235694602,
+          "density_min": 4.420553766386891,
+          "density_max": 4.576465786730464,
+          "slice_volume": 454.3146106485921
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.0004472577106955046,
+          "Hamiltonian_max": 0.003961749329979725,
+          "momentum_max": 0.0003049008620457684,
+          "harmonic_max": 0.00020483904944601505,
+          "charge_relative": 9.342526752220692e-12,
+          "Hnormal_min": -1.20097242824255,
+          "Hnormal_max": -1.1915183961844582,
+          "Theta_current_min": -3.5950308971832534,
+          "Theta_current_max": -3.5825353549236985,
+          "lapse_min": 0.8350624585560534,
+          "spatial_determinant_min": 0.5884818916827184,
+          "density_min": 4.693389366050205,
+          "density_max": 4.859602456501934,
+          "slice_volume": 427.86483832831385
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.0004414884688135869,
+          "Hamiltonian_max": 0.004410359614604786,
+          "momentum_max": 0.00032311417064985123,
+          "harmonic_max": 0.00028943121189728416,
+          "charge_relative": 1.0395906357985041e-11,
+          "Hnormal_min": -1.2766230406103876,
+          "Hnormal_max": -1.2633899320185613,
+          "Theta_current_min": -3.8194434180258283,
+          "Theta_current_max": -3.8008875650202425,
+          "lapse_min": 0.7862729237474024,
+          "spatial_determinant_min": 0.5221721061048996,
+          "density_min": 4.982890470945249,
+          "density_max": 5.160356460310926,
+          "slice_volume": 402.95492893517127
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.00043421254248563563,
+          "Hamiltonian_max": 0.004892296715045319,
+          "momentum_max": 0.00034225010742630277,
+          "harmonic_max": 0.00038320060448837623,
+          "charge_relative": 1.8486101538428557e-11,
+          "Hnormal_min": -1.3569998183016612,
+          "Hnormal_max": -1.3396405031076595,
+          "Theta_current_min": -4.058092588765695,
+          "Theta_current_max": -4.0324123581499,
+          "lapse_min": 0.7402959972560238,
+          "spatial_determinant_min": 0.46337953673924887,
+          "density_min": 5.290070984715509,
+          "density_max": 5.479830501359797,
+          "slice_volume": 379.49525469728474
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.0004256509011402554,
+          "Hamiltonian_max": 0.00540938194816043,
+          "momentum_max": 0.00036238171726493337,
+          "harmonic_max": 0.00048681341262479805,
+          "charge_relative": 3.950795246510097e-11,
+          "Hnormal_min": -1.4423951793365808,
+          "Hnormal_max": -1.4205399813388866,
+          "Theta_current_min": -4.311863777159929,
+          "Theta_current_max": -4.277890611178973,
+          "lapse_min": 0.6969750883732968,
+          "spatial_determinant_min": 0.41124355410937724,
+          "density_min": 5.616006926541717,
+          "density_max": 5.819195981231754,
+          "slice_volume": 357.40140461786245
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.00041600388681988654,
+          "Hamiltonian_max": 0.005963492281052751,
+          "momentum_max": 0.00039193993769680996,
+          "harmonic_max": 0.0006009730841416427,
+          "charge_relative": 7.968670168168046e-11,
+          "Hnormal_min": -1.5331197825960403,
+          "Hnormal_max": -1.5063746164705283,
+          "Theta_current_min": -4.581697145633538,
+          "Theta_current_max": -4.538166365865807,
+          "lapse_min": 0.6561616154952284,
+          "spatial_determinant_min": 0.36500356860343713,
+          "density_min": 5.961840220864325,
+          "density_max": 6.179697280321734,
+          "slice_volume": 336.593880039464
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.000405452697987925,
+          "Hamiltonian_max": 0.006556557704797683,
+          "momentum_max": 0.00042790322628542127,
+          "harmonic_max": 0.0007264213486291027,
+          "charge_relative": 1.45354839276024e-10,
+          "Hnormal_min": -1.6295036552420772,
+          "Hnormal_max": -1.5974480536749025,
+          "Theta_current_min": -4.868591050435153,
+          "Theta_current_max": -4.814170443251983,
+          "lapse_min": 0.6177146779470651,
+          "spatial_determinant_min": 0.32398714078611357,
+          "density_min": 6.328782719583033,
+          "density_max": 6.562656303708299,
+          "slice_volume": 316.9978082194408
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.0003941607994666314,
+          "Hamiltonian_max": 0.007190557994984914,
+          "momentum_max": 0.00046570528503610265,
+          "harmonic_max": 0.0008639391650921979,
+          "charge_relative": 2.427629208767712e-10,
+          "Hnormal_min": -1.7318973909468702,
+          "Hnormal_max": -1.6940824124619251,
+          "Theta_current_min": -5.1736056507543156,
+          "Theta_current_max": -5.106868049611119,
+          "lapse_min": 0.5815007323441698,
+          "spatial_determinant_min": 0.2875995485144797,
+          "density_min": 6.718120471107909,
+          "density_max": 6.96947730886439,
+          "slice_volume": 298.542672798457
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.00038227525861424786,
+          "Hamiltonian_max": 0.007867518794999029,
+          "momentum_max": 0.0005052479851595307,
+          "harmonic_max": 0.0010143475857296025,
+          "charge_relative": 3.779172530471442e-10,
+          "Hnormal_min": -1.8406734233292597,
+          "Hnormal_max": -1.7966194307261725,
+          "Theta_current_min": -5.497866741156701,
+          "Theta_current_max": -5.417283568510823,
+          "lapse_min": 0.5473932747198644,
+          "spatial_determinant_min": 0.255314625319678,
+          "density_min": 7.131218251498055,
+          "density_max": 7.401652032636467,
+          "slice_volume": 281.16206012251496
+        }
+      ],
+      "seconds": 356.626236478,
+      "status": "completed within declared finite-interval numerical controls"
+    }
+  ],
+  "scope": "Single massless classical ECD field, L=8, theta=.2 sin(kx), periodic 3D seed; no physical quantum-state, finite-cloud or general-stability claim.",
+  "spatial_successive_RMS_differences": [
+    [
+      3.232588171549168e-05,
+      0.0001545753887825166,
+      0.0007728115186015655
+    ],
+    [
+      9.630968109987371e-06,
+      4.7409760611613494e-05,
+      0.00022652661332741366
+    ]
+  ],
+  "spatial_observed_orders": [
+    1.9369562061956727,
+    1.891895629047435,
+    1.9622419594988856
+  ],
+  "temporal_records": [
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00000_initial.npz",
+          "sha256": "31fdab497ccd206fd0f0f209319a6cf3caccb59f5a0764350227b7279391cae4",
+          "bytes": 451760,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "f13dfcbb3e6a4b4eaeabc3f18ae9773df5812da75f528a2e2bc5ec1479a68859",
+            "p": "f9041e6769b2cf3c38dd3e8f12d35ebb0f5f546e89da655725102a7bb415f576",
+            "psi": "0e3a931cae88826f061c35a211ee172b26137e8a658672ffcdacf2e646036930"
+          },
+          "git_blob_sha": "c9d648465d75d281af4ef381dbc3b632c41d64a2"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00010_checkpoint.npz",
+          "sha256": "e537813308d4fc4717b6550f4a036d69d95d1605057414731301b6adbd1e1212",
+          "bytes": 1141014,
+          "time": 0.1,
+          "step": 10,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "dcff7b745d72a22433d8a223968d07d213253b2e9a768cf68e6f4d6864ee0106",
+            "p": "5a5293124c43b8af174964ef98ed3dd020b3260acd5e73649cd2ecfef7099ef8",
+            "psi": "7612c32ca0781ad00669e02b27473f9168747fbbd7de65693de2589b7a2d5bcc"
+          },
+          "git_blob_sha": "4824dad96fa5e892e727b4f313172d0becb71c15"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00020_completed.npz",
+          "sha256": "abc795ebce9a678b405339485abae36be715b33646101f1436582bae7a3bf879",
+          "bytes": 1158233,
+          "time": 0.2,
+          "step": 20,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "3b76ec9f8882e575fd4772069d52b9509c87404ffb2547198421db829c249e27",
+            "p": "0067f8f5a9c85ac2c1dab5ff163b67c024af05a07406e9c41c2e00b865455c56",
+            "psi": "3f2117bbafed5d1daa338ddbd607cbb98a8df8a22b84c16dc043fb3e7b9c0515"
+          },
+          "git_blob_sha": "606f69b5763607d74acc81d184b5ee61fa474983"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.010194502231742675,
+              "full_R_max": 0.008043200083413193,
+              "full_K_min": 120.94220639294488,
+              "full_K_max": 132.70237838757126,
+              "full_orthonormal_component_max_abs": 3.060310757583647,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.010191330458457326,
+              "full_R_max": 0.008046486477024661,
+              "full_K_min": 120.9421853874731,
+              "full_K_max": 132.7023553986302,
+              "full_orthonormal_component_max_abs": 3.060310227633827,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00010_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.009338157301038041,
+              "full_R_max": 0.0074216853385551396,
+              "full_K_min": 399.0952182469499,
+              "full_K_max": 442.4753898549674,
+              "full_orthonormal_component_max_abs": 5.595588358615673,
+              "torsion2_min": -45.02779161215944,
+              "torsion2_max": -41.97845381215926,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.00933249749191667,
+              "full_R_max": 0.007427768024599324,
+              "full_K_min": 399.09515017815926,
+              "full_K_max": 442.4753121516362,
+              "full_orthonormal_component_max_abs": 5.5955873833947205,
+              "torsion2_min": -45.02779161215944,
+              "torsion2_max": -41.97845381215926,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n17_s20_9409c9f357a4/step00020_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.006318363507227254,
+              "full_R_max": 0.0049786062138910125,
+              "full_K_min": 1311.7912914876506,
+              "full_K_max": 1479.2397762389949,
+              "full_orthonormal_component_max_abs": 10.219321346064172,
+              "torsion2_min": -82.14550976698507,
+              "torsion2_max": -76.28950875177084,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.006308213195593382,
+              "full_R_max": 0.004989817971154054,
+              "full_K_min": 1311.7910701616715,
+              "full_K_max": 1479.2395144142345,
+              "full_orthonormal_component_max_abs": 10.21931957050603,
+              "torsion2_min": -82.14550976698507,
+              "torsion2_max": -76.28950875177084,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 20,
+      "termination_reason": null,
+      "n": 17,
+      "steps": 20,
+      "dt": 0.01,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 17,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.0021657720920881945,
+        "axial_formula_max_error": 4.440892098500626e-15,
+        "spatial_stress_formula_max_error": 5.773159728050814e-15,
+        "Ktrace": 2.9991155262553555,
+        "mean_log_chi": 1.354288773589555e-13,
+        "scalar_spectral_residual_max": 3.41025373309578e-12,
+        "vector_spectral_residual_max": 8.049116928532385e-16,
+        "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+        "oversample_n": 35,
+        "FD_Hamiltonian_max": 0.010408973122697063,
+        "FD_Hamiltonian_relative": 0.0016853397141546472,
+        "FD_momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.884981308350689e-15,
+        "seed_momentum_mean": [
+          2.54223672441136e-20,
+          1.446250225442907e-18,
+          -1.2358095188110778e-21
+        ],
+        "initial_H_min": -0.9997051754184522,
+        "initial_H_max": -0.9997051754184515,
+        "source_variation_each_axis": [
+          0.7931892398735605,
+          0.7931892398735605,
+          0.7931892398735605
+        ],
+        "chi_range": [
+          0.9858606377238854,
+          1.01330311822232
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.32958252699972945,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.0016853397141546472,
+        "Hamiltonian_max": 0.010408973122697063,
+        "momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754184522,
+        "Hnormal_max": -0.9997051754184515,
+        "Theta_current_min": -2.999115526255357,
+        "Theta_current_max": -2.9991155262553537,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199322411537,
+        "density_min": 3.921112827109684,
+        "density_max": 4.058304057761104,
+        "slice_volume": 512.2203014525093
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.0014215014382666761,
+        "Hamiltonian_max": 0.029241945436364603,
+        "momentum_max": 0.001834514256821726,
+        "harmonic_max": 0.00377165654977496,
+        "charge_relative": 2.8664524087673726e-09,
+        "Hnormal_min": -1.840002916383922,
+        "Hnormal_max": -1.79726886599441,
+        "Theta_current_min": -5.4969535657626265,
+        "Theta_current_max": -5.418199931162936,
+        "lapse_min": 0.5474153765287467,
+        "spatial_determinant_min": 0.2552699448057599,
+        "density_min": 7.131596770792678,
+        "density_max": 7.400248183540202,
+        "slice_volume": 281.16206029551967
+      },
+      "max_Hamiltonian_relative": 0.0016869637378571244,
+      "max_momentum": 0.001834514256821726,
+      "max_harmonic": 0.00377165654977496,
+      "max_charge_drift": 2.8664524087673726e-09,
+      "max_Theta_current_over_time": -2.9991155262553537,
+      "max_Hnormal_over_time": -0.9997051754184515,
+      "max_CFL_ratio": 0.2623669498963489,
+      "slice_volume_ratio": 0.5489084667246203,
+      "metric_R_range": [
+        -20.53195195023001,
+        -19.079503385783635
+      ],
+      "metric_Kretschmann_max_abs": 703.3760153631076,
+      "conservation": {
+        "stress_divergence_RMS": 0.47513928926062265,
+        "stress_divergence_relative_RMS": 0.0011978659267178136
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.00114396862555381,
+            "stress_divergence_relative_RMS": 2.887499342814505e-06
+          },
+          {
+            "stress_divergence_RMS": 0.0011439626514808314,
+            "stress_divergence_relative_RMS": 2.887484268725093e-06
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.0016853397141546472,
+          "Hamiltonian_max": 0.010408973122697063,
+          "momentum_max": 0.0009375205043588956,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754184522,
+          "Hnormal_max": -0.9997051754184515,
+          "Theta_current_min": -2.999115526255357,
+          "Theta_current_max": -2.9991155262553537,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199322411537,
+          "density_min": 3.921112827109684,
+          "density_max": 4.058304057761104,
+          "slice_volume": 512.2203014525093
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.0016863010900935844,
+          "Hamiltonian_max": 0.011742875041306888,
+          "momentum_max": 0.0009950507748279873,
+          "harmonic_max": 0.00022567854845156887,
+          "charge_relative": 1.7814327790688367e-10,
+          "Hnormal_min": -1.062713430225019,
+          "Hnormal_max": -1.0599630208864694,
+          "Theta_current_min": -3.185603091288043,
+          "Theta_current_max": -3.18243166332954,
+          "lapse_min": 0.9417482165979165,
+          "spatial_determinant_min": 0.7476774501794828,
+          "density_min": 4.163430720206159,
+          "density_max": 4.309218120207336,
+          "slice_volume": 482.39941520580487
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.0016786917104987492,
+          "Hamiltonian_max": 0.013181517247737418,
+          "momentum_max": 0.0010553164728597,
+          "harmonic_max": 0.00047883983361174387,
+          "charge_relative": 3.3417757450138197e-10,
+          "Hnormal_min": -1.1296667267187883,
+          "Hnormal_max": -1.1238813792622524,
+          "Theta_current_min": -3.383957175933284,
+          "Theta_current_max": -3.3767792530055,
+          "lapse_min": 0.886830977496419,
+          "spatial_determinant_min": 0.6632773816067491,
+          "density_min": 4.420563927835798,
+          "density_max": 4.575729314469467,
+          "slice_volume": 454.31461453142265
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.0016636010081947162,
+          "Hamiltonian_max": 0.014731013686288819,
+          "momentum_max": 0.001118542259560252,
+          "harmonic_max": 0.0007615725249965344,
+          "charge_relative": 4.800235764435001e-10,
+          "Hnormal_min": -1.200808756613587,
+          "Hnormal_max": -1.1916865969246826,
+          "Theta_current_min": -3.5949163323054076,
+          "Theta_current_max": -3.5827980023645427,
+          "lapse_min": 0.8350654986650217,
+          "spatial_determinant_min": 0.5884707312523292,
+          "density_min": 4.693413467388885,
+          "density_max": 4.858813957116276,
+          "slice_volume": 427.8648458533236
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.0016420230099476374,
+          "Hamiltonian_max": 0.01639770878584912,
+          "momentum_max": 0.0011849659786226582,
+          "harmonic_max": 0.0010760911889500235,
+          "charge_relative": 6.319871292959078e-10,
+          "Hnormal_min": -1.27639851076155,
+          "Hnormal_max": -1.2636187066569609,
+          "Theta_current_min": -3.8192647765625143,
+          "Theta_current_max": -3.801217051680755,
+          "lapse_min": 0.7862780439555426,
+          "spatial_determinant_min": 0.5221549648698776,
+          "density_min": 4.982935593169552,
+          "density_max": 5.159509167707426,
+          "slice_volume": 402.95494017567125
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.0016148626079820797,
+          "Hamiltonian_max": 0.01818817320931032,
+          "momentum_max": 0.001254839878531075,
+          "harmonic_max": 0.0014247406761906944,
+          "charge_relative": 8.095777381811331e-10,
+          "Hnormal_min": -1.3567109756969644,
+          "Hnormal_max": -1.3399322817240609,
+          "Theta_current_min": -4.057835227706678,
+          "Theta_current_max": -4.032797596485148,
+          "lapse_min": 0.7403035518944333,
+          "spatial_determinant_min": 0.4633563947839573,
+          "density_min": 5.290145165756119,
+          "density_max": 5.4789166576468045,
+          "slice_volume": 379.495268977832
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.0015829416320340128,
+          "Hamiltonian_max": 0.020109197984886862,
+          "momentum_max": 0.0013284319489568347,
+          "harmonic_max": 0.0018100003554639699,
+          "charge_relative": 1.0344545220419832e-09,
+          "Hnormal_min": -1.4420383558877277,
+          "Hnormal_max": -1.4208973415574804,
+          "Theta_current_min": -4.311511920455953,
+          "Theta_current_max": -4.278347552879739,
+          "lapse_min": 0.6969853369961836,
+          "spatial_determinant_min": 0.411214756254081,
+          "density_min": 5.616119227876728,
+          "density_max": 5.818206754188262,
+          "slice_volume": 357.40142060159303
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.0015470046916538284,
+          "Hamiltonian_max": 0.02216778682384657,
+          "momentum_max": 0.0014269655802954043,
+          "harmonic_max": 0.0022344881605231848,
+          "charge_relative": 1.329494958568489e-09,
+          "Hnormal_min": -1.5326910743578026,
+          "Hnormal_max": -1.5068003121290408,
+          "Theta_current_min": -4.581233803356862,
+          "Theta_current_max": -4.53872441123517,
+          "lapse_min": 0.6561747359175439,
+          "spatial_determinant_min": 0.3649696908034002,
+          "density_min": 5.962000799618347,
+          "density_max": 6.178622674081314,
+          "slice_volume": 336.5938958373944
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.0015077247677076939,
+          "Hamiltonian_max": 0.024371146418367573,
+          "momentum_max": 0.0015552176753932667,
+          "harmonic_max": 0.0027009644138935585,
+          "charge_relative": 1.7179859757021632e-09,
+          "Hnormal_min": -1.628998898840722,
+          "Hnormal_max": -1.5979450443118175,
+          "Theta_current_min": -4.8679979339792325,
+          "Theta_current_max": -4.814838268594381,
+          "lapse_min": 0.6177307732233724,
+          "spatial_determinant_min": 0.3239488911019204,
+          "density_min": 6.329002906549425,
+          "density_max": 6.561485062258769,
+          "slice_volume": 316.9978215096251
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.0014657085393112018,
+          "Hamiltonian_max": 0.026726674501201586,
+          "momentum_max": 0.0016894119042701883,
+          "harmonic_max": 0.003212335386698406,
+          "charge_relative": 2.2229291740671897e-09,
+          "Hnormal_min": -1.731312138611015,
+          "Hnormal_max": -1.6946538937502396,
+          "Theta_current_min": -5.1728630837519995,
+          "Theta_current_max": -5.107655050188744,
+          "lapse_min": 0.5815198401654016,
+          "spatial_determinant_min": 0.287557695014278,
+          "density_min": 6.718412855148138,
+          "density_max": 6.968196811938402,
+          "slice_volume": 298.54268094620613
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.0014215014382666761,
+          "Hamiltonian_max": 0.029241945436364603,
+          "momentum_max": 0.001834514256821726,
+          "harmonic_max": 0.00377165654977496,
+          "charge_relative": 2.8664524087673726e-09,
+          "Hnormal_min": -1.840002916383922,
+          "Hnormal_max": -1.79726886599441,
+          "Theta_current_min": -5.4969535657626265,
+          "Theta_current_max": -5.418199931162936,
+          "lapse_min": 0.5474153765287467,
+          "spatial_determinant_min": 0.2552699448057599,
+          "density_min": 7.131596770792678,
+          "density_max": 7.400248183540202,
+          "slice_volume": 281.16206029551967
+        }
+      ],
+      "seconds": 25.66297313599989,
+      "status": "completed within declared finite-interval numerical controls"
+    },
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00000_initial.npz",
+          "sha256": "71325ba21c05afcafb2126e841642a1b393d6b6fed3825e37a76922e7451d710",
+          "bytes": 451762,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "f13dfcbb3e6a4b4eaeabc3f18ae9773df5812da75f528a2e2bc5ec1479a68859",
+            "p": "f9041e6769b2cf3c38dd3e8f12d35ebb0f5f546e89da655725102a7bb415f576",
+            "psi": "0e3a931cae88826f061c35a211ee172b26137e8a658672ffcdacf2e646036930"
+          },
+          "git_blob_sha": "e929e334c7b2dedde922852fc9ec2c40e1c98f6a"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00020_checkpoint.npz",
+          "sha256": "85b333eadaffe1070e52f2d66a7e661a1a3b983f368432ed71b436a89e795ec6",
+          "bytes": 1139603,
+          "time": 0.1,
+          "step": 20,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "0ef8f0628573122a953eef8274e2a7c62c8a4f7cae1c526121f57de724c9c782",
+            "p": "c0c2854574b32838853ff944badd503b5a31755d60571e849934402f3373e299",
+            "psi": "3c6ce45e228d4ba7f667d6cc8f228fb1ac31d63062f985ee93689b246184482c"
+          },
+          "git_blob_sha": "f5297702e589defe4020187c8bcc97f090793afb"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+          "sha256": "3cf45e9d286dcecfb51c62c16296cfa4b176f87bba9cc6b390b7053d0a5c41cc",
+          "bytes": 1157168,
+          "time": 0.2,
+          "step": 40,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "099efc967e8bbd2382e001c14f3b39955ca4b0febfa3972ffb8224fa7fe811dd",
+            "p": "f9cae5b78ee47bccc2d898751fb41ebe1018ac59edab3b2ae1bb6bca456f5e55",
+            "psi": "154aced53b787f622c9d3a8e156df1a7949b650161b4cd58b2a76e085e124e75"
+          },
+          "git_blob_sha": "c6cb2be5818319fc70e95d184128d4f190397cbf"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.010194502231742675,
+              "full_R_max": 0.008043200083413193,
+              "full_K_min": 120.94220639294488,
+              "full_K_max": 132.70237838757126,
+              "full_orthonormal_component_max_abs": 3.060310757583647,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.010191330458457326,
+              "full_R_max": 0.008046486477024661,
+              "full_K_min": 120.9421853874731,
+              "full_K_max": 132.7023553986302,
+              "full_orthonormal_component_max_abs": 3.060310227633827,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00020_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.009340811631423751,
+              "full_R_max": 0.007418313262859133,
+              "full_K_min": 399.09524380119393,
+              "full_K_max": 442.47541378412427,
+              "full_orthonormal_component_max_abs": 5.5955883423270905,
+              "torsion2_min": -45.027791514784234,
+              "torsion2_max": -41.97845382755156,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.009335151813843812,
+              "full_R_max": 0.007424395967694064,
+              "full_K_min": 399.0951757324523,
+              "full_K_max": 442.4753360812068,
+              "full_orthonormal_component_max_abs": 5.59558736711557,
+              "torsion2_min": -45.027791514784234,
+              "torsion2_max": -41.97845382755156,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n17_s40_228f1bdb2f52/step00040_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.006326359932606884,
+              "full_R_max": 0.004968375125121938,
+              "full_K_min": 1311.7914778648305,
+              "full_K_max": 1479.2399843522523,
+              "full_orthonormal_component_max_abs": 10.219321465808216,
+              "torsion2_min": -82.14550944071851,
+              "torsion2_max": -76.28950876496705,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.006316209573954623,
+              "full_R_max": 0.004979586894592991,
+              "full_K_min": 1311.7912565351987,
+              "full_K_max": 1479.2397225227642,
+              "full_orthonormal_component_max_abs": 10.219319690253572,
+              "torsion2_min": -82.14550944071851,
+              "torsion2_max": -76.28950876496705,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 40,
+      "termination_reason": null,
+      "n": 17,
+      "steps": 40,
+      "dt": 0.005,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 17,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.0021657720920881945,
+        "axial_formula_max_error": 4.440892098500626e-15,
+        "spatial_stress_formula_max_error": 5.773159728050814e-15,
+        "Ktrace": 2.9991155262553555,
+        "mean_log_chi": 1.354288773589555e-13,
+        "scalar_spectral_residual_max": 3.41025373309578e-12,
+        "vector_spectral_residual_max": 8.049116928532385e-16,
+        "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+        "oversample_n": 35,
+        "FD_Hamiltonian_max": 0.010408973122697063,
+        "FD_Hamiltonian_relative": 0.0016853397141546472,
+        "FD_momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.884981308350689e-15,
+        "seed_momentum_mean": [
+          2.54223672441136e-20,
+          1.446250225442907e-18,
+          -1.2358095188110778e-21
+        ],
+        "initial_H_min": -0.9997051754184522,
+        "initial_H_max": -0.9997051754184515,
+        "source_variation_each_axis": [
+          0.7931892398735605,
+          0.7931892398735605,
+          0.7931892398735605
+        ],
+        "chi_range": [
+          0.9858606377238854,
+          1.01330311822232
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.3867525810001098,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.0016853397141546472,
+        "Hamiltonian_max": 0.010408973122697063,
+        "momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754184522,
+        "Hnormal_max": -0.9997051754184515,
+        "Theta_current_min": -2.999115526255357,
+        "Theta_current_max": -2.9991155262553537,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199322411537,
+        "density_min": 3.921112827109684,
+        "density_max": 4.058304057761104,
+        "slice_volume": 512.2203014525093
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.0014215334737086379,
+        "Hamiltonian_max": 0.029242604334232425,
+        "momentum_max": 0.001834522280702855,
+        "harmonic_max": 0.0037704353327381313,
+        "charge_relative": 1.0640157643848625e-09,
+        "Hnormal_min": -1.84000293114251,
+        "Hnormal_max": -1.797268896623032,
+        "Theta_current_min": -5.496953608952578,
+        "Theta_current_max": -5.418200024254704,
+        "lapse_min": 0.5474153726621651,
+        "spatial_determinant_min": 0.25526994416571613,
+        "density_min": 7.131596771409477,
+        "density_max": 7.400248168844002,
+        "slice_volume": 281.1620600790651
+      },
+      "max_Hamiltonian_relative": 0.0016869618504379252,
+      "max_momentum": 0.001834522280702855,
+      "max_harmonic": 0.0037704353327381313,
+      "max_charge_drift": 1.0640157643848625e-09,
+      "max_Theta_current_over_time": -2.9991155262553537,
+      "max_Hnormal_over_time": -0.9997051754184515,
+      "max_CFL_ratio": 0.13118347494817445,
+      "slice_volume_ratio": 0.5489084663020393,
+      "metric_R_range": [
+        -20.531962101485526,
+        -19.07951138573464
+      ],
+      "metric_Kretschmann_max_abs": 703.3763069108493,
+      "conservation": {
+        "stress_divergence_RMS": 0.11873143818874929,
+        "stress_divergence_relative_RMS": 0.000299601065444064
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.0011439686510734779,
+            "stress_divergence_relative_RMS": 2.8874991332422603e-06
+          },
+          {
+            "stress_divergence_RMS": 0.0011439626719499643,
+            "stress_divergence_relative_RMS": 2.8874840464058383e-06
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.0016853397141546472,
+          "Hamiltonian_max": 0.010408973122697063,
+          "momentum_max": 0.0009375205043588956,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754184522,
+          "Hnormal_max": -0.9997051754184515,
+          "Theta_current_min": -2.999115526255357,
+          "Theta_current_max": -2.9991155262553537,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199322411537,
+          "density_min": 3.921112827109684,
+          "density_max": 4.058304057761104,
+          "slice_volume": 512.2203014525093
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.0016862978300361657,
+          "Hamiltonian_max": 0.011742852333997966,
+          "momentum_max": 0.0009950510195253295,
+          "harmonic_max": 0.00022561160419654058,
+          "charge_relative": -2.0342616480206743e-12,
+          "Hnormal_min": -1.062713425170728,
+          "Hnormal_max": -1.0599630191916536,
+          "Theta_current_min": -3.185603076194864,
+          "Theta_current_max": -3.1824316576262643,
+          "lapse_min": 0.9417482211517026,
+          "spatial_determinant_min": 0.7476774498992849,
+          "density_min": 4.163430720455261,
+          "density_max": 4.309218119229521,
+          "slice_volume": 482.39941516874666
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.001678687134092294,
+          "Hamiltonian_max": 0.013181481300966524,
+          "momentum_max": 0.001055316940156894,
+          "harmonic_max": 0.0004786966993717279,
+          "charge_relative": -2.621691752580091e-11,
+          "Hnormal_min": -1.1296667178302935,
+          "Hnormal_max": -1.1238813767629696,
+          "Theta_current_min": -3.383957149332738,
+          "Theta_current_max": -3.3767792452375156,
+          "lapse_min": 0.8868309846348976,
+          "spatial_determinant_min": 0.6632773811320484,
+          "density_min": 4.420563928313722,
+          "density_max": 4.575729312413575,
+          "slice_volume": 454.3146144616515
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.0016635968401309314,
+          "Hamiltonian_max": 0.014730976759352643,
+          "momentum_max": 0.0011185429273513,
+          "harmonic_max": 0.000761342997098069,
+          "charge_relative": -6.0616844876904e-11,
+          "Hnormal_min": -1.200808745197859,
+          "Hnormal_max": -1.1916865945683515,
+          "Theta_current_min": -3.5949162980455633,
+          "Theta_current_max": -3.5827979950441105,
+          "lapse_min": 0.8350655068530691,
+          "spatial_determinant_min": 0.5884707306490863,
+          "density_min": 4.6934134680683615,
+          "density_max": 4.858813953878769,
+          "slice_volume": 427.8648457547734
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.001642020773829103,
+          "Hamiltonian_max": 0.016397686427461977,
+          "momentum_max": 0.0011849668251053304,
+          "harmonic_max": 0.0010757640177230243,
+          "charge_relative": -8.891887226525341e-11,
+          "Hnormal_min": -1.2763984982018999,
+          "Hnormal_max": -1.2636187054511352,
+          "Theta_current_min": -3.819264738759027,
+          "Theta_current_max": -3.8012170479065093,
+          "lapse_min": 0.786278052019893,
+          "spatial_determinant_min": 0.5221549641882566,
+          "density_min": 4.982935594015728,
+          "density_max": 5.159509163181554,
+          "slice_volume": 402.95494005190994
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.001614863642897121,
+          "Hamiltonian_max": 0.01818818482771256,
+          "momentum_max": 0.001254840882502023,
+          "harmonic_max": 0.0014243034696432844,
+          "charge_relative": -9.160372460570443e-11,
+          "Hnormal_min": -1.3567109634668275,
+          "Hnormal_max": -1.3399322827395495,
+          "Theta_current_min": -4.057835190748744,
+          "Theta_current_max": -4.032797599528567,
+          "lapse_min": 0.7403035589604808,
+          "spatial_determinant_min": 0.4633563940615822,
+          "density_min": 5.290145166725992,
+          "density_max": 5.4789166517225665,
+          "slice_volume": 379.49526883209944
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.0015829471079254229,
+          "Hamiltonian_max": 0.020109267499806904,
+          "momentum_max": 0.0013284330901104785,
+          "harmonic_max": 0.0018094394738641384,
+          "charge_relative": -4.700417832737003e-11,
+          "Hnormal_min": -1.4420383455500605,
+          "Hnormal_max": -1.4208973459315457,
+          "Theta_current_min": -4.31151188901297,
+          "Theta_current_max": -4.278347566196964,
+          "lapse_min": 0.6969853424377107,
+          "spatial_determinant_min": 0.4112147555187004,
+          "density_min": 5.616119228918564,
+          "density_max": 5.818206746752242,
+          "slice_volume": 357.401420436833
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.0015470156235941202,
+          "Hamiltonian_max": 0.022167943411220747,
+          "momentum_max": 0.0014269721297774235,
+          "harmonic_max": 0.0022337886009315966,
+          "charge_relative": 6.776512684325553e-11,
+          "Hnormal_min": -1.5326910675679697,
+          "Hnormal_max": -1.506800321068706,
+          "Theta_current_min": -4.581233782385815,
+          "Theta_current_max": -4.538724438478988,
+          "lapse_min": 0.656174739307827,
+          "spatial_determinant_min": 0.36496969007505115,
+          "density_min": 5.962000800671104,
+          "density_max": 6.1786226650164435,
+          "slice_volume": 336.59389565628254
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.0015077420291767982,
+          "Hamiltonian_max": 0.024371425360168786,
+          "momentum_max": 0.0015552245659071692,
+          "harmonic_max": 0.0027001096835723715,
+          "charge_relative": 2.759985573419499e-10,
+          "Hnormal_min": -1.6289988973496394,
+          "Hnormal_max": -1.5979450590972986,
+          "Theta_current_min": -4.867997928732845,
+          "Theta_current_max": -4.814838313626442,
+          "lapse_min": 0.6177307742973387,
+          "spatial_determinant_min": 0.3239488903946707,
+          "density_min": 6.329002907542127,
+          "density_max": 6.561485051443962,
+          "slice_volume": 316.9978213145927
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.0014657328745351788,
+          "Hamiltonian_max": 0.026727118153942797,
+          "momentum_max": 0.0016894189042346644,
+          "harmonic_max": 0.0032113073642587864,
+          "charge_relative": 6.0070370899723e-10,
+          "Hnormal_min": -1.7313121442685373,
+          "Hnormal_max": -1.694653915738529,
+          "Theta_current_min": -5.172863099787735,
+          "Theta_current_max": -5.10765511709205,
+          "lapse_min": 0.5815198387867285,
+          "spatial_determinant_min": 0.2875576943376202,
+          "density_min": 6.718412855999263,
+          "density_max": 6.968196799248142,
+          "slice_volume": 298.5426807394612
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.0014215334737086379,
+          "Hamiltonian_max": 0.029242604334232425,
+          "momentum_max": 0.001834522280702855,
+          "harmonic_max": 0.0037704353327381313,
+          "charge_relative": 1.0640157643848625e-09,
+          "Hnormal_min": -1.84000293114251,
+          "Hnormal_max": -1.797268896623032,
+          "Theta_current_min": -5.496953608952578,
+          "Theta_current_max": -5.418200024254704,
+          "lapse_min": 0.5474153726621651,
+          "spatial_determinant_min": 0.25526994416571613,
+          "density_min": 7.131596771409477,
+          "density_max": 7.400248168844002,
+          "slice_volume": 281.1620600790651
+        }
+      ],
+      "seconds": 47.43133460099989,
+      "status": "completed within declared finite-interval numerical controls"
+    },
+    {
+      "checkpoint_manifest": [
+        {
+          "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00000_initial.npz",
+          "sha256": "ab48846390c49950c5bc6d27e2460f8e2fc33001afea5ccbcfaa45003488132d",
+          "bytes": 451763,
+          "time": 0.0,
+          "step": 0,
+          "status": "initial",
+          "reason": null,
+          "field_hashes": {
+            "g": "f13dfcbb3e6a4b4eaeabc3f18ae9773df5812da75f528a2e2bc5ec1479a68859",
+            "p": "f9041e6769b2cf3c38dd3e8f12d35ebb0f5f546e89da655725102a7bb415f576",
+            "psi": "0e3a931cae88826f061c35a211ee172b26137e8a658672ffcdacf2e646036930"
+          },
+          "git_blob_sha": "e2d55d6a2945860519e83e09cbeb8f754de91736"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00040_checkpoint.npz",
+          "sha256": "810c49db49bb7c3822b6b5ee9a428319cceb8bb294ae0f7f8a2f5fc5601d4049",
+          "bytes": 1139716,
+          "time": 0.1,
+          "step": 40,
+          "status": "checkpoint",
+          "reason": null,
+          "field_hashes": {
+            "g": "78b0a6cfc7ee887f124adb0b1419b3a797d4d530fac5a2a39d4bd88746ee75f2",
+            "p": "29c2a19493248382819ff73f367b528f3f6514610ab5945c5c0227bbb6ccc793",
+            "psi": "474f949050f911cdf3508478289324d4652618b584c96394f72ae2ef5d465e10"
+          },
+          "git_blob_sha": "7dee9c5018f4a501f077a08a4b635c501a117fbe"
+        },
+        {
+          "path": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00080_completed.npz",
+          "sha256": "181840f2d981774b97dea9aa0ff5f90dbf67bfdea2254d443688a6edc2129aae",
+          "bytes": 1157446,
+          "time": 0.2,
+          "step": 80,
+          "status": "completed",
+          "reason": null,
+          "field_hashes": {
+            "g": "ea22a491154c83840ff8237271554efc5673f7bd56f19f8ff3189c5667d8109e",
+            "p": "a3819f49cc553f19e09e90210ebf017b0d29ad2037f580ce640897be8f769fee",
+            "psi": "57f38d069b1f199b03178785199f2f655de3a4c405480b628d378a5f5167bc38"
+          },
+          "git_blob_sha": "f4a332ab493adfcb463d1f708aed66650bfda0d5"
+        }
+      ],
+      "full_curvature_history": [
+        {
+          "time": 0.0,
+          "checkpoint": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00000_initial.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.010194502231742675,
+              "full_R_max": 0.008043200083413193,
+              "full_K_min": 120.94220639294488,
+              "full_K_max": 132.70237838757126,
+              "full_orthonormal_component_max_abs": 3.060310757583647,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.010191330458457326,
+              "full_R_max": 0.008046486477024661,
+              "full_K_min": 120.9421853874731,
+              "full_K_max": 132.7023553986302,
+              "full_orthonormal_component_max_abs": 3.060310227633827,
+              "torsion2_min": -24.704747737860362,
+              "torsion2_max": -23.062688704386147,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.1,
+          "checkpoint": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00040_checkpoint.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.009340971155077149,
+              "full_R_max": 0.0074181107932149715,
+              "full_K_min": 399.0952453786754,
+              "full_K_max": 442.47541527678675,
+              "full_orthonormal_component_max_abs": 5.595588341640767,
+              "torsion2_min": -45.02779150890528,
+              "torsion2_max": -41.97845382852118,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.009335311355581855,
+              "full_R_max": 0.007424193498788867,
+              "full_K_min": 399.0951773102863,
+              "full_K_max": 442.47533757485195,
+              "full_orthonormal_component_max_abs": 5.595587366422519,
+              "torsion2_min": -45.02779150890528,
+              "torsion2_max": -41.97845382852118,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        },
+        {
+          "time": 0.2,
+          "checkpoint": "checkpoints/cycle08/n17_s80_1fefa95989d9/step00080_completed.npz",
+          "probes": [
+            {
+              "delta": 0.0001,
+              "full_R_min": -0.006326840306348558,
+              "full_R_max": 0.004967761202270715,
+              "full_K_min": 1311.7914893071286,
+              "full_K_max": 1479.2399971800678,
+              "full_orthonormal_component_max_abs": 10.219321473979539,
+              "torsion2_min": -82.14550942106472,
+              "torsion2_max": -76.28950876587868,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            },
+            {
+              "delta": 5e-05,
+              "full_R_min": -0.006316690036217487,
+              "full_R_max": 0.004978972999290399,
+              "full_K_min": 1311.7912679809208,
+              "full_K_max": 1479.2397353519505,
+              "full_orthonormal_component_max_abs": 10.219319698440989,
+              "torsion2_min": -82.14550942106472,
+              "torsion2_max": -76.28950876587868,
+              "scope": "Full affine Riemann. Time derivatives use a centered tangent-state difference; spatial derivatives use the existing FD operator. Lorentzian scalar contractions can cancel."
+            }
+          ]
+        }
+      ],
+      "completed_steps": 80,
+      "termination_reason": null,
+      "n": 17,
+      "steps": 80,
+      "dt": 0.0025,
+      "duration": 0.2,
+      "initial_data": {
+        "n": 17,
+        "parameters": {
+          "n0": 4.0,
+          "epsilon": 0.1,
+          "length": 8.0,
+          "mass": 0.0,
+          "kappa": 1.0,
+          "tolerance": 1e-11,
+          "spin_amplitude": 0.2,
+          "texture": "theta=spin_amplitude sin(kx); real lower pair"
+        },
+        "momentum_formula_FD_error": 0.0021657720920881945,
+        "axial_formula_max_error": 4.440892098500626e-15,
+        "spatial_stress_formula_max_error": 5.773159728050814e-15,
+        "Ktrace": 2.9991155262553555,
+        "mean_log_chi": 1.354288773589555e-13,
+        "scalar_spectral_residual_max": 3.41025373309578e-12,
+        "vector_spectral_residual_max": 8.049116928532385e-16,
+        "oversampled_continuum_Hamiltonian_max": 3.168665330122167e-11,
+        "oversample_n": 35,
+        "FD_Hamiltonian_max": 0.010408973122697063,
+        "FD_Hamiltonian_relative": 0.0016853397141546472,
+        "FD_momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "energy_formula_max_error": 4.884981308350689e-15,
+        "seed_momentum_mean": [
+          2.54223672441136e-20,
+          1.446250225442907e-18,
+          -1.2358095188110778e-21
+        ],
+        "initial_H_min": -0.9997051754184522,
+        "initial_H_max": -0.9997051754184515,
+        "source_variation_each_axis": [
+          0.7931892398735605,
+          0.7931892398735605,
+          0.7931892398735605
+        ],
+        "chi_range": [
+          0.9858606377238854,
+          1.01330311822232
+        ],
+        "field_evaluations": 20,
+        "seconds": 0.31513889899997594,
+        "scope": "Real periodic spin texture, full source and independent FD constraints; no evolution or physical quantum-state claim."
+      },
+      "initial": {
+        "t": 0.0,
+        "Hamiltonian_relative": 0.0016853397141546472,
+        "Hamiltonian_max": 0.010408973122697063,
+        "momentum_max": 0.0009375205043588956,
+        "harmonic_max": 4.440892098500626e-16,
+        "charge_relative": 0.0,
+        "Hnormal_min": -0.9997051754184522,
+        "Hnormal_max": -0.9997051754184515,
+        "Theta_current_min": -2.999115526255357,
+        "Theta_current_max": -2.9991155262553537,
+        "lapse_min": 1.0,
+        "spatial_determinant_min": 0.8429199322411537,
+        "density_min": 3.921112827109684,
+        "density_max": 4.058304057761104,
+        "slice_volume": 512.2203014525093
+      },
+      "final": {
+        "t": 0.2,
+        "Hamiltonian_relative": 0.0014215355529939814,
+        "Hamiltonian_max": 0.02924264710102875,
+        "momentum_max": 0.001834522739602773,
+        "harmonic_max": 0.003770362500172375,
+        "charge_relative": 9.545233492502803e-10,
+        "Hnormal_min": -1.840002932216385,
+        "Hnormal_max": -1.7972688986117558,
+        "Theta_current_min": -5.496953612107307,
+        "Theta_current_max": -5.418200030295248,
+        "lapse_min": 0.5474153723749031,
+        "spatial_determinant_min": 0.2552699441263998,
+        "density_min": 7.131596771452084,
+        "density_max": 7.4002481679587255,
+        "slice_volume": 281.1620600656505
+      },
+      "max_Hamiltonian_relative": 0.0016870042513433964,
+      "max_momentum": 0.001834522739602773,
+      "max_harmonic": 0.003770362500172375,
+      "max_charge_drift": 9.545233492502803e-10,
+      "max_Theta_current_over_time": -2.9991155262553537,
+      "max_Hnormal_over_time": -0.9997051754184515,
+      "max_CFL_ratio": 0.06559173747408722,
+      "slice_volume_ratio": 0.5489084662758502,
+      "metric_R_range": [
+        -20.53196271059189,
+        -19.079511866356327
+      ],
+      "metric_Kretschmann_max_abs": 703.3763245756174,
+      "conservation": {
+        "stress_divergence_RMS": 0.029706324904787113,
+        "stress_divergence_relative_RMS": 7.497632274665087e-05
+      },
+      "tangent_conservation": {
+        "deltas": [
+          1e-05,
+          5e-06
+        ],
+        "records": [
+          {
+            "stress_divergence_RMS": 0.0011439686507938613,
+            "stress_divergence_relative_RMS": 2.8874991156345888e-06
+          },
+          {
+            "stress_divergence_RMS": 0.001143962676080172,
+            "stress_divergence_relative_RMS": 2.8874840399292677e-06
+          }
+        ],
+        "interpretation": "Chain derivative of the semidiscrete full stress along its evolved-state RHS; not an extra evolution or a replacement for snapshot conservation."
+      },
+      "rows": [
+        {
+          "t": 0.0,
+          "Hamiltonian_relative": 0.0016853397141546472,
+          "Hamiltonian_max": 0.010408973122697063,
+          "momentum_max": 0.0009375205043588956,
+          "harmonic_max": 4.440892098500626e-16,
+          "charge_relative": 0.0,
+          "Hnormal_min": -0.9997051754184522,
+          "Hnormal_max": -0.9997051754184515,
+          "Theta_current_min": -2.999115526255357,
+          "Theta_current_max": -2.9991155262553537,
+          "lapse_min": 1.0,
+          "spatial_determinant_min": 0.8429199322411537,
+          "density_min": 3.921112827109684,
+          "density_max": 4.058304057761104,
+          "slice_volume": 512.2203014525093
+        },
+        {
+          "t": 0.02,
+          "Hamiltonian_relative": 0.0016862976526597635,
+          "Hamiltonian_max": 0.011742851098484941,
+          "momentum_max": 0.0009950510341101525,
+          "harmonic_max": 0.00022560760049605832,
+          "charge_relative": -1.2979284313985318e-11,
+          "Hnormal_min": -1.0627134248802816,
+          "Hnormal_max": -1.0599630191000642,
+          "Theta_current_min": -3.18560307532729,
+          "Theta_current_max": -3.1824316573151634,
+          "lapse_min": 0.9417482214138683,
+          "spatial_determinant_min": 0.7476774498821023,
+          "density_min": 4.163430720470763,
+          "density_max": 4.309218119170388,
+          "slice_volume": 482.3994151664505
+        },
+        {
+          "t": 0.04,
+          "Hamiltonian_relative": 0.0016786868954229276,
+          "Hamiltonian_max": 0.013181479426170206,
+          "momentum_max": 0.0010553169679886933,
+          "harmonic_max": 0.0004786881413436639,
+          "charge_relative": -4.810940534838437e-11,
+          "Hnormal_min": -1.1296667173237984,
+          "Hnormal_max": -1.1238813766341658,
+          "Theta_current_min": -3.383957147816369,
+          "Theta_current_max": -3.3767792448358307,
+          "lapse_min": 0.8868309850426589,
+          "spatial_determinant_min": 0.6632773811029361,
+          "density_min": 4.420563928343526,
+          "density_max": 4.575729312289294,
+          "slice_volume": 454.31461445732793
+        },
+        {
+          "t": 0.06,
+          "Hamiltonian_relative": 0.001663596643106227,
+          "Hamiltonian_max": 0.014730975013563352,
+          "momentum_max": 0.0011185429670902795,
+          "harmonic_max": 0.0007613292774402147,
+          "charge_relative": -9.345890727985307e-11,
+          "Hnormal_min": -1.2008087445549782,
+          "Hnormal_max": -1.1916865944601898,
+          "Theta_current_min": -3.5949162961150627,
+          "Theta_current_max": -3.5827979947058264,
+          "lapse_min": 0.835065507315754,
+          "spatial_determinant_min": 0.5884707306120862,
+          "density_min": 4.693413468110846,
+          "density_max": 4.858813953683138,
+          "slice_volume": 427.8648457486663
+        },
+        {
+          "t": 0.08,
+          "Hamiltonian_relative": 0.0016420207093059346,
+          "Hamiltonian_max": 0.016397685781434745,
+          "momentum_max": 0.0011849668754291103,
+          "harmonic_max": 0.0010757444672857552,
+          "charge_relative": -1.327113974269878e-10,
+          "Hnormal_min": -1.276398497506923,
+          "Hnormal_max": -1.263618705425135,
+          "Theta_current_min": -3.8192647366652697,
+          "Theta_current_max": -3.801217047820673,
+          "lapse_min": 0.7862780524684058,
+          "spatial_determinant_min": 0.5221549641464429,
+          "density_min": 4.982935594068806,
+          "density_max": 5.159509162908192,
+          "slice_volume": 402.9549400442404
+        },
+        {
+          "t": 0.1,
+          "Hamiltonian_relative": 0.0016148637906570828,
+          "Hamiltonian_max": 0.018188186489650704,
+          "momentum_max": 0.0012548409421290242,
+          "harmonic_max": 0.001424277351790959,
+          "charge_relative": -1.463476007046438e-10,
+          "Hnormal_min": -1.3567109628095093,
+          "Hnormal_max": -1.3399322828610847,
+          "Theta_current_min": -4.0578351887591975,
+          "Theta_current_max": -4.0327975998947725,
+          "lapse_min": 0.7403035593435143,
+          "spatial_determinant_min": 0.46335639401726075,
+          "density_min": 5.290145166787087,
+          "density_max": 5.478916651364896,
+          "slice_volume": 379.4952688230681
+        },
+        {
+          "t": 0.12,
+          "Hamiltonian_relative": 0.0015829475375941156,
+          "Hamiltonian_max": 0.020109272955226132,
+          "momentum_max": 0.0013284331578162917,
+          "harmonic_max": 0.0018094059783120287,
+          "charge_relative": -1.1269940536351442e-10,
+          "Hnormal_min": -1.4420383450255845,
+          "Hnormal_max": -1.4208973462700385,
+          "Theta_current_min": -4.311511887412059,
+          "Theta_current_max": -4.278347567226079,
+          "lapse_min": 0.6969853427187422,
+          "spatial_determinant_min": 0.4112147554735721,
+          "density_min": 5.61611922898456,
+          "density_max": 5.818206746303502,
+          "slice_volume": 357.40142042662245
+        },
+        {
+          "t": 0.14,
+          "Hamiltonian_relative": 0.0015470163955028982,
+          "Hamiltonian_max": 0.02216795446856068,
+          "momentum_max": 0.0014269725122496094,
+          "harmonic_max": 0.002233746836988182,
+          "charge_relative": -8.880896018581552e-12,
+          "Hnormal_min": -1.5326910672771288,
+          "Hnormal_max": -1.5068003216978278,
+          "Theta_current_min": -4.581233781475431,
+          "Theta_current_max": -4.5387244403938745,
+          "lapse_min": 0.6561747394621873,
+          "spatial_determinant_min": 0.3649696900303446,
+          "density_min": 5.962000800738322,
+          "density_max": 6.178622664469645,
+          "slice_volume": 336.5938956450585
+        },
+        {
+          "t": 0.16,
+          "Hamiltonian_relative": 0.0015077431951546606,
+          "Hamiltonian_max": 0.02437144420268922,
+          "momentum_max": 0.0015552249663261866,
+          "harmonic_max": 0.0027000586727456977,
+          "charge_relative": 1.884024047882349e-10,
+          "Hnormal_min": -1.6289988973990255,
+          "Hnormal_max": -1.5979450600951794,
+          "Theta_current_min": -4.867997928832807,
+          "Theta_current_max": -4.814838316662691,
+          "lapse_min": 0.6177307743099509,
+          "spatial_determinant_min": 0.32394889035124896,
+          "density_min": 6.329002907606287,
+          "density_max": 6.561485050791904,
+          "slice_volume": 316.99782130250594
+        },
+        {
+          "t": 0.18,
+          "Hamiltonian_relative": 0.0014657344786591277,
+          "Hamiltonian_max": 0.026727147399071782,
+          "momentum_max": 0.001689419308401309,
+          "harmonic_max": 0.003211246032157611,
+          "charge_relative": 5.021585369746617e-10,
+          "Hnormal_min": -1.731312144770751,
+          "Hnormal_max": -1.694653917187976,
+          "Theta_current_min": -5.17286310123637,
+          "Theta_current_max": -5.107655121498761,
+          "lapse_min": 0.5815198386501426,
+          "spatial_determinant_min": 0.287557694296066,
+          "density_min": 6.718412856055449,
+          "density_max": 6.96819679848335,
+          "slice_volume": 298.5426807266485
+        },
+        {
+          "t": 0.2,
+          "Hamiltonian_relative": 0.0014215355529939814,
+          "Hamiltonian_max": 0.02924264710102875,
+          "momentum_max": 0.001834522739602773,
+          "harmonic_max": 0.003770362500172375,
+          "charge_relative": 9.545233492502803e-10,
+          "Hnormal_min": -1.840002932216385,
+          "Hnormal_max": -1.7972688986117558,
+          "Theta_current_min": -5.496953612107307,
+          "Theta_current_max": -5.418200030295248,
+          "lapse_min": 0.5474153723749031,
+          "spatial_determinant_min": 0.2552699441263998,
+          "density_min": 7.131596771452084,
+          "density_max": 7.4002481679587255,
+          "slice_volume": 281.1620600656505
+        }
+      ],
+      "seconds": 85.76869334900039,
+      "status": "completed within declared finite-interval numerical controls"
+    }
+  ],
+  "temporal_successive_RMS_differences": [
+    [
+      1.8736081108241202e-09,
+      5.495631073773162e-08,
+      2.7528486240397856e-08
+    ],
+    [
+      1.2631408248635743e-10,
+      3.186537288196922e-09,
+      1.659950860642155e-09
+    ]
+  ],
+  "temporal_ratios": [
+    14.83293132439512,
+    17.246404409354405,
+    16.58391636349308
+  ],
+  "matched_fixed_polarization_comparison": [
+    {
+      "n": 9,
+      "theta0_volume_ratio": 0.5489092982207644,
+      "theta02_volume_ratio": 0.548908470435391,
+      "difference": -8.277853733584806e-07,
+      "restrictions": "Same n_seed and classical charge; constraints resolved separately; different spin states. Not torsion-free attribution."
+    },
+    {
+      "n": 17,
+      "theta0_volume_ratio": 0.5489090813979446,
+      "theta02_volume_ratio": 0.5489084663020393,
+      "difference": -6.150959053208283e-07,
+      "restrictions": "Same n_seed and classical charge; constraints resolved separately; different spin states. Not torsion-free attribution."
+    },
+    {
+      "n": 33,
+      "theta0_volume_ratio": 0.5489090167560609,
+      "theta02_volume_ratio": 0.5489084663863668,
+      "difference": -5.503696940412084e-07,
+      "restrictions": "Same n_seed and classical charge; constraints resolved separately; different spin states. Not torsion-free attribution."
+    }
+  ],
+  "comparison": "All final fields Fourier-resampled to 17\u00b3 shared physical points; no spectral change to evolution. Original full fields persist in the checkpoint manifest.",
+  "checkpoint_index": "checkpoints/cycle08/index.json",
+  "checkpoint_total_bytes": 29275156
+}

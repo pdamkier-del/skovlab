@@ -104,3 +104,19 @@ For the conformal seed Psi and psi=chi^-3 Psi, momentum scales as chi^-6 j_seed 
 The selected smooth periodic theta=.2 sin(kx) has been independently checked at 9³/17³/33³. Initial source projections agree to roundoff, FD constraints converge, and oversampled scalar residuals expose the coarse-grid alias error rather than hiding it. The zero-texture limit reproduces C04. Numerical existence for this family is supported; arbitrary-spin initial-data existence and dynamical stability are not proved.
 
 Checkpoint persistence preserves the full metric, metric velocity and complex spinor without resampling or lossy packing, and distinguishes harmonic time from proper time. Hash and restart tests establish reproducible storage, not physical correctness of a trajectory.
+
+## C08 — finite-time response of the real spin texture (numerically supported)
+
+| n | Final relative Hamiltonian | Maximum charge drift | Slice-volume ratio | Final full-K maximum |
+|---:|---:|---:|---:|---:|
+| 9 | .00484238 | 3.07e-9 | .5489084704 |1473.7972|
+|17 | .00142153 | 1.06e-9 | .5489084663 |1479.2397|
+|33 | .000382275| 3.78e-10| .5489084664 |1480.7645|
+
+Spatial orders1.937/1.892/1.962 and temporal ratios14.83/17.25/16.58 support the intended finite-difference/RK4 approximation for this interval. The 33³ current expansion remains negative, ending between -5.49787 and -5.41728. No local turn is resolved in these sampled contracting data. This is not a universal no-bounce result or a long-time stability theorem.
+
+The full torsionful Riemann diagnostic is now applied to evolved textured states at three declared times, not only initial data or an exact homogeneous solution. Scalar residuals converge toward the massless identity, while full curvature remains nonzero and grows. Finite values on these three slices do not bound every spacetime event or establish geodesic completeness.
+
+The matched C05 volume-ratio difference is approximately -5.50e-7 at33³. It is tiny and slicing-dependent; changing the spin state also changes its separately constrained geometry. It is not a torsion-removal experiment. All classical/EFT/finite-body limitations remain.
+
+Raw NPZ checkpoints and a cryptographic index preserve g,p,psi and provenance for future independent diagnostics. Their successful storage/reload says nothing by itself about physical validity.

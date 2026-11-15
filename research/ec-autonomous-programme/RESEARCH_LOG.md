@@ -79,3 +79,17 @@ At 33³, K=2.99911552625, relative FD Hamiltonian=.0004529730, momentum max=.000
 Added full lossless checkpoint storage with hashes, deterministic metadata, atomic writes and safe reload. Exact restart equivalence, rejected-state handling and corruption detection are tested. A tiny 5³ two-step smoke run exercised the new evolving checkpoint/full-curvature path; it is infrastructure validation, not a physical result. All 18 programme tests passed.
 
 Artifacts: spin_texture_source.py, spin_texture_data.py, checkpoints.py, test_spin_texture.py, cycle07_source_symbolic.json and cycle07_spin_data.json. Decision: execute the C08 full texture evolution at the predeclared parameters and retain its raw fields for later diagnostics.
+
+## 2026-11-15 — cycle 08: spin-texture dynamics and evolved full curvature
+
+Evolved C07 theta=.2 sin(kx) with the unchanged full 3+1 engine, n=9/17/33, t_end=.2, 40 steps. Separate n17 time runs use20/40/80 steps, reusing the existing40-step result. All predeclared guards pass. Source code/runtime provenance and initial/midpoint/final raw arrays are recorded in lossless checkpoints; reload checks precede full-curvature probing.
+
+Spatial state orders are1.93696/1.89190/1.96224; temporal ratios14.8329/17.2464/16.5839. At33³ final relative Hamiltonian=.0003822753, current expansion range [-5.49787,-5.41728], charge drift3.78e-10, volume ratio .5489084664. No sampled material or normal volume turn occurs. The largest run took356.6 seconds. This is finite-interval response of one textured family, not arbitrary spin-perturbation stability.
+
+Full connection checks at t=0,.1,.2 use delta1e-4/5e-5 on fields reloaded from disk. At33³ the final full-K maximum is1480.76446, with full-scalar residual range [-.00169609,.00135300]. Spatial refinement reduces scalar residuals; difference-step changes are separately retained. Finite sampled curvature is not global regularity. The massless zero-scalar identity does not imply zero full Riemann curvature.
+
+At matched seed density/charge and separately resolved constraints, the harmonic-slice volume-ratio difference from C05 is -8.28e-7/-6.15e-7/-5.50e-7 across grids. This is a small slicing-dependent finite-run difference, not a torsion-free attribution or a general physical effect claim.
+
+Persisted all15 NPZ files, totaling29,275,156 bytes. Uploaded Git objects were checked against locally computed raw Git SHA and whole-file SHA256; publication augments manifests with blob IDs without altering field arrays. Transferred binary data in exact chunks to avoid tool-output byte clipping. Dataset index: checkpoints/cycle08/index.json. No expensive trajectory had to be repeated for new postprocessing.
+
+Artifacts: spin_texture_evolution.py, cycle08_spin_evolution.json and the committed checkpoint dataset. Decision: analyze the saved final states' local Raychaudhuri terms next, separating the geometric identity from the Einstein-source replacement and its constraint error.
