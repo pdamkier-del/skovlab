@@ -17,3 +17,17 @@ Physical restriction: these are deliberately high reduced-Planck curvatures of a
 ## Diagnostic correction
 
 Periodic grids omit the repeated endpoint, so charge must be the periodic sum times dx³. Open-interval trapezoids undercounted a uniform n=9 torus by (8/9)³. The correction changes diagnostics only and is regression-tested for uniform charge and translated nonuniform data. Dirichlet quadrature is unchanged.
+
+## C02 — constrained periodic planar perturbation (conditional/numerically supported)
+
+Take gamma_ij=chi(z)^4 delta_ij, Kij=gamma_ij K/3, psi=chi^-3 sqrt(n_seed(z)) (0,0,1,0), m=0, kappa=1. The polarization is along z, the only varying direction. Direct substitution in the full field source gives zero momentum and E=GA n_seed² chi^-12. The momentum constraint vanishes because K is constant. R3=-8 chi^-5 chi'', so the Hamiltonian constraint is exactly
+
+chi''=K² chi⁵/12-GA n_seed² chi^-7/4.
+
+Set u=log chi; u''=K² exp(4u)/12-GA n_seed² exp(-8u)/4-(u')². Solve for periodic u,u' and unknown positive K with mean(u)=0 (an integral auxiliary variable enforces the mean). This fixes the global conformal normalization and scalar compatibility; no finite-box exterior is asserted. Numerical convergence of a BVP is evidence for this local branch, not uniqueness for all seeds. Harmonic p0mu is then solved using the existing geometric routine.
+
+For n_seed=4[1+.02 cos(2 pi z/8)], K=2.999732467797363. The independent grid Hamiltonian residual at initial time is .00071418, .00019217, .0000497165, .0000126347 at n=17,33,65,129. Initial momentum/gauge residuals are near roundoff. The continuum data are deliberately not reprojected onto each monitored discrete constraint.
+
+At t=.45 the final relative Hamiltonian residual decreases from 5.88e-5 to 1.04e-6, while state differences give near-second-order spatial convergence. R remains finite at the endpoint, around -89.55 to -88.91. Both sampled current and normal expansion stay negative throughout; this is no local material-volume turn within the sampled resolved interval for this family. It does not prove no later turn, global regularity or stability against arbitrary perturbations. No finite-body or exterior conclusion follows.
+
+Stress-divergence accuracy is limited by the centered temporal diagnostic at fixed dt. A tangent-source derivative provides a complementary check but has an additional chosen-delta error. Full torsionful Riemann regularity is not established by the algebraic torsion contraction or metric scalar/Kretschmann alone.

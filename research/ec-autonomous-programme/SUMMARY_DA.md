@@ -9,3 +9,7 @@ Løsningen bouncer ikke; det følger også analytisk for netop denne gren. Det u
 En tidligere identificeret fejl i beregningen af partikelantallet på periodiske gitre er rettet uden at ændre feltligningerne.
 
 Næste skridt er at undersøge rumligt varierende, bindingskonsistente data. En homogen test kan ikke vise, om rumlige forstyrrelser vokser eller om en generel 3D-beregning er stabil. Hverken et endeligt legemes bounce eller fysiske oscillationer er endnu påvist.
+
+Anden cyklus tilføjer rumligt varierende data, der opfylder de kontinuerte bindingsligninger. For netop denne plane, periodiske forstyrrelse falder rumfejlene med omtrent anden orden, og kontraktionen fortsætter gennem det beregnede interval. Materialestrømmens ekspansion forbliver også negativ. Det er stadig ikke en test af vilkårlige 3D-forstyrrelser.
+
+Kontrollen af energimomentum-bevarelse viste en tidsdiskretiseringsgrænse i selve fejlmålingen. Den er adskilt fra rumfejlen og dokumenteret. Det næste forsøg undersøger større forstyrrelser og stærkere kontraktion; negative resultater bevares som forskningsresultater.

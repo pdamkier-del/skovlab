@@ -1,6 +1,6 @@
 # Prioritized open questions
 
-1. Can the same engine converge on constraint-consistent, spatially varying high-curvature periodic data? Need independent continuum initial constraints, space/time refinement, stress/current conservation and gauge control.
+1. How robust is the resolved planar contraction under larger amplitudes, shorter wavelengths and deeper compression? C02 supplies one positive spatial-convergence example, not general stability. Tighten temporal/conservation diagnostics before strong claims.
 2. Does that result survive transverse perturbations? A planar reduction cannot answer general 3D stability.
 3. Can a state other than the known focusing one-field branch produce a validated regular material-volume turn? Normal expansion alone is insufficient; include acceleration divergence and current-frame conditioning.
 4. Can any candidate turn be attributed to torsion after resolving constraints for both actions? Do not hold invalid geometry fixed.

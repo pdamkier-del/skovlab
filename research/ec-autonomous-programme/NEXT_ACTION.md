@@ -1,13 +1,11 @@
-# Exact next action
+# Exact next action after cycle 02
 
-Latest completed: cycle 01 strong homogeneous harmonic benchmark and diagnostic charge fix. Do not rerun the old audit or rederive the known proper-time branch as new research.
+Latest completed: C01 homogeneous high-curvature harmonic verification and periodic charge fix; C02 continuum-constrained planar perturbation with near-second-order spatial convergence. Read the JSON records; do not repeat completed audit/sweeps without a new question.
 
-Next: cycle 02 periodic planar constrained perturbation. Use a real lower-component seed aligned along z, mass zero, n_seed(z)=4[1+.02 cos(2 pi z/8)], psi=chi^-3 sqrt(n_seed) (0,0,1,0), spatial metric chi⁴ delta, Kij=gammaij K/3 with unknown positive constant K. Momentum vanishes for variation along the polarization. Derive and independently solve the periodic Hamiltonian BVP with mean(log chi)=0:
+Next C03: using periodic_data()/run() in code/planar_contraction.py, test finite epsilon and higher seed mode (start epsilon=.1,.3 and modes1,4) with n=65,129,257 and duration .8. Resolve the highest seed mode adequately, verify the BVP residual and measured physical density contrast, and refine timestep independently. Compare normal/current expansion, density contrast amplification, Hamiltonian/momentum/gauge and charge errors. Every run must respect the characteristic bound and stop before lapse<.05. In this context a constraint/gauge failure is an unresolved numerical stop, not a physical singularity or oscillation.
 
-chi''=K² chi⁵/12 - GA n_seed² chi^-7/4 (kappa=1).
+The C02 local tangent stress diagnostic has delta sensitivity; centered evolved-snapshot divergence has a known temporal floor. Keep both. The metric-velocity temporal ratio was 9.85 in one pair, so seek a clearer independent time-refinement sequence instead of asserting fourth order universally.
 
-Use an integral variable to impose the mean condition, solve K as a BVP parameter, then sample onto odd periodic grids. Verify the full tensor engine constraints and their spatial convergence; do not hide continuum error by only solving the monitored discrete residual. Set initial harmonic p0mu using harmonic_initial_velocity().
+Periodicity imposes a torus. PlanarGrid retains all tensor components but removes x/y dependence; its verified full-grid lift does not test transverse perturbation stability. Use a later constrained fully 3D data family for that question.
 
-Evolve with PlanarGrid and the existing RK4/RHS, compare at common physical locations, refine time separately, measure charge and full stress divergence. Check at least one lifted full 3D RHS/RK step for spatially varying data. Record all failures as outcomes rather than changing the equations. Boundaries are a periodic torus, not a vacuum exterior.
-
-Update every status file after the completed cycle, commit meaningful progress, and leave the next unresolved question precisely specified.
+Update all seven research records at the end of each cycle, commit milestones on codex/ec-autonomous-programme, and leave exact continuation parameters and unresolved failures.
