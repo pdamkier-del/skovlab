@@ -14,3 +14,10 @@ Derived z=H, eliminated connection and obtained K_z by differentiating the reduc
 
 Derived flat/open NEC obstruction before any dynamics. Ran no forbidden flat scalar-bounce search. For k=+1, fixed beta=.25,c=1e8 and three nearby, separately constrained turning states. Two-sided proper-time integration has contraction/expansion and fourth-order temporal convergence. Reconstructed the full Lorentz connection/Cartan curvature, checked H=z, original trace and all 16 original coframe variations. The trace check is limited by the independent time interpolant; its measured error is not an exact numerical zero. Saved states and curvature diagnostics. Scalar-GR/de Sitter attribution controls explained; pure closed vacuum-GR copied data would violate constraints. Result 03.
 
+## H04 — Genuine inhomogeneous constrained local assessment
+
+Constructed time-symmetric S³ scalar data with an l=2 perturbation at epsilon=.001,.002. Solved the nonlinear Hamiltonian BVP with regular pole/equator conditions; momentum constraints vanish. Independent 65/129/257 finite differences converge at second order, separately from collocation residual. Linearized l=2 solution agrees to the expected quadratic perturbation correction. Full BVP modes/derivatives retained. Analytic normal Raychaudhuri derivative is positive throughout; no scalar-fluid rest frame is claimed for its spacelike gradient. This is constrained initial/local continuation evidence, not a nonlinear long-time inhomogeneous evolution. Result 05.
+
+## Decision and handoff
+
+Healthy pseudoscalaron verified. No Level B torsion-caused bounce accepted. Restricted flat/open no-go is established; closed curvature-assisted turns are finite and locally robust in the tested scope but do not settle physical-control/attribution/global questions. The twelve requested records, equation/source ledger, reproducible code/results and precise continuation are saved. Main and all existing research branches are preserved; no PR is merged.

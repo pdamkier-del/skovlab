@@ -1,0 +1,66 @@
+{
+  "issue": {
+    "number": 6,
+    "title": "Codex research: derive Einstein–Cartan–Holst variation and test pseudoscalaron bounce",
+    "url": "https://github.com/pdamkier-del/skovlab/issues/6",
+    "body": "# Codex assignment — Holst variation and pseudoscalaron sector (EC Bounce Programme Model 4)\n\n**Objective:** Independently derive the variational equations of a precisely specified Einstein–Cartan–Holst action, distinguish the ordinary linear Holst term from a *modified/nonlinear* Holst invariant that creates a pseudoscalaron, and assess whether any controlled regular contraction-to-expansion bounce exists. Do not engineer a bounce, assume inflation implies bounce, or import an unverified scalar potential.\n\n## Baseline and references\n- Repository `pdamkier-del/skovlab`; research programme PR #5, branch `codex/ec-bounce-programme`, not merged; consult `research/ec-bounce-programme/{MASTER_STATUS.md,MODEL_REGISTRY.md,ACCEPTANCE_CRITERIA.md,NEXT_ACTION.md}` and previous PRs #2/#3.\n- User-supplied papers are titled *'(In)equivalence of Metric-Affine and Metric Effective Field Theories'* (Pradisi & Salvio, arXiv:2206.15041), *'Einstein-Cartan pseudoscalaron inflation, reheating and nonthermal leptogenesis'* (arXiv:2605.09571), and *'Non-thermal particle production in Einstein-Cartan gravity with modified Holst term'* (arXiv:2406.14982). Fetch papers from authoritative public arXiv if not available in repo. Check differences in action/convention/metric compatibility. In particular Pradisi–Salvio Sec. 4.2.1 Eq.(4.17)–(4.22) specifies S=∫√−g[α R(Γ)+βR'(Γ)+Δ(R'(Γ))]; with Δ=c(R')² and c>0, integrating out distortion yields a canonical pseudoscalar ω with potential U=cζ'². **Do not mistake a merely linear Holst term for an extra dynamical degree of freedom.**\n\n## Scientific work (complete as much as can be independently verified)\n1. Choose and explicitly fix signature, epsilon conventions, tetrad/coframe, independent spin connection, metric compatibility, torsion/contortion, κ, axial current normalization and boundary conditions. Define Holst density R' carefully; distinguish Nieh–Yan identity/boundary and minimally coupled fermions.\n2. First derive variations δS/δe and δS/δω for EC + linear Holst + Dirac; solve algebraic torsion irreducible components, show resulting fourfermion couplings. Check the γ/Immirzi-dependence and specify fermionic minimal/nonminimal conventions; identify under which conventions it disappears or changes.\n3. Independently derive the modified/nonlinear Holst branch (e.g. βR'+c(R')²) with an auxiliary pseudoscalar ζ'. Verify Legendre transformation, ζ'=R' on shell, integrate out torsion, derive the exact scalar kinetic coefficient K(ζ') and U(ζ'), and canonical field ω. Independently verify paper Eq. (4.19),(4.25)–(4.31) and kinetic positivity/tachyon conditions, including factors of 2 and dimensions. If derivation cannot be reproduced, record precise discrepancy, do not guess.\n4. Couple a physical Dirac/quantized fermion sector where feasible; derive all scalar-axial contact and derivative couplings and effective stress consistently from the same action. Do not double-count axial fourfermion terms. Quantum matter sources require renormalization and fluctuations: separate tree-level from semiclassical claims.\n5. Formulate homogeneous FLRW dynamics with spatial curvature k=0,±1 when appropriate and massless/massive fermion effective sources. Calculate H², dot H, scalar EOM and constraints. First analytic necessary conditions for a regular bounce (H=0, dot H>0, finite both Levi-Civita and torsionful curvature), then minimal reproducible ODE numerics ONLY if no physical or EFT validity gate already forbids their interpretation. A canonical scalar with nonnegative V and matter satisfying NEC cannot bounce in flat GR-Einstein-frame FLRW; derive and apply this obstruction rather than falsely declaring a Holst bounce. For k=+1 assess curvature-assisted turns separately from genuinely torsion-driven bounce.\n6. Critically examine sub-cutoff control, energy scales, higher operators, ghosts/tachyons/gradient issues, quantum-source state, fermionic stress, and at least limited constraint-consistent perturbations if a promising candidate exists. Explicitly distinguish (a) viable inflation, (b) mathematical contraction turn, (c) Level B controlled *torsion-driven* bounce. Compare an independently constrained torsion-free or scalar-free counterfactual and explain attribution limits.\n7. For every result distinguish proven identities, numerics, conditional interpretations and unknowns. Classify Model 4 as ACCEPTED only if all B1–B7 in existing programme satisfied; otherwise CONDITIONAL / REJECTED WITHIN ASSUMPTIONS / INCONCLUSIVE. No generic EC no-go from restricted ansatz.\n\n## Deliverables and execution\nCreate **separate branch and draft PR**, avoid edits to existing PR #5 and prior branches (unless explicitly authorized); place outputs in `research/ec-holst-variation-audit/`: `MASTER_STATUS.md`, `ACTION_CONVENTIONS.md`, `TETRAD_CONNECTION_VARIATION.md`, `TORSION_ELIMINATION.md`, `PSEUDOSCALARON_DERIVATION.md`, `FERMION_COUPLINGS.md`, `BOUNCE_CONDITIONS.md`, `VALIDITY_AND_STABILITY.md`, `FALSIFICATION_RESULTS.md`, `RESEARCH_LOG.md`, `NEXT_ACTION.md`, `SUMMARY_DA.md`, plus reproducible symbolic/algebraic/numeric code, tests and results. Do independent checks; preserve exact references to source equation numbers and parameter conventions. Commit verified research cycles, leave precise handoff. If you cannot execute a calculation, say so. Do not claim live background progress. Do not merge other PRs.\n\n**Final central answer:** Does plain linear Holst change bounce physics? Does modified nonlinear Holst introduce a healthy propagating pseudoscalaron? Under which assumptions (if any) can the resulting theory produce a genuinely torsion-caused Level B bounce rather than merely inflation or a k=+1 curvature turn?"
+  },
+  "baseline_branches": [
+    {
+      "name": "codex/ec-autonomous-programme",
+      "sha": "a3421e7c06b89b2c6c4edc7412de1c6545092358"
+    },
+    {
+      "name": "codex/ec-bounce-programme",
+      "sha": "bc0252ab6190728c975cb559dc9786628d8443f4"
+    },
+    {
+      "name": "codex/ec-multifield-critical-audit",
+      "sha": "47167c304c4c5bf8700066f2bfa94ba48864d3e0"
+    },
+    {
+      "name": "codex/ec-research-audit",
+      "sha": "770122a9d1e69bbea123a132e98e717a300a9699"
+    },
+    {
+      "name": "main",
+      "sha": "d069bfac8398cc71793c542ad93d650cc511794c"
+    }
+  ],
+  "programme_records_verified": [
+    {
+      "path": "MASTER_STATUS.md",
+      "remote_matches_local": true
+    },
+    {
+      "path": "MODEL_REGISTRY.md",
+      "remote_matches_local": true
+    },
+    {
+      "path": "ACCEPTANCE_CRITERIA.md",
+      "remote_matches_local": true
+    },
+    {
+      "path": "NEXT_ACTION.md",
+      "remote_matches_local": true
+    }
+  ],
+  "papers": [
+    {
+      "arxiv": "2206.15041v3",
+      "url": "https://arxiv.org/html/2206.15041v3",
+      "sections": "2,4.2.1, algebraic comparison of 4.19,4.25-4.31"
+    },
+    {
+      "arxiv": "2406.14982v2",
+      "url": "https://arxiv.org/html/2406.14982v2",
+      "sections": "II, III action and effective couplings"
+    },
+    {
+      "arxiv": "2605.09571v2",
+      "url": "https://arxiv.org/html/2605.09571v2",
+      "sections": "II, III.1, inspected fermion convention references"
+    }
+  ],
+  "retrieval": "Authoritative arXiv HTML inspected with web tool; direct shell HTML archival retrieval was unavailable (proxy 403). No full paper text copied into repository."
+}

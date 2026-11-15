@@ -24,6 +24,17 @@ A minimal numerical witness fixes M=1, β=1/4,c=10⁸ (no parameter search); m_�
 
 Full torsion is reconstructed from q^μ=24∂^μf/(M²D), t_μ=−Bq_μ. A direct Cartan calculation on the S³ coframe computes the full affine curvature, alongside metric R and Kretschmann. It independently checks H=z and all original tetrad variations. At φ̇_b=0 torsion itself vanishes but its derivatives and Holst curvature need not; a zero torsion square alone would be inadequate. All recorded invariants are finite.
 
+## A genuinely inhomogeneous constrained assessment
+
+For the reference closed turn, use time-symmetric data K_ij=0, scalar normal momentum π=0, and γ_ij=a_b²χ⁴γ_unit S³. Declare φ/M=.5+εQ₂(θ), Q₂=4cos²θ−1, with ε=.001,.002; Q₂ is an l=2 harmonic with ΔQ₂=−8Q₂. Solve the nonlinear Hamiltonian
+
+−8Δχ+6χ=χ|D(φ/M)|²+2b_b²χ⁵W(φ/M),
+W=V/(m_φ²M²).
+
+Momentum constraints vanish exactly. The reflection-even BVP has χ′(0)=χ′(π/2)=0 and a positive smooth solution. Independent centered finite differences at 65/129/257 full-sphere points show second-order constraint convergence (reported BVP residual is not used as independent validation). The linear l=2 solution u=χ−1=b_b²W′ εQ₂/[4(8−3)] predicts the observed first-order perturbation; nonlinear correction scales approximately as ε². Raw BVP meshes/χ/χ′ are retained.
+
+On this slice a Gaussian-normal geodesic congruence has Θ=0, shear=0 and Θ̇=V/M²>0 pointwise, since scalar spatial-gradient contributions cancel in ρ+ΣP. The scalar gradient is spacelike on the initial slice, so this is **normal geodesic volume**, not a purported scalar fluid rest frame. Smooth positive constrained data imply regular local Einstein-scalar continuation; no evolved nonlinear inhomogeneous trajectory or long-time stability is claimed.
+
 ## Attribution and controls
 
 Torsion-free GR with the same canonical scalar action has exactly the same metric equations, constraints and turns; it is the mathematical field-representation control, not removal of the original action's scalar sector. A scalar-free GR+Λ control with Λ=V_b/M² also has separately constrained closed de Sitter turning data a_b,H=0. It is a distinct matter action, illustrating curvature/potential mechanics, not identical microscopic matter. Pure scalar-free vacuum GR has **no real k=+1 H=0 data** at that radius; keeping the same data after deleting the scalar violates the constraint.

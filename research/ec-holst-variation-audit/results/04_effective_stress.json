@@ -1,26 +1,42 @@
 {
   "off_shell_variations": [
     {
+      "nonminimal_a": 0.0,
+      "nonminimal_nu": 0.0,
       "energy_error": 5.015449860978904e-13,
       "max_pressure_error": 1.7773282845467975e-13
     },
     {
+      "nonminimal_a": 0.0,
+      "nonminimal_nu": 0.0,
       "energy_error": 4.8058779178461464e-14,
       "max_pressure_error": 6.604335134330341e-13
     },
     {
+      "nonminimal_a": 0.0,
+      "nonminimal_nu": 0.0,
       "energy_error": 2.5810603654363717e-13,
       "max_pressure_error": 3.7139388786577854e-13
     },
     {
-      "energy_error": 3.575056917171082e-13,
-      "max_pressure_error": 1.753736045273513e-13
+      "nonminimal_a": 0.2,
+      "nonminimal_nu": -0.3,
+      "energy_error": 8.355538483328928e-13,
+      "max_pressure_error": 1.6678325387431414e-13
     },
     {
-      "energy_error": 3.415601135259294e-13,
-      "max_pressure_error": 5.657072033038446e-13
+      "nonminimal_a": 0.2,
+      "nonminimal_nu": -0.3,
+      "energy_error": 2.937528692514846e-13,
+      "max_pressure_error": 5.488734466929657e-13
+    },
+    {
+      "nonminimal_a": 0.2,
+      "nonminimal_nu": -0.3,
+      "energy_error": 2.0969424113781443e-13,
+      "max_pressure_error": 1.2702686125187768e-13
     }
   ],
-  "on_shell_stress": "T=scalar stress+K_D+h A_(mu partial_nu)omega +g g_munu A^2 for Lint=-h partial(omega).A-g A^2.",
+  "on_shell_stress": "T=scalar stress+K_D-(D_A A_(mu+D_V V_(mu)partial_nu)omega-g_munu F for Lint=D_A partial(omega).A+D_V partial(omega).V+F quartic.",
   "scope": "Independent variation before on-shell substitution; random classical jets, not quantized matter or an EOS."
 }
