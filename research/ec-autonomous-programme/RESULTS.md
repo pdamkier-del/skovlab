@@ -44,3 +44,21 @@ Stress-divergence accuracy is limited by the centered temporal diagnostic at fix
 Density contrast is (max n-min n)/(max n+min n) on the declared slices. It is not identical to the seed amplitude because solving the constraints changes the conformal factor and physical density. Amplification compares the same observable at endpoints; it is not a Lyapunov exponent, trajectory perturbation norm or proof of oscillation. The low modes increase and the high modes decrease over this interval, so uniform decay is not supported.
 
 Normal/current expansion remain negative throughout the sampled evolution to t=.8. State errors converge with order 1.94–2.03 in space, and a separate high-mode time test has near-16 ratios. Finite endpoint metric/torsion contractions and positive spatial metric do not establish global regularity or all torsionful curvature bounds. This is a classical high-curvature torus calculation outside a demonstrated physical EFT regime.
+
+## C04 — three-coordinate periodic constrained initial data (derived identities; numerical solution)
+
+Let n_s=4[1+.1 cos(kx)cos(ky)cos(kz)], k=2 pi/8, gamma=chi⁴ delta, psi=chi^-3 sqrt(n_s)(0,0,1,0), m=0, kappa=1. The full initial source gives E=GA n_s² chi^-12 and
+
+j_i=chi^-6 jtilde_i, jtilde=(partial_y n_s,-partial_x n_s,0)/4.
+
+This is spin-induced stress momentum; a zero spatial particle current does not imply zero stress momentum. jtilde has zero mean and zero divergence. Thus solve Delta W=jtilde with meanW=0; divW=0, and L W is symmetric tracefree. With Kij=chi^-2(LW)ij+gammaij K/3, the conformal momentum constraint is satisfied. No stress component is discarded in the subsequent full tensor check.
+
+Set Q=|LW|²+2 GA n_s². The scalar Hamiltonian is
+
+Delta chi=K² chi⁵/12-Q chi^-7/8.
+
+Periodicity implies K²=(3/2) integral(Q chi^-7)/integral(chi⁵). Use u=log chi and meanu=0 to fix normalization. The Newton residual is Delta u+|grad u|²-K² exp(4u)/12+Q exp(-8u)/8+meanu. Integrating this residual against chi shows that its zero also enforces meanu=0. This is a conformal constraint construction, not a new matter EOS or modification of ECD.
+
+K=2.99909273989 for the tested family. Exact conformal scaling keeps initial total classical Dirac charge integral(n_s)=n0 L³ while geometry is solved; total charge and a chosen free collapse rate were not assigned independently. Numerical positivity, spectral/oversampled constraints, full-source matching and FD convergence support these data. Uniqueness and existence for arbitrary amplitudes are not established.
+
+All three axes have nonzero source variation. Therefore these are genuinely 3D initial data, unlike a transverse lift of the planar test. Their evolution and stability require separate validation.

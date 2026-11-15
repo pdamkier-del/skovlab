@@ -1,11 +1,9 @@
-# Exact next action after cycle 03
+# Exact next action after cycle 04
 
-Completed: C01 harmonic high-curvature reference, C02 continuum-constrained planar contraction, C03 finite planar amplitude/mode tests. Do not repeat those sweeps as new work.
+Completed: C01 harmonic homogeneous strong-field benchmark; C02 continuum planar data/evolution; C03 finite planar mode/amplitude continuation; C04 genuinely 3D periodic conformal constraint construction. Read their JSON records and do not repeat the completed parameter sweeps without a new uncertainty.
 
-Next C04: solve genuinely 3D periodic conformal initial data. Use n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], k=2 pi/8, real lower spinor seed polarized along z. With psi=chi^-3 sqrt(n_seed)(0,0,1,0), direct continuum source algebra gives j_i=chi^-6(derivative_y n_seed,-derivative_x n_seed,0)/4. This source is a zero-mean curl.
+Next C05: use construct() from code/periodic_3d_data.py without changing the seed family (n0=4, epsilon=.1, L=8, mass0, kappa1). Evolve with the original full-grid ecd.rk4, not PlanarGrid, at n=9,17,33 to harmonic t=.2 with 40 steps. Refine time separately at n=17 with 20/40/80 steps. All timesteps must satisfy characteristic_step(). Reject >5% relative Hamiltonian or lapse<.1, and label coordinate/numerical exits as inconclusive.
 
-Solve Delta W_i+(1/3)derivative_i divW=j_tilde_i on the torus, with meanW=0. Then Aij=chi^-2(LW)ij and Kij=Aij+gammaij K/3. The scalar constraint is Delta chi=K² chi⁵/12-Q chi^-7/8, Q=|LW|²+2 GA n_seed², GA=3/16. Unknown positive constant K and mean(log chi)=0 fix scalar compatibility/normalization. Derive these identities from the full ECD source and check them independently rather than treating the effective energy as a fluid assumption.
+Measure every-step constraints, normal/current expansion, current frame validity, charge, slice volume and source conservation. Compare the smooth final fields on shared physical points via documented interpolation, accounting for unequal odd-grid spacing ratios. Include metric curvature at the endpoint; state that g_tt comes from the evolution RHS and that metric invariants alone do not certify full torsionful regularity. Initial spectral/oversampled constraints from C04 are independent of the FD evolution residual.
 
-Use Fourier derivatives for this continuum construction, oversample its residual and compare the existing independent FD Hamiltonian/momentum constraints at n=9,17,33. Inspect every component and verify variation in all axes. Check tolerance dependence before strong-field evolution.
-
-A later dynamical C05 should first evolve these exact same families at 9³/17³/33³, with a short high-curvature interval and separate time refinement; include independent stress/current diagnostics and coordinate/constraint stops. No periodic constrained-data existence theorem or stability theorem is supplied by a Newton return flag.
+If convergent, next investigate stronger/independent transverse seeds or a principled multi-species bounce benchmark. Do not interpret one resolved focusing family as a universal no-bounce or stability result. No finite-cloud or quantum applicability conclusion follows from these periodic high-curvature classical calculations.

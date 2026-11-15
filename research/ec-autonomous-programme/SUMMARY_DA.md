@@ -15,3 +15,5 @@ Anden cyklus tilføjer rumligt varierende data, der opfylder de kontinuerte bind
 Kontrollen af energimomentum-bevarelse viste en tidsdiskretiseringsgrænse i selve fejlmålingen. Den er adskilt fra rumfejlen og dokumenteret. Det næste forsøg undersøger større forstyrrelser og stærkere kontraktion; negative resultater bevares som forskningsresultater.
 
 Tredje cyklus undersøger større plane forstyrrelser og kortere bølgelængder gennem en kraftigere kontraktion. De fire undersøgte familier fortsætter med negativ volumenekspansion og viser rumlig konvergens. Tæthedskontrasten vokser for nogle bølgelængder og falder for andre. Derfor kaldes resultatet ikke generel stabilitet. Ingen fysisk oscillation er påvist.
+
+Fjerde cyklus løser et vigtigt forberedende problem: Startdata varierer nu i alle tre rumretninger og opfylder gravitationens bindingsligninger under uafhængig kontrol. Spinets rumlige variation giver et momentumfelt, som også skal med i geometrien. En meget præcis startdataberegning fjerner dog ikke automatisk fejlene i den efterfølgende rumdiskretisering. Det næste trin er en egentlig 3D-udvikling af disse data.

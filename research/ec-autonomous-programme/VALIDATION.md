@@ -37,3 +37,15 @@ python research/ec-autonomous-programme/code/perturbation_sweep.py --output rese
 12 spatial runs: epsilon=.1/.3, mode1/4, n=65/129/257, t_end=.8, 400 steps. Three separate time runs at n=129, epsilon=.3, mode4, 200/400/800 steps. The driver checkpoints after each completed seed family. Errors, stop reasons, BVP parameters, density contrasts, curvature, gauge/current/stress diagnostics and CFL ratios are stored; no visual classification of a curve is used.
 
 Acceptance is refinement and an observable separated from zero, not a coarse run merely finishing. The strongest n65 case reaches .0123 Hamiltonian relative error and is only coarse evidence. Its finest error is .000811. No sampled current/normal turn is found; this says nothing about unsampled modes, transverse perturbations or unlimited evolution. All numeric states used the same action and the same existing RK engine without damping or altered matter forces.
+
+## Cycle 04 reproduction
+
+```sh
+python research/ec-autonomous-programme/code/periodic_3d_data.py --output research/ec-autonomous-programme/results/cycle04_3d_initial.json
+```
+
+Grid sizes 9³,17³,33³; n0=4, epsilon=.1, length8, mass0, kappa1. The vector/scalar solve uses Fourier derivatives; the field engine checks independent second-order FD constraints. Evaluate scalar continuum residuals on 19³/35³/67³ oversampling grids. The latter higher grids are scalar-only validation and do not imply a full tensor evolution at those resolutions.
+
+17³ tolerances 1e-9/1e-11/1e-12 give K values agreeing within 1e-12. The tightest spectral nonlinear residual is 2.22e-15, while FD relative Hamiltonian remains .00169023514. This explicitly rules out elliptic tolerance as the dominant observed FD error in this case. On 33³, energy-source formula agrees within 4.45e-15; initial gauge within 4.45e-16.
+
+Ten programme tests pass, including arbitrary-jet source scaling, uniform limit, positivity/input rejection, nonzero three-axis variation, oversampling and independent constraint refinement. A spectral return flag alone is not the validation.

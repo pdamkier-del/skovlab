@@ -33,3 +33,13 @@ RMS spatial orders are 1.94–2.03. A separate worst-seed (epsilon=.3,mode4) n=1
 Density contrast grows by about 1.93 and 1.85 for the low mode, but changes by .970 and .902 for the higher mode. Thus “all perturbations decay” is falsified as a description of this observable over the tested interval, while continued contraction is numerically supported. No asymptotic instability rate or general stability classification follows from four finite cases. The coarse strongest run has Hamiltonian error .0123; finest error .000811 and refinement, rather than its coarse output alone, is the evidence.
 
 Artifact: results/cycle03_perturbations.json and code/perturbation_sweep.py. Next priority is genuinely three-dimensional constrained data, since the planar lift cannot test transverse physics.
+
+## 2026-11-15 — cycle 04: a full three-coordinate periodic constraint family
+
+Highest unresolved obstruction after the planar tests was the absence of periodic high-curvature data with genuine transverse dependence. Derived the momentum-curl and energy identities for a real polarized conformal seed; verified the momentum identity for independent arbitrary first metric/spinor jets and checked the full source on the constructed data.
+
+For n_seed=4[1+.1 cos(kx)cos(ky)cos(kz)], solved the zero-mean vector elliptic problem spectrally, then the scalar Hamiltonian with positive chi and unknown CMC K. Gauge initialization uses the existing full harmonic routine. Scalar residual is also evaluated on an oversampled grid; this avoids presenting a small monitored collocation residual as sufficient continuum evidence.
+
+9³/17³/33³ independent FD Hamiltonian maxima are .0355067/.0104393/.00280839; momentum maxima .00046010/.00014408/.000039155. The 33³ oversampled scalar residual is 4.91e-11. Initial gauge is near roundoff. Tightening the 17³ scalar solve to 1e-12 reduces its nonlinear residual to 2.22e-15 without changing the finite-difference truncation error. Numerical initial-data existence is supported for this seed family, not proved for arbitrary data or for a finite isolated body.
+
+Artifacts: code/periodic_3d_data.py, tests/test_periodic_3d.py, results/cycle04_3d_initial.json. Ten research tests pass. Decision: proceed to actual full 3D evolution of the same data, rather than identifying a planar lift with transverse stability.
