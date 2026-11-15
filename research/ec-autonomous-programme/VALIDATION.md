@@ -107,3 +107,17 @@ Three spatial runs at9³/17³/33³ and separate17³ time refinement use the unch
 Fifteen raw NPZ files are committed as binary blobs (29.3MB total). checkpoints/cycle08/index.json records relative paths, byte counts, SHA256 and Git blob SHA; cycle08_spin_evolution.json references each checkpoint. Publication added blob IDs after execution, without changing fields. Git checkout or the Git blob API can retrieve these exact binary files; raw-content tools restricted to UTF-8 should not reinterpret the NPZ as text. load_checkpoint() uses allow_pickle=False and validates each field hash and status.
 
 Full torsionful curvature probes at t=0,.1,.2 use delta1e-4/5e-5 on reloaded fields. Spatial and diagnostic-step errors remain separate. Current/normal expansion and constraints are sampled every timestep. Stress divergence still has its documented centered-time diagnostic floor. No browser tests or new physical interactions were introduced.
+
+## Cycle 09 reproduction, conditioning and error separation
+
+```sh
+python research/ec-autonomous-programme/code/spin_texture_focusing.py --input research/ec-autonomous-programme/results/cycle08_spin_evolution.json --output research/ec-autonomous-programme/results/cycle09_focusing_balance.json
+python -m unittest discover -s research/ec-autonomous-programme/tests -v
+python research/ec-autonomous-programme/code/plot_spin_texture.py
+```
+
+This postprocessing loads the committed endpoint checkpoints, checks whole-file/field hashes, and performs no evolution. Kinematic current derivatives and acceleration divergence use the existing spatial operator and tangent steps1e-4/5e-5. Metric Ricci is built from metric jets with g_tt supplied by the evolution RHS; its source mismatch is reported separately, not claimed to be an independent off-shell Einstein test.
+
+Fine-pair geometric/source residual orders are1.9375/1.9796. The current Lorentz factor maxima are1.000525/1.000590/1.000612 for9³/17³/33³. The derived focusing is far from a current-frame conditioning failure. The source splitting follows the regular single-spinor on-shell identity and is not a torsion-free matched-action comparison. Statistics are unweighted coordinate-grid values, not global proper-volume observables.
+
+Twenty programme tests passed after adding the texture/checkpoint and focusing modules. The independent symbolic C07 source run also passed all axial/stress components. No production engine code changed in this continuation, and the previous engine/browser suites were not unnecessarily repeated. figures/spin_texture.svg is generated from committed numerical data; its PNG preview was inspected for readable axes, positive and negative focusing contributions and explicit caveats.

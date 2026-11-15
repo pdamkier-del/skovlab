@@ -2,7 +2,7 @@
 
 Updated 2026-11-15. Starting research baseline: d069bfac8398cc71793c542ad93d650cc511794c; inherited audit: 770122a9d1e69bbea123a132e98e717a300a9699. No previous ec-autonomous-programme files existed on either accessible branch. This is programme initialization from verified research, not a claim that missing cycles were completed.
 
-## Completed cycles: 01–08
+## Completed cycles: 01–09
 
 The unchanged ECD evolution equations pass a new strong-curvature homogeneous harmonic-time benchmark. All tensor components, spinor, constraints and metric curvature are evaluated through the existing engine. The periodic number quadrature defect identified in the audit is corrected; no physical interaction has been added.
 
@@ -58,11 +58,19 @@ Fifteen lossless full-field checkpoints (29,275,156 bytes) cover initial/midpoin
 
 The full affine curvature was measured from reloaded states at t=0,.1,.2 with two tangent difference steps. At 33³ the final full Kretschmann maximum is about1480.76. The small massless full-scalar residual decreases with spatial refinement; it is not interpreted as a physical nonzero trace. These are sampled finite-time checks, not a regularity/completeness theorem.
 
+## Cycle 09 — material-current focusing balance without re-evolution
+
+Postprocessed the three final C08 checkpoints, checking hashes and current conditioning. An exact homogeneous reference validates the new diagnostic. The Levi–Civita kinematic Raychaudhuri identity is checked separately from replacing metric Ricci by the full effective Einstein source. Time derivatives use two tangent steps; all means/RMS are unweighted coordinate-grid statistics, not proper-volume averages.
+
+At33³,t=.2, material Theta-dot ranges from -30.543 to -29.023. The explicit on-shell contact source piece ranges from -20.544 to -19.070, while maximum positive acceleration divergence is .10523 and vorticity contribution .000315. The source balance therefore remains strongly focusing at this sampled final slice. This contact splitting is not a torsion-removal experiment and is not a universal claim about other classical or quantum states.
+
+Geometric-identity RMS errors decrease .001988→.000645→.000178; effective-source balance RMS decreases .01889→.005548→.001492. Fine-pair orders are1.94 and1.98. The final current Lorentz factor stays below1.000613, so the observed focusing is not a nearly null current-frame artifact. Twenty programme tests pass in this session. The original production evolution equations remain unchanged.
+
 ## Exact continuation
 
-Next C09: use the persisted C08 fields to resolve the material-current Raychaudhuri balance. Validate the kinematic identity independently of the effective Einstein-source substitution, distinguish geometric and constraint errors, and quantify whether acceleration/rotation oppose the measured focusing. No re-evolution is needed. See NEXT_ACTION.md.
+Read NEXT_ACTION.md. The next predeclared finite-amplitude test is spin_amplitude=1.0, with the same density, mode, action and numerical controls. Reuse the verified source identities and constraint solver, retain new checkpoints, compare against the C08 dataset, and do not scan parameters merely until a bounce appears.
 
-No global bounce, oscillation, arbitrary-perturbation stability or physical fermion-cloud interpretation has been established.
+No global bounce, oscillation, arbitrary-perturbation stability or physically controlled high-density fermion realization has been established. Current progress consists of source/constraint derivations, resolved finite trajectories, persisted raw fields and independently checked focusing diagnostics.
 
 ## Record entry points
 
@@ -73,5 +81,7 @@ No global bounce, oscillation, arbitrary-perturbation stability or physical ferm
 - [Exact next investigation](NEXT_ACTION.md)
 - [Short Danish explanation](SUMMARY_DA.md)
 - [Recorded convergence figure](figures/validation.svg)
+- [Spin-texture curvature and focusing figure](figures/spin_texture.svg)
+- [Raw checkpoint index](checkpoints/cycle08/index.json)
 
 The engine's only production change is periodic charge quadrature; all field equations, the weak-field frontend and its limits are preserved. Research drivers, initial-data construction and additional diagnostics live in this programme directory.

@@ -1,7 +1,7 @@
 # Prioritized unresolved questions after cycle 06
 
-1. **Explain the resolved spin-texture focusing.** C08 supplies convergent finite dynamics and reusable raw fields. Analyze the material-current Raychaudhuri terms, separating its kinematic identity, source replacement and numerical errors, before selecting a stronger texture or longer interval.
-2. **Evolved full-curvature control.** C06 validates the diagnostic on an exact branch and 3D initial data, not the whole evolving C05 trajectory. Add full field checkpoints and measure full-connection curvature with space/time diagnostic refinement on the next new run.
+1. **Nonlinear orientation amplitude.** C08/C09 resolve one theta-amplitude .2 trajectory and its final focusing. Test the predeclared amplitude1.0 at the same density/mode/action with separately solved constraints; do not assume the small-amplitude result proves arbitrary-perturbation stability.
+2. **Evolved full-curvature control.** C08 now supplies full fields and full-connection probes at three evolved slices. Longer trajectories, more time samples and general regularity/completeness remain unestablished. Use the stored fields instead of repeating completed evolution.
 3. **General nonlinear 3D stability.** C05 is one short convergent trajectory; C03's finite planar mode tests are not an arbitrary-perturbation theorem. Independent transverse polarization, longer intervals and properly defined perturbation norms remain open.
 4. **A regular bounce in a new admissible state.** None was found in the tested focusing families. A candidate requires resolved current-volume expansion through zero, frame conditioning, full curvature control and continuation. Do not assume it exists.
 5. **Torsion attribution.** A candidate needs separately constrained ECD/Einstein–Dirac comparisons at matched free data. No new candidate was identified in these cycles.

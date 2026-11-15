@@ -93,3 +93,17 @@ At matched seed density/charge and separately resolved constraints, the harmonic
 Persisted all15 NPZ files, totaling29,275,156 bytes. Uploaded Git objects were checked against locally computed raw Git SHA and whole-file SHA256; publication augments manifests with blob IDs without altering field arrays. Transferred binary data in exact chunks to avoid tool-output byte clipping. Dataset index: checkpoints/cycle08/index.json. No expensive trajectory had to be repeated for new postprocessing.
 
 Artifacts: spin_texture_evolution.py, cycle08_spin_evolution.json and the committed checkpoint dataset. Decision: analyze the saved final states' local Raychaudhuri terms next, separating the geometric identity from the Einstein-source replacement and its constraint error.
+
+## 2026-11-15 — cycle 09: mechanism check on saved spin-texture fields
+
+Used the completed C08 raw endpoints at9³/17³/33³ without re-evolving them. Verified manifest/file/field hashes. Derived a diagnostic of material Theta-dot with independently measured expansion, shear, rotation, acceleration divergence and Levi–Civita Ricci focusing. Time derivatives use tangent steps1e-4/5e-5. The geometric kinematic identity is kept separate from its Einstein-source replacement, so constraint/gauge errors are visible rather than called physical defocusing.
+
+First validated the exact homogeneous massless branch: Theta-dot=-9/v², volume term=-3/v², contact source=-6/v², with zero acceleration/shear/vorticity/other source. The tangent error falls by four under step halving. On the final textured33³ slice, Theta-dot is [-30.54295,-29.02306]. The explicit on-shell contact piece is [-20.54417,-19.07035]; acceleration divergence has positive maximum .10523 and rotation maximum .000315. Other source terms, shear and the negative expansion-square term are retained. These values explain the sampled focusing but do not prove future behavior or causal torsion attribution.
+
+Geometric residual RMS .00198796/.00064508/.00017843 and effective-source residual RMS .01888696/.00554835/.00149248 improve under refinement. The fine-pair orders are1.9375/1.9796. Einstein-Ricci source mismatch is separately reported and dominates the latter error. Current normal-frame Lorentz factor stays below1.000613 at the final slice, excluding a nearly null frame as the explanation for the large negative expansion derivative. Means/RMS are coordinate-grid statistics, not proper-volume averages.
+
+Massless one-spinor source splitting -(epsilon+3P)/2=-2 GA n²-G_spatial is an on-shell identity on the same solution. Removing the contact changes both fields and constraints; no counterfactual dynamics have been computed here. Do not turn this result into universal attraction/repulsion language or apply it to the six-species/quantum cases.
+
+All20 programme tests passed, including five new texture/checkpoint checks and two new focusing checks. Added a standalone SVG generated from C08/C09 JSON and visually inspected its preview. Three new commits in this continuation cover C07 source/data, C08 evolution/raw persistence, and C09 focusing analysis; prior completed trajectories were not repeated as new experiments.
+
+Decision: next test one predeclared larger orientation amplitude1.0, holding density/mode/action fixed and resolving constraints anew. This probes nonlinear orientation sensitivity rather than blindly searching for a desired bounce. All finite-interval, periodic-topology and physical-applicability caveats remain.

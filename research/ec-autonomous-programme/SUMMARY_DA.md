@@ -1,29 +1,15 @@
-# Status efter seks forskningscyklusser
+# Status efter ni forskningscyklusser
 
-De tidligere autonome statusfiler fandtes ikke på repositoryets tilgængelige branches. Programmet er derfor startet fra den verificerede forskning og audit; der er ikke opfundet en tidligere log.
+**Fortsættelsen har tilføjet tre cyklusser: en ny rumlig spintilstand, dens 3D-udvikling og en kontrol af, hvad der styrer materialestrømmens volumenændring.**
 
-**Det stærkeste nye resultat er en kontrolleret, kort 3D-beregning med stærk krumning og rumligt varierende spinorfelter.** Startdata opfylder gravitationens bindingsligninger under uafhængig kontrol. Rumfejlene falder omtrent med anden orden, og separat tidsforfinelse er forenelig med RK4. Kontraktionen fortsætter gennem det beregnede interval, også målt langs materialestrømmen.
+Spinets retning varierer nu i rummet. Kildetermerne og gravitationens bindinger er kontrolleret uafhængigt, også de spændinger en perfekt-fluid-erstatning ville overse. Startdata og evolution er testet på tre opløsninger. Rumfejlene falder omtrent med anden orden, og den separate tidsforfinelse er forenelig med RK4.
 
-Arbejdet omfatter seks trin: en eksakt stærkkrumningstest; periodiske plane startdata og udvikling; større plane forstyrrelser; egentlige tredimensionale startdata; deres 3D-udvikling; og en uafhængig kontrol af den fulde torsionskrumning. Kode, parametre, fejlmål og begrænsninger er gemt.
+For netop denne familie fortsætter kontraktionen gennem det beregnede interval. Der ses ingen lokal volumenvending. Det er ikke et generelt bevis imod bounces eller for stabilitet ved vilkårlige forstyrrelser.
 
-For de undersøgte familier ses ingen lokal volumenvending i de beregnede intervaller. Nogle tæthedskontraster vokser, andre falder. Det udelukker en påstand om, at alle de målte forstyrrelser blot dæmpes; det afgør ikke generel eller langsigtet stabilitet. Der er ikke påvist et bounce eller fysiske volumenoscillationer.
+De fulde felter er nu gemt i 15 tabsfri checkpoints med kontrolsummer. Den fulde torsionskrumning er kontrolleret på genindlæste felter ved tre tidspunkter. De målte værdier er endelige og konvergerer, men tre tidssnit beviser ikke global regularitet eller fravær af en senere singularitet.
 
-En vigtig matematisk kontrol viser, hvorfor én krumningsskalar ikke er nok: Den fulde forbindelses Ricci-skalar kan være præcis nul, mens dens anden krumningsinvariant vokser som 1/volumen⁴. Det er verificeret symbolsk og numerisk. Et endeligt numerisk forløb beviser stadig ikke global regularitet eller fravær af en senere singularitet.
+Ved sluttidspunktet viser Raychaudhuri-kontrollen en tydelig fokusering: Rotation og acceleration kan modvirke kontraktionen nogle steder, men er langt svagere end de negative bidrag. Kontaktleddets bidrag i den kontrollerede enkeltspinor-identitet er også fokuserende. Dette er en analyse af samme løsning, ikke en sammenligning med en torsionsfri udvikling; konklusionen må ikke overføres til alle ECD-tilstande eller kvantestof.
 
-Fejlen i partikelantallet på periodiske gitre er rettet. 13 nye forskningstests og 16 eksisterende feltmotortests består. Energimomentum-kontrollen har en dokumenteret tidsdiskretiseringsgrænse, som ikke skjules af flere rumlige gitterpunkter.
+20 programtests består. Alle nye resultater, fejlmål, checkpoints og begrænsninger er gemt. Der er stadig ikke påvist et bounce af en endelig sky, fysiske volumenoscillationer eller en kontrolleret kvantefysisk fermionbeskrivelse ved disse store krumninger.
 
-**Den største hindring er nu at undersøge andre bindingskonsistente spintilstande og følge hele torsionskrumningen gennem længere udvikling.** Den klassiske models fysiske gyldighed ved disse store krumninger er heller ikke etableret. En periodisk geometri er ikke en afgrænset stjerne med vakuum udenfor.
-
-Det næste konkrete forsøg ændrer spinets retning rumligt, løser bindingerne igen og tester udviklingen med de samme kontroller. Fremtidige dyre beregninger skal gemme de fulde felter som checkpoints, så nye målinger ikke kræver unødvendige gentagelser. NEXT_ACTION.md beskriver præcis, hvad der skal udledes, testes og gemmes.
-
-## Fortsættelse: syvende cyklus
-
-Spinets retning må nu variere rumligt i startdata. Kildetermerne er kontrolleret uafhængigt, også de spændinger der ville forsvinde ved en forkert perfekt-fluid-erstatning. Bindingerne er løst på tre opløsninger med konvergerende kontrolfejl. Det er endnu ikke en dynamisk stabilitetstest.
-
-De fulde felter kan nu gemmes og genindlæses uden tab, med kontrolsummer og korrekt tids-/gittermetadata. Det næste forsøg udvikler den nye spintilstand og gemmer checkpoints undervejs, så den fulde torsionskrumning kan kontrolleres uden at gentage dyre beregninger.
-
-## Ottende cyklus
-
-Den nye rumligt varierende spinretning er nu udviklet med den fulde 3D-feltmotor på tre opløsninger. Fejlene falder ved rum- og tidsforfinelse, og kontraktionen fortsætter gennem det undersøgte interval. Det er et afgrænset resultat for disse startdata, ikke et generelt stabilitetsbevis.
-
-Alle15 checkpoints er gemt som tabsfri felter med kontrolsummer. Den fulde torsionskrumning er målt på genindlæste felter ved tre tidspunkter. Det næste trin kan derfor undersøge, hvilke led der styrer materialestrømmens fokusering, uden at gentage den dyre evolution.
+**Næste konkrete forsøg øger kun spinretningens amplitude fra 0,2 til 1,0**, mens tæthed, bølgelængde og action beholdes, og bindingerne løses igen. Det undersøger en stærkere forstyrrelse uden at vælge parametre efter et ønsket bounce. NEXT_ACTION.md beskriver præcist fremgangsmåde, stopkriterier og validering.

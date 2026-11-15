@@ -120,3 +120,27 @@ The full torsionful Riemann diagnostic is now applied to evolved textured states
 The matched C05 volume-ratio difference is approximately -5.50e-7 at33³. It is tiny and slicing-dependent; changing the spin state also changes its separately constrained geometry. It is not a torsion-removal experiment. All classical/EFT/finite-body limitations remain.
 
 Raw NPZ checkpoints and a cryptographic index preserve g,p,psi and provenance for future independent diagnostics. Their successful storage/reload says nothing by itself about physical validity.
+
+## C09 — resolved final-slice current focusing (conditional numerical mechanism evidence)
+
+Raychaudhuri uses the metric Levi–Civita connection after torsion elimination, not the full affine Ricci tensor:
+
+u·grad Theta=-Theta²/3-sigma_ab sigma^ab+omega_ab omega^ab-R_LC,ab u^a u^b+div a.
+
+Both the geometric identity and the separate replacement Ruu=(epsilon+3P)/2 are evaluated. The latter uses the full evolved ECD stress; no fluid or initial spin alignment is imposed. For this regular single massless spinor, the exact on-shell source identity splits the source term into -2 GA n² and the remaining spatial-kinetic contribution. It includes the interaction's shifted Dirac kinetic frequency and is not obtained by reading only the contact metric term.
+
+At the final33³ checkpoint:
+
+| Quantity | Pointwise range |
+|---|---:|
+| Material expansion derivative |[-30.543,-29.023]|
+| Explicit contact source identity |[-20.544,-19.070]|
+| Other source identity |[-.03368,.00294]|
+| Acceleration divergence |[-.16419,.10523]|
+| Vorticity contribution |[~0,.000315]|
+
+The expansion-square and shear contributions are negative and also included. The measured final slice is thus strongly focusing; the small positive terms cannot overturn its sign within observed errors. The material expansion itself is negative, so there is no local volume minimum there. A final-slice derivative is not a theorem for all later times or a proof of absence of a bounce in other data.
+
+The geometric residual RMS falls .001988→.000645→.000178, and the effective-source residual RMS .01889→.005548→.001492. Source/gauge/constraint mismatch is explicitly distinguished from the kinematic identity error. Diagnostic-step refinement and the exact reference check limit the interpretation of numerical cancellation. The final Lorentz factor remains near1, rather than approaching a null-current frame.
+
+This is a mechanism diagnosis on the same trajectory. It does not establish the effect of replacing ECD by Einstein–Dirac, and neither the total-current single-field identity nor the conclusion transfers automatically to multiple species or quantum correlations. The physical fermion-state problem remains unresolved.
