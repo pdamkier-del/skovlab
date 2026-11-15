@@ -1,0 +1,94 @@
+{
+  "conventions": "eta=(-+++), epsilon_lower0123=+1, Rprime=epsilon^abcd R_abcd, C_abc=-C_cba, derivative index middle. alpha=M^2/2.",
+  "direct_affine_irreducible_checks": [
+    [
+      2.220446049250313e-16,
+      1.0408340855860843e-17
+    ],
+    [
+      0.0,
+      -2.7755575615628914e-17
+    ],
+    [
+      8.881784197001252e-16,
+      4.440892098500626e-16
+    ],
+    [
+      0.0,
+      8.881784197001252e-16
+    ],
+    [
+      -4.440892098500626e-16,
+      -1.1102230246251565e-16
+    ]
+  ],
+  "full_24_component_variations": [
+    {
+      "f": 0.0,
+      "trace_source_norm": 0.0,
+      "hessian_rank": 24,
+      "max_full_connection_error": 2.220446049250313e-16,
+      "max_Euler_residual": 1.1102230246251565e-16,
+      "on_shell_action_error": 1.7763568394002505e-15
+    },
+    {
+      "f": 0.0,
+      "trace_source_norm": 0.19772677271017486,
+      "hessian_rank": 24,
+      "max_full_connection_error": 2.220446049250313e-16,
+      "max_Euler_residual": 0.0,
+      "on_shell_action_error": 8.881784197001252e-16
+    },
+    {
+      "f": 0.03,
+      "trace_source_norm": 0.0,
+      "hessian_rank": 24,
+      "max_full_connection_error": 1.1102230246251565e-16,
+      "max_Euler_residual": 4.440892098500626e-16,
+      "on_shell_action_error": 3.552713678800501e-15
+    },
+    {
+      "f": 0.03,
+      "trace_source_norm": 0.28926686884390973,
+      "hessian_rank": 24,
+      "max_full_connection_error": 1.1102230246251565e-16,
+      "max_Euler_residual": 4.440892098500626e-16,
+      "on_shell_action_error": 4.440892098500626e-16
+    },
+    {
+      "f": -0.4,
+      "trace_source_norm": 0.0,
+      "hessian_rank": 24,
+      "max_full_connection_error": 3.3306690738754696e-16,
+      "max_Euler_residual": 8.881784197001252e-16,
+      "on_shell_action_error": 3.552713678800501e-15
+    },
+    {
+      "f": -0.4,
+      "trace_source_norm": 0.17309115550108176,
+      "hessian_rank": 24,
+      "max_full_connection_error": 8.326672684688674e-17,
+      "max_Euler_residual": 2.220446049250313e-16,
+      "on_shell_action_error": 8.326672684688674e-17
+    },
+    {
+      "f": 2.0,
+      "trace_source_norm": 0.0,
+      "hessian_rank": 24,
+      "max_full_connection_error": 2.7755575615628914e-17,
+      "max_Euler_residual": 4.440892098500626e-16,
+      "on_shell_action_error": 5.551115123125783e-17
+    },
+    {
+      "f": 2.0,
+      "trace_source_norm": 0.15340969369002175,
+      "hessian_rank": 24,
+      "max_full_connection_error": 2.7755575615628914e-17,
+      "max_Euler_residual": 4.440892098500626e-16,
+      "on_shell_action_error": 1.1102230246251565e-16
+    }
+  ],
+  "Rprime_identity": "Rprime=div(q)-(2/3)t.q + tensor-torsion quadratic part",
+  "eliminated_action": "Lred=3J^2/(4M^2)-12/[M^2(1+16 f^2/M^4)] (df+A/8+fJ/M^2)^2; contractions use metric.",
+  "qualification": "All 24 metric-compatible connection components varied; no nonmetricity sector or quantum stress solved."
+}
