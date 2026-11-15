@@ -1,0 +1,219 @@
+{
+  "scope": "Fixed Minkowski a=1, one unpolarized Dirac species, minimal G=3/16, fixed physical UV cutoff. Full covariance includes filled negative-energy reference; Q is vacuum-Wick ordered relative to that fixed vacuum.",
+  "parameters": {
+    "mass": 0.1,
+    "T": 0.001,
+    "mu": 0.1,
+    "cutoff": 0.1,
+    "proper_time_interval": [
+      0,
+      100.0
+    ],
+    "coherent_rotation_angle": 0.05,
+    "rotation_envelope_momentum": 0.03
+  },
+  "matrix_checks": {
+    "functional_gradient_errors": [
+      1.446160899365445e-13,
+      3.466393838635895e-13,
+      4.203651315926038e-13,
+      5.101474798152594e-13,
+      4.07111844236141e-13,
+      7.847021643581087e-14
+    ],
+    "unpolarized_selfenergy_error": 0.0
+  },
+  "thermal_state_checks": [
+    {
+      "radial_nodes": 48,
+      "D": 9.923837109702715e-08,
+      "S": 9.757552781208834e-08,
+      "rho_free": 1.0094578305652944e-08,
+      "Q": -1.4445110776803262e-14,
+      "rho_total": 1.0094575597194674e-08,
+      "mass_shift": -3.6590822929533125e-08,
+      "occupation_spectrum_error": 1.1102230246251565e-16,
+      "occupation_min": 0.0,
+      "occupation_max": 1.0,
+      "max_initial_covariance_derivative": 5.1731331468518604e-08
+    },
+    {
+      "radial_nodes": 96,
+      "D": 9.923837109702793e-08,
+      "S": 9.757552781208939e-08,
+      "rho_free": 1.0094578305653063e-08,
+      "Q": -1.4445110776803543e-14,
+      "rho_total": 1.0094575597194793e-08,
+      "mass_shift": -3.659082292953352e-08,
+      "occupation_spectrum_error": 1.1102230246251565e-16,
+      "occupation_min": 0.0,
+      "occupation_max": 1.0,
+      "max_initial_covariance_derivative": 5.174322073586701e-08
+    },
+    {
+      "radial_nodes": 192,
+      "D": 9.923837109702651e-08,
+      "S": 9.757552781208801e-08,
+      "rho_free": 1.0094578305652924e-08,
+      "Q": -1.4445110776803136e-14,
+      "rho_total": 1.0094575597194654e-08,
+      "mass_shift": -3.6590822929533006e-08,
+      "occupation_spectrum_error": 1.1102230246251565e-16,
+      "occupation_min": 0.0,
+      "occupation_max": 1.0,
+      "max_initial_covariance_derivative": 5.174622855208533e-08
+    }
+  ],
+  "independent_adaptive_D": 9.923837109702748e-08,
+  "independent_adaptive_S": 9.757552781208898e-08,
+  "coherent_time_refinement": [
+    {
+      "steps": 64,
+      "covariance_endpoint_error": 1.5961337955688288e-05,
+      "max_energy_drift_absolute": 1.795809109852623e-20,
+      "max_energy_drift_over_initial_energy": 1.7704426596454153e-12,
+      "max_occupation_eigenvalue_drift": 2.620217667281821e-07,
+      "endpoint": {
+        "D": 9.923837109702793e-08,
+        "S": 1.0766352967900844e-07,
+        "rho_free": 1.0143280542407178e-08,
+        "Q": -1.6515562771938447e-14,
+        "rho_total": 1.0143277445739158e-08,
+        "mass_shift": -4.0373823629628165e-08
+      }
+    },
+    {
+      "steps": 128,
+      "covariance_endpoint_error": 9.985445689165044e-07,
+      "max_energy_drift_absolute": 9.628382330117242e-22,
+      "max_energy_drift_over_initial_energy": 9.492377963276201e-14,
+      "max_occupation_eigenvalue_drift": 8.268155271551336e-09,
+      "endpoint": {
+        "D": 9.923837109702793e-08,
+        "S": 1.076763537755236e-07,
+        "rho_free": 1.0143280542908231e-08,
+        "Q": -1.651832431138743e-14,
+        "rho_total": 1.0143277445722423e-08,
+        "mass_shift": -4.037863266582135e-08
+      }
+    },
+    {
+      "steps": 256,
+      "covariance_endpoint_error": 6.24208028232975e-08,
+      "max_energy_drift_absolute": 5.922613185879678e-22,
+      "max_energy_drift_over_initial_energy": 5.8389541423589e-14,
+      "max_occupation_eigenvalue_drift": 2.5898261313272997e-10,
+      "endpoint": {
+        "D": 9.923837109702793e-08,
+        "S": 1.0767697952991768e-07,
+        "rho_free": 1.0143280542933116e-08,
+        "Q": -1.6518459069682026e-14,
+        "rho_total": 1.014327744572204e-08,
+        "mass_shift": -4.037886732371913e-08
+      }
+    }
+  ],
+  "observed_time_error_ratios": [
+    15.984602442941064,
+    15.996983757854114
+  ],
+  "radial_endpoint_refinement": [
+    {
+      "radial_nodes": 48,
+      "endpoint": {
+        "D": 9.923837109702715e-08,
+        "S": 1.0767701494694143e-07,
+        "rho_free": 1.0143280542934595e-08,
+        "Q": -1.6518466696879484e-14,
+        "rho_total": 1.014327744572209e-08,
+        "mass_shift": -4.0378880605103035e-08
+      }
+    },
+    {
+      "radial_nodes": 96,
+      "endpoint": {
+        "D": 9.923837109702793e-08,
+        "S": 1.0767701494695643e-07,
+        "rho_free": 1.0143280542934828e-08,
+        "Q": -1.6518466696882794e-14,
+        "rho_total": 1.0143277445722323e-08,
+        "mass_shift": -4.037888060510866e-08
+      }
+    },
+    {
+      "radial_nodes": 192,
+      "endpoint": {
+        "D": 9.923837109702651e-08,
+        "S": 1.0767701494695335e-07,
+        "rho_free": 1.0143280542934956e-08,
+        "Q": -1.651846669688199e-14,
+        "rho_total": 1.014327744572245e-08,
+        "mass_shift": -4.037888060510751e-08
+      }
+    }
+  ],
+  "cutoff_sensitivity": [
+    {
+      "cutoff": 0.08,
+      "initial": {
+        "D": 9.923837109633496e-08,
+        "S": 7.970845868235378e-08,
+        "rho_free": 1.0143279353456794e-08,
+        "Q": -1.1277565534443444e-14,
+        "rho_total": 1.0143277238913255e-08,
+        "mass_shift": -2.9890672005882664e-08
+      },
+      "endpoint": {
+        "D": 9.923837109633496e-08,
+        "S": 1.0771099381720977e-07,
+        "rho_free": 1.0143280337497945e-08,
+        "Q": -1.6525785338017944e-14,
+        "rho_total": 1.0143277238913194e-08,
+        "mass_shift": -4.0391622681453664e-08
+      }
+    },
+    {
+      "cutoff": 0.1,
+      "initial": {
+        "D": 9.923837109702793e-08,
+        "S": 7.960799397200678e-08,
+        "rho_free": 1.0143279557264935e-08,
+        "Q": -1.1261559853242782e-14,
+        "rho_total": 1.0143277445722462e-08,
+        "mass_shift": -2.985299773950254e-08
+      },
+      "endpoint": {
+        "D": 9.923837109702793e-08,
+        "S": 1.0767701494695643e-07,
+        "rho_free": 1.0143280542934828e-08,
+        "Q": -1.6518466696882794e-14,
+        "rho_total": 1.0143277445722323e-08,
+        "mass_shift": -4.037888060510866e-08
+      }
+    },
+    {
+      "cutoff": 0.12,
+      "initial": {
+        "D": 9.923837109702807e-08,
+        "S": 7.96054524038399e-08,
+        "rho_free": 1.0143279557357989e-08,
+        "Q": -1.1261155201415748e-14,
+        "rho_total": 1.0143277445891389e-08,
+        "mass_shift": -2.985204465143996e-08
+      },
+      "endpoint": {
+        "D": 9.923837109702807e-08,
+        "S": 1.0768273592986699e-07,
+        "rho_free": 1.0143280543335149e-08,
+        "Q": -1.6519698766337197e-14,
+        "rho_total": 1.014327744589163e-08,
+        "mass_shift": -4.038102597370012e-08
+      }
+    }
+  ],
+  "energy_tangent_derivatives": [
+    0.0,
+    0.0
+  ],
+  "limitations": "Gaussian Hartree-Fock is a conserving truncation, not an error bound for omitted cumulants. No cosmological evolution, renormalized curved-space stress, stress-noise or actual bounce."
+}

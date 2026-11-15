@@ -1,0 +1,32 @@
+{
+  "primary_source": "https://arxiv.org/html/1512.06074v1",
+  "equation": "33b-33d as printed, real mass; c=6 pi G_N xi^2/a^2, B=sum_h F3h-F3h/4",
+  "Bloch_length_squared_derivative": "-c*z*(-X*y + Y*x)/2",
+  "component_required_for_cross_product_completion": "c*(-X*y + Y*x)/4",
+  "admissible_full_covariance_eigenvalue_range": [
+    0.270871215252208,
+    0.7291287847477921
+  ],
+  "printed_generator_length_derivative": [
+    [
+      -1.7999999999997185e-06,
+      6.749999999916545e-07
+    ],
+    [
+      -1.7999999999997185e-06,
+      6.749999999916545e-07
+    ]
+  ],
+  "cross_product_completion_residual": [
+    [
+      0.0,
+      -6.938893903907228e-18
+    ],
+    [
+      0.0,
+      -6.938893903907228e-18
+    ]
+  ],
+  "classification": "The printed components cannot be used as an exact isospectral Hartree-Fock generator for a full equal-time covariance in general. If f denotes vacuum-subtracted/approximated currents, reference-source terms and approximation errors must be derived before interpreting it as a Pauli state.",
+  "limitation": "The completion is an algebraic consistency condition, not a validated replacement for the full renormalized 2PI equations. No published bounce is declared disproven."
+}

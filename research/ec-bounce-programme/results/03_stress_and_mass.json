@@ -1,0 +1,75 @@
+{
+  "ensemble": "Omega1/V=G Q=-G B; P(T,mu)=P0+G B, E(T,mu)=3P0+5G B. At fixed physical entropy and charges, DeltaE=DeltaP=-G B at first order.",
+  "symbolic_checks": {
+    "grand_energy_minus_5GB": "0",
+    "fixed_entropy_charge_DeltaE_over_G": "g*mu**2*(-pi**4*T**4*g - pi**4*T**4 - 2*pi**2*T**2*g*mu**2 - 2*pi**2*T**2*mu**2 - g*mu**4 - mu**4)/(36*pi**4)",
+    "fixed_entropy_charge_DeltaP_over_G": "g*mu**2*(-pi**4*T**4*g - pi**4*T**4 - 2*pi**2*T**2*g*mu**2 - 2*pi**2*T**2*mu**2 - g*mu**4 - mu**4)/(36*pi**4)",
+    "adiabatic_conservation": "0"
+  },
+  "formal_adiabatic_sound_speed_squared": "(4/9 - 2*r)/(4/3 - 2*r)",
+  "formal_gradient_sign_change_r": 0.2222222222222222,
+  "formal_enthalpy_zero_r": 0.6666666666666666,
+  "formal_flat_bounce_r": 1,
+  "stability_scope": "Sound-speed result belongs to the extrapolated local-equilibrium first-order fluid. It is not a controlled proof of a quantum gradient instability at these large corrections.",
+  "massive_unpolarized_Dirac_trace": "-D**2/2 - S**2",
+  "massive_thermal_examples": [
+    {
+      "mass": 1,
+      "T": 0.05,
+      "mu": 1.05,
+      "net_charge": 0.0025100919287632754,
+      "scalar_condensate_medium": 0.002289421811283779,
+      "rho0": 0.002762710596984844,
+      "A2": -8.39173297540317e-06,
+      "contact_fraction": 0.000569531218581244
+    },
+    {
+      "mass": 1,
+      "T": 0.4,
+      "mu": 0.0,
+      "net_charge": 0.0,
+      "scalar_condensate_medium": 0.005832252888782506,
+      "rho0": 0.0175207195399833,
+      "A2": -3.401517375871189e-05,
+      "contact_fraction": 0.0003640173033535447
+    },
+    {
+      "mass": 0.1,
+      "T": 1.0,
+      "mu": 0.0,
+      "net_charge": 0.0,
+      "scalar_condensate_medium": 0.016495908459583906,
+      "rho0": 1.1506171937169745,
+      "A2": -0.00027211499590697186,
+      "contact_fraction": 4.4342777086214275e-05
+    },
+    {
+      "mass": 1,
+      "T": 0.2,
+      "mu": 2.0,
+      "net_charge": 0.20251572187778966,
+      "scalar_condensate_medium": 0.1166325544871807,
+      "rho0": 0.36931961122017753,
+      "A2": -0.0341094615700463,
+      "contact_fraction": 0.017317044235083574
+    }
+  ],
+  "nonrelativistic_checks": [
+    {
+      "p_over_m": 0.01,
+      "actual_contact_fraction": 9.498196097287802e-09,
+      "conditional_bound": 9.498860966469168e-09
+    },
+    {
+      "p_over_m": 0.1,
+      "actual_contact_fraction": 9.432875857950857e-06,
+      "conditional_bound": 9.498860966469169e-06
+    },
+    {
+      "p_over_m": 0.3,
+      "actual_contact_fraction": 0.00024135528454414393,
+      "conditional_bound": 0.0002564692460946675
+    }
+  ],
+  "nonrelativistic_bound": "For unpolarized independent free Dirac species, p<=P<<m and occupations<=1: |DeltaE|/rho0 <= G P^3/(2 pi^2 m) = (G m^2)(P/m)^3/(2 pi^2). No interspecies axial Hartree term in this state."
+}

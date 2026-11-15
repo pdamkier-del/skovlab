@@ -1,0 +1,32 @@
+{
+  "status": "PASS within explicitly declared source/state assumptions",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "sympy": "1.14.0",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "scripts_completed": [
+    "finite_fock.py",
+    "thermal_bounds.py",
+    "stress_and_mass.py",
+    "nonrelativistic_loophole.py",
+    "source_scale_check.py"
+  ],
+  "evidence_sha256": {
+    "code/finite_fock.py": "1e60021192b62478f783d59dcded89bca5b981b6e09236d064d84498c36bab6d",
+    "code/nonrelativistic_loophole.py": "88aa14a7e4ed160f86386d463acea0558e6c95912974eefbea1b1bf32ebcc224",
+    "code/quantum_gas.py": "afb3fdfc6d50a9fe2f44c349fce70a115a4107cf7ba2411ee743d05faeb955ad",
+    "code/source_scale_check.py": "3a9b8123a6fbe6f5e12d198f438e90fe42e615d613cd9aebd4d7b187da2783de",
+    "code/stress_and_mass.py": "870baf508a49be4cddb3de1ee45020ff89c58089f8dd9171a684121c044c075f",
+    "code/thermal_bounds.py": "692409c828d11ffd9869b8ded9144f217a8cbf8e6fde86bda0f0bd6b0bcaa1fd",
+    "code/validate_programme.py": "de7a5003a638a3a207750cc6c2d3a79b9b38a227887c61144c13da9846aca933",
+    "results/01_particle_antiparticle_fock.json": "3c6a2d684ab2ba21360df437261b3563b0d5d2cba687b3e79c653be36070474c",
+    "results/02_thermal_and_pauli_bounds.json": "971909513380c9d33adc5c547184ca41dfaa0cc8f2512f7781bda2ce87ec56fd",
+    "results/03_stress_and_mass.json": "73188d05e9d26c09e36ef5d364e9db65d3c89b8651fa6bcf30025d1c9c2b2cbe",
+    "results/04_nonrelativistic_loophole.json": "eb40aaa2167984a3750e07ea408de8f8812feceb4cb77bc65a6a2092ac229821",
+    "results/05_nonminimal_source_scale.json": "c6f1267ddfe76c1b9ccbcf025587ab36804a1b1dbf5b36a7730a977be5b721bd"
+  },
+  "new_spacetime_evolutions": 0,
+  "level_B_accepted": false,
+  "limitation": "No complete covariant interacting stress/noise, actual quantum bounce, or inhomogeneous robustness demonstrated."
+}
