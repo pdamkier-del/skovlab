@@ -1,0 +1,73 @@
+{
+  "six_distinct_species": {
+    "species_assignment": "six independent Weyl species, one occupied mode each",
+    "occupations": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "normal_ordered_A2_times_V2": -35.99999999999999,
+    "independent_Wick_result": -35.99999999999999,
+    "mean_A2_times_V2": -36.0,
+    "coefficient_C_in_minus_C_n2": 0.9999999999999998,
+    "qualification": "Exact reference-state finite-occupation Wick polynomial; not an interacting state, renormalized curved-space stress, or closed scattering truncation."
+  },
+  "same_species_six_modes": {
+    "species_assignment": "one Weyl species, six occupied momentum modes",
+    "occupations": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "normal_ordered_A2_times_V2": -71.99999999999999,
+    "independent_Wick_result": -71.99999999999999,
+    "mean_A2_times_V2": -36.0,
+    "coefficient_C_in_minus_C_n2": 1.9999999999999996,
+    "qualification": "Exact reference-state finite-occupation Wick polynomial; not an interacting state, renormalized curved-space stress, or closed scattering truncation."
+  },
+  "Pauli_normalized_benchmark": [
+    {
+      "per_mode_occupation": 1.0,
+      "a_b": 0.06734517079693746,
+      "rho_b_in_reduced_Planck4": 1175.9417526158152,
+      "p_b_in_reduced_Planck": 14.848874658217888,
+      "GA_p_b_squared": 41.34170224039976,
+      "R_b_in_reduced_Planck2": 2351.8835052316304,
+      "torsion_norm_b_in_reduced_Planck2": 9407.534020926521
+    },
+    {
+      "per_mode_occupation": 0.5,
+      "a_b": 0.04762022695068073,
+      "rho_b_in_reduced_Planck4": 2351.8835052316304,
+      "p_b_in_reduced_Planck": 20.999479927629892,
+      "GA_p_b_squared": 82.68340448079951,
+      "R_b_in_reduced_Planck2": 4703.767010463261,
+      "torsion_norm_b_in_reduced_Planck2": 18815.068041853043
+    },
+    {
+      "per_mode_occupation": 0.1,
+      "a_b": 0.02129641291313793,
+      "rho_b_in_reduced_Planck4": 11759.417526158151,
+      "p_b_in_reduced_Planck": 46.9562646103228,
+      "GA_p_b_squared": 413.4170224039975,
+      "R_b_in_reduced_Planck2": 23518.835052316303,
+      "torsion_norm_b_in_reduced_Planck2": 94075.34020926521
+    }
+  ],
+  "bounds": "For the six fundamental modes with f<=1: rho_b>=1024 pi\u00b3/(27 kappa\u00b2), p_b>=8 pi^(3/2)/(3 sqrt(kappa)), GA p_b\u00b2>=4 pi\u00b3/3. Changing L does not lower these physical bounce scales.",
+  "free_chiral_gas": {
+    "g": 6,
+    "C": 1.1666666666666667,
+    "ratio_prefactor_in_kappa_pF2": 0.02955201189568185,
+    "formal_equal_correction_pF_in_reduced_Planck": 5.8170992479824335,
+    "ratio_at_pF_point1_Mbar": 0.0002955201189568186,
+    "scope": "Leading vacuum-normal-ordered free-state estimate, no strong correlations or medium response; not a universal bound for every quantum state."
+  },
+  "classification": "Pauli/exchange algebra mathematically checked. A controlled quantum bounce does not follow; the benchmark cancellation is outside the small EFT/interaction expansion."
+}
