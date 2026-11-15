@@ -34,3 +34,7 @@ Continued from c4192f9 on the actual programme branch; main and PR #2/#3 remain 
 
 Added one fixed coherent eigenvector rotation of amplitude .05 (no occupation retuning), then evolved both helicity Bloch vectors at fixed geometry. Independent DOP853 reference and RK4 64/128/256 give error ratios 15.9846/15.9970; charge, full energy and occupation drift are recorded separately. Momentum quadrature converges; finite cutoff dependence is preserved as a limitation, not called renormalized away. Initial and final mode arrays are retained in JSON. This is a finite-cutoff Gaussian matter validation, not full cosmological backreaction or a quantum bounce.
 
+## P06 — Component generator and subtraction consistency
+
+Independently differentiated the squared Bloch length of the printed local component equations. Found a nonzero generic polynomial defect if interpreted as full covariance Hartree–Fock. Verified it on admissible finite covariance data and derived the necessary cross-product completion only as a diagnostic. Because the paper's currents are subtracted/approximated, this does not prove a physical Pauli violation or refute its full 2PI theory. Derived the exact full-to-subtracted covariance identity, including reference commutator and projector time derivative. Decision: do not naively use the printed components as a physical source; resolve subtraction and approximation order first. Artifact: result 07 and component-consistency document.
+
