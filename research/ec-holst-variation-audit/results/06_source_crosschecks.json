@@ -1,0 +1,34 @@
+{
+  "2022_reference": "https://arxiv.org/html/2206.15041v3",
+  "2022_verified_equations": [
+    "4.19",
+    "4.20-4.22",
+    "4.25-4.31"
+  ],
+  "2024_reference": "https://arxiv.org/html/2406.14982v2",
+  "2024_verified_structure": [
+    "12-14 scalar normalization",
+    "35-37 effective-formula algebra"
+  ],
+  "2024_effective_formula_map": "b_p=-4 beta/M^2, c_p=4c/M^2, chi_p=-z, phi_p=-omega; alpha_N,p=a, beta_N,p=-nu, A_p=-A, V_p=V. This is a map matching effective formulas; the independent microscopic trace-source sign dictionary of Eq29 is not certified by this algebra alone.",
+  "2024_nonminimal_residuals": {
+    "AA_AV_VV": "0",
+    "scalar_derivative_currents": "0"
+  },
+  "2026_reference": "https://arxiv.org/html/2605.09571v2",
+  "2026_printed_consistency_flags": [
+    {
+      "equations": "14-18",
+      "flag": "K in Eq15 multiplies (partial B)^2. Canonical integration over z in Eq17 requires B_z; Eq18 has the correct universal asinh relation. Do not identify this K_B with 2022 K_z."
+    },
+    {
+      "equations": "38-39,41",
+      "flag": "Eq38 uses C_phi/M_P, so C_phi is dimensionless; Eq39 as printed has derivative dB/dphi of dimension inverse mass and requires M_P or a declared dimensionless phi. Eq41 is dimensionless."
+    },
+    {
+      "equations": "40 and 42",
+      "flag": "For real gamma and B(0)=1/(4gamma), substitution into positive Eq40 stays positive, while Eq42 is negative. A signature change cannot reconcile two formulas within the same convention. Independent elimination fixes the effective-action sign here."
+    }
+  ],
+  "limits": "Flags are local algebra/dimension checks, not a reproduction or refutation of reheating/leptogenesis phenomenology. Separate literal typography from physical model."
+}

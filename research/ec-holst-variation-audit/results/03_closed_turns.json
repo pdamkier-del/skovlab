@@ -1,0 +1,614 @@
+{
+  "classification": "Finite regular k=+1 scalar-potential curvature turns; not a Level B torsion-caused or flat-FLRW bounce.",
+  "parameters": {
+    "M": 1.0,
+    "beta": 0.25,
+    "c": 100000000.0,
+    "mu_squared": 4.166666666666667e-10,
+    "tau": "mu*t",
+    "k": 1
+  },
+  "cases": [
+    {
+      "initial_phi": 0.5,
+      "initial_velocity": 0.0,
+      "a_mu_at_turn": 4.171603633040006,
+      "Hdot_over_mu2_at_turn": 0.057463744968647305,
+      "refinement": [
+        {
+          "steps_per_half": 32,
+          "max_constraint_in_mu2": 1.4038874229793663e-11,
+          "endpoint_error": 5.78866066192063e-10
+        },
+        {
+          "steps_per_half": 64,
+          "max_constraint_in_mu2": 9.724582250569824e-13,
+          "endpoint_error": 3.599687214972391e-11
+        },
+        {
+          "steps_per_half": 128,
+          "max_constraint_in_mu2": 6.363659599273319e-14,
+          "endpoint_error": 2.2257196086172826e-12
+        }
+      ],
+      "samples": [
+        {
+          "tau": -0.5,
+          "H_over_mu": -0.016618654239178517,
+          "phi_over_M": 0.4041272636215328,
+          "phi_dot_over_mu_M": 0.36310848226756953,
+          "a_times_mu": 4.195034985539932,
+          "original_tetrad_variation_max": 2.775557561562891e-12,
+          "metric_R_over_mu2": 0.2896541739784312,
+          "metric_K_over_mu4": 0.04005900838981318,
+          "full_scalar_over_mu2": -0.7951433303561367,
+          "Holst_over_mu2": 1.5902866607121338,
+          "full_K_over_mu4": 0.22546566088392367,
+          "torsion_squared_over_mu2": 0.06545869137651908
+        },
+        {
+          "tau": -0.4,
+          "H_over_mu": -0.016489485573410192,
+          "phi_over_M": 0.4374350748324417,
+          "phi_dot_over_mu_M": 0.3018048594248194,
+          "a_times_mu": 4.188024352115837,
+          "original_tetrad_variation_max": 1.8041124150158794e-11,
+          "metric_R_over_mu2": 0.4141724630136119,
+          "metric_K_over_mu4": 0.04103484126792518,
+          "full_scalar_over_mu2": -0.8705676046576114,
+          "Holst_over_mu2": 1.741135209315086,
+          "full_K_over_mu4": 0.25417432613641167,
+          "torsion_squared_over_mu2": 0.03912637260871381
+        },
+        {
+          "tau": -0.3,
+          "H_over_mu": -0.014394428674635768,
+          "phi_over_M": 0.4642528571157915,
+          "phi_dot_over_mu_M": 0.23345715621742913,
+          "a_times_mu": 4.18149775521724,
+          "original_tetrad_variation_max": 1.942890293094024e-11,
+          "metric_R_over_mu2": 0.5252852122103002,
+          "metric_K_over_mu4": 0.0504431675615445,
+          "full_scalar_over_mu2": -0.932566986332898,
+          "Holst_over_mu2": 1.8651339726664617,
+          "full_K_over_mu4": 0.2785923493207177,
+          "torsion_squared_over_mu2": 0.02057080065673886
+        },
+        {
+          "tau": -0.19999999999999996,
+          "H_over_mu": -0.010626473964316603,
+          "phi_over_M": 0.48392957806083076,
+          "phi_dot_over_mu_M": 0.15921809822533828,
+          "a_times_mu": 4.176218466612279,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.6133456610623903,
+          "metric_K_over_mu4": 0.0636627810407164,
+          "full_scalar_over_mu2": -0.9787972700146027,
+          "Holst_over_mu2": 1.9575945400345771,
+          "full_K_over_mu4": 0.2972716035742742,
+          "torsion_squared_over_mu2": 0.008623533591430078
+        },
+        {
+          "tau": -0.09999999999999998,
+          "H_over_mu": -0.005636262196468379,
+          "phi_over_M": 0.4959542552555253,
+          "phi_dot_over_mu_M": 0.08072544956898635,
+          "a_times_mu": 4.172790876602231,
+          "original_tetrad_variation_max": 2.0816681711721682e-11,
+          "metric_R_over_mu2": 0.6700040198420357,
+          "metric_K_over_mu4": 0.07488126351239019,
+          "full_scalar_over_mu2": -1.0073633540409925,
+          "Holst_over_mu2": 2.0147267080879647,
+          "full_K_over_mu4": 0.3090124478809087,
+          "torsion_squared_over_mu2": 0.002071059955399155
+        },
+        {
+          "tau": 0.0,
+          "H_over_mu": 0.0,
+          "phi_over_M": 0.5,
+          "phi_dot_over_mu_M": 0.0,
+          "a_times_mu": 4.171603633040006,
+          "original_tetrad_variation_max": 8.326672684688674e-12,
+          "metric_R_over_mu2": 0.6895649396237676,
+          "metric_K_over_mu4": 0.07924996765972173,
+          "full_scalar_over_mu2": -1.0170287161312859,
+          "Holst_over_mu2": 2.0340574322625713,
+          "full_K_over_mu4": 0.31301908273795737,
+          "torsion_squared_over_mu2": 0.0
+        },
+        {
+          "tau": 0.10000000000000009,
+          "H_over_mu": 0.0056362621964683845,
+          "phi_over_M": 0.4959542552555253,
+          "phi_dot_over_mu_M": -0.08072544956898643,
+          "a_times_mu": 4.172790876602231,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.6700040198420357,
+          "metric_K_over_mu4": 0.07488126351239016,
+          "full_scalar_over_mu2": -1.0073633540409928,
+          "Holst_over_mu2": 2.0147267080879647,
+          "full_K_over_mu4": 0.3090124478809088,
+          "torsion_squared_over_mu2": 0.002071059955399157
+        },
+        {
+          "tau": 0.20000000000000007,
+          "H_over_mu": 0.010626473964316608,
+          "phi_over_M": 0.4839295780608307,
+          "phi_dot_over_mu_M": -0.15921809822533836,
+          "a_times_mu": 4.176218466612279,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.6133456610623902,
+          "metric_K_over_mu4": 0.0636627810407164,
+          "full_scalar_over_mu2": -0.9787972700146027,
+          "Holst_over_mu2": 1.9575945400345773,
+          "full_K_over_mu4": 0.2972716035742742,
+          "torsion_squared_over_mu2": 0.008623533591430081
+        },
+        {
+          "tau": 0.30000000000000004,
+          "H_over_mu": 0.014394428674635772,
+          "phi_over_M": 0.4642528571157915,
+          "phi_dot_over_mu_M": -0.23345715621742918,
+          "a_times_mu": 4.18149775521724,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.5252852122103001,
+          "metric_K_over_mu4": 0.050443167561544495,
+          "full_scalar_over_mu2": -0.9325669863328983,
+          "Holst_over_mu2": 1.8651339726664622,
+          "full_K_over_mu4": 0.2785923493207178,
+          "torsion_squared_over_mu2": 0.020570800656738854
+        },
+        {
+          "tau": 0.4,
+          "H_over_mu": 0.016489485573410192,
+          "phi_over_M": 0.4374350748324417,
+          "phi_dot_over_mu_M": -0.3018048594248194,
+          "a_times_mu": 4.188024352115837,
+          "original_tetrad_variation_max": 2.914335439641036e-11,
+          "metric_R_over_mu2": 0.4141724630136119,
+          "metric_K_over_mu4": 0.04103484126792518,
+          "full_scalar_over_mu2": -0.8705676046576114,
+          "Holst_over_mu2": 1.7411352093150867,
+          "full_K_over_mu4": 0.25417432613641167,
+          "torsion_squared_over_mu2": 0.03912637260871381
+        },
+        {
+          "tau": 0.5,
+          "H_over_mu": 0.016618654239178517,
+          "phi_over_M": 0.4041272636215328,
+          "phi_dot_over_mu_M": -0.36310848226756953,
+          "a_times_mu": 4.195034985539932,
+          "original_tetrad_variation_max": 8.326672684688674e-12,
+          "metric_R_over_mu2": 0.2896541739784312,
+          "metric_K_over_mu4": 0.04005900838981318,
+          "full_scalar_over_mu2": -0.7951433303561367,
+          "Holst_over_mu2": 1.5902866607121346,
+          "full_K_over_mu4": 0.22546566088392334,
+          "torsion_squared_over_mu2": 0.06545869137651908
+        }
+      ]
+    },
+    {
+      "initial_phi": 0.45,
+      "initial_velocity": 0.0,
+      "a_mu_at_turn": 4.7168080282068905,
+      "Hdot_over_mu2_at_turn": 0.04494729889322743,
+      "refinement": [
+        {
+          "steps_per_half": 32,
+          "max_constraint_in_mu2": 9.058261085659325e-12,
+          "endpoint_error": 4.2939873878822254e-10
+        },
+        {
+          "steps_per_half": 64,
+          "max_constraint_in_mu2": 6.270747809900001e-13,
+          "endpoint_error": 2.6699142896546846e-11
+        },
+        {
+          "steps_per_half": 128,
+          "max_constraint_in_mu2": 4.1092129698938606e-14,
+          "endpoint_error": 1.6496803922905201e-12
+        }
+      ],
+      "samples": [
+        {
+          "tau": -0.5,
+          "H_over_mu": -0.013537568521482989,
+          "phi_over_M": 0.36767026877110753,
+          "phi_dot_over_mu_M": 0.31337723736364187,
+          "a_times_mu": 4.737873987538429,
+          "original_tetrad_variation_max": 9.020562075079397e-12,
+          "metric_R_over_mu2": 0.2421651913179155,
+          "metric_K_over_mu4": 0.024240415977349005,
+          "full_scalar_over_mu2": -0.7145318231706378,
+          "Holst_over_mu2": 1.4290636463411532,
+          "full_K_over_mu4": 0.15004858281854858,
+          "torsion_squared_over_mu2": 0.056223865063367705
+        },
+        {
+          "tau": -0.4,
+          "H_over_mu": -0.013206781326617548,
+          "phi_over_M": 0.3963688732886993,
+          "phi_dot_over_mu_M": 0.25959958685369533,
+          "a_times_mu": 4.731481355386524,
+          "original_tetrad_variation_max": 4.163336342344337e-12,
+          "metric_R_over_mu2": 0.33594457992661364,
+          "metric_K_over_mu4": 0.025622304940000735,
+          "full_scalar_over_mu2": -0.7778205372258274,
+          "Holst_over_mu2": 1.555641074452675,
+          "full_K_over_mu4": 0.16977447278525523,
+          "torsion_squared_over_mu2": 0.034532207424023464
+        },
+        {
+          "tau": -0.3,
+          "H_over_mu": -0.011401832090478523,
+          "phi_over_M": 0.41940335035454746,
+          "phi_dot_over_mu_M": 0.20022903961936572,
+          "a_times_mu": 4.725608907532977,
+          "original_tetrad_variation_max": 6.9388939039072276e-12,
+          "metric_R_over_mu2": 0.4186454591040265,
+          "metric_K_over_mu4": 0.03162168287284847,
+          "full_scalar_over_mu2": -0.8295213626632827,
+          "Holst_over_mu2": 1.659042725327598,
+          "full_K_over_mu4": 0.18655885490885799,
+          "torsion_squared_over_mu2": 0.01866183828265511
+        },
+        {
+          "tau": -0.19999999999999996,
+          "H_over_mu": -0.008357055532484513,
+          "phi_over_M": 0.436260720910658,
+          "phi_dot_over_mu_M": 0.1362509578187045,
+          "a_times_mu": 4.720899811498551,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.48357812514314613,
+          "metric_K_over_mu4": 0.03949158501370851,
+          "full_scalar_over_mu2": -0.8678788354201175,
+          "Holst_over_mu2": 1.7357576708429,
+          "full_K_over_mu4": 0.19939203819821602,
+          "torsion_squared_over_mu2": 0.008017402590313503
+        },
+        {
+          "tau": -0.09999999999999998,
+          "H_over_mu": -0.0044144819257404,
+          "phi_over_M": 0.44654358980834513,
+          "phi_dot_over_mu_M": 0.06898304899317573,
+          "a_times_mu": 4.717858705318103,
+          "original_tetrad_variation_max": 4.163336342344337e-12,
+          "metric_R_over_mu2": 0.5250852455277351,
+          "metric_K_over_mu4": 0.04598638646094723,
+          "full_scalar_over_mu2": -0.8914964160645007,
+          "Holst_over_mu2": 1.7829928321340855,
+          "full_K_over_mu4": 0.20745241938107148,
+          "torsion_squared_over_mu2": 0.0019590228591371715
+        },
+        {
+          "tau": 0.0,
+          "H_over_mu": 0.0,
+          "phi_over_M": 0.45,
+          "phi_dot_over_mu_M": 0.0,
+          "a_times_mu": 4.7168080282068905,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.5393675867187292,
+          "metric_K_over_mu4": 0.048486232267130974,
+          "full_scalar_over_mu2": -0.899472834541485,
+          "Holst_over_mu2": 1.7989456690829702,
+          "full_K_over_mu4": 0.21020172962902967,
+          "torsion_squared_over_mu2": 0.0
+        },
+        {
+          "tau": 0.10000000000000009,
+          "H_over_mu": 0.004414481925740404,
+          "phi_over_M": 0.44654358980834513,
+          "phi_dot_over_mu_M": -0.06898304899317581,
+          "a_times_mu": 4.717858705318103,
+          "original_tetrad_variation_max": 4.163336342344337e-12,
+          "metric_R_over_mu2": 0.5250852455277351,
+          "metric_K_over_mu4": 0.04598638646094723,
+          "full_scalar_over_mu2": -0.8914964160645008,
+          "Holst_over_mu2": 1.7829928321340853,
+          "full_K_over_mu4": 0.20745241938107176,
+          "torsion_squared_over_mu2": 0.0019590228591371745
+        },
+        {
+          "tau": 0.20000000000000007,
+          "H_over_mu": 0.008357055532484519,
+          "phi_over_M": 0.436260720910658,
+          "phi_dot_over_mu_M": -0.1362509578187046,
+          "a_times_mu": 4.720899811498551,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.48357812514314613,
+          "metric_K_over_mu4": 0.039491585013708495,
+          "full_scalar_over_mu2": -0.8678788354201175,
+          "Holst_over_mu2": 1.7357576708429,
+          "full_K_over_mu4": 0.19939203819821602,
+          "torsion_squared_over_mu2": 0.008017402590313518
+        },
+        {
+          "tau": 0.30000000000000004,
+          "H_over_mu": 0.011401832090478525,
+          "phi_over_M": 0.41940335035454746,
+          "phi_dot_over_mu_M": -0.20022903961936578,
+          "a_times_mu": 4.725608907532977,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.41864545910402645,
+          "metric_K_over_mu4": 0.031621682872848465,
+          "full_scalar_over_mu2": -0.8295213626632822,
+          "Holst_over_mu2": 1.659042725327598,
+          "full_K_over_mu4": 0.18655885490885765,
+          "torsion_squared_over_mu2": 0.01866183828265512
+        },
+        {
+          "tau": 0.4,
+          "H_over_mu": 0.013206781326617548,
+          "phi_over_M": 0.3963688732886993,
+          "phi_dot_over_mu_M": -0.25959958685369533,
+          "a_times_mu": 4.731481355386524,
+          "original_tetrad_variation_max": 4.163336342344337e-12,
+          "metric_R_over_mu2": 0.33594457992661364,
+          "metric_K_over_mu4": 0.025622304940000735,
+          "full_scalar_over_mu2": -0.7778205372258274,
+          "Holst_over_mu2": 1.5556410744526756,
+          "full_K_over_mu4": 0.16977447278525523,
+          "torsion_squared_over_mu2": 0.034532207424023464
+        },
+        {
+          "tau": 0.5,
+          "H_over_mu": 0.013537568521482989,
+          "phi_over_M": 0.36767026877110753,
+          "phi_dot_over_mu_M": -0.31337723736364187,
+          "a_times_mu": 4.737873987538429,
+          "original_tetrad_variation_max": 9.020562075079397e-12,
+          "metric_R_over_mu2": 0.2421651913179155,
+          "metric_K_over_mu4": 0.024240415977349005,
+          "full_scalar_over_mu2": -0.7145318231706378,
+          "Holst_over_mu2": 1.429063646341153,
+          "full_K_over_mu4": 0.15004858281854858,
+          "torsion_squared_over_mu2": 0.056223865063367705
+        }
+      ]
+    },
+    {
+      "initial_phi": 0.55,
+      "initial_velocity": 0.05,
+      "a_mu_at_turn": 3.7148741683343336,
+      "Hdot_over_mu2_at_turn": 0.07121224490411682,
+      "refinement": [
+        {
+          "steps_per_half": 32,
+          "max_constraint_in_mu2": 2.0941054446055318e-11,
+          "endpoint_error": 7.928623313446792e-10
+        },
+        {
+          "steps_per_half": 64,
+          "max_constraint_in_mu2": 1.4277884430313748e-12,
+          "endpoint_error": 4.926375973823838e-11
+        },
+        {
+          "steps_per_half": 128,
+          "max_constraint_in_mu2": 9.300893388797249e-14,
+          "endpoint_error": 3.0541680295925744e-12
+        }
+      ],
+      "samples": [
+        {
+          "tau": -0.5,
+          "H_over_mu": -0.014950041191308602,
+          "phi_over_M": 0.41705567732609805,
+          "phi_dot_over_mu_M": 0.4522446079325673,
+          "a_times_mu": 3.737056264396175,
+          "original_tetrad_variation_max": 6.9388939039072276e-12,
+          "metric_R_over_mu2": 0.24836130054714958,
+          "metric_K_over_mu4": 0.07302638313177282,
+          "full_scalar_over_mu2": -0.8242146133908452,
+          "Holst_over_mu2": 1.6484292267815799,
+          "full_K_over_mu4": 0.31472742486774086,
+          "torsion_squared_over_mu2": 0.09616957197035528
+        },
+        {
+          "tau": -0.4,
+          "H_over_mu": -0.016643398916055038,
+          "phi_over_M": 0.45912140275275165,
+          "phi_dot_over_mu_M": 0.38750270081521343,
+          "a_times_mu": 3.731072264138698,
+          "original_tetrad_variation_max": 1.1102230246251564e-11,
+          "metric_R_over_mu2": 0.4148622203403296,
+          "metric_K_over_mu4": 0.06250640233236406,
+          "full_scalar_over_mu2": -0.9206143846474983,
+          "Holst_over_mu2": 1.8412287692945353,
+          "full_K_over_mu4": 0.35744436839555893,
+          "torsion_squared_over_mu2": 0.05815383490196019
+        },
+        {
+          "tau": -0.3,
+          "H_over_mu": -0.015641046460987497,
+          "phi_over_M": 0.4942503356719662,
+          "phi_dot_over_mu_M": 0.31360727908301855,
+          "a_times_mu": 3.72497307981999,
+          "original_tetrad_variation_max": 1.249000902703301e-11,
+          "metric_R_over_mu2": 0.5727255404198064,
+          "metric_K_over_mu4": 0.0691780345221593,
+          "full_scalar_over_mu2": -1.00330085162467,
+          "Holst_over_mu2": 2.0066017032491708,
+          "full_K_over_mu4": 0.3948724725787287,
+          "torsion_squared_over_mu2": 0.03156654250250295
+        },
+        {
+          "tau": -0.19999999999999996,
+          "H_over_mu": -0.012182987947172826,
+          "phi_over_M": 0.5215684889552057,
+          "phi_dot_over_mu_M": 0.23150524561045951,
+          "a_times_mu": 3.719724376720397,
+          "original_tetrad_variation_max": 1.249000902703301e-11,
+          "metric_R_over_mu2": 0.7082778509068053,
+          "metric_K_over_mu4": 0.08791817006555569,
+          "full_scalar_over_mu2": -1.0690223545268644,
+          "Holst_over_mu2": 2.138044709053611,
+          "full_K_over_mu4": 0.4249685603688475,
+          "torsion_squared_over_mu2": 0.014535105847697027
+        },
+        {
+          "tau": -0.09999999999999998,
+          "H_over_mu": -0.0067412885134484945,
+          "phi_over_M": 0.5403326698736466,
+          "phi_dot_over_mu_M": 0.14286392051351765,
+          "a_times_mu": 3.7161544740571983,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.8082629221621063,
+          "metric_K_over_mu4": 0.10950635015015726,
+          "full_scalar_over_mu2": -1.114903373803205,
+          "Holst_over_mu2": 2.229806747607552,
+          "full_K_over_mu4": 0.44587335027213915,
+          "torsion_squared_over_mu2": 0.004856263099636335
+        },
+        {
+          "tau": 0.0,
+          "H_over_mu": 0.0,
+          "phi_over_M": 0.55,
+          "phi_dot_over_mu_M": 0.05,
+          "a_times_mu": 3.7148741683343336,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.8620469388494019,
+          "metric_K_over_mu4": 0.1238635291299374,
+          "full_scalar_over_mu2": -1.1387802282592112,
+          "Holst_over_mu2": 2.2775604565184233,
+          "full_K_over_mu4": 0.456172461150646,
+          "torsion_squared_over_mu2": 0.000552698169058495
+        },
+        {
+          "tau": 0.10000000000000009,
+          "H_over_mu": 0.00720698145741195,
+          "phi_over_M": 0.5502841428302161,
+          "phi_dot_over_mu_M": -0.04431404407982782,
+          "a_times_mu": 3.7162123920711716,
+          "original_tetrad_variation_max": 1.5265566588595902e-11,
+          "metric_R_over_mu2": 0.8636528800492929,
+          "metric_K_over_mu4": 0.1243218339160354,
+          "full_scalar_over_mu2": -1.1394844982820058,
+          "Holst_over_mu2": 2.2789689965656033,
+          "full_K_over_mu4": 0.4551244299496209,
+          "torsion_squared_over_mu2": 0.00043317388175087714
+        },
+        {
+          "tau": 0.20000000000000007,
+          "H_over_mu": 0.01399135574998391,
+          "phi_over_M": 0.5411869854733775,
+          "phi_dot_over_mu_M": -0.13713976713116888,
+          "a_times_mu": 3.720179999809663,
+          "original_tetrad_variation_max": 1.3877787807814455e-11,
+          "metric_R_over_mu2": 0.812995509398601,
+          "metric_K_over_mu4": 0.11069085573776542,
+          "full_scalar_over_mu2": -1.117006820790004,
+          "Holst_over_mu2": 2.2340136415798444,
+          "full_K_over_mu4": 0.44279282269277553,
+          "torsion_squared_over_mu2": 0.004446745573611221
+        },
+        {
+          "tau": 0.30000000000000004,
+          "H_over_mu": 0.019518659907271637,
+          "phi_over_M": 0.5229989072331314,
+          "phi_dot_over_mu_M": -0.22569940081325127,
+          "a_times_mu": 3.726469137490597,
+          "original_tetrad_variation_max": 9.71445146547012e-12,
+          "metric_R_over_mu2": 0.7158952170248056,
+          "metric_K_over_mu4": 0.08931001924142443,
+          "full_scalar_over_mu2": -1.0724985570286723,
+          "Holst_over_mu2": 2.1449971140572437,
+          "full_K_over_mu4": 0.4200422323514823,
+          "torsion_squared_over_mu2": 0.013684690462008197
+        },
+        {
+          "tau": 0.4,
+          "H_over_mu": 0.02310400010671268,
+          "phi_over_M": 0.49626759179665303,
+          "phi_dot_over_mu_M": -0.307666492197443,
+          "a_times_mu": 3.734488316967574,
+          "original_tetrad_variation_max": 5.551115123125782e-12,
+          "metric_R_over_mu2": 0.5828664441914677,
+          "metric_K_over_mu4": 0.07006261112289734,
+          "full_scalar_over_mu2": -1.00811094226774,
+          "Holst_over_mu2": 2.0162218845348368,
+          "full_K_over_mu4": 0.38839908738208806,
+          "torsion_squared_over_mu2": 0.03002899628844702
+        },
+        {
+          "tau": 0.5,
+          "H_over_mu": 0.02427467111083286,
+          "phi_over_M": 0.4617421803830176,
+          "phi_dot_over_mu_M": -0.38136085717923285,
+          "a_times_mu": 3.7434259464326303,
+          "original_tetrad_variation_max": 1.1102230246251564e-11,
+          "metric_R_over_mu2": 0.4270959499420446,
+          "metric_K_over_mu4": 0.0621293153293862,
+          "full_scalar_over_mu2": -0.9267135911358887,
+          "Holst_over_mu2": 1.853427182271664,
+          "full_K_over_mu4": 0.3498189978865946,
+          "torsion_squared_over_mu2": 0.05559208868796306
+        }
+      ]
+    }
+  ],
+  "raw_endpoints": [
+    {
+      "initial_turn_state": [
+        1.4283005261629993,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "negative_time_state": [
+        1.4339016797032091,
+        -0.016618654239178517,
+        0.4041272636215328,
+        0.36310848226756953
+      ],
+      "positive_time_state": [
+        1.4339016797032091,
+        0.016618654239178517,
+        0.4041272636215328,
+        -0.36310848226756953
+      ]
+    },
+    {
+      "initial_turn_state": [
+        1.5511323056165967,
+        0.0,
+        0.45,
+        0.0
+      ],
+      "negative_time_state": [
+        1.5555885092534105,
+        -0.013537568521482989,
+        0.36767026877110753,
+        0.31337723736364187
+      ],
+      "positive_time_state": [
+        1.5555885092534105,
+        0.013537568521482989,
+        0.36767026877110753,
+        -0.31337723736364187
+      ]
+    },
+    {
+      "initial_turn_state": [
+        1.3123448063536385,
+        0.0,
+        0.55,
+        0.05
+      ],
+      "negative_time_state": [
+        1.3182982064232345,
+        -0.014950041191308602,
+        0.41705567732609805,
+        0.4522446079325673
+      ],
+      "positive_time_state": [
+        1.320001220586335,
+        0.02427467111083286,
+        0.4617421803830176,
+        -0.38136085717923285
+      ]
+    }
+  ],
+  "counterfactuals": "Torsion-free GR with the same canonical scalar action reproduces the metric exactly, with its own identical constraint. Scalar-free GR+Lambda=V(phi_turn) has an independently constrained closed de Sitter turn, but is a distinct matter action. Pure scalar-free vacuum GR has no real closed-FLRW H=0 data at this a.",
+  "limits": "Three homogeneous data points are not B6 inhomogeneous robustness or global completeness. Small curvature alone does not certify omitted operators or quantum state control."
+}

@@ -1,0 +1,38 @@
+{
+  "status": "PASS stated classical/regulated algebra and finite local geometry checks",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "sympy": "1.14.0",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "completed_scripts": [
+    "verify_connection.py",
+    "scalar_identities.py",
+    "fermion_stress.py",
+    "source_crosschecks.py",
+    "nonminimal_source.py",
+    "closed_turn.py",
+    "inhomogeneous_constraints.py"
+  ],
+  "Level_B_accepted": false,
+  "source_and_evidence_sha256": {
+    "code/closed_turn.py": "313ef5df27ba5db915f636cbf061a16cab121abb5b1bd7d9cbc54d86a7c56748",
+    "code/fermion_stress.py": "8d4a8da7f6d5d0e94e4f01c38a92f7c8ec610aa14a01033fedb178cc34c951dc",
+    "code/geometry.py": "6bac8520c9df95e4c6daadb2ab4a82d031f6f5eb5971f82810df4b30bcec3159",
+    "code/inhomogeneous_constraints.py": "5c077926e39616798985ccd2e912069c16dee9e451581c6ef28abd603e5f2276",
+    "code/nonminimal_source.py": "16f16ddf7b7aa8cc3530685770bc0507b74caa08b824aa45e6be956ae684078c",
+    "code/scalar_identities.py": "c8debcd5b1759f7c7760bb79deba85ffa7ac8f416e8efc6109484e0575e72699",
+    "code/source_crosschecks.py": "6c52c7ed5d34172a6cd34ea8c002878e10ee237c658763b67c207bbfb0bc91e4",
+    "code/validate_audit.py": "98645b2ea051c23236bf06bd99c509f411f4aff78a3d601e07aa9b14d0fe84f1",
+    "code/verify_connection.py": "1f7bf10bfcd79e0377d75a3e493f9358f6af7df21e1810f30ce6cea40b1c96a0",
+    "results/01_connection_variation.json": "4f8eb4b4a1c2c130fff331ea5ce07b0845afbb4dadc2a4fec64dedd7e5e99176",
+    "results/02_scalar_and_fermions.json": "5acce85c37ef03d30201573c2f5af6679037f5ec5bd4ff7e60a00140d9071e5c",
+    "results/03_closed_turns.json": "f2c9b801fd60907ad6cd50c651f1253b405a9f6c4da01d2cd32d5473b4c601c4",
+    "results/04_effective_stress.json": "3f3ccef9db94bc5204042f2b76f6601513df89ae640bde019d9ba2c45b5c700a",
+    "results/05_inhomogeneous_constraints.json": "d4945c30c6a0891571079369124030425113fb808786d7f62653d7fb5f394460",
+    "results/06_source_crosschecks.json": "b195664720d37c19482e04ea17764bdb4031d44537313c1369b19ccef84b571d",
+    "results/07_nonminimal_action_source.json": "0cbfa26f3844e86d056428fe91f85f215027b9a10fffcc318f0d530c780ee9b1",
+    "results/provenance.json": "2f9d15bfa29a2c9b6ac87a0ad45b65878b2a302f2c0698a2dd5a6a3c55c8f546"
+  },
+  "limitations": "No complete physical fermion state/quantum stress-noise, exact microscopic nonminimal dictionary, global completeness or Level B torsion-caused bounce."
+}
