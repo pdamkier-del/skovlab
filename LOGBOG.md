@@ -717,3 +717,15 @@ Appen er ryddet til skovgitter (vis art, højde eller kombination), arts- og s-o
 Den eksisterende gittermodel **beholder højden** og alle de hidtidige regler om kollektivt valg, randangreb og lokal abstrakt højdeudjævning. Der er nu en justerbar skelnegrænse Δs med standardværdi 0,01. Kun hvis |s_A−s_B| > Δs må et randtræ fra A forsøge angreb mod B; lige eller næsten lige strategier giver intet kampforsøg. Tomme celler kan stadig koloniseres. Når kampen er tilladt, er sejrssandsynligheden fortsat h_A/(h_A+h_B). Δs er altså en **separat tolerance på strategiforskellen**, ikke et alternativ til højdebaseret kamp. Ingen mutation er tilføjet.
 
 Test: JavaScript kunne køres for Δs=0, 0,01 og 0,20 i 150 sweeps på et 20×20-gitter; uden ugyldige højder eller manglende UI-referencer. Når tolerancen var større, var flere arter tilbage i det testede eksempel. Ingen visuel browserkontrol udført.
+
+
+## 16. november 2026 — Valg af latticens krumning k = −1, 0, +1
+
+Tilføjet en geometrivælger til den eksisterende højdebaserede skovsimulation:
+- **k = 0:** det tidligere kvadratiske gitter, med valgfri periodiske kanter.
+- **k = +1:** lukket, sfærisk-lignende ringgraf med celleantal proportionalt med sin(breddegrad), aftagende mod to poler; vist som udfoldet længde-/breddekort. Naboforbindelserne lukkes rundt om ringene og sammenkobles mellem ringe.
+- **k = −1:** åben, hyperbolsk-lignende ringgraf med celleantal proportionalt med sinh(radial afstand), voksende mod skivens rand; vist i en diskmodel.
+
+**Præcisering:** Disse er *kombinatoriske tilnærmelser til positiv/negativ krumning*, ikke eksakte tesselleringer af flader med konstant Gaussisk krumning K=±1, og diskens billedgeometri er ikke en metrisk isometri. Antallet af celler er L² i alle tre tilfælde; selve nabografen ændres, så geometri påvirker kamp, koloniforbindelse og lokal højdeudjævning. 4/8-nabovalget bestemmer, hvor mange radiale nabokoblinger der tilføjes i krummede tilfælde; gradtallet er ikke nødvendigvis præcis 4 eller 8. Krumningen ændres ved at geninitialisere forsøget. Periodiske kanter er kun relevante i den flade version.
+
+Kontrol: 20×20, 5 arter, 70 % startdækning, 100 sweeps for alle seks kombinationer af k∈{−1,0,+1} og 4/8 nabovalg. Ingen ugyldige/negative højder og alle kombinationer gennemførte uden kodefejl; de krummede grafer har præcis L² celler. Browservisuel kontrol er ikke gennemført.
