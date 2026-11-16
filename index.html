@@ -33,12 +33,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Ved spredning overføres 2 energienheder til hvert nyt træ. Nabotræer af samme art udveksler energi gradvist. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
 <canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div><div id="inspect">Peg på et felt for at se træets energi og højde.</div></section>
-<section class="panel"><h2>Evolution og diversitet</h2><p class="hint">Artsentropien er Shannon-entropi, ikke termodynamisk entropi.</p>
-<div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="H">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Dominerende art</small><b id="dominant">–</b></div></div>
-<div class="legend"><span><i style="background:#238674"></i>Artsentropi H / ln(K)</span><span><i style="background:#c58d48"></i>Andel forskellige nabopar</span><span><i style="background:#6681b9"></i>Arter tilbage / K</span></div>
-<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for diversitet og naboblanding"></canvas>
-<div class="hint">Artsentropi og antal arter er normaliseret til intervallet 0–1. Naboblanding er andelen af undersøgte nabopar med forskellige arter.</div></section>
-<section class="panel"><h2>Entropi og energifordeling</h2>
+<section class="panel"><h2>Evolution, entropi og energifordeling</h2>
 <p class="hint">Tre samtidige mål: artsdiversitet, fordeling af disponibel energi mellem træer og rumlig energikorrelation. Ingen af målene er i sig selv termodynamisk entropi.</p>
 <div class="metrics"><div class="stat"><small>Artsentropi H<sub>art</sub> (nat)</small><b id="entropyArt">–</b></div><div class="stat"><small>Energi-entropi H<sub>E</sub> (nat)</small><b id="entropyEnergy">–</b></div><div class="stat"><small>Nabo-korrelation r<sub>E</sub></small><b id="entropyCorrelation">–</b></div></div>
 <div class="legend"><span><i style="background:#238674"></i>H<sub>art</sub> / ln(K)</span><span><i style="background:#c58d48"></i>H<sub>E</sub> / ln(N<sub>træer</sub>)</span><span><i style="background:#6681b9"></i>(r<sub>E</sub> + 1) / 2</span></div>
@@ -213,10 +208,10 @@ function draw(){
  $("entropyArt").textContent=st.ent.toFixed(4);
  $("entropyEnergy").textContent=Number.isFinite(obs.energyEntropy)?obs.energyEntropy.toFixed(4):"–";
  $("entropyCorrelation").textContent=Number.isFinite(obs.correlation)?obs.correlation.toFixed(4):"–";
- $("H").textContent=st.ent.toFixed(4);$("effective").textContent=Math.exp(st.ent).toFixed(2);$("dominant").textContent=(st.leader*100).toFixed(1)+" %";
+ 
  $("treeEnergy").textContent=st.treeE.toFixed(2);$("storeEnergy").textContent=store.toFixed(2);$("totalEnergy").textContent=sum.toFixed(2);
  $("balance").textContent="Energibalance: start "+initialTotal.toFixed(2)+" = nu "+sum.toFixed(2)+" · numerisk afvigelse "+err.toExponential(2);
- plot("evolutionPlot",[["H","#238674"],["mix","#c58d48"],["alive","#6681b9"]]);plot("entropyPlot",[["H","#238674"],["energyH","#c58d48"],["spatialR","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["store","#c58d48"]]);
+ plot("entropyPlot",[["H","#238674"],["energyH","#c58d48"],["spatialR","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["store","#c58d48"]]);
  $("speciesRows").innerHTML=strategies.map((strategy,k)=>'<tr><td><span class="swatch" style="background:'+color(k)+'"></span> '+(k+1)+'</td><td>'+strategy.toFixed(3)+'</td><td>'+st.cnt[k]+'</td><td>'+(st.cnt[k]?st.sumH[k]/st.cnt[k]:0).toFixed(2)+'</td><td>'+st.sumE[k].toFixed(2)+'</td></tr>').join("");
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)sweepOnce();draw();raf=requestAnimationFrame(loop);}
