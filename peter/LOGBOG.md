@@ -778,3 +778,8 @@ Efter brugerens ændrede modelønske betaler træer nu m × h fra reserve til Q 
 ## 2026-11-16 · Justerbare vækst- og angrebspriser gendannet
 
 Under 03 kan κ (pris pr. højdeenhed, standard 2) og angrebsprisen (standard 1) igen ændres. κ bruges konsekvent til vækst, afkoms startstruktur, dødsretur og energiregnskab. Prisændringer genstarter simulationen for at undgå omvurdering af eksisterende struktur og deraf kunstig energi. Dette erstatter den tidligere beslutning om faste handlingspriser.
+
+
+## 2026-11-16 · Logaritmisk vedligeholdelse
+
+Vedligehold ændres fra m × h til m × ln(1 + h) / ln(2), så højde 1 stadig koster m, men store træers pris vokser langsommere. Standard m = 0,1 giver ca. 0,35 ved højde 10 og 0,67 ved højde 100. Betaling til Q, rækkefølgen og dødsreglen er uændrede. Dette erstatter den lineære højdepris; energien bevares fortsat.
