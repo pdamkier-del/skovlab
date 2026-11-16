@@ -62,6 +62,8 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div>
 <div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div>
 <p class="hint">Ved angreb mod en anden art skal forskellen mellem strategierne være større end Δs: |sₐ − sᵦ| &gt; Δs. Ellers kan arterne ikke skelnes, og der gennemføres ingen kamp mellem dem. Tomme felter kan stadig overtages. Når en kamp finder sted, afgør højden fortsat vinderen.</p>
+<div class="field"><label for="curvature">Lattice-krumning k</label><select id="curvature"><option value="0">k = 0 · flad (kvadratisk)</option><option value="1">k = +1 · sfærisk (lukket)</option><option value="-1">k = −1 · hyperbolsk (udvidende)</option></select></div>
+<p class="hint" id="curvatureHelp">Fladt kvadratgitter. Periodiske kanter kan vælges.</p>
 <div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
 <div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
 <div class="field"><label for="alpha">Lokal højdeudjævning α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
@@ -74,8 +76,8 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01};
-let rng,sp,h,stamp,strategies,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img;
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01,curvature:0};
+let rng,sp,h,stamp,strategies,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null;
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
 const color=k=>colors[k%colors.length];
@@ -86,6 +88,8 @@ function inputs(){
  cfg.L=Number($("size").value);cfg.K=Number($("species").value);cfg.fill=Number($("fill").value);
  cfg.speed=Number($("speed").value);cfg.seed=Math.floor(getNum("seed",1,1));cfg.neighbors=Number($("neighbors").value);
  cfg.periodic=$("periodic").checked;cfg.maxHeight=Math.floor(getNum("maxHeight",0,0));
+ cfg.curvature=Number($("curvature").value);$("periodic").disabled=cfg.curvature!==0;
+ $("curvatureHelp").textContent=cfg.curvature===0?"Fladt kvadratgitter; periodiske kanter kan vælges.":cfg.curvature===1?"Lukket sfærisk ringgitter: naboforbindelser er syet rundt om kuglen; vises som et udfoldet længde-/breddekort.": "Hyperbolsk ringgitter med eksponentielt voksende antal celler mod randen; vises som en skive. Kanten er åben.";
  cfg.alpha=Math.min(.12,getNum("alpha",0,.1));cfg.deltaS=Math.min(.2,getNum("deltaS",0,.01));
  $("deltaSOut").textContent=cfg.deltaS.toFixed(2).replace(".",",");
  $("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");
@@ -95,13 +99,52 @@ function inputs(){
 function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
 function init(){
  stop();inputs();rng=mulberry32((cfg.seed*2654435761)>>>0);
- const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Float64Array(N);stamp=new Int32Array(N);
+ geometry=buildGeometry();const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Float64Array(N);stamp=new Int32Array(N);
  strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);
  for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;}else sp[i]=-1;}
  sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
  bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();
 }
+// Combinatorial approximations of curvature, not exact constant-curvature tilings.
+// k=+1: capped circular rings (closed sphere topology), counts ~ sin(latitude).
+// k=-1: open growing rings (hyperbolic-like), counts ~ sinh(radius).
+// Each cell is an independent tree; edges, not display proximity, define neighbours.
+function buildGeometry(){
+ if(cfg.curvature===0)return null;
+ const R=cfg.L,N=R*R,weights=Array.from({length:R},(_,r)=>{
+  const t=(r+.5)/R;
+  return cfg.curvature===1?Math.sin(Math.PI*t):Math.sinh(3.5*t);
+ });
+ const minPer=3,remaining=N-minPer*R,totalW=weights.reduce((a,b)=>a+b,0);
+ const counts=weights.map(w=>minPer+Math.floor(remaining*w/totalW));
+ let left=N-counts.reduce((a,b)=>a+b,0);
+ const residual=weights.map((w,r)=>({r,f:remaining*w/totalW-Math.floor(remaining*w/totalW)})).sort((a,b)=>b.f-a.f);
+ for(let i=0;i<left;i++)counts[residual[i].r]++;
+ const offsets=new Int32Array(R+1);for(let r=0;r<R;r++)offsets[r+1]=offsets[r]+counts[r];
+ const adj=Array.from({length:N},()=>[]),edgeI=[],edgeJ=[],seen=new Set();
+ function link(a,b){if(a===b)return;const lo=Math.min(a,b),hi=Math.max(a,b),key=lo*N+hi;if(seen.has(key))return;seen.add(key);
+  adj[a].push(b);adj[b].push(a);edgeI.push(a);edgeJ.push(b);}
+ for(let r=0;r<R;r++){
+  const n=counts[r],off=offsets[r];
+  for(let j=0;j<n;j++){
+   link(off+j,off+(j+1)%n);
+   if(r===R-1)continue;
+   const nn=counts[r+1],next=offsets[r+1];
+   const mapped=(j+.5)*nn/n-.5,mid=((Math.round(mapped)%nn)+nn)%nn;
+   link(off+j,next+mid);
+   if(cfg.neighbors===8)link(off+j,next+(mid+1)%nn);
+  }
+ }
+ // Visual projection only: rectangular equirectangular for sphere, disk for hyperbolic.
+ const pixels=new Int32Array(N),radii=new Float64Array(R+1);
+ if(cfg.curvature===-1){
+  const scale=Math.tanh(2.25);
+  for(let r=0;r<=R;r++)radii[r]=.98*Math.tanh(2.25*r/R)/scale;
+ }
+ return{counts,offsets,adj,edgeI,edgeJ,radii,pixels,maximumDegree:Math.max(...adj.map(a=>a.length))};
+}
 function neighbours(i){
+ if(geometry)return geometry.adj[i];
  const L=cfg.L,x=i%L,y=Math.floor(i/L),out=[];
  for(const [dx,dy] of directions()){
   let nx=x+dx,ny=y+dy;
@@ -109,6 +152,20 @@ function neighbours(i){
   else if(nx<0||nx>=L||ny<0||ny>=L)continue;
   const j=ny*L+nx;if(j!==i&&!out.includes(j))out.push(j);
  }return out;
+}
+function visualCell(x,y){
+ if(!geometry)return y*cfg.L+x;
+ const L=cfg.L,R=geometry.counts.length;
+ if(cfg.curvature===1){
+  const r=Math.min(R-1,Math.floor(y*R/L)),n=geometry.counts[r];
+  return geometry.offsets[r]+Math.min(n-1,Math.floor(x*n/L));
+ }
+ const dx=(x+.5-L/2)/(L/2),dy=(y+.5-L/2)/(L/2),rad=Math.hypot(dx,dy);
+ if(rad>=.98)return -1;
+ let low=0,high=R;
+ while(low+1<high){const mid=(low+high)>>1;if(geometry.radii[mid]<=rad)low=mid;else high=mid;}
+ const r=Math.min(R-1,low),n=geometry.counts[r],angle=(Math.atan2(dy,dx)+2*Math.PI)%(2*Math.PI);
+ return geometry.offsets[r]+Math.min(n-1,Math.floor(angle*n/(2*Math.PI)));
 }
 function shuffle(arr){for(let k=arr.length-1;k>0;k--){const j=Math.floor(rng()*(k+1)),t=arr[k];arr[k]=arr[j];arr[j]=t;}return arr;}
 function colonies(){
@@ -126,15 +183,24 @@ function colonies(){
 function diffuseHeights(){
  if(cfg.alpha===0)return;
  const delta=new Float64Array(h.length),L=cfg.L;
- const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){
-  const x=i%L,y=Math.floor(i/L);
-  for(const [dx,dy] of dirs){
-   let nx=x+dx,ny=y+dy;
-   if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
-   else if(nx<0||nx>=L||ny<0||ny>=L)continue;
-   const j=ny*L+nx;if(j===i||sp[j]!==sp[i])continue;
-   const flux=cfg.alpha*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
+ if(geometry){
+  const rate=Math.min(cfg.alpha,.9/Math.max(1,geometry.maximumDegree));
+  for(let k=0;k<geometry.edgeI.length;k++){
+   const i=geometry.edgeI[k],j=geometry.edgeJ[k];
+   if(sp[i]<0||sp[i]!==sp[j])continue;
+   const flux=rate*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
+  }
+ }else{
+  const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
+  for(let i=0;i<sp.length;i++)if(sp[i]>=0){
+   const x=i%L,y=Math.floor(i/L);
+   for(const [dx,dy] of dirs){
+    let nx=x+dx,ny=y+dy;
+    if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
+    else if(nx<0||nx>=L||ny<0||ny>=L)continue;
+    const j=ny*L+nx;if(j===i||sp[j]!==sp[i])continue;
+    const flux=cfg.alpha*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
+   }
   }
  }
  for(let i=0;i<sp.length;i++)if(sp[i]>=0)h[i]+=delta[i];
@@ -203,8 +269,8 @@ function plot(){
 function draw(){
  const st=stats(),L=cfg.L,data=img.data,maxLog=Math.log1p(Math.max(1,st.highest));
  const ramp=[[35,43,82],[39,110,163],[63,187,176],[210,230,110]];
- for(let i=0;i<sp.length;i++){
-  const a=sp[i],off=i*4;
+ for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+  const i=visualCell(x,y),off=(y*L+x)*4,a=i<0?-1:sp[i];
   if(a<0){data[off]=228;data[off+1]=235;data[off+2]=224;}
   else{
    const hex=color(a),base=[parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)];
@@ -237,12 +303,14 @@ $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.ran
 for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
  $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
-for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS"])$(id).addEventListener("change",()=>{inputs();draw();});
-canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
+for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature"])$(id).addEventListener("change",()=>{
+  if(id==="neighbors"||id==="curvature")init();else{inputs();draw();}
+});
+canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
 })();
 </script></body></html>
