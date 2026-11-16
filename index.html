@@ -64,7 +64,6 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="initialEnergy">Startenergi pr. træ</label><input id="initialEnergy" type="number" min="0.1" max="10000" step="0.5" value="10"></div>
 <div class="field"><label for="initialStore">Fælles lager ved start pr. træ</label><input id="initialStore" type="number" min="0" max="100000" step="1" value="10"></div>
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1.5"></div>
-<div class="field"><label for="returnRate">Energi retur fra træet pr. sweep</label><input id="returnRate" type="number" min="0" max="1000" step="0.25" value="0.5"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
 <p class="hint"><b>Ved spredning:</b> Et nyt træ får altid energipakken fra modertræet (standard 2), også på et tomt felt. Der betales ingen yderligere angrebsomkostning. Kan træet ikke vokse op, forsøger det at sprede sig med 100 % sandsynlighed, men skal have energi nok til pakken.</p>
@@ -77,14 +76,14 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,attackMode:"height",neighbors:4,periodic:true,newHeight:"sapling",maxHeight:0,e0:10,store0:10,sun:1.5,returnRate:.5,growthCost:1,birthCost:2,alpha:.1};
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,attackMode:"height",neighbors:4,periodic:true,newHeight:"sapling",maxHeight:0,e0:10,store0:10,sun:1.5,growthCost:1,birthCost:2,alpha:.1};
 let rng,sp,h,en,stamp,order,strategies,store,initialTotal,sweep,history,historyStep,historyStride=1,running=false,raf=0;
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");let bufctx,img;
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
 const color=k=>colors[k%colors.length];
 function mulberry32(a){return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;}}
 function num(id,minimum,otherwise){const v=Number($(id).value);return Number.isFinite(v)?Math.max(minimum,v):otherwise}
-function takeInputs(){cfg.L=+ $("size").value;cfg.K=+ $("species").value;cfg.fill=+ $("fill").value;cfg.speed=+ $("speed").value;cfg.seed=Math.max(1,Math.floor(num("seed",1,1)));cfg.attackMode=$("attackMode").value;cfg.neighbors=+$("neighbors").value;cfg.periodic=$("periodic").checked;cfg.newHeight=$("newHeight").value;cfg.maxHeight=Math.floor(num("maxHeight",0,0));cfg.e0=num("initialEnergy",.1,10);cfg.store0=num("initialStore",0,10);cfg.sun=num("sun",0,1.5);cfg.returnRate=num("returnRate",0,.5);cfg.growthCost=num("growthCost",.01,1);cfg.birthCost=num("birthCost",.01,2);cfg.alpha=Math.min(.12,num("alpha",0,.1));$("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");$("sizeOut").textContent=cfg.L;$("speciesOut").textContent=cfg.K;$("fillOut").textContent=Math.round(cfg.fill*100)+" %";$("speedOut").textContent=cfg.speed;$("attackFormula").textContent=cfg.attackMode==="height"?"P(angriber vinder) = hₐ / (hₐ + hբ)":"P(angriber vinder) = Eₐ / (Eₐ + Eբ)";}
+function takeInputs(){cfg.L=+ $("size").value;cfg.K=+ $("species").value;cfg.fill=+ $("fill").value;cfg.speed=+ $("speed").value;cfg.seed=Math.max(1,Math.floor(num("seed",1,1)));cfg.attackMode=$("attackMode").value;cfg.neighbors=+$("neighbors").value;cfg.periodic=$("periodic").checked;cfg.newHeight=$("newHeight").value;cfg.maxHeight=Math.floor(num("maxHeight",0,0));cfg.e0=num("initialEnergy",.1,10);cfg.store0=num("initialStore",0,10);cfg.sun=num("sun",0,1.5);cfg.growthCost=num("growthCost",.01,1);cfg.birthCost=num("birthCost",.01,2);cfg.alpha=Math.min(.12,num("alpha",0,.1));$("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");$("sizeOut").textContent=cfg.L;$("speciesOut").textContent=cfg.K;$("fillOut").textContent=Math.round(cfg.fill*100)+" %";$("speedOut").textContent=cfg.speed;$("attackFormula").textContent=cfg.attackMode==="height"?"P(angriber vinder) = hₐ / (hₐ + hբ)":"P(angriber vinder) = Eₐ / (Eₐ + Eբ)";}
 function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
 function init(){stop();takeInputs();rng=mulberry32((cfg.seed*2654435761)>>>0);const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Int32Array(N);en=new Float64Array(N);stamp=new Int32Array(N);order=new Int32Array(N);strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);let alive=0;for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;en[i]=cfg.e0;alive++}else sp[i]=-1;}store=alive*cfg.store0;initialTotal=store+alive*cfg.e0;sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();}
 function die(i){if(sp[i]<0)return;store+=en[i];en[i]=0;sp[i]=-1;h[i]=0;}
@@ -112,8 +111,8 @@ function transportEnergy(){
 }
 function sweepOnce(){
   sweep++;const N=sp.length;let n=0;
-  // Each tree present at sweep start exchanges resources with the finite store.
-  for(let i=0;i<N;i++)if(sp[i]>=0){order[n++]=i;const returned=Math.min(cfg.returnRate,en[i]);en[i]-=returned;store+=returned;const received=Math.min(cfg.sun,store);en[i]+=received;store-=received;}
+  // Each tree present at sweep start receives resources from the finite store.
+  for(let i=0;i<N;i++)if(sp[i]>=0){order[n++]=i;const received=Math.min(cfg.sun,store);en[i]+=received;store-=received;}
   transportEnergy();
   for(let k=n-1;k>0;k--){const j=Math.floor(rng()*(k+1)),a=order[k];order[k]=order[j];order[j]=a;}
   for(let k=0;k<n;k++){
@@ -174,7 +173,7 @@ $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("ru
 $("step").addEventListener("click",()=>{stop();sweepOnce();draw();});
 $("restart").addEventListener("click",init);
 $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.random()*1000000);init();});
-for(const id of ["size","species","fill","seed","initialEnergy","initialStore","sun","returnRate","growthCost","birthCost","alpha"])$(id).addEventListener("change",init);
+for(const id of ["size","species","fill","seed","initialEnergy","initialStore","sun","growthCost","birthCost","alpha"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])$(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
 for(const id of ["attackMode","neighbors","periodic","newHeight","maxHeight"])$(id).addEventListener("change",()=>{takeInputs();draw();});
 canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i]+" · energi "+en[i].toFixed(2)+" · strategi "+strategies[a].toFixed(3);});
