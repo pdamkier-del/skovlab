@@ -200,7 +200,7 @@ function sphereRender(maxLog){
   const off=(y*w+x)*4,{i,light}=sphereHit(x+.5,y+.5,w,hpx);
   if(i<0){data[off]=228;data[off+1]=235;data[off+2]=224;}
   else{
-   const a=sp[i],base=a<0?[209,218,208]:rgbs[a%rgbs.length];
+   const a=sp[i],base=a<0?[209,218,208]:rgbs[a];
    const t=a<0?0:Math.min(1,Math.max(0,Math.log1p(h[i])/maxLog));
    let rgb=base;
    if(a>=0&&gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;rgb=ramp[k].map((v,c)=>v*(1-f)+ramp[k+1][c]*f);}
@@ -328,10 +328,18 @@ function stats(){
  let entropy=0;
  if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
  let unlike=0,pairs=0;const L=cfg.L;
- for(let y=0;y<L;y++)for(let x=0;x<L;x++){const i=y*L+x;if(sp[i]<0)continue;
-  for(const [dx,dy] of [[1,0],[0,1]]){
-   let nx=x+dx,ny=y+dy;if(cfg.periodic){nx%=L;ny%=L;}else if(nx>=L||ny>=L)continue;
-   const j=ny*L+nx;if(sp[j]>=0){pairs++;if(sp[i]!==sp[j])unlike++;}
+ if(geometry){
+  for(let k=0;k<geometry.edgeI.length;k++){
+   const a=sp[geometry.edgeI[k]],b=sp[geometry.edgeJ[k]];
+   if(a>=0&&b>=0){pairs++;if(a!==b)unlike++;}
+  }
+ }else{
+  for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+   const i=y*L+x;if(sp[i]<0)continue;
+   for(const [dx,dy] of [[1,0],[0,1]]){
+    let nx=x+dx,ny=y+dy;if(cfg.periodic){nx%=L;ny%=L;}else if(nx>=L||ny>=L)continue;
+    const j=ny*L+nx;if(sp[j]>=0){pairs++;if(sp[i]!==sp[j])unlike++;}
+   }
   }
  }
  return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
@@ -384,11 +392,17 @@ function draw(){
  $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
  $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
  $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest).toFixed(1);
- $("forestSpeciesLegend").innerHTML=strategies.map((strategy,k)=>'<div class="forest-species-row'+(st.cnt[k]===0?' extinct':'')+'"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategy.toFixed(3)+'</span></div>').join("");
+ const living=st.cnt.map((n,k)=>({n,k})).filter(v=>v.n>0).sort((a,b)=>b.n-a.n);
+ $("forestSpeciesLegend").innerHTML=living.slice(0,24).map(({n,k})=>'<div class="forest-species-row"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategies[k].toFixed(3)+'</span></div>').join("")+(living.length>24?'<div class="hint">+'+(living.length-24)+' flere aktive arter</div>':"");
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");
  $("alive").textContent=st.alive;$("highest").textContent=st.highest.toFixed(1);
  $("entropyArt").textContent=st.entropy.toFixed(4);$("effective").textContent=Math.exp(st.entropy).toFixed(2);
- $("meanHeight").textContent=st.meanHeight.toFixed(2);plot();
+ $("meanHeight").textContent=st.meanHeight.toFixed(2);
+ $("birthMutations").textContent=mutationCounts.birth.toLocaleString("da-DK");
+ $("spontaneousMutations").textContent=mutationCounts.spontaneous.toLocaleString("da-DK");
+ const dominant=st.cnt.indexOf(Math.max(...st.cnt));
+ $("dominantStrategy").textContent=st.total?strategies[dominant].toFixed(3):"–";
+ plot();
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)step();draw();raf=requestAnimationFrame(loop);}
 $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
