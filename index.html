@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Skovlaboratoriet · Up or out</title>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skovlaboratoriet · Oskars p-model</title>
 <style>
 :root{color-scheme:light;--bg:#f5f5ef;--card:#fffefa;--ink:#202c29;--muted:#68746f;--line:#dce2da;--forest:#276d55;--soft:#eaf2e9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:14px;line-height:1.48}
@@ -19,7 +18,7 @@ main,aside{min-width:0;display:flex;flex-direction:column;gap:16px}
 .forest-species-row .swatch{flex:none;width:12px;height:12px;margin:0}
 .forest-species-name{font-weight:600;flex:1;min-width:0}.forest-species-s{font-weight:650;white-space:nowrap}
 @media(max-width:650px){.forest-with-key{grid-template-columns:1fr}.forest-species{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));max-height:none;gap:3px 10px}.forest-key{padding:9px}}
-.lattice{display:block;width:100%;aspect-ratio:1/1;max-height:650px;object-fit:contain;image-rendering:pixelated;background:#e3e9df;border-radius:8px;cursor:crosshair}
+.model-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.model-metrics .stat b{font-size:19px}.species-count{color:var(--muted);font-size:11px}.lattice{display:block;width:100%;aspect-ratio:1/1;max-height:650px;object-fit:contain;image-rendering:pixelated;background:#e3e9df;border-radius:8px;cursor:crosshair}
 .stats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}.stats span,.stat{background:var(--soft);padding:9px 12px;border-radius:9px}.stats b{font-size:16px}
 .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.stat small{display:block;color:var(--muted);font-size:11px}.stat b{display:block;font-size:20px;margin-top:2px;font-variant-numeric:tabular-nums}
 canvas.plot{width:100%;height:205px;display:block}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:8px 0}.legend i{display:inline-block;width:10px;height:10px;border-radius:100%;margin-right:5px}
@@ -36,194 +35,169 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 5px;t
 footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 20px 24px}
 @media(max-width:900px){.layout{grid-template-columns:1fr;padding:12px;gap:12px}header{padding:16px}header h1{font-size:24px}aside{order:-1}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lattice{max-height:none}}
 </style></head><body>
-<header><div><h1>Skovlaboratoriet</h1><p>Up or out · vækst, konkurrence og lokal nabokobling</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
+<header><div><h1>Skovlaboratoriet</h1><p>Oskars model · angreb, tolerance og mutation</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout"><main>
-<section class="panel"><h2>Skoven</h2>
-<p class="hint">Hver sammenhængende klump af én art vælger samlet vækst eller angreb ud fra sin strategi s. Ved vækst bliver hvert træ én højdeenhed højere; kun randtræer kan angribe fremmede eller tomme felter. Angreb afgøres udelukkende af højde.</p>
-<div class="field"><label for="gridView">Gittervisning <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option></select></div>
-<div id="heightLegend" class="hint" hidden><span id="heightLegendText">Farve = træhøjde</span><div id="heightLegendBar" style="height:12px;border-radius:5px;background:linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e);margin-top:5px"></div><div style="display:flex;justify-content:space-between"><span>Højde 1</span><span id="heightMaxLegend">Maks. højde</span></div></div>
-<div class="forest-with-key"><canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
-<div class="forest-key" aria-label="Arter og strategier"><h3>Arter og strategi</h3><p class="hint">s = sandsynlighed for angreb</p><div id="forestSpeciesLegend" class="forest-species"></div></div></div>
-<div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div>
-<div id="inspect">Peg på et felt for at se art, højde og strategi.</div></section>
-<section class="panel"><h2>Udvikling i skoven</h2>
-<div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="entropyArt">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Gennemsnitlig højde</small><b id="meanHeight">–</b></div></div>
-<div class="legend"><span><i style="background:#238674"></i>Artsentropi / ln(K)</span><span><i style="background:#c58d48"></i>Arter tilbage / K</span><span><i style="background:#6681b9"></i>Andel forskellige nabopar</span></div>
-<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for artsdiversitet"></canvas>
-<p class="hint">Shannon-entropi måler artsfordeling, ikke termodynamisk entropi.</p></section>
+<section class="panel"><h2>Skoven</h2><p class="hint">Hver sammenhængende klump vælger angreb med sandsynlighed p, ellers bliver den. Kun randtræer kan angribe. Højder og energi indgår ikke længere.</p>
+<div class="forest-with-key">
+<canvas id="forest" class="lattice" aria-label="Gitter med procentarter"></canvas>
+<div class="forest-key"><h3>Arter</h3><p class="hint">p = chance for angreb. Kun aktive typer vises.</p><div id="forestSpeciesLegend" class="forest-species"></div></div>
+</div>
+<div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Aktive procentarter <b id="alive">–</b></span><span>Ændringsfri sweeps <b id="still">0</b></span></div>
+<div id="inspect">Peg på en celle for at se dens p-værdi.</div></section>
+<section class="panel"><h2>Evolution og mutation</h2>
+<div class="model-metrics"><div class="stat"><small>Artsentropi H</small><b id="entropy">–</b></div><div class="stat"><small>Antal mutationer</small><b id="mutations">0</b></div><div class="stat"><small>Seneste mutation</small><b id="lastMutation">–</b></div></div>
+<div class="legend"><span><i style="background:#238674"></i>Artsentropi / ln(101)</span><span><i style="background:#c58d48"></i>Aktive typer / 101</span><span><i style="background:#6681b9"></i>Ændringsfri sweeps / tærskel</span></div>
+<canvas id="evolutionPlot" class="plot" aria-label="Udvikling af diversitet og stilstand"></canvas>
+<p class="hint">En mutation ændrer én tilfældig levende celle til en ny procenttype p ± ε. Dermed opstår variation først efter en periode uden ændringer i artstilknytning.</p></section>
 </main><aside>
 <section class="panel"><h2>Kør simulationen</h2><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div>
-<div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input type="range" id="size" min="10" max="200" step="5" value="100"></div>
-<div class="field"><label for="species">Antal arter <output id="speciesOut">10</output></label><input type="range" id="species" min="2" max="30" step="1" value="10"></div>
-<div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input type="range" id="fill" min="0.05" max="1" step="0.05" value="1"></div>
-<div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input type="range" id="speed" min="1" max="30" step="1" value="1"></div>
+<div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input id="size" type="range" min="10" max="200" step="5" value="100"></div>
+<div class="field"><label for="species">Antal arter ved start <output id="speciesOut">10</output></label><input id="species" type="range" min="2" max="30" step="1" value="10"></div>
+<div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input id="fill" type="range" min="0.05" max="1" step="0.05" value="1"></div>
+<div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input id="speed" type="range" min="1" max="30" step="1" value="1"></div>
 <div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></section>
-<section class="panel"><h2>Konkurrence og nabokobling</h2>
-<div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div>
+<section class="panel"><h2>Konkurrence og mutation</h2>
+<div class="status">P(angriber vinder) = p / (p + p′), når |p−p′| &gt; Δs.</div>
+<div class="field"><label for="deltaS">Tolerance Δs (procentpoint)</label><input id="deltaS" type="number" min="0" max="100" step="1" value="1"></div>
+<p class="hint">Hvis to procentarter har en forskel på højst Δs, sker der ingen erobring mellem dem. Et tomt felt kan altid overtages. Angriberens nederlag betyder død, når der faktisk udkæmpes en kamp.</p>
+<div class="field"><label for="stillThreshold">Mutation efter antal ændringsfri sweeps</label><input id="stillThreshold" type="number" min="1" max="100000" step="1" value="100"></div>
+<div class="field"><label for="epsilon">Mutation ε (procentpoint)</label><input id="epsilon" type="number" min="1" max="100" step="1" value="1"></div>
 <div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
 <div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
-<div class="field"><label for="alpha">Lokal højdeudjævning α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
-<p class="hint">Nabokobling er en <b>abstrakt modelregel</b>: højdeforskelle udjævnes gradvist mellem nabotræer af samme art. Den ændrer højderne lokalt, men bevarer deres sum under selve udjævningen. Det er ikke fysisk diffusion af træhøjde. Sæt α = 0 for at slå den fra.</p>
-<details><summary>Flere regler</summary>
-<div class="field"><label for="maxHeight">Maksimal højde (0 = ingen)</label><input id="maxHeight" type="number" min="0" max="1000000" step="1" value="0"></div>
-<p class="hint">Hvis en klump vælger en umulig handling, forsøger den den anden. Ved angreb forsøger hvert randtræ én gang; ved tabt kamp dør angriberen, og ved sejr erstattes forsvareren med et træ i højde 1.</p></details></section>
-</aside></div><footer>Skovlaboratoriet · enkel model uden energilager · <a href="LOGBOG.md">Logbog</a></footer>
+<p class="hint">p er diskretiseret i hele procentpoint fra 0 % til 100 %. Stilstand betyder her ingen ændringer i cellernes procentarter eller besættelse — ikke matematisk ligevægt. Klumperne træffer fælles valg som i den tidligere model.</p>
+</section></aside></div>
+<footer>Eksperimentel stokastisk p-model · uden højde eller energi · <a href="LOGBOG.md">Logbog</a></footer>
 <script>
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1};
-let rng,sp,h,stamp,strategies,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img;
-const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
-const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
-const color=k=>colors[k%colors.length];
-const directions=()=>cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,deltaS:1,epsilon:1,stillThreshold:100,neighbors:4,periodic:true};
+let rng,sp,sweep,changedFree,mutationCount,lastMutation,history,stride=1,historyStep=0,running=false,raf=0;
+const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");let bufctx,img;
+const color=id=>"hsl("+((id*137.507764)%360).toFixed(1)+" 55% 43%)";
+const dirs=()=>cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
 function mulberry32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
 function getNum(id,min,def){const v=Number($(id).value);return Number.isFinite(v)?Math.max(min,v):def;}
 function inputs(){
- cfg.L=Number($("size").value);cfg.K=Number($("species").value);cfg.fill=Number($("fill").value);
- cfg.speed=Number($("speed").value);cfg.seed=Math.floor(getNum("seed",1,1));cfg.neighbors=Number($("neighbors").value);
- cfg.periodic=$("periodic").checked;cfg.maxHeight=Math.floor(getNum("maxHeight",0,0));
- cfg.alpha=Math.min(.12,getNum("alpha",0,.1));
- $("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");
+ cfg.L=Number($("size").value);cfg.K=Number($("species").value);cfg.fill=Number($("fill").value);cfg.speed=Number($("speed").value);
+ cfg.seed=Math.floor(getNum("seed",1,1));cfg.deltaS=Math.min(100,Math.floor(getNum("deltaS",0,1)));
+ cfg.epsilon=Math.min(100,Math.floor(getNum("epsilon",1,1)));
+ cfg.stillThreshold=Math.floor(getNum("stillThreshold",1,100));
+ cfg.neighbors=Number($("neighbors").value);cfg.periodic=$("periodic").checked;
  for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["speed","speedOut"]])$(out).textContent=$(id).value;
  $("fillOut").textContent=Math.round(cfg.fill*100)+" %";
 }
 function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
 function init(){
  stop();inputs();rng=mulberry32((cfg.seed*2654435761)>>>0);
- const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Float64Array(N);stamp=new Int32Array(N);
- strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);
- for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;}else sp[i]=-1;}
- sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
- bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();
+ const values=Array.from({length:101},(_,i)=>i);
+ for(let k=100;k>0;k--){const j=Math.floor(rng()*(k+1)),t=values[k];values[k]=values[j];values[j]=t;}
+ const starting=values.slice(0,cfg.K),N=cfg.L*cfg.L;
+ sp=new Int16Array(N);
+ for(let i=0;i<N;i++)sp[i]=rng()<cfg.fill?starting[Math.floor(rng()*starting.length)]:-1;
+ sweep=0;changedFree=0;mutationCount=0;lastMutation=null;history=[];stride=1;historyStep=0;
+ buffer.width=cfg.L;buffer.height=cfg.L;bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);
+ record(true);draw();
 }
 function neighbours(i){
  const L=cfg.L,x=i%L,y=Math.floor(i/L),out=[];
- for(const [dx,dy] of directions()){
+ for(const [dx,dy] of dirs()){
   let nx=x+dx,ny=y+dy;
-  if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
-  else if(nx<0||nx>=L||ny<0||ny>=L)continue;
-  const j=ny*L+nx;if(j!==i&&!out.includes(j))out.push(j);
+  if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}else if(nx<0||nx>=L||ny<0||ny>=L)continue;
+  const j=ny*L+nx;if(i!==j&&!out.includes(j))out.push(j);
  }return out;
 }
 function shuffle(arr){for(let k=arr.length-1;k>0;k--){const j=Math.floor(rng()*(k+1)),t=arr[k];arr[k]=arr[j];arr[j]=t;}return arr;}
 function colonies(){
  const seen=new Uint8Array(sp.length),groups=[];
- for(let origin=0;origin<sp.length;origin++){
-  const species=sp[origin];if(species<0||seen[origin])continue;
-  const members=[],q=[origin];seen[origin]=1;
-  for(let k=0;k<q.length;k++){const i=q[k];members.push(i);
-   for(const j of neighbours(i))if(!seen[j]&&sp[j]===species){seen[j]=1;q.push(j);}
-  }
-  groups.push({species,members});
+ for(let root=0;root<sp.length;root++){
+  const p=sp[root];if(p<0||seen[root])continue;
+  const members=[],q=[root];seen[root]=1;
+  for(let k=0;k<q.length;k++){
+   const i=q[k];members.push(i);
+   for(const j of neighbours(i))if(!seen[j]&&sp[j]===p){seen[j]=1;q.push(j);}
+  }groups.push({p,members});
  }return groups;
 }
-// Abstract, pairwise height smoothing, not diffusion of a physical resource.
-function diffuseHeights(){
- if(cfg.alpha===0)return;
- const delta=new Float64Array(h.length),L=cfg.L;
- const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){
-  const x=i%L,y=Math.floor(i/L);
-  for(const [dx,dy] of dirs){
-   let nx=x+dx,ny=y+dy;
-   if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
-   else if(nx<0||nx>=L||ny<0||ny>=L)continue;
-   const j=ny*L+nx;if(j===i||sp[j]!==sp[i])continue;
-   const flux=cfg.alpha*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
-  }
- }
- for(let i=0;i<sp.length;i++)if(sp[i]>=0)h[i]+=delta[i];
+function external(i,p){return neighbours(i).filter(j=>sp[j]!==p);}
+function attack(i,p){
+ if(sp[i]!==p)return false;
+ const options=external(i,p);if(!options.length)return false;
+ const j=options[Math.floor(rng()*options.length)],other=sp[j];
+ if(other<0){sp[j]=p;return true;}
+ if(Math.abs(p-other)<=cfg.deltaS)return false; // Unable to distinguish near-equal types
+ const chance=p+other>0?p/(p+other):.5;
+ if(rng()<chance){sp[j]=p;return true;}
+ sp[i]=-1;return true; // Losing attacker dies
 }
-function external(i,a){return neighbours(i).filter(j=>sp[j]!==a);}
-function attempt(i,a){
- if(sp[i]!==a||stamp[i]===sweep)return;
- const opts=external(i,a);if(!opts.length)return;
- const j=opts[Math.floor(rng()*opts.length)];
- if(sp[j]<0){sp[j]=a;h[j]=1;stamp[j]=sweep;return;}
- const chance=h[i]+h[j]>0?h[i]/(h[i]+h[j]):.5;
- if(rng()<chance){sp[j]=a;h[j]=1;stamp[j]=sweep;}
- else{sp[i]=-1;h[i]=0;}
+function mutate(){
+ const alive=[];for(let i=0;i<sp.length;i++)if(sp[i]>=0)alive.push(i);
+ if(!alive.length)return false;
+ const i=alive[Math.floor(rng()*alive.length)],old=sp[i];
+ const alternatives=[old-cfg.epsilon,old+cfg.epsilon].filter(p=>p>=0&&p<=100);
+ if(!alternatives.length)return false;
+ const next=alternatives[Math.floor(rng()*alternatives.length)];
+ if(next===old)return false;
+ sp[i]=next;mutationCount++;lastMutation={sweep,from:old,to:next};return true;
 }
 function step(){
- sweep++;diffuseHeights();
+ sweep++;let changes=0;
  const groups=shuffle(colonies());
  for(const group of groups){
-  const a=group.species,members=group.members.filter(i=>sp[i]===a&&stamp[i]!==sweep);
-  if(!members.length)continue;
-  const canGrow=members.some(i=>!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9);
-  const canAttack=members.some(i=>external(i,a).length>0);
-  const preferGrowth=rng()>=strategies[a],grow=canGrow&&(preferGrowth||!canAttack);
-  if(grow){for(const i of members)if(sp[i]===a&&(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9))h[i]+=1;}
-  else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
+  const p=group.p,members=group.members.filter(i=>sp[i]===p);
+  if(!members.length||rng()>=p/100)continue; // Shared colony decision: go out or stay
+  shuffle(members);
+  for(const i of members)if(sp[i]===p&&external(i,p).length)changes+=attack(i,p)?1:0;
  }
- record();
+ if(changes===0)changedFree++;else changedFree=0;
+ if(changedFree>=cfg.stillThreshold){
+  if(mutate()){changedFree=0;changes++;}
+ }
+ record();return changes;
 }
 function stats(){
- const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0);let total=0,highest=0;
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];total++;highest=Math.max(highest,h[i]);}
- let entropy=0;
- if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
- let unlike=0,pairs=0;const L=cfg.L;
- for(let y=0;y<L;y++)for(let x=0;x<L;x++){const i=y*L+x;if(sp[i]<0)continue;
-  for(const [dx,dy] of [[1,0],[0,1]]){
-   let nx=x+dx,ny=y+dy;if(cfg.periodic){nx%=L;ny%=L;}else if(nx>=L||ny>=L)continue;
-   const j=ny*L+nx;if(sp[j]>=0){pairs++;if(sp[i]!==sp[j])unlike++;}
-  }
- }
- return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
- alive:cnt.filter(x=>x>0).length,mix:pairs?unlike/pairs:0};
+ const cnt=Array(101).fill(0);let total=0;
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){cnt[sp[i]]++;total++;}
+ let H=0;for(const n of cnt)if(n){const q=n/total;H-=q*Math.log(q);}
+ return{cnt,total,alive:cnt.filter(x=>x>0).length,H};
 }
 function record(force=false){
- historyStep++;if(!force&&historyStep%historyStride)return;
- const st=stats();history.push({t:sweep,H:cfg.K>1?st.entropy/Math.log(cfg.K):0,alive:st.alive/cfg.K,mix:st.mix});
- if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
+ historyStep++;if(!force&&historyStep%stride)return;
+ const st=stats();history.push({t:sweep,H:st.H/Math.log(101),alive:st.alive/101,stagnation:Math.min(1,changedFree/cfg.stillThreshold)});
+ if(history.length>900){history=history.filter((_,i)=>i%2===0);stride*=2;}
 }
-function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
+function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return{w,h:hh,d};}
 function plot(){
- const c=$("evolutionPlot"),{w,h:hh,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,hh);
+ const c=$("evolutionPlot"),{w,h,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,h);
  const left=35*d,right=9*d,top=12*d,bottom=22*d;
  g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";
- for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
+ for(let k=0;k<=4;k++){const y=top+(h-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
  if(history.length<2)return;
- const t0=history[0].t,t1=history[history.length-1].t;
- const x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0);
- const y=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v)));
- for(const [key,color] of [["H","#238674"],["alive","#c58d48"],["mix","#6681b9"]]){
-  g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
-  history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
+ const t0=history[0].t,t1=history[history.length-1].t,x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0),y=v=>top+(h-top-bottom)*(1-Math.max(0,Math.min(1,v)));
+ for(const [key,color] of [["H","#238674"],["alive","#c58d48"],["stagnation","#6681b9"]]){
+  g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
  }
- g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,hh-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,hh-3*d);
+ g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,h-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,h-3*d);
 }
 function draw(){
- const st=stats(),L=cfg.L,data=img.data,maxLog=Math.log1p(Math.max(1,st.highest));
- const ramp=[[35,43,82],[39,110,163],[63,187,176],[210,230,110]];
+ const st=stats(),data=img.data;
+ const palette=Array.from({length:101},(_,id)=>{
+  const hue=(id*137.507764)%360,s=.55,l=.43;
+  const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((hue/60)%2-1)),m=l-c/2;
+  let rgb=hue<60?[c,x,0]:hue<120?[x,c,0]:hue<180?[0,c,x]:hue<240?[0,x,c]:hue<300?[x,0,c]:[c,0,x];
+  return rgb.map(v=>Math.round((v+m)*255));
+ });
  for(let i=0;i<sp.length;i++){
-  const a=sp[i],off=i*4;
-  if(a<0){data[off]=228;data[off+1]=235;data[off+2]=224;}
-  else{
-   const hex=color(a),base=[parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)];
-   const t=Math.min(1,Math.max(0,Math.log1p(h[i])/maxLog));
-   if(gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;
-    for(let c=0;c<3;c++)data[off+c]=Math.round(ramp[k][c]*(1-f)+ramp[k+1][c]*f);
-   }else if(gridView==="combined"){const brightness=.24+.76*t;
-    for(let c=0;c<3;c++)data[off+c]=Math.round(base[c]*brightness);
-   }else for(let c=0;c<3;c++)data[off+c]=base[c];
-  }data[off+3]=255;
+  const off=4*i,rgb=sp[i]<0?[228,235,224]:palette[sp[i]];
+  data[off]=rgb[0];data[off+1]=rgb[1];data[off+2]=rgb[2];data[off+3]=255;
  }
- bufctx.putImageData(img,0,0);fit(canvas);ctx.imageSmoothingEnabled=false;
- ctx.drawImage(buffer,0,0,canvas.width,canvas.height);
- $("heightLegend").hidden=gridView==="species";
- $("gridLegendLabel").textContent=gridView==="species"?"Farve = art":gridView==="height"?"Farve = højde (log-skala)":"Farve = art · lysstyrke = højde";
- $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
- $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
- $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest).toFixed(1);
- $("forestSpeciesLegend").innerHTML=strategies.map((strategy,k)=>'<div class="forest-species-row'+(st.cnt[k]===0?' extinct':'')+'"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategy.toFixed(3)+'</span></div>').join("");
+ bufctx.putImageData(img,0,0);fit(canvas);ctx.imageSmoothingEnabled=false;ctx.drawImage(buffer,0,0,canvas.width,canvas.height);
+ $("forestSpeciesLegend").innerHTML=st.cnt.map((n,p)=>n?'<div class="forest-species-row"><span class="swatch" style="background:'+color(p)+'"></span><span class="forest-species-name">p = '+p+' %</span><span class="species-count">'+n+'</span></div>':'').join("");
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");
- $("alive").textContent=st.alive;$("highest").textContent=st.highest.toFixed(1);
- $("entropyArt").textContent=st.entropy.toFixed(4);$("effective").textContent=Math.exp(st.entropy).toFixed(2);
- $("meanHeight").textContent=st.meanHeight.toFixed(2);plot();
+ $("alive").textContent=st.alive;$("still").textContent=changedFree;
+ $("entropy").textContent=st.H.toFixed(4);$("mutations").textContent=mutationCount;
+ $("lastMutation").textContent=lastMutation?"#"+lastMutation.sweep+" ("+lastMutation.from+"→"+lastMutation.to+" %)":"–";
+ plot();
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)step();draw();raf=requestAnimationFrame(loop);}
 $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
@@ -231,14 +205,12 @@ $("step").addEventListener("click",()=>{stop();step();draw();});
 $("restart").addEventListener("click",init);
 $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.random()*1000000);init();});
 for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
-for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
- $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
-for(const id of ["neighbors","periodic","maxHeight","alpha"])$(id).addEventListener("change",()=>{inputs();draw();});
-canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
-canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
-$("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
+for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])$(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
+for(const id of ["deltaS","epsilon","stillThreshold","neighbors","periodic"])$(id).addEventListener("change",()=>{inputs();draw();});
+canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,p=sp[i];$("inspect").textContent=p<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): p = "+p+" % (angreb), "+(100-p)+" % (bliv)";});
+canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på en celle for at se dens p-værdi.";});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
+window.__skovTest={step,restart:init,snapshot:()=>({sweep,sp:Array.from(sp),mutationCount,lastMutation,changedFree,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.changedFree!==undefined)changedFree=x.changedFree;}};
 })();
 </script></body></html>
