@@ -30,7 +30,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <header><div><h1>Skovlaboratoriet</h1><p>Up or out · evolution og energi i kredsløb</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout">
 <main>
-<section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
+<section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Tomme felter er gratis at kolonisere. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
 <canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div><div id="inspect">Peg på et felt for at se træets energi og højde.</div></section>
 <section class="panel"><h2>Evolution og diversitet</h2><p class="hint">Artsentropien er Shannon-entropi, ikke termodynamisk entropi.</p>
@@ -66,8 +66,8 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1.5"></div>
 <div class="field"><label for="returnRate">Energi retur fra træet pr. sweep</label><input id="returnRate" type="number" min="0" max="1000" step="0.25" value="0.5"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="1"></div>
-<div class="field"><label for="birthCost">Energi overført til afkom</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
-<p class="hint"><b>Ved energimangel:</b> Træet angriber med 100 % sandsynlighed, hvis det ikke har energi nok til at vokse. Angreb kræver stadig energi nok til et afkom. Kun nul energi medfører sultedød; nederlag i kamp kan også dræbe et træ.</p>
+<div class="field"><label for="birthCost">Energi til angreb på besat felt</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
+<p class="hint"><b>Ved energimangel:</b> Træet forsøger at sprede sig med 100 % sandsynlighed, hvis det ikke kan vokse. Tomme nabofelter kan overtages gratis; nye træer starter dér med E = 0 og får først energi fra lageret ved næste sweep. Besatte felter kræver energipakken ovenfor. Træer dør ved E = 0 efter energitilførslen eller ved tabt kamp.</p>
 </section>
 </aside></div>
 <footer>Modellen er et idealiseret evolutionært gitter med bogført disponibel energi. Energi i et træ er ikke det samme som fysisk gravitationel potentiel energi. <a href="LOGBOG.md">Forskningslogbog</a>.</footer>
@@ -102,13 +102,15 @@ function sweepOnce(){
       if(en[i]<=1e-10)die(i);
       continue;
     }
-    if(en[i]+1e-10<cfg.birthCost)continue;
     const j=neighbour(i);if(j<0||sp[j]===a)continue;
     if(sp[j]<0){
-      sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;en[i]-=cfg.birthCost;en[j]=cfg.birthCost;stamp[j]=sweep;
-      if(en[i]<=1e-10)die(i);
+      // A vacant neighbour can be colonised without transferring energy.
+      // The newborn begins at E=0 and receives resources next sweep.
+      sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;en[j]=0;stamp[j]=sweep;
       continue;
     }
+    // Occupied territory still requires the energy packet for takeover.
+    if(en[i]+1e-10<cfg.birthCost)continue;
     const va=cfg.attackMode==="height"?h[i]:en[i],vb=cfg.attackMode==="height"?h[j]:en[j],den=va+vb;
     const wins=den>0?rng()<va/den:rng()<.5;
     if(wins){
