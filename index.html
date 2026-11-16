@@ -46,11 +46,11 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <p>Energi-entropi: H<sub>E</sub> = −Σ<sub>i</sub> q<sub>i</sub> ln q<sub>i</sub>, med q<sub>i</sub> = E<sub>i</sub> / Σ<sub>j</sub> E<sub>j</sub>. Hvis der ikke findes disponibel træenergi, er fordelingen udefineret.</p>
 <p>Rumligt mål: Pearson-korrelation af energien ved de to ender af alle vandrette og lodrette nabopar med to levende træer. Vi bruger netop fire retninger til målingen uanset konkurrence-naboreglen, så forsøgsresultater kan sammenlignes. r = 1 betyder stærk positiv sammenhæng, r = 0 ingen lineær sammenhæng, og r = −1 negativ sammenhæng. Dette er ikke en entropi.</p>
 <p>Normalisering gør kurverne visuelt sammenlignelige, men ændrer ikke deres fysik. Specielt varierer ln(N<sub>træer</sub>), når træantal ændrer sig.</p></details></section>
-<section class="panel"><h2>Energi</h2><p class="hint">Energien transporteres gradvist mellem nabotræer af samme art. Vækst flytter energi til lageret; ved tabt kamp overføres taberens resterende energi til lageret.</p>
-<div class="metrics"><div class="stat"><small>Energi i træerne</small><b id="treeEnergy">–</b></div><div class="stat"><small>Fælles energilager</small><b id="storeEnergy">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergy">–</b></div></div>
+<section class="panel"><h2>Energi</h2><p class="hint">Energiregnskab: Q + Σ(E + U) er konstant. Højdevækst flytter E til højdebundet U. Kampomkostning går til Q; døde træers E og U frigives til Q. Kun E udveksles lokalt mellem levende nabotræer.</p>
+<div class="metrics"><div class="stat"><small>Disponibel energi E</small><b id="treeEnergy">–</b></div><div class="stat"><small>Højdebundet energi U</small><b id="potentialEnergy">–</b></div><div class="stat"><small>Lager Q</small><b id="storeEnergy">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergy">–</b></div></div>
 <div class="status" id="balance">Initialiserer energiregnskabet.</div>
-<div class="legend"><span><i style="background:#238674"></i>Træernes energiandel</span><span><i style="background:#c58d48"></i>Lagerets energiandel</span></div><canvas class="plot" id="energyPlot" aria-label="Tidsserier for energifordeling"></canvas>
-<details><summary>Energi og population pr. art</summary><div style="overflow:auto"><table><thead><tr><th>Art</th><th>Strategi s</th><th>Antal</th><th>Gns. højde</th><th>Energi</th></tr></thead><tbody id="speciesRows"></tbody></table></div></details></section>
+<div class="legend"><span><i style="background:#238674"></i>Disponibel E</span><span><i style="background:#6681b9"></i>Højdeenergi U</span><span><i style="background:#c58d48"></i>Lager Q</span></div><canvas class="plot" id="energyPlot" aria-label="Tidsserier for energifordeling"></canvas>
+<details><summary>Energi og population pr. art</summary><div style="overflow:auto"><table><thead><tr><th>Art</th><th>Strategi s</th><th>Antal</th><th>Gns. højde</th><th>E</th><th>U</th></tr></thead><tbody id="speciesRows"></tbody></table></div></details></section>
 </main>
 <aside>
 <section class="panel"><h2>Kør simulationen</h2><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div>
@@ -61,8 +61,8 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div>
 </section>
 <section class="panel"><h2>Konkurrence</h2>
-<div class="field"><label for="attackMode">Sejrssandsynlighed beregnes ud fra</label><select id="attackMode"><option value="height">Træhøjde</option><option value="energy">Disponibel energi</option></select></div>
-<div class="status" id="attackFormula">P(angriber vinder) = hₐ / (hₐ + hբ)</div>
+<div class="field"><label for="attackMode">Sejrssandsynlighed beregnes ud fra</label><select id="attackMode"><option value="combined">E + U (standard)</option><option value="energy">Kun E (kontrol)</option><option value="height">Kun U (kontrol)</option></select></div>
+<div class="status" id="attackFormula">P(A vinder) = (Eₐ + Uₐ) / (Eₐ + Uₐ + Eᵦ + Uᵦ)</div>
 <div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
 <div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
 <details><summary>Flere konkurrenceregler</summary>
@@ -74,7 +74,9 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="initialStore">Fælles lager ved start pr. træ</label><input id="initialStore" type="number" min="0" max="100000" step="1" value="0"></div>
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
+<div class="field"><label for="attackCost">Energiomkostning ved kamp mod en anden art (til Q)</label><input id="attackCost" type="number" min="0" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
+<p class="hint"><b>Energikredsløb:</b> Q → E ved tilførsel fra lageret, E → U ved højdevækst, E → Q ved kamp mod en anden art og E + U → Q ved død. U = vækstomkostning × (højde − 1). Hvert træ dør ved E = 0, også selv om U er stor. Sejrssandsynlighed bruger som standard E + U. Det fælles Q er et genanvendeligt ressourcelager, ikke en termodynamisk varmebeholder.</p>
 <p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger vækst med sandsynlighed 1−s eller angreb med sandsynlighed s. Ved vækst vokser hvert træ med tilstrækkelig energi én højdeenhed og betaler selv vækstomkostningen; energifattige træer vokser ikke. Hvis klumpens valgte handling er umulig, forsøger den den anden. Hvis hverken vækst eller angreb er muligt, kan klumpen forblive statisk. Ved angreb forsøger <b>kun randtræer</b> at erobre ét tilfældigt tomt eller fremmed nabofelt. Et nyt træ modtager altid energipakken (standard 2) fra modertræet; angreb kan ikke gennemføres uden tilstrækkelig energi. Hvert træ dør individuelt, hvis dets energi når nul.</p>
 <div class="field"><label for="alpha">Lokal energitransport α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
 <p class="hint"><b>Gradvis energitransport:</b> For hvert par nabotræer af samme art overføres ΔE = α(Eᵢ − Eⱼ) ved ét synkront transporttrin pr. sweep. Ved 4 eller 8 naboer bevares energien, og raten er begrænset til 0,12 for at undgå negative energier. Adskilte kolonier deler ikke energi direkte.</p>
@@ -85,17 +87,18 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,attackMode:"height",neighbors:4,periodic:true,newHeight:"sapling",maxHeight:0,e0:10,store0:0,sun:1,growthCost:2,birthCost:2,alpha:.1};
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,attackMode:"combined",neighbors:4,periodic:true,newHeight:"sapling",maxHeight:0,e0:10,store0:0,sun:1,growthCost:2,birthCost:2,attackCost:1,alpha:.1};
 let rng,sp,h,en,stamp,order,strategies,store,initialTotal,sweep,history,historyStep,historyStride=1,running=false,raf=0,gridView="species";
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");let bufctx,img;
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
 const color=k=>colors[k%colors.length];
 function mulberry32(a){return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;}}
 function num(id,minimum,otherwise){const v=Number($(id).value);return Number.isFinite(v)?Math.max(minimum,v):otherwise}
-function takeInputs(){cfg.L=+ $("size").value;cfg.K=+ $("species").value;cfg.fill=+ $("fill").value;cfg.speed=+ $("speed").value;cfg.seed=Math.max(1,Math.floor(num("seed",1,1)));cfg.attackMode=$("attackMode").value;cfg.neighbors=+$("neighbors").value;cfg.periodic=$("periodic").checked;cfg.newHeight=$("newHeight").value;cfg.maxHeight=Math.floor(num("maxHeight",0,0));cfg.e0=num("initialEnergy",.1,10);cfg.store0=num("initialStore",0,0);cfg.sun=num("sun",0,1);cfg.growthCost=num("growthCost",.01,2);cfg.birthCost=num("birthCost",.01,2);cfg.alpha=Math.min(.12,num("alpha",0,.1));$("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");$("sizeOut").textContent=cfg.L;$("speciesOut").textContent=cfg.K;$("fillOut").textContent=Math.round(cfg.fill*100)+" %";$("speedOut").textContent=cfg.speed;$("attackFormula").textContent=cfg.attackMode==="height"?"P(angriber vinder) = hₐ / (hₐ + hբ)":"P(angriber vinder) = Eₐ / (Eₐ + Eբ)";}
+function takeInputs(){cfg.L=+ $("size").value;cfg.K=+ $("species").value;cfg.fill=+ $("fill").value;cfg.speed=+ $("speed").value;cfg.seed=Math.max(1,Math.floor(num("seed",1,1)));cfg.attackMode=$("attackMode").value;cfg.neighbors=+$("neighbors").value;cfg.periodic=$("periodic").checked;cfg.newHeight=$("newHeight").value;cfg.maxHeight=Math.floor(num("maxHeight",0,0));cfg.e0=num("initialEnergy",.1,10);cfg.store0=num("initialStore",0,0);cfg.sun=num("sun",0,1);cfg.growthCost=num("growthCost",.01,2);cfg.birthCost=num("birthCost",.01,2);cfg.attackCost=num("attackCost",0,1);cfg.alpha=Math.min(.12,num("alpha",0,.1));$("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");$("sizeOut").textContent=cfg.L;$("speciesOut").textContent=cfg.K;$("fillOut").textContent=Math.round(cfg.fill*100)+" %";$("speedOut").textContent=cfg.speed;$("attackFormula").textContent=cfg.attackMode==="height"?"P(A vinder) = Uₐ / (Uₐ + Uᵦ)":"P(A vinder) = "+(cfg.attackMode==="energy"?"Eₐ / (Eₐ + Eᵦ)":"(Eₐ + Uₐ) / (Eₐ + Uₐ + Eᵦ + Uᵦ)");}
 function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
 function init(){stop();takeInputs();rng=mulberry32((cfg.seed*2654435761)>>>0);const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Int32Array(N);en=new Float64Array(N);stamp=new Int32Array(N);order=new Int32Array(N);strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);let alive=0;for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;en[i]=cfg.e0;alive++}else sp[i]=-1;}store=alive*cfg.store0;initialTotal=store+alive*cfg.e0;sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();}
-function die(i){if(sp[i]<0)return;store+=en[i];en[i]=0;sp[i]=-1;h[i]=0;}
+function potential(i){return sp[i]>=0?cfg.growthCost*(h[i]-1):0;}
+function die(i){if(sp[i]<0)return;store+=en[i]+potential(i);en[i]=0;sp[i]=-1;h[i]=0;}
 function neighbour(i){const L=cfg.L,x=i%L,y=Math.floor(i/L);let dx,dy;if(cfg.neighbors===4){const m=Math.floor(rng()*4);dx=[1,-1,0,0][m];dy=[0,0,1,-1][m];}else{const m=Math.floor(rng()*8);dx=[-1,0,1,-1,1,-1,0,1][m];dy=[-1,-1,-1,0,0,1,1,1][m];}let xx=x+dx,yy=y+dy;if(cfg.periodic){xx=(xx+L)%L;yy=(yy+L)%L}else if(xx<0||yy<0||xx>=L||yy>=L)return -1;return yy*L+xx;}
 // One synchronous local transport step per sweep. All fluxes use energies
 // from the start of the transport step: no instantaneous long-range sharing.
@@ -159,23 +162,41 @@ function externalNeighbours(i,a){
   return targets;
 }
 function attackFrom(i,a){
-  if(sp[i]!==a||en[i]<=1e-10||en[i]+1e-10<cfg.birthCost)return;
+  if(sp[i]!==a||en[i]<=1e-10)return;
   const targets=externalNeighbours(i,a);
   if(!targets.length)return;
-  const j=targets[Math.floor(rng()*targets.length)];
-  if(sp[j]<0){
-    sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;
-    en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
-    return;
+  // Only valid, affordable targets are considered. Occupied enemy sites
+  // require both the attack fee (to Q) and a packet for the new child.
+  const eligible=targets.filter(j=>en[i]+1e-10>=cfg.birthCost+(sp[j]>=0?cfg.attackCost:0));
+  if(!eligible.length)return;
+  const j=eligible[Math.floor(rng()*eligible.length)];
+  const occupied=sp[j]>=0;
+  const formerHeight=occupied?h[j]:1;
+  if(occupied){
+    // The fee goes to Q whether the attacker wins or loses.
+    en[i]=Math.max(0,en[i]-cfg.attackCost);store+=cfg.attackCost;
+    const uA=potential(i),uB=potential(j);
+    const strengthA=cfg.attackMode==="height"?uA:cfg.attackMode==="energy"?en[i]:en[i]+uA;
+    const strengthB=cfg.attackMode==="height"?uB:cfg.attackMode==="energy"?en[j]:en[j]+uB;
+    const chance=(strengthA+strengthB)>0?strengthA/(strengthA+strengthB):.5;
+    if(rng()>=chance){die(i);return;}
+    die(j); // Defender's E and U are returned to Q before any inheritance.
   }
-  const strengthA=cfg.attackMode==="height"?h[i]:en[i];
-  const strengthB=cfg.attackMode==="height"?h[j]:en[j];
-  const winChance=(strengthA+strengthB)>0?strengthA/(strengthA+strengthB):.5;
-  if(rng()<winChance){
-    const formerHeight=h[j];die(j);
-    sp[j]=a;h[j]=cfg.newHeight==="sapling"?1:cfg.newHeight==="attacker"?h[i]:formerHeight;
-    en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
-  }else die(i);
+  // All offspring receive the birth packet. Height is a separate,
+  // conserved energy investment with U = growthCost * (height - 1).
+  en[i]=Math.max(0,en[i]-cfg.birthCost);
+  let childHeight=1;
+  if(cfg.newHeight==="defender"&&occupied){
+    childHeight=formerHeight;
+    store-=cfg.growthCost*(childHeight-1); // Transfer defender's U from Q.
+  }else if(cfg.newHeight==="attacker"){
+    const extra=cfg.growthCost*(h[i]-1);
+    if(en[i]+1e-10>=extra){
+      en[i]=Math.max(0,en[i]-extra);childHeight=h[i];
+    }
+    // If mother cannot fund the matching height, offspring is a sapling.
+  }
+  sp[j]=a;h[j]=childHeight;en[j]=cfg.birthCost;stamp[j]=sweep;
 }
 function sweepOnce(){
   sweep++;const N=sp.length;
@@ -200,7 +221,7 @@ function sweepOnce(){
     // One shared choice; growth feasibility remains individual.
     // Only if NO member can grow is the group forced to select attack.
     const canAnyoneGrow=members.some(i=>en[i]+1e-10>=cfg.growthCost&&(!cfg.maxHeight||h[i]<cfg.maxHeight));
-    const canAnyoneAttack=members.some(i=>en[i]+1e-10>=cfg.birthCost&&externalNeighbours(i,a).length>0);
+    const canAnyoneAttack=members.some(i=>externalNeighbours(i,a).some(j=>en[i]+1e-10>=cfg.birthCost+(sp[j]>=0?cfg.attackCost:0)));
     // Each colony chooses according to s, falling back to the other feasible
     // action only when its first choice cannot be performed.
     const prefersGrowth=rng()>=strategies[a];
@@ -210,14 +231,14 @@ function sweepOnce(){
         if(en[i]+1e-10<cfg.growthCost||(cfg.maxHeight&&h[i]>=cfg.maxHeight))continue;
         h[i]++;
         en[i]=Math.max(0,en[i]-cfg.growthCost);
-        store+=cfg.growthCost;
+        // The paid energy is now stored as potential U = growthCost*(h-1).
       }
     }else{
       // Same collective choice; only boundary members can attack.
       for(let k=members.length-1;k>0;k--){
         const j=Math.floor(rng()*(k+1)),t=members[k];members[k]=members[j];members[j]=t;
       }
-      for(const i of members)if(sp[i]===a&&stamp[i]!==sweep&&externalNeighbours(i,a).length)attackFrom(i,a);
+      for(const i of members)if(sp[i]===a&&stamp[i]!==sweep)attackFrom(i,a);
     }
   }
   // Death from exhaustion is assessed after paying costs and doing attacks.
@@ -225,11 +246,11 @@ function sweepOnce(){
   for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]<=1e-10)die(i);
   record();
 }
-function stats(){const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0),sumE=Array(cfg.K).fill(0);let total=0,highest=0,treeE=0;
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];sumE[a]+=en[i];treeE+=en[i];total++;highest=Math.max(highest,h[i]);}
+function stats(){const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0),sumE=Array(cfg.K).fill(0),sumU=Array(cfg.K).fill(0);let total=0,highest=0,treeE=0,treeU=0;
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];sumE[a]+=en[i];sumU[a]+=potential(i);treeE+=en[i];treeU+=potential(i);total++;highest=Math.max(highest,h[i]);}
  let ent=0,leader=0;for(const x of cnt)if(x>0){const p=x/total;ent-=p*Math.log(p);leader=Math.max(leader,x);}let unlike=0,pairs=0;const L=cfg.L;
  for(let y=0;y<L;y++)for(let x=0;x<L;x++){const i=y*L+x,a=sp[i];if(a<0)continue;if(x+1<L||cfg.periodic){const b=sp[y*L+((x+1)%L)];if(b>=0){pairs++;if(b!==a)unlike++;}}if(y+1<L||cfg.periodic){const b=sp[((y+1)%L)*L+x];if(b>=0){pairs++;if(b!==a)unlike++;}}}
- return {cnt,sumH,sumE,total,highest,treeE,ent,leader:total?leader/total:0,mixing:pairs?unlike/pairs:0,alive:cnt.filter(x=>x>0).length};}
+ return {cnt,sumH,sumE,sumU,total,highest,treeE,treeU,ent,leader:total?leader/total:0,mixing:pairs?unlike/pairs:0,alive:cnt.filter(x=>x>0).length};}
 // These are distinct descriptive statistics, not physical thermodynamic entropy.
 function energyDistributionStats(st){
   let energyEntropy=NaN;
@@ -264,7 +285,7 @@ function energyDistributionStats(st){
 }
 function record(force=false){historyStep++;if(!force&&historyStep%historyStride)return;const st=stats(),obs=energyDistributionStats(st);
  history.push({t:sweep,H:cfg.K>1?st.ent/Math.log(cfg.K):0,mix:st.mixing,alive:st.alive/cfg.K,
- tree:st.treeE/initialTotal,store:store/initialTotal,
+ tree:st.treeE/initialTotal,potential:st.treeU/initialTotal,store:store/initialTotal,
  energyH:st.total>1&&Number.isFinite(obs.energyEntropy)?obs.energyEntropy/Math.log(st.total):NaN,
  spatialR:Number.isFinite(obs.correlation)?(obs.correlation+1)/2:NaN});if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}}
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h;}return {w,h,d};}
@@ -298,30 +319,30 @@ function draw(){
  $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
  $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
  $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest);
- const obs=energyDistributionStats(st),sum=st.treeE+store,err=sum-initialTotal;
+ const obs=energyDistributionStats(st),sum=st.treeE+st.treeU+store,err=sum-initialTotal;
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");$("alive").textContent=st.alive;$("highest").textContent=st.highest;
  $("entropyArt").textContent=st.ent.toFixed(4);
  $("entropyEnergy").textContent=Number.isFinite(obs.energyEntropy)?obs.energyEntropy.toFixed(4):"–";
  $("entropyCorrelation").textContent=Number.isFinite(obs.correlation)?obs.correlation.toFixed(4):"–";
  
- $("treeEnergy").textContent=st.treeE.toFixed(2);$("storeEnergy").textContent=store.toFixed(2);$("totalEnergy").textContent=sum.toFixed(2);
+ $("treeEnergy").textContent=st.treeE.toFixed(2);$("potentialEnergy").textContent=st.treeU.toFixed(2);$("storeEnergy").textContent=store.toFixed(2);$("totalEnergy").textContent=sum.toFixed(2);
  $("balance").textContent="Energibalance: start "+initialTotal.toFixed(2)+" = nu "+sum.toFixed(2)+" · numerisk afvigelse "+err.toExponential(2);
- plot("entropyPlot",[["H","#238674"],["energyH","#c58d48"],["spatialR","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["store","#c58d48"]]);
- $("speciesRows").innerHTML=strategies.map((strategy,k)=>'<tr><td><span class="swatch" style="background:'+color(k)+'"></span> '+(k+1)+'</td><td>'+strategy.toFixed(3)+'</td><td>'+st.cnt[k]+'</td><td>'+(st.cnt[k]?st.sumH[k]/st.cnt[k]:0).toFixed(2)+'</td><td>'+st.sumE[k].toFixed(2)+'</td></tr>').join("");
+ plot("entropyPlot",[["H","#238674"],["energyH","#c58d48"],["spatialR","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["potential","#6681b9"],["store","#c58d48"]]);
+ $("speciesRows").innerHTML=strategies.map((strategy,k)=>'<tr><td><span class="swatch" style="background:'+color(k)+'"></span> '+(k+1)+'</td><td>'+strategy.toFixed(3)+'</td><td>'+st.cnt[k]+'</td><td>'+(st.cnt[k]?st.sumH[k]/st.cnt[k]:0).toFixed(2)+'</td><td>'+st.sumE[k].toFixed(2)+'</td><td>'+st.sumU[k].toFixed(2)+'</td></tr>').join("");
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)sweepOnce();draw();raf=requestAnimationFrame(loop);}
 $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
 $("step").addEventListener("click",()=>{stop();sweepOnce();draw();});
 $("restart").addEventListener("click",init);
 $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.random()*1000000);init();});
-for(const id of ["size","species","fill","seed","initialEnergy","initialStore","sun","growthCost","birthCost","alpha"])$(id).addEventListener("change",init);
+for(const id of ["size","species","fill","seed","initialEnergy","initialStore","sun","growthCost","birthCost","attackCost","alpha"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])$(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
 for(const id of ["attackMode","neighbors","periodic","newHeight","maxHeight"])$(id).addEventListener("change",()=>{takeInputs();draw();});
-canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i]+" · energi "+en[i].toFixed(2)+" · strategi "+strategies[a].toFixed(3);});
+canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i]+" · E "+en[i].toFixed(2)+" · U "+potential(i).toFixed(2)+" · strategi "+strategies[a].toFixed(3);});
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se træets energi og højde."});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={configure:x=>{Object.assign(cfg,x);init();},step:sweepOnce,snapshot:()=>({sweep,tree:stats().treeE,store,initialTotal,alive:stats().alive,trees:stats().total,entropyArt:stats().ent,entropyEnergy:energyDistributionStats(stats()).energyEntropy,spatialCorrelation:energyDistributionStats(stats()).correlation,energy:Array.from(en),sp:Array.from(sp),h:Array.from(h)}),set:(values)=>{if(values.energy)en.set(values.energy);if(values.store!==undefined)store=values.store;if(values.sp)sp.set(values.sp);if(values.h)h.set(values.h);}};
+window.__skovTest={configure:x=>{Object.assign(cfg,x);init();},step:sweepOnce,snapshot:()=>({sweep,tree:stats().treeE,potential:stats().treeU,store,initialTotal,alive:stats().alive,trees:stats().total,entropyArt:stats().ent,entropyEnergy:energyDistributionStats(stats()).energyEntropy,spatialCorrelation:energyDistributionStats(stats()).correlation,energy:Array.from(en),sp:Array.from(sp),h:Array.from(h)}),set:(values)=>{if(values.energy)en.set(values.energy);if(values.store!==undefined)store=values.store;if(values.sp)sp.set(values.sp);if(values.h)h.set(values.h);}};
 })();
 </script></body></html>
