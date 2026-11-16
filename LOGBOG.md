@@ -635,3 +635,12 @@ Den tidligere regel om øjeblikkelig ligelig deling af energi inden for en hel s
 Alle par-fluxe beregnes ud fra energierne før transporttrinnet og summeres først derefter, så energien ikke springer øjeblikkeligt på tværs af kolonien. Naboer defineres ved 4 eller 8 forbindelser efter det valgte gitter; de periodiske kanter respekteres. Kontrolparameteren **α kan vælges 0,00–0,12**, standard 0,10, hvilket holder det eksplicitte trin stabilt og ikke-negativt selv ved 8 naboer. Transporten finder sted efter energiudveksling med fælleslageret og før vækst-/angrebshandlingerne. Nul-energi-død kontrolleres ved afslutningen af et sweep; et træ, der taber i kamp, dør straks. Formering kræver fortsat overførsel af 2 energienheder også ved kolonisering af tomt felt.
 
 Validering af JavaScript-reglerne: 20×20 gitter, 5 arter, 40 % startdækning, 160 sweeps i hver af kombinationerne (højde-/energikamp) × (4/8 naboer) ved α=0,12. Største absolutte afvigelse fra startenergien var 1,23×10⁻¹¹ modelenergienheder; ingen negative energiresultater. Ingen browser-visuel test endnu. Modellen er energibevarende, men dette alene dokumenterer ikke en fysisk termodynamisk første-hovedsætning med alle former for energi repræsenteret.
+
+
+## 16. november 2026 — Fjernet fast tilbageførsel af energi pr. sweep
+
+Energi returneres ikke længere automatisk fra levende træer til fælleslageret i hvert sweep. Hvert levende træ kan fortsat modtage op til den angivne energimængde fra lageret ved sweepets begyndelse, forudsat at lageret har energi nok. Energi går **tilbage til lageret ved vertikal vækst** (den betalte vækstenergi) og **ved død** (eventuel resterende disponibel energi). Den lokale energitransport mellem nabotræer af samme art og overførslen af 2 energienheder fra modertræ til afkom er fortsat interne overførsler. Energibalancen forbliver E_total = sum E_træ + E_lager.
+
+Indstillingen 'Energi retur fra træet pr. sweep' er fjernet fra både HTML og simulationens beregninger.
+
+Funktionstest: 20×20 gitter, fem arter, startdækning 40 %, 150 sweeps med henholdsvis højde- og energibaseret konkurrence. Maksimal energibalanceafvigelse: 5,92×10⁻¹² henholdsvis 6,37×10⁻¹² modelenergienheder. Ingen negative energier registreret.
