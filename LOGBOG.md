@@ -622,3 +622,16 @@ Energideling, formering, vækst og død er interne overførsler. Den beregnede d
 **Funktionstest:** 20×20 gitter med 5 arter og 40 % startdækning, 180 sweeps med henholdsvis højde- og energibaseret kamp. Energibalancens maksimale absolutte afvigelse var 5,92×10⁻¹¹ og 4,37×10⁻¹¹ modelenergienheder; der forekom ingen negative energiresultater. De to testforløb er ikke statistisk dokumentation for en bestemt evolutionær fordel.
 
 **Vigtigt historisk:** Logbogens tidligere afsnit, hvor tomme felter fik et nyt træ med E=0, er overskrevet af denne regel.
+
+
+## 16. november 2026 — Lokal, gradvis energitransport (erstatter øjeblikkelig udligning)
+
+Den tidligere regel om øjeblikkelig ligelig deling af energi inden for en hel sammenhængende artskoloni er **erstattet**. Nu udføres ét **synkront, lokalt transporttrin** pr. sweep mellem par af nabotræer af samme art:
+
+\[
+\Delta E_{i\to j}=\alpha(E_i-E_j).
+\]
+
+Alle par-fluxe beregnes ud fra energierne før transporttrinnet og summeres først derefter, så energien ikke springer øjeblikkeligt på tværs af kolonien. Naboer defineres ved 4 eller 8 forbindelser efter det valgte gitter; de periodiske kanter respekteres. Kontrolparameteren **α kan vælges 0,00–0,12**, standard 0,10, hvilket holder det eksplicitte trin stabilt og ikke-negativt selv ved 8 naboer. Transporten finder sted efter energiudveksling med fælleslageret og før vækst-/angrebshandlingerne. Nul-energi-død kontrolleres ved afslutningen af et sweep; et træ, der taber i kamp, dør straks. Formering kræver fortsat overførsel af 2 energienheder også ved kolonisering af tomt felt.
+
+Validering af JavaScript-reglerne: 20×20 gitter, 5 arter, 40 % startdækning, 160 sweeps i hver af kombinationerne (højde-/energikamp) × (4/8 naboer) ved α=0,12. Største absolutte afvigelse fra startenergien var 1,23×10⁻¹¹ modelenergienheder; ingen negative energiresultater. Ingen browser-visuel test endnu. Modellen er energibevarende, men dette alene dokumenterer ikke en fysisk termodynamisk første-hovedsætning med alle former for energi repræsenteret.
