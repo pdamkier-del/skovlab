@@ -677,3 +677,14 @@ Alle træer beholder egen energi, lokal gradvis energitransport og individuel d�
 I den kollektive klumpdynamik var en mulig kilde til tilsyneladende stilstand, at en klump kunne vælge angreb, selv om ingen randtræer kunne angribe et fremmed/tomt nabofelt. Nu trækkes fortsat et fælles vækst-/angrebsvalg med sandsynlighederne 1−s og s, men hvis denne handling ikke kan gennemføres og alternativet kan, bruges alternativet. Hvis ingen træer kan vokse, forsøger klumpen angreb; hvis ingen kan angribe, vokser de individuelt vækstkompetente træer. Er begge umulige, vil klumpen stadig kunne forblive statisk, hvilket er en reel konsekvens af modellen. Individuel energidød og lokal energitransport er uændret.
 
 Funktionstest: 20×20 med 5 arter, 40 % startdækning, 200 sweeps, begge konkurrenceformer. Maksimal numerisk energibalanceafvigelse under 3×10⁻¹²; ingen negative energier. I begge enkeltforløb endte én art med at dække hele gitteret — et eksempel på mulig evolutionær fiksering, ikke et bevis for universel opførsel.
+
+
+## 16. november 2026 — Energiomdannelse Q → E → U og kombineret kampstyrke
+
+Implementeret idealiseret energiregnskab: E_total = Q + Σ_i (E_i + U_i). E_i er individuelt disponibel energi, som stadig transporteres lokalt mellem nabotræer af samme art. Højdebundet U_i beregnes som growthCost × (h_i−1); h=1 svarer til U=0. Når et træ vokser, flyttes vækstomkostningen fra E_i til U_i, ikke til Q. Ved død frigives træets resterende E_i+U_i til Q.
+
+Angreb: E+U er standardkampstyrke; E alene og U alene kan vælges som kontrol. En kamp mod en fremmed art koster særskilt attackCost=1 fra E til Q, uanset udfald. Angriberen skal samtidig kunne overføre birthCost=2 til et eventuelt nyt træ. Spredning til en tom celle koster ingen ekstra kampomkostning. Ved almindeligt nyt træ (h=1) frigives den besejrede forsvarers U til Q. Hvis den nye celle arver forsvarerens højde, flyttes tilsvarende U fra Q til det nye træ. Ved valg af angriberens højde skal modertræet selv betale disponibel E svarende til barnets U; ellers bliver det nye træ højde 1. Klumpens fælles vækst-/angrebsvalg, randbegrænsede angreb og individuel død ved E=0 er bevaret.
+
+Modellens U er en effektiv højdeafhængig investering, ikke nødvendigvis fysisk tyngdepotentiale mgh. Q er et genanvendeligt lager, ikke i sig selv varme med temperatur eller termodynamisk entropi S.
+
+Numeriske tests: 18 kombinationer af E+U/E/U-kamp, 4/8 naboer og de tre fødselshøjder, hver i 120 sweeps på 15×15, 5 arter, 50 % startdækning. Maksimal absolut energibalanceafvigelse 6,9×10⁻¹³. Alle E>=0 og U svarede præcist til growthCost×Σ(h−1). Visuel browserkontrol ikke udført.
