@@ -267,13 +267,44 @@ function diffuseHeights(){
 }
 // Only distinguishable species can be challenged; vacancies stay open.
 function external(i,a){return neighbours(i).filter(j=>sp[j]<0||(sp[j]!==a&&Math.abs(strategies[a]-strategies[sp[j]])>cfg.deltaS+1e-12));}
+// Mutants get distinct lineage IDs and inherit their new strategy.
+function mutationVariant(parent){
+ const old=strategies[parent],eps=cfg.mutationEpsilon;
+ const values=[Math.max(0,Math.round((old-eps)*1000)/1000),Math.min(1,Math.round((old+eps)*1000)/1000)].filter(v=>Math.abs(v-old)>1e-9);
+ if(!values.length)return parent;
+ strategies.push(values[Math.floor(rng()*values.length)]);
+ return strategies.length-1;
+}
+function newborn(parent){
+ if(rng()<cfg.birthMutation){
+  const id=mutationVariant(parent);
+  if(id!==parent){mutationCounts.birth++;return id;}
+ }
+ return parent;
+}
+function spontaneousMutation(){
+ if(rng()>=cfg.spontaneousMutation)return;
+ let i=-1;
+ for(let trial=0;trial<16;trial++){
+  const j=Math.floor(rng()*sp.length);
+  if(sp[j]>=0){i=j;break;}
+ }
+ if(i<0){
+  const alive=[];
+  for(let j=0;j<sp.length;j++)if(sp[j]>=0)alive.push(j);
+  if(!alive.length)return;
+  i=alive[Math.floor(rng()*alive.length)];
+ }
+ const id=mutationVariant(sp[i]);
+ if(id!==sp[i]){sp[i]=id;mutationCounts.spontaneous++;}
+}
 function attempt(i,a){
  if(sp[i]!==a||stamp[i]===sweep)return;
  const opts=external(i,a);if(!opts.length)return;
  const j=opts[Math.floor(rng()*opts.length)];
- if(sp[j]<0){sp[j]=a;h[j]=1;stamp[j]=sweep;return;}
+ if(sp[j]<0){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;return;}
  const chance=h[i]+h[j]>0?h[i]/(h[i]+h[j]):.5;
- if(rng()<chance){sp[j]=a;h[j]=1;stamp[j]=sweep;}
+ if(rng()<chance){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;}
  else{sp[i]=-1;h[i]=0;}
 }
 function step(){
@@ -288,10 +319,11 @@ function step(){
   if(grow){for(const i of members)if(sp[i]===a&&(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9))h[i]+=1;}
   else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
  }
+ spontaneousMutation();
  record();
 }
 function stats(){
- const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0);let total=0,highest=0;
+ const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0;
  for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];total++;highest=Math.max(highest,h[i]);}
  let entropy=0;
  if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
@@ -303,11 +335,11 @@ function stats(){
   }
  }
  return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
- alive:cnt.filter(x=>x>0).length,mix:pairs?unlike/pairs:0};
+ alive:cnt.filter(x=>x>0).length,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0};
 }
 function record(force=false){
  historyStep++;if(!force&&historyStep%historyStride)return;
- const st=stats();history.push({t:sweep,H:cfg.K>1?st.entropy/Math.log(cfg.K):0,alive:st.alive/cfg.K,mix:st.mix});
+ const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,leader:st.leader,mix:st.mix});
  if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
 }
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
@@ -320,7 +352,7 @@ function plot(){
  const t0=history[0].t,t1=history[history.length-1].t;
  const x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0);
  const y=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v)));
- for(const [key,color] of [["H","#238674"],["alive","#c58d48"],["mix","#6681b9"]]){
+ for(const [key,color] of [["H","#238674"],["leader","#c58d48"],["mix","#6681b9"]]){
   g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
   history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
  }
@@ -366,7 +398,7 @@ $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.ran
 for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
  $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
-for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature"])$(id).addEventListener("change",()=>{
+for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature","birthMutation","spontaneousMutation","mutationEpsilon"])$(id).addEventListener("change",()=>{
   if(id==="neighbors"||id==="curvature")init();else{inputs();draw();}
 });
 canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const hit=cfg.curvature===1?sphereHit((e.clientX-r.left)/r.width*380,(e.clientY-r.top)/r.height*380,380,380):null;
@@ -393,6 +425,6 @@ $("resetSphere").addEventListener("click",()=>{sphereYaw=0;spherePitch=.15;spher
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),mutationCounts:{...mutationCounts},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
 })();
 </script></body></html>
