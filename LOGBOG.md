@@ -701,3 +701,12 @@ Tests: 20×20 gitter, 5 arter, 50 % startdækning, 150 sweeps for hver kombinati
 ## 16. november 2026 — Artsoversigt ved gitteret
 
 Tilføjet en responsiv oversigt direkte ved siden af skovgitteret med artsnummer, artens farve og dens faste strategi s (sandsynlighed for angreb). Oversigten opdateres ved tegning og nedtoner uddøde arter uden at fjerne deres s-værdi. På smalle skærme vises oversigten under gitteret i flere kolonner. Simulationens dynamik er uændret. Kontrolleret JavaScript-kørsel, alle UI-referencer og energibalance i 60 sweeps; ingen browser-visuel test udført.
+
+
+## 16. november 2026 — Tilbage til enkel højdebaseret Up or out-model
+
+På brugerens ønske er den komplekse Q/E/U-energimodel, energilager, vedligeholdelse, energibaseret kamp, energi-entropi, energigrafer og relaterede kontroller fjernet helt fra HTML og simulationskoden. Modellen bruger nu **kun højden h** som kampstyrke: P(A vinder) = h_A / (h_A + h_B). Ved sejrrigt angreb overtages feltet med et nyt træ i højde 1; ved tabt angreb dør angriberen. Kun randtræer angriber. Hver sammenhængende artsklump træffer stadig én vækst-/angrebsbeslutning efter sin arts faste s. Ved vækst vokser alle medlemmer én højdeenhed, forudsat eventuel højdegrænse. Den anden handling forsøges, hvis den først valgte er umulig.
+
+**Diffusion er bevaret som en åbenlys abstraktion**, ikke som skjult energi: en lokal symmetrisk udjævning af højdeforskelle mellem nabotræer af samme art. For hvert nabopar overføres en højdeandel α(h_i−h_j), med synkron opdatering og 0≤α≤0,12. Det bevarer summen af træhøjder under selve udjævningstrinnet, men kan give decimalhøjder og repræsenterer **ikke fysisk transport af træhøjde**. Som kontrol kan α sættes til 0, hvor hver vækst igen er et helt højdetrin. Dette er en modelantagelse til undersøgelse, ikke en biologisk etableret mekanisme.
+
+Appen er ryddet til skovgitter (vis art, højde eller kombination), arts- og s-oversigt, én graf for artsdiversitet og få forsøgsindstillinger. Mobiltilpasset layout bibeholdt. Numerisk kørselskontrol: 8 kombinationer af 4/8 naboer, α=0/0,1 og startdækning 100 %/40 %, hver 140 sweeps. Ingen ugyldige eller negative højder, ingen runtime-fejl, korrekt initialiseret artsoversigt. Visuel test i rigtig browser er endnu ikke udført.
