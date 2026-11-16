@@ -60,6 +60,8 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></section>
 <section class="panel"><h2>Konkurrence og nabokobling</h2>
 <div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div>
+<div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div>
+<p class="hint">Ved angreb mod en anden art skal forskellen mellem strategierne være større end Δs: |sₐ − sᵦ| &gt; Δs. Ellers kan arterne ikke skelnes, og der gennemføres ingen kamp mellem dem. Tomme felter kan stadig overtages. Når en kamp finder sted, afgør højden fortsat vinderen.</p>
 <div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
 <div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
 <div class="field"><label for="alpha">Lokal højdeudjævning α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
@@ -72,7 +74,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1};
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01};
 let rng,sp,h,stamp,strategies,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img;
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
@@ -84,7 +86,8 @@ function inputs(){
  cfg.L=Number($("size").value);cfg.K=Number($("species").value);cfg.fill=Number($("fill").value);
  cfg.speed=Number($("speed").value);cfg.seed=Math.floor(getNum("seed",1,1));cfg.neighbors=Number($("neighbors").value);
  cfg.periodic=$("periodic").checked;cfg.maxHeight=Math.floor(getNum("maxHeight",0,0));
- cfg.alpha=Math.min(.12,getNum("alpha",0,.1));
+ cfg.alpha=Math.min(.12,getNum("alpha",0,.1));cfg.deltaS=Math.min(.2,getNum("deltaS",0,.01));
+ $("deltaSOut").textContent=cfg.deltaS.toFixed(2).replace(".",",");
  $("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");
  for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["speed","speedOut"]])$(out).textContent=$(id).value;
  $("fillOut").textContent=Math.round(cfg.fill*100)+" %";
@@ -136,7 +139,8 @@ function diffuseHeights(){
  }
  for(let i=0;i<sp.length;i++)if(sp[i]>=0)h[i]+=delta[i];
 }
-function external(i,a){return neighbours(i).filter(j=>sp[j]!==a);}
+// Only distinguishable species can be challenged; vacancies stay open.
+function external(i,a){return neighbours(i).filter(j=>sp[j]<0||(sp[j]!==a&&Math.abs(strategies[a]-strategies[sp[j]])>cfg.deltaS+1e-12));}
 function attempt(i,a){
  if(sp[i]!==a||stamp[i]===sweep)return;
  const opts=external(i,a);if(!opts.length)return;
@@ -233,7 +237,7 @@ $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.ran
 for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
  $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
-for(const id of ["neighbors","periodic","maxHeight","alpha"])$(id).addEventListener("change",()=>{inputs();draw();});
+for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS"])$(id).addEventListener("change",()=>{inputs();draw();});
 canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const i=y*cfg.L+x,a=sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
