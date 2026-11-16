@@ -688,3 +688,12 @@ Angreb: E+U er standardkampstyrke; E alene og U alene kan vælges som kontrol. E
 Modellens U er en effektiv højdeafhængig investering, ikke nødvendigvis fysisk tyngdepotentiale mgh. Q er et genanvendeligt lager, ikke i sig selv varme med temperatur eller termodynamisk entropi S.
 
 Numeriske tests: 18 kombinationer af E+U/E/U-kamp, 4/8 naboer og de tre fødselshøjder, hver i 120 sweeps på 15×15, 5 arter, 50 % startdækning. Maksimal absolut energibalanceafvigelse 6,9×10⁻¹³. Alle E>=0 og U svarede præcist til growthCost×Σ(h−1). Visuel browserkontrol ikke udført.
+
+
+## 16. november 2026 — To valgbare vedligeholdelsesmodeller
+
+Indført vedligeholdelse af hvert levende træ pr. sweep som energioverførsel E_i → Q, begrænset til det faktisk tilgængelige E_i: paid = min(E_i, m_i). Standard er **konstant m_i = 0,10**. Alternativet er **højdeafhængigt m_i = m0 + m1·h_i** med standard m0=0,05 og m1=0,02. Alle parametre kan redigeres, og den aktive model vælges i energireglerne.
+
+Vedligeholdelse køres efter tilførsel fra Q og lokal energitransport, men før klumpernes kollektive vækst-/angrebsvalg. Dermed betaler et nyfødt træ først næste sweep. Træer med E_i=0 dør individuelt og frigiver U_i til Q; de kan ikke overleve uendeligt med en positiv restenergi, hvis de ikke får tilførsel. Det er ikke en fast aldersgrænse.
+
+Tests: 20×20 gitter, 5 arter, 50 % startdækning, 150 sweeps for hver kombination af de to vedligeholdelsesmodeller og tre kampformer. Højeste observerede højde i disse seks forløb var h=59 (konstant) og h=38 (højdeafhængig); alle energier var ikke-negative. Maksimal energibalanceafvigelse < 2,1×10⁻¹¹ for Q + Σ(E+U). Browser-visuel kontrol ikke udført.
