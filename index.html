@@ -231,6 +231,6 @@ canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se træets energi og højde."});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={configure:x=>{Object.assign(cfg,x);init();},step:sweepOnce,snapshot:()=>({sweep,tree:stats().treeE,store,initialTotal,alive:stats().alive,trees:stats().total,energy:Array.from(en),sp:Array.from(sp),h:Array.from(h)}),set:(values)=>{if(values.energy)en.set(values.energy);if(values.store!==undefined)store=values.store;if(values.sp)sp.set(values.sp);if(values.h)h.set(values.h);}};
+window.__skovTest={configure:x=>{Object.assign(cfg,x);init();},step:sweepOnce,snapshot:()=>({sweep,tree:stats().treeE,store,initialTotal,alive:stats().alive,trees:stats().total,entropyArt:stats().ent,entropyEnergy:energyDistributionStats(stats()).energyEntropy,spatialCorrelation:energyDistributionStats(stats()).correlation,energy:Array.from(en),sp:Array.from(sp),h:Array.from(h)}),set:(values)=>{if(values.energy)en.set(values.energy);if(values.store!==undefined)store=values.store;if(values.sp)sp.set(values.sp);if(values.h)h.set(values.h);}};
 })();
 </script></body></html>
