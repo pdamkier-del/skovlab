@@ -36,7 +36,19 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <section class="panel"><h2>Evolution og diversitet</h2><p class="hint">Artsentropien er Shannon-entropi, ikke termodynamisk entropi.</p>
 <div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="H">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Dominerende art</small><b id="dominant">–</b></div></div>
 <div class="legend"><span><i style="background:#238674"></i>Artsentropi H / ln(K)</span><span><i style="background:#c58d48"></i>Andel forskellige nabopar</span><span><i style="background:#6681b9"></i>Arter tilbage / K</span></div>
-<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for diversitet og naboblanding"></canvas></section>
+<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for diversitet og naboblanding"></canvas>
+<div class="hint">Artsentropi og antal arter er normaliseret til intervallet 0–1. Naboblanding er andelen af undersøgte nabopar med forskellige arter.</div></section>
+<section class="panel"><h2>Entropi og energifordeling</h2>
+<p class="hint">Tre samtidige mål: artsdiversitet, fordeling af disponibel energi mellem træer og rumlig energikorrelation. Ingen af målene er i sig selv termodynamisk entropi.</p>
+<div class="metrics"><div class="stat"><small>Artsentropi H<sub>art</sub> (nat)</small><b id="entropyArt">–</b></div><div class="stat"><small>Energi-entropi H<sub>E</sub> (nat)</small><b id="entropyEnergy">–</b></div><div class="stat"><small>Nabo-korrelation r<sub>E</sub></small><b id="entropyCorrelation">–</b></div></div>
+<div class="legend"><span><i style="background:#238674"></i>H<sub>art</sub> / ln(K)</span><span><i style="background:#c58d48"></i>H<sub>E</sub> / ln(N<sub>træer</sub>)</span><span><i style="background:#6681b9"></i>(r<sub>E</sub> + 1) / 2</span></div>
+<canvas class="plot" id="entropyPlot" aria-label="Sammenlign artsentropi, energi-entropi og rumlig energikorrelation over tid"></canvas>
+<p class="hint">Korrelationen er Pearsons r mellem energierne i to tilstødende levende træer, uanset art (−1 til +1). Den omskaleres kun i grafen. Ved nul variation eller for få nabopar vises 'ikke defineret', og kurven brydes. Energi-entropi måler fordelingen af energi mellem levende træer og udelader fælleslageret.</p>
+<details><summary>Se definitioner og fortolkning</summary>
+<p>Artsentropi: H<sub>art</sub> = −Σ<sub>k</sub> p<sub>k</sub> ln p<sub>k</sub>, hvor p<sub>k</sub> er andelen af træer af art k.</p>
+<p>Energi-entropi: H<sub>E</sub> = −Σ<sub>i</sub> q<sub>i</sub> ln q<sub>i</sub>, med q<sub>i</sub> = E<sub>i</sub> / Σ<sub>j</sub> E<sub>j</sub>. Hvis der ikke findes disponibel træenergi, er fordelingen udefineret.</p>
+<p>Rumligt mål: Pearson-korrelation af energien ved de to ender af alle vandrette og lodrette nabopar med to levende træer. Vi bruger netop fire retninger til målingen uanset konkurrence-naboreglen, så forsøgsresultater kan sammenlignes. r = 1 betyder stærk positiv sammenhæng, r = 0 ingen lineær sammenhæng, og r = −1 negativ sammenhæng. Dette er ikke en entropi.</p>
+<p>Normalisering gør kurverne visuelt sammenlignelige, men ændrer ikke deres fysik. Specielt varierer ln(N<sub>træer</sub>), når træantal ændrer sig.</p></details></section>
 <section class="panel"><h2>Energi</h2><p class="hint">Energien transporteres gradvist mellem nabotræer af samme art. Vækst flytter energi til lageret; ved tabt kamp overføres taberens resterende energi til lageret.</p>
 <div class="metrics"><div class="stat"><small>Energi i træerne</small><b id="treeEnergy">–</b></div><div class="stat"><small>Fælles energilager</small><b id="storeEnergy">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergy">–</b></div></div>
 <div class="status" id="balance">Initialiserer energiregnskabet.</div>
@@ -150,22 +162,61 @@ function stats(){const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0),sumE=A
  let ent=0,leader=0;for(const x of cnt)if(x>0){const p=x/total;ent-=p*Math.log(p);leader=Math.max(leader,x);}let unlike=0,pairs=0;const L=cfg.L;
  for(let y=0;y<L;y++)for(let x=0;x<L;x++){const i=y*L+x,a=sp[i];if(a<0)continue;if(x+1<L||cfg.periodic){const b=sp[y*L+((x+1)%L)];if(b>=0){pairs++;if(b!==a)unlike++;}}if(y+1<L||cfg.periodic){const b=sp[((y+1)%L)*L+x];if(b>=0){pairs++;if(b!==a)unlike++;}}}
  return {cnt,sumH,sumE,total,highest,treeE,ent,leader:total?leader/total:0,mixing:pairs?unlike/pairs:0,alive:cnt.filter(x=>x>0).length};}
-function record(force=false){historyStep++;if(!force&&historyStep%historyStride)return;const st=stats();history.push({t:sweep,H:cfg.K>1?st.ent/Math.log(cfg.K):0,mix:st.mixing,alive:st.alive/cfg.K,tree:st.treeE/initialTotal,store:store/initialTotal});if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}}
+// These are distinct descriptive statistics, not physical thermodynamic entropy.
+function energyDistributionStats(st){
+  let energyEntropy=NaN;
+  if(st.treeE>0){
+    energyEntropy=0;
+    for(let i=0;i<en.length;i++)if(sp[i]>=0&&en[i]>0){
+      const q=en[i]/st.treeE;
+      energyEntropy-=q*Math.log(q);
+    }
+  }
+  // Pairwise Pearson correlation at nearest-neighbour (right/down) edges.
+  // Symmetric endpoint bookkeeping avoids a direction-dependent covariance.
+  const L=cfg.L;let count=0,sx=0,sy=0,sxx=0,syy=0,sxy=0;
+  for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+    const i=y*L+x;if(sp[i]<0)continue;
+    const neighbors=[];
+    if(x+1<L||cfg.periodic)neighbors.push(y*L+(x+1)%L);
+    if(y+1<L||cfg.periodic)neighbors.push(((y+1)%L)*L+x);
+    for(const j of neighbors)if(sp[j]>=0){
+      const a=en[i],b=en[j];count+=2;
+      sx+=a+b;sy+=a+b;
+      sxx+=a*a+b*b;syy+=a*a+b*b;
+      sxy+=2*a*b;
+    }
+  }
+  let correlation=NaN;
+  if(count>=4){
+    const varx=sxx-sx*sx/count, vary=syy-sy*sy/count;
+    if(varx>1e-12&&vary>1e-12)correlation=Math.max(-1,Math.min(1,(sxy-sx*sy/count)/Math.sqrt(varx*vary)));
+  }
+  return {energyEntropy,correlation};
+}
+function record(force=false){historyStep++;if(!force&&historyStep%historyStride)return;const st=stats(),obs=energyDistributionStats(st);
+ history.push({t:sweep,H:cfg.K>1?st.ent/Math.log(cfg.K):0,mix:st.mixing,alive:st.alive/cfg.K,
+ tree:st.treeE/initialTotal,store:store/initialTotal,
+ energyH:st.total>1&&Number.isFinite(obs.energyEntropy)?obs.energyEntropy/Math.log(st.total):NaN,
+ spatialR:Number.isFinite(obs.correlation)?(obs.correlation+1)/2:NaN});if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}}
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h;}return {w,h,d};}
 function plot(id,series){const c=$(id),{w,h,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,h);const left=35*d,right=9*d,top=12*d,bottom=22*d;g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";for(let k=0;k<=4;k++){const y=top+(h-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
  if(history.length<2)return;const t0=history[0].t,t1=history[history.length-1].t,x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0),y=v=>top+(h-top-bottom)*(1-Math.max(0,Math.min(1,v)));
- for(const [key,color] of series){g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();}
+ for(const [key,color] of series){g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();let started=false;history.forEach(p=>{const v=p[key];if(!Number.isFinite(v)){started=false;return;}if(started)g.lineTo(x(p.t),y(v));else{g.moveTo(x(p.t),y(v));started=true;}});g.stroke();}
  g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,h-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,h-3*d);
 }
 function draw(){
  const L=cfg.L,N=L*L,data=img.data;for(let i=0;i<N;i++){const a=sp[i],off=i*4;if(a<0){data[off]=228;data[off+1]=235;data[off+2]=224;}else{const hex=color(a);data[off]=parseInt(hex.slice(1,3),16);data[off+1]=parseInt(hex.slice(3,5),16);data[off+2]=parseInt(hex.slice(5,7),16);}data[off+3]=255;}
  bufctx.putImageData(img,0,0);fit(canvas);ctx.imageSmoothingEnabled=false;ctx.drawImage(buffer,0,0,canvas.width,canvas.height);
- const st=stats(),sum=st.treeE+store,err=sum-initialTotal;
+ const st=stats(),obs=energyDistributionStats(st),sum=st.treeE+store,err=sum-initialTotal;
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");$("alive").textContent=st.alive;$("highest").textContent=st.highest;
+ $("entropyArt").textContent=st.ent.toFixed(4);
+ $("entropyEnergy").textContent=Number.isFinite(obs.energyEntropy)?obs.energyEntropy.toFixed(4):"–";
+ $("entropyCorrelation").textContent=Number.isFinite(obs.correlation)?obs.correlation.toFixed(4):"–";
  $("H").textContent=st.ent.toFixed(4);$("effective").textContent=Math.exp(st.ent).toFixed(2);$("dominant").textContent=(st.leader*100).toFixed(1)+" %";
  $("treeEnergy").textContent=st.treeE.toFixed(2);$("storeEnergy").textContent=store.toFixed(2);$("totalEnergy").textContent=sum.toFixed(2);
  $("balance").textContent="Energibalance: start "+initialTotal.toFixed(2)+" = nu "+sum.toFixed(2)+" · numerisk afvigelse "+err.toExponential(2);
- plot("evolutionPlot",[["H","#238674"],["mix","#c58d48"],["alive","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["store","#c58d48"]]);
+ plot("evolutionPlot",[["H","#238674"],["mix","#c58d48"],["alive","#6681b9"]]);plot("entropyPlot",[["H","#238674"],["energyH","#c58d48"],["spatialR","#6681b9"]]);plot("energyPlot",[["tree","#238674"],["store","#c58d48"]]);
  $("speciesRows").innerHTML=strategies.map((strategy,k)=>'<tr><td><span class="swatch" style="background:'+color(k)+'"></span> '+(k+1)+'</td><td>'+strategy.toFixed(3)+'</td><td>'+st.cnt[k]+'</td><td>'+(st.cnt[k]?st.sumH[k]/st.cnt[k]:0).toFixed(2)+'</td><td>'+st.sumE[k].toFixed(2)+'</td></tr>').join("");
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)sweepOnce();draw();raf=requestAnimationFrame(loop);}
