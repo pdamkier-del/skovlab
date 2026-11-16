@@ -751,3 +751,14 @@ Appen viser antal mutationer af hver type, dominerende levende arts s og de op t
 **Vigtig begrænsning:** Δs-reglen er stadig en hård spærring, hvis |s_i−s_j|≤Δs. En mutation på præcis 0,01 med Δs=0,01 kan derfor normalt ikke angribe sin moderlinje direkte. Det kan forsinke selektionen. Mutationer garanterer variation, men hverken permanent aktivitet eller at systemet konvergerer mod én optimal strategi.
 
 Kørselstest i JavaScript for k=−1,0,+1, hver 100 sweeps på 20×20 med maksimalt mutationstryk (10 % ved fødsel og 100 % spontan pr. sweep) for at belaste systemet. Der blev registreret hundrede spontane mutationer i hvert forsøg og hundredvis af børnemutationer, ingen ugyldige artshenvisninger eller højder og ingen manglende UI-elementer. Ægte browser-visuel validering ikke udført.
+
+
+## 2026-11-16 — Peters private Skovlab: forsøg A/B/C og energiregler
+
+Der er oprettet et tilvalg af dimensionsløs energi i `peter-dev/index.html` og en separat offentlig kopi på `main/peter/index.html`, som kan åbnes på https://pdamkier-del.github.io/skovlab/peter/. **Den fælles simulation i `main/index.html` er uændret.**
+
+Tre forskningspaneler: **A** (energitilførsel, populationstæthed, aktivitet, mulige kritiske tilstande), **B** (periodisk energitilførsel og populationsvægtet strategi) samt **C** (Shannon-artsentropi, dominans og dødsfald). Grafer viser tidsserier, ikke automatiske påstande om faseovergange eller tilpasning. I særdeleshed er Shannon-entropi og dødstællinger **ikke termodynamisk entropiproduktion**.
+
+Justerbare energiparametre: middeltilførsel Q0, amplituden a, perioden T, **vækstomkostning pr. træ**, **angrebsomkostning pr. forsøg**, **energioverførsel til afkom fra forælderen**, vedligeholdelse, startenergi og maksimumreserve. Før hver sweep modtager levende træer Q(t)=Q0[1+a sin(2πt/T)] og betaler vedligeholdelse; ved underskud dør de. En handling kræver tilstrækkelig reserve. Succesfuld kolonisering betaler afkommets startenergi fra forælderen. Der er ingen energiudveksling gennem tomme celler, og ingen varme-/reservoirregnskab. Energimodellen kan slås fra, så den oprindelige dynamik kan bruges som kontrol. Modelparametre genstarter for reproducerbare forsøg.
+
+Kørselskontrol via den faktiske JavaScript-kode: 20×20, 150 sweeps, Q0=0/0,4/1,3/2,2; ingen ikke-finite energier/højder. Ved lave Q0 blev alle træer uddøde, ved højere Q0 overlevede træer med fortsat aktivitet. Dette er kun en funktionstest og ikke evidens for en kritisk faseovergang. Separat kontrol med energimodel slået fra gennemført. Visuel browser-test og live GitHub Pages-servering ikke uafhængigt verificeret.
