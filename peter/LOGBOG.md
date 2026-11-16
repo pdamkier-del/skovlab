@@ -773,3 +773,8 @@ Se `PETER.md` for de præcise beslutninger og testkommandoer.
 ## 2026-11-16 · Højdeafhængig vedligeholdelse genindført
 
 Efter brugerens ændrede modelønske betaler træer nu m × h fra reserve til Q hver sweep, efter optag og diffusion og før handlinger. Standard m = 0,1; værdien kan justeres under Vækst og angreb. Mangler træet energi til hele beløbet, eller ville betalingen efterlade E = 0, dør det og returnerer E + U til Q. Højden reduceres ikke hos overlevende træer. Dette erstatter beslutningen ovenfor om ingen vedligeholdelse. Energien bevares; tilbageførsel er ikke en garanti for en altid positiv Q eller vedvarende population.
+
+
+## 2026-11-16 · Justerbare vækst- og angrebspriser gendannet
+
+Under 03 kan κ (pris pr. højdeenhed, standard 2) og angrebsprisen (standard 1) igen ændres. κ bruges konsekvent til vækst, afkoms startstruktur, dødsretur og energiregnskab. Prisændringer genstarter simulationen for at undgå omvurdering af eksisterende struktur og deraf kunstig energi. Dette erstatter den tidligere beslutning om faste handlingspriser.
