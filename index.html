@@ -73,7 +73,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
 <div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
-<p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger én handling ud fra artens strategi s. Ved vækst vokser alle træer i klumpen én højdeenhed og betaler hver vækstomkostningen. Kan ét træ ikke betale eller nås højdelimitten, vælger klumpen angreb. Ved angreb forsøger hvert træ i klumpen at sprede sig én gang. Et nyt træ modtager altid energipakken (standard 2) fra sit modertræ. Angrebsforsøg uden mulige eller betalelige mål skaber ikke energi og giver ingen erobring.</p>
+<p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger vækst med sandsynlighed 1−s eller angreb med sandsynlighed s. Ved vækst vokser hvert træ med tilstrækkelig energi én højdeenhed og betaler selv vækstomkostningen; energifattige træer vokser ikke. Kun hvis ingen i klumpen kan vokse, vælges angreb automatisk. Ved angreb forsøger <b>kun randtræer</b> at erobre ét tilfældigt tomt eller fremmed nabofelt. Et nyt træ modtager altid energipakken (standard 2) fra modertræet; angreb kan ikke gennemføres uden tilstrækkelig energi. Hvert træ dør individuelt, hvis dets energi når nul.</p>
 <div class="field"><label for="alpha">Lokal energitransport α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
 <p class="hint"><b>Gradvis energitransport:</b> For hvert par nabotræer af samme art overføres ΔE = α(Eᵢ − Eⱼ) ved ét synkront transporttrin pr. sweep. Ved 4 eller 8 naboer bevares energien, og raten er begrænset til 0,12 for at undgå negative energier. Adskilte kolonier deler ikke energi direkte.</p>
 </section>
@@ -141,12 +141,26 @@ function coloniesNow(){
   }
   return groups;
 }
+// Only edge trees have a meaningful attack target. Choose one of the
+// eligible neighbours uniformly; internal trees cannot attempt attacks.
+function externalNeighbours(i,a){
+  const L=cfg.L,x=i%L,y=(i/L)|0;
+  const dirs=cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
+  const targets=[];
+  for(const [dx,dy] of dirs){
+    let nx=x+dx,ny=y+dy;
+    if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
+    else if(nx<0||ny<0||nx>=L||ny>=L)continue;
+    const j=ny*L+nx;
+    if(j!==i&&sp[j]!==a&&!targets.includes(j))targets.push(j);
+  }
+  return targets;
+}
 function attackFrom(i,a){
   if(sp[i]!==a||en[i]<=1e-10||en[i]+1e-10<cfg.birthCost)return;
-  // Choosing a same-species neighbour is still an attack attempt; there is
-  // simply no external cell to conquer from that direction.
-  const j=neighbour(i);
-  if(j<0||sp[j]===a)return;
+  const targets=externalNeighbours(i,a);
+  if(!targets.length)return;
+  const j=targets[Math.floor(rng()*targets.length)];
   if(sp[j]<0){
     sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;
     en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
@@ -181,22 +195,23 @@ function sweepOnce(){
     const a=group.speciesId;
     const members=group.members.filter(i=>sp[i]===a&&stamp[i]!==sweep);
     if(!members.length)continue;
-    // The group can only choose growth if ALL currently surviving members
-    // can pay for their own growth and have room to grow.
-    const canAllGrow=members.every(i=>en[i]+1e-10>=cfg.growthCost&&(!cfg.maxHeight||h[i]<cfg.maxHeight));
-    const grow=canAllGrow&&rng()>=strategies[a];
+    // One shared choice; growth feasibility remains individual.
+    // Only if NO member can grow is the group forced to select attack.
+    const canAnyoneGrow=members.some(i=>en[i]+1e-10>=cfg.growthCost&&(!cfg.maxHeight||h[i]<cfg.maxHeight));
+    const grow=canAnyoneGrow&&rng()>=strategies[a];
     if(grow){
       for(const i of members){
+        if(en[i]+1e-10<cfg.growthCost||(cfg.maxHeight&&h[i]>=cfg.maxHeight))continue;
         h[i]++;
         en[i]=Math.max(0,en[i]-cfg.growthCost);
         store+=cfg.growthCost;
       }
     }else{
-      // Same collective choice, but each member makes a local attempt.
+      // Same collective choice; only boundary members can attack.
       for(let k=members.length-1;k>0;k--){
         const j=Math.floor(rng()*(k+1)),t=members[k];members[k]=members[j];members[j]=t;
       }
-      for(const i of members)if(sp[i]===a&&stamp[i]!==sweep)attackFrom(i,a);
+      for(const i of members)if(sp[i]===a&&stamp[i]!==sweep&&externalNeighbours(i,a).length)attackFrom(i,a);
     }
   }
   // Death from exhaustion is assessed after paying costs and doing attacks.
