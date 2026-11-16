@@ -38,3 +38,51 @@ Oprindelige skovregler er udgangspunktet; energimodellen er en eksperimentel udv
 [Theory, conventions and validation](ec-flrw/collapse/THEORY.md) documents the first deliverable and the published-reference benchmark. The [retained KS geometry explorer](https://pdamkier-del.github.io/skovlab/ec-flrw/geometry-lab.html#ks) remains separate. The parameter screen is exploratory; exterior matching, radial inhomogeneity and thermodynamics are not implemented. An interior bounce or trapped surface does not establish a global event horizon or baby universe.
 
 Run `npm ci`, `npm test`, and `npm run serve`. With Chromium installed, run `npm run test:browser`; set `CHROMIUM_PATH` if necessary, or use `npx playwright install chromium`. After editing the theory Markdown, regenerate the static page with `npm run docs`. GitHub Actions runs the equation/solver tests, checks the generated documentation and exercises both interfaces in Chromium.
+
+
+---
+
+## Samarbejde: Peter og William
+
+**Den fælles, udgivne udgave** er `index.html` på branchen `main` og kan ses på https://pdamkier-del.github.io/skovlab/.
+
+Arbejdsudgaverne ligger på separate branches: **`peter-dev`** og **`william-dev`**. Hver person kloner repoet på sin egen computer og redigerer *sin egen lokale* `index.html` på sin egen branch. Arbejdsbranches påvirker ikke hjemmesiden, før en ændring bliver flettet ind i `main`.
+
+### Kom i gang
+
+```bash
+git clone https://github.com/pdamkier-del/skovlab.git
+cd skovlab
+git fetch origin
+git switch --track origin/william-dev  # William
+# eller: git switch --track origin/peter-dev  # Peter
+```
+
+Åbn derefter `index.html` i browseren (gerne via VS Code / Live Server).
+
+### Gem eget arbejde
+
+```bash
+git add index.html
+git commit -m "Beskriv ændringen"
+git push origin william-dev   # eller peter-dev
+```
+
+### Gør en ændring fælles
+
+Opret en **pull request** på https://github.com/pdamkier-del/skovlab/pulls med **base: main** og **compare: william-dev** (eller `peter-dev`). Gennemgå ændringen sammen; når den er klar, merge til `main`. Først da bliver den fælles GitHub Pages-version opdateret.
+
+Når fællesudgaven er blevet ændret, kan du hente ændringerne ind i din arbejdsbranch:
+
+```bash
+git fetch origin
+git switch william-dev      # eller peter-dev
+git merge origin/main
+git push origin william-dev  # eller peter-dev
+```
+
+Der kan opstå merge-konflikter, hvis I redigerer de samme linjer. Gennemgå dem før push og undgå at overskrive den andens ændringer.
+
+**William skal inviteres som collaborator:** På GitHub: repository → Settings → Collaborators → Add people; brug hans GitHub-brugernavn. Han skal acceptere invitationen for at kunne pushe direkte til `william-dev`. Alternativt kan han arbejde fra sin egen fork og oprette PR'er.
+
+**Parkerede udviklingsideer** dokumenteres i [IDEER.md](IDEER.md), og implementerede modelændringer i [LOGBOG.md](LOGBOG.md).
