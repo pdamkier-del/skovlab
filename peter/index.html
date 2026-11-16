@@ -74,9 +74,9 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <p class="hint"><b>r₀</b> er den gennemsnitlige grænse for energioptag pr. træ. a styrer udsvinget, og T er antal sweeps pr. cyklus. Optaget kan aldrig overstige tilgængelig energi i Q.</p></details>
 <details class="settings-group"><summary>Den fælles pulje og optag</summary>
 <div class="field"><label for="initialPool">Startenergi i puljen (pr. felt)</label><input id="initialPool" type="number" min="0" step="0.5" value="2"></div><div class="field"><label for="uptakeLimit">Energioverførsel fra pulje pr. træ (maks.)</label><input id="uptakeLimit" type="number" min="0" step="0.1" value="2"></div><div class="field"><label for="poolLeak">Puljetab (%) · 0 betyder samlet energibevarelse</label><input id="poolLeak" type="number" min="0" max="100" step="1" value="0"></div><div class="field"><label for="startEnergy">Startenergi pr. træ</label><input id="startEnergy" type="number" min="0" step="0.5" value="10"></div><div class="field"><label for="maxEnergy">Maksimal reserve</label><input id="maxEnergy" type="number" min="0.1" step="0.5" value="12"></div>
-<p class="hint">Q er den fælles pulje. Energi fra angreb og døde træer returneres til Q; træerne kan efterfølgende optage fra den. Ved 0 % puljetab bevares den samlede energi.</p></details></div></details><details class="right-category" open><summary>03 · Vækst, angreb og vedligehold</summary><div class="right-category-content">
+<p class="hint">Q er den fælles pulje. Energi fra angreb og døde træer returneres til Q; træerne kan efterfølgende optage fra den. Ved 0 % puljetab bevares den samlede energi. Død af energimangel sker, når E = 0.</p></details></div></details><details class="right-category" open><summary>03 · Vækst, angreb og vedligehold</summary><div class="right-category-content">
 <div class="field"><label for="growthCost">Vækstpris κ (og U pr. højdeenhed)</label><input id="growthCost" type="number" min="0" step="0.1" value="2"></div><div class="field"><label for="attackCost">Pris for angrebsforsøg</label><input id="attackCost" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="offspringEnergy">Energi overført til afkom</label><input id="offspringEnergy" type="number" min="0" step="0.1" value="2"></div><div class="field"><label for="maintenance">Vedligeholdelse pr. træ</label><input id="maintenance" type="number" min="0" step="0.1" value="0.5"></div>
-<p class="hint"><b>Vækst:</b> reserve → struktur U(h) = κh. <b>Angreb:</b> koster energi afgivet til omgivelserne, også ved nederlag. <b>Afkom:</b> kræver reserveoverførsel og energi til ny højde h = 1. <b>Vedligehold:</b> betales før handling; uden nok energi dør træet.</p>
+<p class="hint"><b>Vækst:</b> reserve → struktur U(h) = κh. <b>Angreb:</b> koster energi afgivet til omgivelserne, også ved nederlag. <b>Afkom:</b> kræver reserveoverførsel og energi til ny højde h = 1. <b>Vedligehold:</b> trækker fra E og returneres til Q. Træet dør af energimangel præcis når E når 0; hvis det ikke har råd til en handling, springes handlingen over. Træer kan også dø ved tabt kamp.</p>
 <details class="settings-group"><summary>Kamp og højder</summary><div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div><div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div><div class="field"><label for="alpha">Lokal diffusion af energi α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div><div class="field"><label for="maxHeight">Maksimal højde (0 = ingen)</label><input id="maxHeight" type="number" min="0" max="1000000" step="1" value="0"></div>
 <p class="hint">Δs bestemmer, hvilke forskellige strategier der må kæmpe. α flytter reserveenergi mellem naboer med samme eller næsten samme strategi og bevarer summen af energien. Maksimal højde 0 betyder ingen grænse.</p></details></div></details><details class="right-category" ><summary>04 · Mutation og evolution</summary><div class="right-category-content">
 <div class="field"><label for="birthMutation">Børnemutation (% pr. fødsel)</label><input id="birthMutation" type="number" min="0" max="100" step="0.1" value="0.1"></div><div class="field"><label for="spontaneousMutation">Spontan mutation (% pr. sweep i hele skoven)</label><input id="spontaneousMutation" type="number" min="0" max="100" step="0.1" value="0"></div><div class="field"><label for="mutationEpsilon">Mutationsstørrelse dε (ændring i s)</label><input id="mutationEpsilon" type="number" min="0.001" max="1" step="0.001" value="0.05"></div>
@@ -298,8 +298,9 @@ function energyTick(){
  const limit=Math.min(cfg.uptakeLimit,energySupply());
  for(const i of order){
   const take=Math.min(pool,limit,Math.max(0,cfg.maxEnergy-en[i]));if(take>0){pool-=take;en[i]+=take;}
-  if(en[i]+1e-10<cfg.maintenance)killTree(i);
-  else{en[i]=Math.max(0,en[i]-cfg.maintenance);pool+=cfg.maintenance;energyLedger.recycled+=cfg.maintenance;}
+  const paid=Math.min(en[i],cfg.maintenance);
+  en[i]=Math.max(0,en[i]-paid);pool+=paid;energyLedger.recycled+=paid;
+  if(en[i]<=1e-10)killTree(i);
  }
  const lost=pool*cfg.poolLeak;pool-=lost;energyLedger.dissipated+=lost;
 }
@@ -328,6 +329,7 @@ function step(){
   if(grow){for(const i of members)if(sp[i]===a&&(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9)&&(!cfg.energyEnabled||en[i]+1e-10>=cfg.growthCost)){if(cfg.energyEnabled)en[i]=Math.max(0,en[i]-cfg.growthCost);h[i]+=1;}}
   else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
  }
+ if(cfg.energyEnabled)for(let i=0;i<sp.length;i++)if(sp[i]>=0&&en[i]<=1e-10)killTree(i);
  spontaneousMutation();record();
 }
 function stats(){
