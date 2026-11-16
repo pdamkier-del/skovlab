@@ -729,3 +729,12 @@ Tilføjet en geometrivælger til den eksisterende højdebaserede skovsimulation:
 **Præcisering:** Disse er *kombinatoriske tilnærmelser til positiv/negativ krumning*, ikke eksakte tesselleringer af flader med konstant Gaussisk krumning K=±1, og diskens billedgeometri er ikke en metrisk isometri. Antallet af celler er L² i alle tre tilfælde; selve nabografen ændres, så geometri påvirker kamp, koloniforbindelse og lokal højdeudjævning. 4/8-nabovalget bestemmer, hvor mange radiale nabokoblinger der tilføjes i krummede tilfælde; gradtallet er ikke nødvendigvis præcis 4 eller 8. Krumningen ændres ved at geninitialisere forsøget. Periodiske kanter er kun relevante i den flade version.
 
 Kontrol: 20×20, 5 arter, 70 % startdækning, 100 sweeps for alle seks kombinationer af k∈{−1,0,+1} og 4/8 nabovalg. Ingen ugyldige/negative højder og alle kombinationer gennemførte uden kodefejl; de krummede grafer har præcis L² celler. Browservisuel kontrol er ikke gennemført.
+
+
+## 16. november 2026 — Interaktiv 3D-sfære ved k=+1
+
+For **k=+1** er den tidligere udfoldede 2D-projektion erstattet af en drejelig, perspektivlignende **ortografisk 3D-projektion af en sfære** i samme canvas. En pixel i den synlige halvkugle beregnes ved invers sfæreprojektion og henføres til præcis én eksisterende celle i den sfæriske ringgraf. Bagsiden dækkes af forsiden. Der er lys/skygge for rumlig form, men artsfarver og den valgte højdevisning fungerer fortsat.
+
+Interaktion: træk med mus eller finger for rotation om to akser; zoom med musehjul eller +/−; knap til nulstilling. k=0 beholder det kvadratiske gitter; k=−1 beholder den flade hyperbolske skiveprojektion. **Simulationsregler og nabograf er uændrede**. Projektionen er en visuel sfære, ikke et bevis for at den diskrete ringgraf er en eksakt sfærisk tessellering med konstant lokal krumning.
+
+JavaScript-test: k=−1,0,+1 i 40 sweeps på 20×20, inklusive kald af rotations-, zoom- og nulstillingshændelser for k=+1; ingen runtime-fejl. Visuel test i rigtig browser ikke udført.
