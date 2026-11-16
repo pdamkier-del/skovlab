@@ -653,3 +653,10 @@ Det nye panel **Entropi og energifordeling** viser tre tidsserier: (1) arts-Shan
 Ved graftegning normaliseres H_art med ln(K), H_E med ln(N_levende), og r_E afbildes som (r_E+1)/2, så alle tre kan vises på 0–1-akse. De rå værdier vises særskilt. Det understreges på siden, at hverken energi-Shannon-entropi eller energikorrelation i sig selv er termodynamisk entropi. Ved ingen træenergi eller utilstrækkelig variation er relevante mål udefinerede; kurven afbrydes for manglende værdier frem for at tegne nul.
 
 Kontrol: 150 sweeps på 20×20-gitter, 5 arter, 40 % startdækning med begge kampformer. Ingen negative energier, og energibalancens største absolutte afvigelse var under 7×10⁻¹². Browser-visuel kontrol udestår.
+
+
+## 16. november 2026 — Konsolideret entropivisning og afgrænsning af termodynamisk S
+
+Det overflødige panel "Evolution og diversitet" er fjernet, fordi H_art allerede blev vist i "Entropi og energifordeling". Den samlede visning hedder nu "Evolution, entropi og energifordeling" og har kun ét sæt tal og kurver for H_art, energi-Shannon-entropi H_E og rumlig Pearson-energikorrelation r_E. Browser-referencer og JavaScript-syntaks er kontrolleret.
+
+Vi har diskuteret en mulig **fremtidig, separat termodynamisk kontrolmodel**: To varmebeholdere med definerede temperaturer og varmekapaciteter, med varmeoverførsel fra varm til kold. Entropien kan da regnes som ΔS = Σ C_i ln(T_{i,f}/T_{i,i}). Dette er **ikke implementeret**. Vores nuværende træenergi er en idealiseret disponibel ressource uden temperatur, varme og specificeret antal mikrotilstande. H_E er derfor ikke termodynamisk entropi, og en invariant E_total alene garanterer ikke anden hovedsætning.
