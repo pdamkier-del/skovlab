@@ -30,14 +30,14 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <header><div><h1>Skovlaboratoriet</h1><p>Up or out · evolution og energi i kredsløb</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout">
 <main>
-<section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Tomme felter er gratis at kolonisere. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
+<section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Ved spredning overføres 2 energienheder til hvert nyt træ. Sammenhængende træer af samme art deler energi. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
 <canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div><div id="inspect">Peg på et felt for at se træets energi og højde.</div></section>
 <section class="panel"><h2>Evolution og diversitet</h2><p class="hint">Artsentropien er Shannon-entropi, ikke termodynamisk entropi.</p>
 <div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="H">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Dominerende art</small><b id="dominant">–</b></div></div>
 <div class="legend"><span><i style="background:#238674"></i>Artsentropi H / ln(K)</span><span><i style="background:#c58d48"></i>Andel forskellige nabopar</span><span><i style="background:#6681b9"></i>Arter tilbage / K</span></div>
 <canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for diversitet og naboblanding"></canvas></section>
-<section class="panel"><h2>Energi</h2><p class="hint">Alle energiændringer bogføres. Vækst flytter energi til lageret, og død returnerer træets resterende energi.</p>
+<section class="panel"><h2>Energi</h2><p class="hint">Energi fordeles ligeligt i hver sammenhængende artsgruppe. Vækst flytter energi til lageret; ved tabt kamp overføres taberens resterende energi til lageret.</p>
 <div class="metrics"><div class="stat"><small>Energi i træerne</small><b id="treeEnergy">–</b></div><div class="stat"><small>Fælles energilager</small><b id="storeEnergy">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergy">–</b></div></div>
 <div class="status" id="balance">Initialiserer energiregnskabet.</div>
 <div class="legend"><span><i style="background:#238674"></i>Træernes energiandel</span><span><i style="background:#c58d48"></i>Lagerets energiandel</span></div><canvas class="plot" id="energyPlot" aria-label="Tidsserier for energifordeling"></canvas>
@@ -66,8 +66,9 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1.5"></div>
 <div class="field"><label for="returnRate">Energi retur fra træet pr. sweep</label><input id="returnRate" type="number" min="0" max="1000" step="0.25" value="0.5"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="1"></div>
-<div class="field"><label for="birthCost">Energi til angreb på besat felt</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
-<p class="hint"><b>Ved energimangel:</b> Træet forsøger at sprede sig med 100 % sandsynlighed, hvis det ikke kan vokse. Tomme nabofelter kan overtages gratis; nye træer starter dér med E = 0 og får først energi fra lageret ved næste sweep. Besatte felter kræver energipakken ovenfor. Træer dør ved E = 0 efter energitilførslen eller ved tabt kamp.</p>
+<div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
+<p class="hint"><b>Ved spredning:</b> Et nyt træ får altid energipakken fra modertræet (standard 2), også på et tomt felt. Der betales ingen yderligere angrebsomkostning. Kan træet ikke vokse op, forsøger det at sprede sig med 100 % sandsynlighed, men skal have energi nok til pakken.</p>
+<p class="hint"><b>Fælles energi i sammenhængende artsgrupper:</b> Træer af samme art, som er forbundne gennem de valgte nabofelter, deler deres samlede disponible energi ligeligt før og efter hvert sweep. Overførsel skaber eller fjerner ikke energi. Ved nul energi dør træet; et nederlag i kamp medfører også død.</p>
 </section>
 </aside></div>
 <footer>Modellen er et idealiseret evolutionært gitter med bogført disponibel energi. Energi i et træ er ikke det samme som fysisk gravitationel potentiel energi. <a href="LOGBOG.md">Forskningslogbog</a>.</footer>
@@ -87,10 +88,37 @@ function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimatio
 function init(){stop();takeInputs();rng=mulberry32((cfg.seed*2654435761)>>>0);const N=cfg.L*cfg.L;sp=new Int16Array(N);h=new Int32Array(N);en=new Float64Array(N);stamp=new Int32Array(N);order=new Int32Array(N);strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);let alive=0;for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;en[i]=cfg.e0;alive++}else sp[i]=-1;}store=alive*cfg.store0;initialTotal=store+alive*cfg.e0;sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();}
 function die(i){if(sp[i]<0)return;store+=en[i];en[i]=0;sp[i]=-1;h[i]=0;}
 function neighbour(i){const L=cfg.L,x=i%L,y=Math.floor(i/L);let dx,dy;if(cfg.neighbors===4){const m=Math.floor(rng()*4);dx=[1,-1,0,0][m];dy=[0,0,1,-1][m];}else{const m=Math.floor(rng()*8);dx=[-1,0,1,-1,1,-1,0,1][m];dy=[-1,-1,-1,0,0,1,1,1][m];}let xx=x+dx,yy=y+dy;if(cfg.periodic){xx=(xx+L)%L;yy=(yy+L)%L}else if(xx<0||yy<0||xx>=L||yy>=L)return -1;return yy*L+xx;}
+// Connected components are formed only by orthogonally adjacent same-species
+// trees (or diagonally as well when 8 neighbours are selected). Energy sharing
+// is internal and conservative; disconnected colonies never share directly.
+function shareConnectedEnergy(){
+  const L=cfg.L,N=sp.length,seen=new Uint8Array(N),queue=new Int32Array(N);
+  const offsets=cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
+  for(let origin=0;origin<N;origin++){
+    const speciesId=sp[origin];if(speciesId<0||seen[origin])continue;
+    let head=0,tail=1,total=0;queue[0]=origin;seen[origin]=1;
+    while(head<tail){
+      const i=queue[head++];total+=en[i];const x=i%L,y=(i/L)|0;
+      for(const [dx,dy] of offsets){
+        let xx=x+dx,yy=y+dy;
+        if(cfg.periodic){xx=(xx+L)%L;yy=(yy+L)%L}
+        else if(xx<0||xx>=L||yy<0||yy>=L)continue;
+        const j=yy*L+xx;
+        if(!seen[j]&&sp[j]===speciesId){seen[j]=1;queue[tail++]=j;}
+      }
+    }
+    if(tail>1){
+      const equal=total/tail;
+      for(let k=0;k<tail-1;k++)en[queue[k]]=equal;
+      en[queue[tail-1]]=Math.max(0,total-equal*(tail-1));
+    }
+  }
+}
 function sweepOnce(){
   sweep++;const N=sp.length;let n=0;
   // Each tree present at sweep start exchanges resources with the finite store.
   for(let i=0;i<N;i++)if(sp[i]>=0){order[n++]=i;const returned=Math.min(cfg.returnRate,en[i]);en[i]-=returned;store+=returned;const received=Math.min(cfg.sun,store);en[i]+=received;store-=received;}
+  shareConnectedEnergy();
   for(let k=n-1;k>0;k--){const j=Math.floor(rng()*(k+1)),a=order[k];order[k]=order[j];order[j]=a;}
   for(let k=0;k<n;k++){
     const i=order[k],a=sp[i];if(a<0||stamp[i]===sweep)continue;
@@ -99,26 +127,28 @@ function sweepOnce(){
     // If vertical growth is impossible, force a reproduction/attack attempt.
     if(canGrow&&rng()>=strategies[a]){
       en[i]=Math.max(0,en[i]-cfg.growthCost);store+=cfg.growthCost;h[i]++;
-      if(en[i]<=1e-10)die(i);
+      // A newly depleted tree may be rescued by its connected species at sweep end.
       continue;
     }
     const j=neighbour(i);if(j<0||sp[j]===a)continue;
+    // All successful reproduction transfers a full packet to the child,
+    // including when the destination is vacant; no additional fee is charged.
+    if(en[i]+1e-10<cfg.birthCost)continue;
     if(sp[j]<0){
-      // A vacant neighbour can be colonised without transferring energy.
-      // The newborn begins at E=0 and receives resources next sweep.
-      sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;en[j]=0;stamp[j]=sweep;
+      sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;
+      en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
       continue;
     }
-    // Occupied territory still requires the energy packet for takeover.
-    if(en[i]+1e-10<cfg.birthCost)continue;
     const va=cfg.attackMode==="height"?h[i]:en[i],vb=cfg.attackMode==="height"?h[j]:en[j],den=va+vb;
     const wins=den>0?rng()<va/den:rng()<.5;
     if(wins){
       const formerHeight=h[j];die(j);sp[j]=a;h[j]=cfg.newHeight==="sapling"?1:cfg.newHeight==="attacker"?h[i]:formerHeight;
-      en[i]-=cfg.birthCost;en[j]=cfg.birthCost;stamp[j]=sweep;
-      if(en[i]<=1e-10)die(i);
+      en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
     }else die(i);
   }
+  shareConnectedEnergy();
+  // Starvation is decided only after the connected cluster has shared energy.
+  for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]<=1e-10)die(i);
   record();
 }
 function stats(){const cnt=Array(cfg.K).fill(0),sumH=Array(cfg.K).fill(0),sumE=Array(cfg.K).fill(0);let total=0,highest=0,treeE=0;
