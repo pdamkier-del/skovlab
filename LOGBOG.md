@@ -697,3 +697,7 @@ Indført vedligeholdelse af hvert levende træ pr. sweep som energioverførsel E
 Vedligeholdelse køres efter tilførsel fra Q og lokal energitransport, men før klumpernes kollektive vækst-/angrebsvalg. Dermed betaler et nyfødt træ først næste sweep. Træer med E_i=0 dør individuelt og frigiver U_i til Q; de kan ikke overleve uendeligt med en positiv restenergi, hvis de ikke får tilførsel. Det er ikke en fast aldersgrænse.
 
 Tests: 20×20 gitter, 5 arter, 50 % startdækning, 150 sweeps for hver kombination af de to vedligeholdelsesmodeller og tre kampformer. Højeste observerede højde i disse seks forløb var h=59 (konstant) og h=38 (højdeafhængig); alle energier var ikke-negative. Maksimal energibalanceafvigelse < 2,1×10⁻¹¹ for Q + Σ(E+U). Browser-visuel kontrol ikke udført.
+
+## 16. november 2026 — Artsoversigt ved gitteret
+
+Tilføjet en responsiv oversigt direkte ved siden af skovgitteret med artsnummer, artens farve og dens faste strategi s (sandsynlighed for angreb). Oversigten opdateres ved tegning og nedtoner uddøde arter uden at fjerne deres s-værdi. På smalle skærme vises oversigten under gitteret i flere kolonner. Simulationens dynamik er uændret. Kontrolleret JavaScript-kørsel, alle UI-referencer og energibalance i 60 sweeps; ingen browser-visuel test udført.
