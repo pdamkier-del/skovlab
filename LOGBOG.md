@@ -660,3 +660,14 @@ Kontrol: 150 sweeps på 20×20-gitter, 5 arter, 40 % startdækning med begge kam
 Det overflødige panel "Evolution og diversitet" er fjernet, fordi H_art allerede blev vist i "Entropi og energifordeling". Den samlede visning hedder nu "Evolution, entropi og energifordeling" og har kun ét sæt tal og kurver for H_art, energi-Shannon-entropi H_E og rumlig Pearson-energikorrelation r_E. Browser-referencer og JavaScript-syntaks er kontrolleret.
 
 Vi har diskuteret en mulig **fremtidig, separat termodynamisk kontrolmodel**: To varmebeholdere med definerede temperaturer og varmekapaciteter, med varmeoverførsel fra varm til kold. Entropien kan da regnes som ΔS = Σ C_i ln(T_{i,f}/T_{i,i}). Dette er **ikke implementeret**. Vores nuværende træenergi er en idealiseret disponibel ressource uden temperatur, varme og specificeret antal mikrotilstande. H_E er derfor ikke termodynamisk entropi, og en invariant E_total alene garanterer ikke anden hovedsætning.
+
+
+## 16. november 2026 — Angreb kun fra klumpens rand
+
+**Ny gældende regel:** Hver sammenhængende klump af en art træffer ét valg per sweep efter artens faste strategi s: vækst med sandsynlighed 1−s, angreb med s. Ved vækst får hvert træ med tilstrækkelig **egen** disponibel energi lov til at vokse én højdeenhed, mens energifattige træer står stille. Kun hvis ingen træer i klumpen har råd til vækst eller har plads under højdegrænsen, vælger klumpen automatisk angreb. Enkeltstående energimangel tvinger **ikke** hele klumpen til angreb.
+
+**Kun randtræer angriber:** Et træ på klumpens rand er et træ med mindst ét nabofelt (4 eller 8 efter indstilling), der enten er tomt eller tilhører en anden art. Randtræet vælger tilfældigt blandt netop de mulige ydre nabofelter og forsøger kun angreb/spredning, når det kan overføre den konfigurerede energipakke (standard 2). Træer helt omgivet af deres egen art angriber ikke. Angrebets udfald følger fortsat den valgte højde- eller energiformel, og døde træer afleverer deres resterende energi til fælleslageret.
+
+Alle træer beholder egen energi, lokal gradvis energitransport og individuel død ved E=0. Nyfødte træer kan ikke handle før næste sweep.
+
+**Kodevalidering:** 20×20, 5 arter, 40 % startdækning, 200 sweeps per kombination af højde-/energikamp og 4/8 naboer. Maksimal absolut energibalanceafvigelse under 1,1×10⁻¹¹ modelenergienheder; ingen negative energier. Dette er kontrol af numerik, ikke en garanti for oscillationer eller for populationsmæssig persistens.
