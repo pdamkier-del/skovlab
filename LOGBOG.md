@@ -596,3 +596,9 @@ Ny selvstændig og forenklet \`index.html\` viser: skoven, population og artsdiv
 Eksekveret 200 sweeps på 20×20-gitter med 5 arter for begge konkurrenceregler. Højdebaseret: 220 træer, 4 arter tilbage. Energibaseret: 307 træer, 1 art tilbage. Maksimal målt energibalanceafvigelse var **0** i begge testforløb ved JS-flydetalspræcision; ingen negative energier blev observeret. Disse resultater er enkeltstående tests af kodekonsistens og må **ikke** fortolkes som statistisk sammenligning mellem kampregler.
 
 Denne logbog bevares som historik; den aktuelle HTML er endnu ikke manuelt browser-testet.
+
+## 16. november 2026 — Gratis kolonisering af tomme nabofelter
+
+Når et træ vælger at sprede sig og det udvalgte nabofelt er tomt, etableres et nyt træ **uden energioverførsel**. Det nye træ starter med E=0 og får mulighed for at optage energi fra fælleslageret ved begyndelsen af næste sweep. Hvis energitilførslen ikke løfter det over nul, dør det ved næste handling. Kravet om energipakken b og energioverførsel ved sejr gælder fortsat for angreb på besatte felter. Reglen om, at et træ som ikke kan betale højdevæksten forsøger spredning med 100 % sandsynlighed, er bevaret.
+
+Funktionstest: to kampmåder, 150 sweeps på 20×20 gitter med 40 % startdækning. Ingen negative energier, og energiregnskabsafvigelsen var 0 i begge forsøg. Testet i simuleret JavaScript DOM; endnu ikke visuelt gennemset i en browser.
