@@ -566,3 +566,33 @@ For en konkret bane optælles \(+\ln(p_+/p_-)\) for hvert fremadgående spring o
 Den tidsreversible kontrol har statistisk JSD tæt ved nul, mens den drevne ring viser klar asymmetri. Denne kontrol er **ikke samme dynamik som skoven**; skovens JSD kan stadig skyldes selektionsdrift eller regelbaserede irreversible udryddelser. Målet er kun at illustrere og teste metodeforskellen mellem reversibel og drevet dynamik.
 
 **Yderligere kontrol:** Den eksisterende skovoptagelse på 100 sweeps med 21 snapshots gav JSD=0,109444 nat; HTML-elementer og JS-funktioner havde ingen manglende eller dublerede referencer, og den testede konservative energibalance var konstant. Der er endnu ingen browserbaseret billed- eller iPhone-test, kun JS-eksekvering med simuleret DOM/canvas.
+
+
+## 16. november 2026 — Ny fokuseret model A og oprydning af hjemmesiden
+
+Brugeren valgte at videreudvikle energikredsløbet (A), og bad om at fjerne ubrugte funktioner fra HTML. Den tidligere blanding af konservativ, cirkulerende og dissipativ energimodel, tilfældig død, varme- og tidens-pil-paneler er erstattet af én mindre, selvstændig implementering af skovmodellen. Tidligere historiske beskrivelser i denne logbog er derfor **ikke alle gældende regler**. Denne sektion beskriver den aktuelle version.
+
+### Gældende regler
+
+- Et L × L-gitter; K arter med en fast strategi s i intervallet [0,1]. Et sweep behandler træer i tilfældig rækkefølge; nyfødte træer handler først næste sweep.
+- Et træ forsøger som udgangspunkt vertikal vækst med sandsynlighed 1-s eller angreb/spredning med sandsynlighed s.
+- **Vækst koster** en konfigurerbar mængde disponibel energi g. Beløbet går til det fælles lager. Hvis et træ ikke kan vokse, enten på grund af højdelimit eller manglende energi til g, forsøger det i stedet angreb med **100 % sandsynlighed**.
+- Angreb kræver mindst en reproduktionspakke b. Hvis der ikke er nok til b, kan træet ikke angribe, selv om det er tvunget til at forsøge. Dette er en handlingsbegrænsning, ikke død.
+- Ved etablering overføres b fra modertræ til afkom. Et nyt træ har normalt højde 1.
+- Kamp mellem forskellige arter: Vælg enten højdebaseret sandsynlighed P(A vinder)=h_A/(h_A+h_B) eller energibaseret sandsynlighed P(A vinder)=E_A/(E_A+E_B), beregnet før afkommets energi trækkes fra angriberen.
+- Taberen i en kamp dør. Angriberen fjernes fra egen celle, hvis den taber; hvis forsvareren taber, erstattes den af angriberens afkom.
+- **Ingen tilfældig naturlig død**: Et træ dør af energimangel kun ved E=0 (i numerikken E <= 10⁻¹⁰ for at undgå floating-point restværdier), eller hvis det taber i kamp. Ved enhver død returneres dets resterende disponible energi til fælleslageret.
+- Energi i kredsløb: Ved starten af hvert sweep returnerer hvert allerede levende træ højst r energienheder til lageret og får derefter højst s_sun fra lageret. Hvis lageret er tomt, kan det ikke betale fuld energitilførsel.
+- Total tilgængelig energi bevares: E_total = sum_i E_i + E_lager. Der er intet termisk entropiregnskab i denne version. Energi skal fortolkes som **disponible modelressourcer**, ikke bogstavelig gravitationel potentiel energi.
+
+### Standardparametre
+
+L=100, K=10, fuld startdækning, startenergi 10 pr. træ, lagerenergi 10 pr. indledende træ, lager→træ 1,5 pr. sweep, træ→lager 0,5 pr. sweep, vækstomkostning 1, reproduktionspakke 2. Højdebaseret kamp er standard; energibaseret kamp kan vælges i HTML. Maksimal højde er som udgangspunkt slået fra.
+
+### UI og validering
+
+Ny selvstændig og forenklet \`index.html\` viser: skoven, population og artsdiversitet, tidsserie for artsentropi/rumlig naboblanding/antallet af arter, træ- og lagerenergi, energibalance, artsoversigt og de relevante kontroller. Den tidligere store kode og paneler for de andre modeller er fjernet fra den aktuelle HTML.
+
+Eksekveret 200 sweeps på 20×20-gitter med 5 arter for begge konkurrenceregler. Højdebaseret: 220 træer, 4 arter tilbage. Energibaseret: 307 træer, 1 art tilbage. Maksimal målt energibalanceafvigelse var **0** i begge testforløb ved JS-flydetalspræcision; ingen negative energier blev observeret. Disse resultater er enkeltstående tests af kodekonsistens og må **ikke** fortolkes som statistisk sammenligning mellem kampregler.
+
+Denne logbog bevares som historik; den aktuelle HTML er endnu ikke manuelt browser-testet.
