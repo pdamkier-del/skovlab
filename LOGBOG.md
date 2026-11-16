@@ -710,3 +710,10 @@ På brugerens ønske er den komplekse Q/E/U-energimodel, energilager, vedligehol
 **Diffusion er bevaret som en åbenlys abstraktion**, ikke som skjult energi: en lokal symmetrisk udjævning af højdeforskelle mellem nabotræer af samme art. For hvert nabopar overføres en højdeandel α(h_i−h_j), med synkron opdatering og 0≤α≤0,12. Det bevarer summen af træhøjder under selve udjævningstrinnet, men kan give decimalhøjder og repræsenterer **ikke fysisk transport af træhøjde**. Som kontrol kan α sættes til 0, hvor hver vækst igen er et helt højdetrin. Dette er en modelantagelse til undersøgelse, ikke en biologisk etableret mekanisme.
 
 Appen er ryddet til skovgitter (vis art, højde eller kombination), arts- og s-oversigt, én graf for artsdiversitet og få forsøgsindstillinger. Mobiltilpasset layout bibeholdt. Numerisk kørselskontrol: 8 kombinationer af 4/8 naboer, α=0/0,1 og startdækning 100 %/40 %, hver 140 sweeps. Ingen ugyldige eller negative højder, ingen runtime-fejl, korrekt initialiseret artsoversigt. Visuel test i rigtig browser er endnu ikke udført.
+
+
+## 16. november 2026 — Δs i den eksisterende højdemodel
+
+Den eksisterende gittermodel **beholder højden** og alle de hidtidige regler om kollektivt valg, randangreb og lokal abstrakt højdeudjævning. Der er nu en justerbar skelnegrænse Δs med standardværdi 0,01. Kun hvis |s_A−s_B| > Δs må et randtræ fra A forsøge angreb mod B; lige eller næsten lige strategier giver intet kampforsøg. Tomme celler kan stadig koloniseres. Når kampen er tilladt, er sejrssandsynligheden fortsat h_A/(h_A+h_B). Δs er altså en **separat tolerance på strategiforskellen**, ikke et alternativ til højdebaseret kamp. Ingen mutation er tilføjet.
+
+Test: JavaScript kunne køres for Δs=0, 0,01 og 0,20 i 150 sweeps på et 20×20-gitter; uden ugyldige højder eller manglende UI-referencer. Når tolerancen var større, var flere arter tilbage i det testede eksempel. Ingen visuel browserkontrol udført.
