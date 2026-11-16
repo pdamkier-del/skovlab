@@ -30,7 +30,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <header><div><h1>Skovlaboratoriet</h1><p>Up or out · evolution og energi i kredsløb</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout">
 <main>
-<section class="panel"><h2>Skoven</h2><p class="hint">Hver art har en fast strategi: vokse op eller sprede sig. Ved spredning overføres 2 energienheder til hvert nyt træ. Nabotræer af samme art udveksler energi gradvist. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
+<section class="panel"><h2>Skoven</h2><p class="hint">Hver sammenhængende artsklump vælger samlet at vokse eller angribe. Ved spredning overføres 2 energienheder til hvert nyt træ. Nabotræer af samme art udveksler energi gradvist. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
 <canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div><div id="inspect">Peg på et felt for at se træets energi og højde.</div></section>
 <section class="panel"><h2>Evolution, entropi og energifordeling</h2>
@@ -73,7 +73,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
 <div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
-<p class="hint"><b>Ved spredning:</b> Et nyt træ får altid energipakken fra modertræet (standard 2), også på et tomt felt. Der betales ingen yderligere angrebsomkostning. Kan træet ikke vokse op, forsøger det at sprede sig med 100 % sandsynlighed, men skal have energi nok til pakken.</p>
+<p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger én handling ud fra artens strategi s. Ved vækst vokser alle træer i klumpen én højdeenhed og betaler hver vækstomkostningen. Kan ét træ ikke betale eller nås højdelimitten, vælger klumpen angreb. Ved angreb forsøger hvert træ i klumpen at sprede sig én gang. Et nyt træ modtager altid energipakken (standard 2) fra sit modertræ. Angrebsforsøg uden mulige eller betalelige mål skaber ikke energi og giver ingen erobring.</p>
 <div class="field"><label for="alpha">Lokal energitransport α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
 <p class="hint"><b>Gradvis energitransport:</b> For hvert par nabotræer af samme art overføres ΔE = α(Eᵢ − Eⱼ) ved ét synkront transporttrin pr. sweep. Ved 4 eller 8 naboer bevares energien, og raten er begrænset til 0,12 for at undgå negative energier. Adskilte kolonier deler ikke energi direkte.</p>
 </section>
@@ -116,39 +116,91 @@ function transportEnergy(){
   }
   for(let i=0;i<N;i++)if(sp[i]>=0)en[i]+=delta[i];
 }
-function sweepOnce(){
-  sweep++;const N=sp.length;let n=0;
-  // Each tree present at sweep start receives resources from the finite store.
-  for(let i=0;i<N;i++)if(sp[i]>=0){order[n++]=i;const received=Math.min(cfg.sun,store);en[i]+=received;store-=received;}
-  transportEnergy();
-  for(let k=n-1;k>0;k--){const j=Math.floor(rng()*(k+1)),a=order[k];order[k]=order[j];order[j]=a;}
-  for(let k=0;k<n;k++){
-    const i=order[k],a=sp[i];if(a<0||stamp[i]===sweep)continue;
-    if(en[i]<=1e-10){die(i);continue;}
-    const canGrow=(!cfg.maxHeight||h[i]<cfg.maxHeight)&&en[i]+1e-10>=cfg.growthCost;
-    // If vertical growth is impossible, force a reproduction/attack attempt.
-    if(canGrow&&rng()>=strategies[a]){
-      en[i]=Math.max(0,en[i]-cfg.growthCost);store+=cfg.growthCost;h[i]++;
-      // Depletion is checked at sweep end, without instantaneous energy sharing.
-      continue;
+// Each connected colony (same species, using the selected 4/8-neighbour topology)
+// chooses one shared action. Colonies are defined at the start of each sweep.
+// A growth action raises every member by one and charges EACH tree its growth cost.
+// In attack mode, all members attempt to spread once, in random order.
+function coloniesNow(){
+  const N=sp.length,L=cfg.L,seen=new Uint8Array(N),queue=new Int32Array(N),groups=[];
+  const offsets=cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
+  for(let origin=0;origin<N;origin++){
+    const speciesId=sp[origin];if(speciesId<0||seen[origin])continue;
+    let front=0,back=1;queue[0]=origin;seen[origin]=1;const members=[];
+    while(front<back){
+      const i=queue[front++];members.push(i);
+      const x=i%L,y=(i/L)|0;
+      for(const [dx,dy] of offsets){
+        let nx=x+dx,ny=y+dy;
+        if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L}
+        else if(nx<0||ny<0||nx>=L||ny>=L)continue;
+        const j=ny*L+nx;
+        if(!seen[j]&&sp[j]===speciesId){seen[j]=1;queue[back++]=j;}
+      }
     }
-    const j=neighbour(i);if(j<0||sp[j]===a)continue;
-    // All successful reproduction transfers a full packet to the child,
-    // including when the destination is vacant; no additional fee is charged.
-    if(en[i]+1e-10<cfg.birthCost)continue;
-    if(sp[j]<0){
-      sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;
-      en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
-      continue;
-    }
-    const va=cfg.attackMode==="height"?h[i]:en[i],vb=cfg.attackMode==="height"?h[j]:en[j],den=va+vb;
-    const wins=den>0?rng()<va/den:rng()<.5;
-    if(wins){
-      const formerHeight=h[j];die(j);sp[j]=a;h[j]=cfg.newHeight==="sapling"?1:cfg.newHeight==="attacker"?h[i]:formerHeight;
-      en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
-    }else die(i);
+    groups.push({speciesId,members});
   }
-  // Starvation is checked after the sweep; no instantaneous rescue at a distance.
+  return groups;
+}
+function attackFrom(i,a){
+  if(sp[i]!==a||en[i]<=1e-10||en[i]+1e-10<cfg.birthCost)return;
+  // Choosing a same-species neighbour is still an attack attempt; there is
+  // simply no external cell to conquer from that direction.
+  const j=neighbour(i);
+  if(j<0||sp[j]===a)return;
+  if(sp[j]<0){
+    sp[j]=a;h[j]=cfg.newHeight==="attacker"?h[i]:1;
+    en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
+    return;
+  }
+  const strengthA=cfg.attackMode==="height"?h[i]:en[i];
+  const strengthB=cfg.attackMode==="height"?h[j]:en[j];
+  const winChance=(strengthA+strengthB)>0?strengthA/(strengthA+strengthB):.5;
+  if(rng()<winChance){
+    const formerHeight=h[j];die(j);
+    sp[j]=a;h[j]=cfg.newHeight==="sapling"?1:cfg.newHeight==="attacker"?h[i]:formerHeight;
+    en[i]=Math.max(0,en[i]-cfg.birthCost);en[j]=cfg.birthCost;stamp[j]=sweep;
+  }else die(i);
+}
+function sweepOnce(){
+  sweep++;const N=sp.length;
+  // First: distribute energy from the finite store to trees that exist already.
+  for(let i=0;i<N;i++)if(sp[i]>=0){
+    const received=Math.min(cfg.sun,store);
+    en[i]+=received;store-=received;
+  }
+  // One simultaneous transport step; energy cannot cross a colony instantly.
+  transportEnergy();
+  // A tree with zero energy dies, even if neighbouring trees have energy.
+  for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]<=1e-10)die(i);
+  const groups=coloniesNow();
+  // Avoid geometric ordering bias between colonies.
+  for(let k=groups.length-1;k>0;k--){
+    const j=Math.floor(rng()*(k+1)),t=groups[k];groups[k]=groups[j];groups[j]=t;
+  }
+  for(const group of groups){
+    const a=group.speciesId;
+    const members=group.members.filter(i=>sp[i]===a&&stamp[i]!==sweep);
+    if(!members.length)continue;
+    // The group can only choose growth if ALL currently surviving members
+    // can pay for their own growth and have room to grow.
+    const canAllGrow=members.every(i=>en[i]+1e-10>=cfg.growthCost&&(!cfg.maxHeight||h[i]<cfg.maxHeight));
+    const grow=canAllGrow&&rng()>=strategies[a];
+    if(grow){
+      for(const i of members){
+        h[i]++;
+        en[i]=Math.max(0,en[i]-cfg.growthCost);
+        store+=cfg.growthCost;
+      }
+    }else{
+      // Same collective choice, but each member makes a local attempt.
+      for(let k=members.length-1;k>0;k--){
+        const j=Math.floor(rng()*(k+1)),t=members[k];members[k]=members[j];members[j]=t;
+      }
+      for(const i of members)if(sp[i]===a&&stamp[i]!==sweep)attackFrom(i,a);
+    }
+  }
+  // Death from exhaustion is assessed after paying costs and doing attacks.
+  // No instant sharing at the end: a depleted tree is not saved by its colony.
   for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]<=1e-10)die(i);
   record();
 }
