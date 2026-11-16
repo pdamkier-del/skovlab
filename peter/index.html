@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skovlaboratoriet · Up or out</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5ef;--card:#fffefa;--ink:#202c29;--muted:#68746f;--line:#dce2da;--forest:#276d55;--soft:#eaf2e9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:14px;line-height:1.48}
+header{background:var(--ink);color:white;padding:22px max(20px,calc((100vw - 1360px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px}
+header h1{font-size:29px;font-family:Georgia,serif;font-weight:500;margin:0}header p{color:#d3e0d7;margin:2px 0 0}header a{color:white;text-decoration:underline}
+.layout{max-width:1400px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start}
+main,aside{min-width:0;display:flex;flex-direction:column;gap:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.panel h2{font:500 23px Georgia,serif;margin:0 0 7px}.hint{color:var(--muted);font-size:12px;margin:5px 0 10px}
+.forest-with-key{display:grid;grid-template-columns:minmax(0,1fr) 154px;gap:13px;align-items:start}
+.forest-key{min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fbfcf8}
+.forest-key h3{font-size:13px;margin:0 0 3px}.forest-key .hint{margin:0 0 9px}
+.forest-species{display:grid;grid-template-columns:1fr;gap:4px;max-height:650px;overflow-y:auto}
+.forest-species-row{display:flex;gap:7px;align-items:center;font-size:12px;padding:5px 4px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.forest-species-row:last-child{border-bottom:0}.forest-species-row.extinct{opacity:.38}
+.forest-species-row .swatch{flex:none;width:12px;height:12px;margin:0}
+.forest-species-name{font-weight:600;flex:1;min-width:0}.forest-species-s{font-weight:650;white-space:nowrap}
+@media(max-width:650px){.forest-with-key{grid-template-columns:1fr}.forest-species{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));max-height:none;gap:3px 10px}.forest-key{padding:9px}}
+.sphere-tools{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin:9px 0 0}
+.sphere-tools button{padding:6px 12px;min-width:42px}
+.sphere-tools .hint{margin:0}
+#forest.sphere-active{cursor:grab;touch-action:none;image-rendering:auto}
+#forest.sphere-active.dragging{cursor:grabbing}
+.lattice{display:block;width:100%;aspect-ratio:1/1;max-height:650px;object-fit:contain;image-rendering:pixelated;background:#e3e9df;border-radius:8px;cursor:crosshair}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}.stats span,.stat{background:var(--soft);padding:9px 12px;border-radius:9px}.stats b{font-size:16px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.stat small{display:block;color:var(--muted);font-size:11px}.stat b{display:block;font-size:20px;margin-top:2px;font-variant-numeric:tabular-nums}
+canvas.plot{width:100%;height:205px;display:block}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:8px 0}.legend i{display:inline-block;width:10px;height:10px;border-radius:100%;margin-right:5px}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0 15px}
+button,select,input{font:inherit}button{padding:10px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer;color:var(--ink);font-weight:600}
+button.primary{background:var(--forest);color:#fff;border-color:var(--forest)}button:hover{filter:brightness(.96)}
+.field{margin:10px 0}.field label{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600;font-size:12px;margin-bottom:4px}.field input:not([type=checkbox]),.field select{width:100%;padding:8px;background:#fff;border:1px solid var(--line);border-radius:7px}
+.field input[type=range]{padding:0;accent-color:var(--forest)}.field output{font-variant-numeric:tabular-nums;color:var(--forest)}
+details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}summary{font-weight:600;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 5px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}.progress{height:7px;border-radius:10px;background:#e6ebe5;overflow:hidden}.progress i{display:block;height:100%}
+#inspect{margin-top:8px;min-height:18px;color:var(--muted);font-size:12px}
+.status{background:var(--soft);padding:11px;border-radius:9px;font-size:12px;color:var(--ink)}
+footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 20px 24px}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:12px;gap:12px}header{padding:16px}header h1{font-size:24px}aside{order:-1}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lattice{max-height:none}}
+</style></head><body>
+<header><div><h1>Skovlaboratoriet</h1><p>Up or out · vækst, konkurrence og lokal nabokobling</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
+<div class="layout"><main>
+<section class="panel"><h2>Skoven</h2>
+<p class="hint">Hver sammenhængende klump af én art vælger samlet vækst eller angreb ud fra sin strategi s. Ved vækst bliver hvert træ én højdeenhed højere; kun randtræer kan angribe fremmede eller tomme felter. Angreb afgøres udelukkende af højde.</p>
+<div class="field"><label for="gridView">Gittervisning <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option></select></div>
+<div id="heightLegend" class="hint" hidden><span id="heightLegendText">Farve = træhøjde</span><div id="heightLegendBar" style="height:12px;border-radius:5px;background:linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e);margin-top:5px"></div><div style="display:flex;justify-content:space-between"><span>Højde 1</span><span id="heightMaxLegend">Maks. højde</span></div></div>
+<div class="forest-with-key"><canvas id="forest" class="lattice" aria-label="Skovgitter. Ved k=+1 kan sfæren drejes med mus eller finger"></canvas>
+<div class="forest-key" aria-label="Arter og strategier"><h3>Arter og strategi</h3><p class="hint">s = sandsynlighed for angreb</p><div id="forestSpeciesLegend" class="forest-species"></div></div></div>
+<div class="sphere-tools" id="sphereTools"><button id="zoomIn" title="Zoom ind" aria-label="Zoom ind">+</button><button id="zoomOut" title="Zoom ud" aria-label="Zoom ud">−</button><button id="resetSphere">Nulstil visning</button><span class="hint">Træk for at dreje · scroll eller +/− for zoom</span></div>
+<div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Levende arter <b id="alive">–</b></span><span>Arter i alt (nogensinde) <b id="speciesTotal">–</b></span><span>Maks. højde <b id="highest">–</b></span></div>
+<div id="inspect">Peg på et felt for at se art, højde og strategi.</div></section>
+<section class="panel"><h2>Udvikling i skoven</h2>
+<div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="entropyArt">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Gennemsnitlig højde</small><b id="meanHeight">–</b></div></div>
+<div class="stats"><span>Børnemutationer <b id="birthMutations">0</b></span><span>Spontane mutationer <b id="spontaneousMutations">0</b></span><span>Dominerende s <b id="dominantStrategy">–</b></span></div>
+<div class="legend"><span><i style="background:#238674"></i>Artsentropi / ln(N)</span><span><i style="background:#c58d48"></i>Største arts andel</span><span><i style="background:#6681b9"></i>Andel forskellige nabopar</span></div>
+<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for artsdiversitet"></canvas>
+<p class="hint">Shannon-entropi måler artsfordeling, ikke termodynamisk entropi.</p></section>
+</main><aside>
+<section class="panel"><h2>Kør simulationen</h2><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div>
+<div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input type="range" id="size" min="10" max="200" step="5" value="100"></div>
+<div class="field"><label for="species">Antal arter <output id="speciesOut">10</output></label><input type="range" id="species" min="2" max="30" step="1" value="10"></div>
+<div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input type="range" id="fill" min="0.05" max="1" step="0.05" value="1"></div>
+<div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input type="range" id="speed" min="1" max="30" step="1" value="1"></div>
+<div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></section>
+<section class="panel"><h2>Mutation og evolution</h2>
+<div class="field"><label for="birthMutation">Børnemutation (% pr. fødsel)</label><input id="birthMutation" type="number" min="0" max="100" step="0.1" value="1"></div>
+<div class="field"><label for="spontaneousMutation">Spontan mutation (% pr. sweep i hele skoven)</label><input id="spontaneousMutation" type="number" min="0" max="100" step="0.1" value="1"></div>
+<div class="field"><label for="mutationEpsilon">Mutationsstørrelse dε (ændring i s)</label><input id="mutationEpsilon" type="number" min="0.001" max="1" step="0.001" value="0.01"></div>
+<p class="hint">Et nyfødt træ arver normalt moderartens strategi s, men kan mutere s ± dε. Uafhængigt heraf kan ét eksisterende træ mutere spontant hvert sweep. Mutationerne er tilfældige; ingen optimal s er programmeret.</p></section>
+<section class="panel"><h2>Konkurrence og nabokobling</h2>
+<div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div>
+<div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div>
+<p class="hint">Ved angreb mod en anden art skal forskellen mellem strategierne være større end Δs: |sₐ − sᵦ| &gt; Δs. Ellers kan arterne ikke skelnes, og der gennemføres ingen kamp mellem dem. Tomme felter kan stadig overtages. Når en kamp finder sted, afgør højden fortsat vinderen.</p>
+<div class="field"><label for="curvature">Lattice-krumning k</label><select id="curvature"><option value="0">k = 0 · flad (kvadratisk)</option><option value="1">k = +1 · sfærisk (lukket)</option><option value="-1">k = −1 · hyperbolsk (udvidende)</option></select></div>
+<p class="hint" id="curvatureHelp">Fladt kvadratgitter. Periodiske kanter kan vælges.</p>
+<div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
+<div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
+<div class="field"><label for="alpha">Lokal højdeudjævning α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
+<p class="hint">Nabokobling er en <b>abstrakt modelregel</b>: højdeforskelle udjævnes gradvist mellem nabotræer af samme art. Den ændrer højderne lokalt, men bevarer deres sum under selve udjævningen. Det er ikke fysisk diffusion af træhøjde. Sæt α = 0 for at slå den fra.</p>
+<details><summary>Flere regler</summary>
+<div class="field"><label for="maxHeight">Maksimal højde (0 = ingen)</label><input id="maxHeight" type="number" min="0" max="1000000" step="1" value="0"></div>
+<p class="hint">Hvis en klump vælger en umulig handling, forsøger den den anden. Ved angreb forsøger hvert randtræ én gang; ved tabt kamp dør angriberen, og ved sejr erstattes forsvareren med et træ i højde 1.</p></details></section>
+</aside></div><footer>Skovlaboratoriet · enkel model uden energilager · <a href="LOGBOG.md">Logbog</a></footer>
+<script>
+(()=>{
+"use strict";
+const $=id=>document.getElementById(id);
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01,curvature:0,birthMutation:.01,spontaneousMutation:.01,mutationEpsilon:.01};
+let rng,sp,h,stamp,strategies,mutationCounts,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null,sphereYaw=0,spherePitch=.15,sphereZoom=1,sphereDrag=null,sphereBuffer=null,sphereCtx=null,sphereImg=null;
+const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
+const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
+const color=k=>k<colors.length?colors[k]:"hsl("+((k*137.508+40)%360).toFixed(1)+" 60% 42%)";
+function rgbColor(k){
+ if(k<colors.length){const hex=colors[k];return [parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)];}
+ const hue=(k*137.508+40)%360,c=.504,x=c*(1-Math.abs((hue/60)%2-1)),m=.42-c/2;
+ const t=hue<60?[c,x,0]:hue<120?[x,c,0]:hue<180?[0,c,x]:hue<240?[0,x,c]:hue<300?[x,0,c]:[c,0,x];
+ return t.map(v=>Math.round((v+m)*255));
+}
+const directions=()=>cfg.neighbors===8?[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1]];
+function mulberry32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function getNum(id,min,def){const v=Number($(id).value);return Number.isFinite(v)?Math.max(min,v):def;}
+function inputs(){
+ cfg.L=Number($("size").value);cfg.K=Number($("species").value);cfg.fill=Number($("fill").value);
+ cfg.speed=Number($("speed").value);cfg.seed=Math.floor(getNum("seed",1,1));cfg.neighbors=Number($("neighbors").value);
+ cfg.periodic=$("periodic").checked;cfg.maxHeight=Math.floor(getNum("maxHeight",0,0));
+ cfg.curvature=Number($("curvature").value);$("periodic").disabled=cfg.curvature!==0;
+ $("curvatureHelp").textContent=cfg.curvature===0?"Fladt kvadratgitter; periodiske kanter kan vælges.":cfg.curvature===1?"Lukket sfærisk ringgitter: naboforbindelser er syet rundt om kuglen; vises som et udfoldet længde-/breddekort.": "Hyperbolsk ringgitter med eksponentielt voksende antal celler mod randen; vises som en skive. Kanten er åben.";
+ cfg.birthMutation=Math.min(1,getNum("birthMutation",0,1)/100);
+ cfg.spontaneousMutation=Math.min(1,getNum("spontaneousMutation",0,1)/100);
+ cfg.mutationEpsilon=Math.min(1,getNum("mutationEpsilon",.001,.01));
+ cfg.alpha=Math.min(.12,getNum("alpha",0,.1));cfg.deltaS=Math.min(.2,getNum("deltaS",0,.01));
+ $("deltaSOut").textContent=cfg.deltaS.toFixed(2).replace(".",",");
+ $("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");
+ for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["speed","speedOut"]])$(out).textContent=$(id).value;
+ $("fillOut").textContent=Math.round(cfg.fill*100)+" %";
+}
+function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
+function init(){
+ stop();inputs();rng=mulberry32((cfg.seed*2654435761)>>>0);
+ geometry=buildGeometry();$("sphereTools").style.display=cfg.curvature===1?"flex":"none";canvas.classList.toggle("sphere-active",cfg.curvature===1);
+ const N=cfg.L*cfg.L;sp=new Int32Array(N);h=new Float64Array(N);stamp=new Int32Array(N);
+ strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);mutationCounts={birth:0,spontaneous:0};
+ for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;}else sp[i]=-1;}
+ sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
+ bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();
+}
+// Combinatorial approximations of curvature, not exact constant-curvature tilings.
+// k=+1: capped circular rings (closed sphere topology), counts ~ sin(latitude).
+// k=-1: open growing rings (hyperbolic-like), counts ~ sinh(radius).
+// Each cell is an independent tree; edges, not display proximity, define neighbours.
+function buildGeometry(){
+ if(cfg.curvature===0)return null;
+ const R=cfg.L,N=R*R,weights=Array.from({length:R},(_,r)=>{
+  const t=(r+.5)/R;
+  return cfg.curvature===1?Math.sin(Math.PI*t):Math.sinh(3.5*t);
+ });
+ const minPer=3,remaining=N-minPer*R,totalW=weights.reduce((a,b)=>a+b,0);
+ const counts=weights.map(w=>minPer+Math.floor(remaining*w/totalW));
+ let left=N-counts.reduce((a,b)=>a+b,0);
+ const residual=weights.map((w,r)=>({r,f:remaining*w/totalW-Math.floor(remaining*w/totalW)})).sort((a,b)=>b.f-a.f);
+ for(let i=0;i<left;i++)counts[residual[i].r]++;
+ const offsets=new Int32Array(R+1);for(let r=0;r<R;r++)offsets[r+1]=offsets[r]+counts[r];
+ const adj=Array.from({length:N},()=>[]),edgeI=[],edgeJ=[],seen=new Set();
+ function link(a,b){if(a===b)return;const lo=Math.min(a,b),hi=Math.max(a,b),key=lo*N+hi;if(seen.has(key))return;seen.add(key);
+  adj[a].push(b);adj[b].push(a);edgeI.push(a);edgeJ.push(b);}
+ for(let r=0;r<R;r++){
+  const n=counts[r],off=offsets[r];
+  for(let j=0;j<n;j++){
+   link(off+j,off+(j+1)%n);
+   if(r===R-1)continue;
+   const nn=counts[r+1],next=offsets[r+1];
+   const mapped=(j+.5)*nn/n-.5,mid=((Math.round(mapped)%nn)+nn)%nn;
+   link(off+j,next+mid);
+   if(cfg.neighbors===8)link(off+j,next+(mid+1)%nn);
+  }
+ }
+ // Visual projection only: rectangular equirectangular for sphere, disk for hyperbolic.
+ const pixels=new Int32Array(N),radii=new Float64Array(R+1);
+ if(cfg.curvature===-1){
+  const scale=Math.tanh(2.25);
+  for(let r=0;r<=R;r++)radii[r]=.98*Math.tanh(2.25*r/R)/scale;
+ }
+ return{counts,offsets,adj,edgeI,edgeJ,radii,pixels,maximumDegree:Math.max(...adj.map(a=>a.length))};
+}
+function neighbours(i){
+ if(geometry)return geometry.adj[i];
+ const L=cfg.L,x=i%L,y=Math.floor(i/L),out=[];
+ for(const [dx,dy] of directions()){
+  let nx=x+dx,ny=y+dy;
+  if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
+  else if(nx<0||nx>=L||ny<0||ny>=L)continue;
+  const j=ny*L+nx;if(j!==i&&!out.includes(j))out.push(j);
+ }return out;
+}
+// Inverse orthographic projection: each visible pixel is mapped back to its
+// unique cell in the existing spherical ring graph. Hidden hemisphere is occluded.
+function sphereHit(px,py,width,height){
+ const side=Math.min(width,height),rad=side*.44*sphereZoom;
+ const dx=(px-width/2)/rad,dy=(height/2-py)/rad,d2=dx*dx+dy*dy;
+ if(d2>=1)return {i:-1,light:1};
+ const vz=Math.sqrt(1-d2),cy=Math.cos(sphereYaw),sy=Math.sin(sphereYaw),
+ cp=Math.cos(spherePitch),ss=Math.sin(spherePitch);
+ const x0=dx,y0=cp*dy+ss*vz,z0=-ss*dy+cp*vz;
+ const wx=cy*x0-sy*z0,wy=y0,wz=sy*x0+cy*z0;
+ const R=geometry.counts.length,r=Math.min(R-1,Math.max(0,Math.floor((1-wy)*R/2)));
+ const phi=(Math.atan2(wz,wx)+2*Math.PI)%(2*Math.PI),n=geometry.counts[r];
+ const i=geometry.offsets[r]+Math.min(n-1,Math.floor(phi*n/(2*Math.PI)));
+ const light=Math.max(.40,Math.min(1.07,.57+.42*(dx*(-.55)+dy*.64+vz*.7)));
+ return {i,light};
+}
+function sphereRender(maxLog){
+ const w=380,hpx=380;
+ if(!sphereBuffer){sphereBuffer=document.createElement("canvas");sphereCtx=sphereBuffer.getContext("2d");sphereBuffer.width=w;sphereBuffer.height=hpx;sphereImg=sphereCtx.createImageData(w,hpx);}
+ const data=sphereImg.data,ramp=[[35,43,82],[39,110,163],[63,187,176],[210,230,110]];
+ const rgbs=strategies.map((_,id)=>rgbColor(id));
+ for(let y=0;y<hpx;y++)for(let x=0;x<w;x++){
+  const off=(y*w+x)*4,{i,light}=sphereHit(x+.5,y+.5,w,hpx);
+  if(i<0){data[off]=228;data[off+1]=235;data[off+2]=224;}
+  else{
+   const a=sp[i],base=a<0?[209,218,208]:rgbs[a];
+   const t=a<0?0:Math.min(1,Math.max(0,Math.log1p(h[i])/maxLog));
+   let rgb=base;
+   if(a>=0&&gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;rgb=ramp[k].map((v,c)=>v*(1-f)+ramp[k+1][c]*f);}
+   else if(a>=0&&gridView==="combined")rgb=base.map(v=>v*(.24+.76*t));
+   for(let c=0;c<3;c++)data[off+c]=Math.min(255,Math.round(rgb[c]*light));
+  }
+  data[off+3]=255;
+ }
+ sphereCtx.putImageData(sphereImg,0,0);fit(canvas);ctx.imageSmoothingEnabled=true;
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.drawImage(sphereBuffer,0,0,canvas.width,canvas.height);
+}
+function visualCell(x,y){
+ if(!geometry)return y*cfg.L+x;
+ const L=cfg.L,R=geometry.counts.length;
+ if(cfg.curvature===1){
+  const r=Math.min(R-1,Math.floor(y*R/L)),n=geometry.counts[r];
+  return geometry.offsets[r]+Math.min(n-1,Math.floor(x*n/L));
+ }
+ const dx=(x+.5-L/2)/(L/2),dy=(y+.5-L/2)/(L/2),rad=Math.hypot(dx,dy);
+ if(rad>=.98)return -1;
+ let low=0,high=R;
+ while(low+1<high){const mid=(low+high)>>1;if(geometry.radii[mid]<=rad)low=mid;else high=mid;}
+ const r=Math.min(R-1,low),n=geometry.counts[r],angle=(Math.atan2(dy,dx)+2*Math.PI)%(2*Math.PI);
+ return geometry.offsets[r]+Math.min(n-1,Math.floor(angle*n/(2*Math.PI)));
+}
+function shuffle(arr){for(let k=arr.length-1;k>0;k--){const j=Math.floor(rng()*(k+1)),t=arr[k];arr[k]=arr[j];arr[j]=t;}return arr;}
+function colonies(){
+ const seen=new Uint8Array(sp.length),groups=[];
+ for(let origin=0;origin<sp.length;origin++){
+  const species=sp[origin];if(species<0||seen[origin])continue;
+  const members=[],q=[origin];seen[origin]=1;
+  for(let k=0;k<q.length;k++){const i=q[k];members.push(i);
+   for(const j of neighbours(i))if(!seen[j]&&sp[j]===species){seen[j]=1;q.push(j);}
+  }
+  groups.push({species,members});
+ }return groups;
+}
+// Abstract, pairwise height smoothing, not diffusion of a physical resource.
+function diffuseHeights(){
+ if(cfg.alpha===0)return;
+ const delta=new Float64Array(h.length),L=cfg.L;
+ if(geometry){
+  const rate=Math.min(cfg.alpha,.9/Math.max(1,geometry.maximumDegree));
+  for(let k=0;k<geometry.edgeI.length;k++){
+   const i=geometry.edgeI[k],j=geometry.edgeJ[k];
+   if(sp[i]<0||sp[i]!==sp[j])continue;
+   const flux=rate*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
+  }
+ }else{
+  const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
+  for(let i=0;i<sp.length;i++)if(sp[i]>=0){
+   const x=i%L,y=Math.floor(i/L);
+   for(const [dx,dy] of dirs){
+    let nx=x+dx,ny=y+dy;
+    if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
+    else if(nx<0||nx>=L||ny<0||ny>=L)continue;
+    const j=ny*L+nx;if(j===i||sp[j]!==sp[i])continue;
+    const flux=cfg.alpha*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
+   }
+  }
+ }
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0)h[i]+=delta[i];
+}
+// Only distinguishable species can be challenged; vacancies stay open.
+function external(i,a){return neighbours(i).filter(j=>sp[j]<0||(sp[j]!==a&&Math.abs(strategies[a]-strategies[sp[j]])>cfg.deltaS+1e-12));}
+// Mutants get distinct lineage IDs and inherit their new strategy.
+function mutationVariant(parent){
+ const old=strategies[parent],eps=cfg.mutationEpsilon;
+ const values=[Math.max(0,Math.round((old-eps)*1000)/1000),Math.min(1,Math.round((old+eps)*1000)/1000)].filter(v=>Math.abs(v-old)>1e-9);
+ if(!values.length)return parent;
+ strategies.push(values[Math.floor(rng()*values.length)]);
+ return strategies.length-1;
+}
+function newborn(parent){
+ if(rng()<cfg.birthMutation){
+  const id=mutationVariant(parent);
+  if(id!==parent){mutationCounts.birth++;return id;}
+ }
+ return parent;
+}
+function spontaneousMutation(){
+ if(rng()>=cfg.spontaneousMutation)return;
+ let i=-1;
+ for(let trial=0;trial<16;trial++){
+  const j=Math.floor(rng()*sp.length);
+  if(sp[j]>=0){i=j;break;}
+ }
+ if(i<0){
+  const alive=[];
+  for(let j=0;j<sp.length;j++)if(sp[j]>=0)alive.push(j);
+  if(!alive.length)return;
+  i=alive[Math.floor(rng()*alive.length)];
+ }
+ const id=mutationVariant(sp[i]);
+ if(id!==sp[i]){sp[i]=id;mutationCounts.spontaneous++;}
+}
+function attempt(i,a){
+ if(sp[i]!==a||stamp[i]===sweep)return;
+ const opts=external(i,a);if(!opts.length)return;
+ const j=opts[Math.floor(rng()*opts.length)];
+ if(sp[j]<0){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;return;}
+ const chance=h[i]+h[j]>0?h[i]/(h[i]+h[j]):.5;
+ if(rng()<chance){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;}
+ else{sp[i]=-1;h[i]=0;}
+}
+function step(){
+ sweep++;diffuseHeights();
+ const groups=shuffle(colonies());
+ for(const group of groups){
+  const a=group.species,members=group.members.filter(i=>sp[i]===a&&stamp[i]!==sweep);
+  if(!members.length)continue;
+  const canGrow=members.some(i=>!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9);
+  const canAttack=members.some(i=>external(i,a).length>0);
+  const preferGrowth=rng()>=strategies[a],grow=canGrow&&(preferGrowth||!canAttack);
+  if(grow){for(const i of members)if(sp[i]===a&&(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9))h[i]+=1;}
+  else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
+ }
+ spontaneousMutation();
+ record();
+}
+function stats(){
+ const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0;
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];total++;highest=Math.max(highest,h[i]);}
+ let entropy=0;
+ if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
+ let unlike=0,pairs=0;const L=cfg.L;
+ if(geometry){
+  for(let k=0;k<geometry.edgeI.length;k++){
+   const a=sp[geometry.edgeI[k]],b=sp[geometry.edgeJ[k]];
+   if(a>=0&&b>=0){pairs++;if(a!==b)unlike++;}
+  }
+ }else{
+  for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+   const i=y*L+x;if(sp[i]<0)continue;
+   for(const [dx,dy] of [[1,0],[0,1]]){
+    let nx=x+dx,ny=y+dy;if(cfg.periodic){nx%=L;ny%=L;}else if(nx>=L||ny>=L)continue;
+    const j=ny*L+nx;if(sp[j]>=0){pairs++;if(sp[i]!==sp[j])unlike++;}
+   }
+  }
+ }
+ return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
+ alive:cnt.filter(x=>x>0).length,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0};
+}
+function record(force=false){
+ historyStep++;if(!force&&historyStep%historyStride)return;
+ const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,leader:st.leader,mix:st.mix});
+ if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
+}
+function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
+function plot(){
+ const c=$("evolutionPlot"),{w,h:hh,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,hh);
+ const left=35*d,right=9*d,top=12*d,bottom=22*d;
+ g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";
+ for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
+ if(history.length<2)return;
+ const t0=history[0].t,t1=history[history.length-1].t;
+ const x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0);
+ const y=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v)));
+ for(const [key,color] of [["H","#238674"],["leader","#c58d48"],["mix","#6681b9"]]){
+  g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
+  history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
+ }
+ g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,hh-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,hh-3*d);
+}
+function draw(){
+ const st=stats(),L=cfg.L,data=img.data,maxLog=Math.log1p(Math.max(1,st.highest));
+ if(cfg.curvature===1)sphereRender(maxLog);
+ else{
+ const ramp=[[35,43,82],[39,110,163],[63,187,176],[210,230,110]];
+ for(let y=0;y<L;y++)for(let x=0;x<L;x++){
+  const i=visualCell(x,y),off=(y*L+x)*4,a=i<0?-1:sp[i];
+  if(a<0){data[off]=228;data[off+1]=235;data[off+2]=224;}
+  else{
+   const base=rgbColor(a);
+   const t=Math.min(1,Math.max(0,Math.log1p(h[i])/maxLog));
+   if(gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;
+    for(let c=0;c<3;c++)data[off+c]=Math.round(ramp[k][c]*(1-f)+ramp[k+1][c]*f);
+   }else if(gridView==="combined"){const brightness=.24+.76*t;
+    for(let c=0;c<3;c++)data[off+c]=Math.round(base[c]*brightness);
+   }else for(let c=0;c<3;c++)data[off+c]=base[c];
+  }data[off+3]=255;
+ }
+ bufctx.putImageData(img,0,0);fit(canvas);ctx.imageSmoothingEnabled=false;
+ ctx.drawImage(buffer,0,0,canvas.width,canvas.height);
+ }
+ $("heightLegend").hidden=gridView==="species";
+ $("gridLegendLabel").textContent=gridView==="species"?"Farve = art":gridView==="height"?"Farve = højde (log-skala)":"Farve = art · lysstyrke = højde";
+ $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
+ $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
+ $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest).toFixed(1);
+ const living=st.cnt.map((n,k)=>({n,k})).filter(v=>v.n>0).sort((a,b)=>b.n-a.n);
+ $("forestSpeciesLegend").innerHTML=living.slice(0,24).map(({n,k})=>'<div class="forest-species-row"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategies[k].toFixed(3)+'</span></div>').join("")+(living.length>24?'<div class="hint">+'+(living.length-24)+' flere aktive arter</div>':"");
+ $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");
+ $("alive").textContent=st.alive;$("speciesTotal").textContent=strategies.length.toLocaleString("da-DK");$("highest").textContent=st.highest.toFixed(1);
+ $("entropyArt").textContent=st.entropy.toFixed(4);$("effective").textContent=Math.exp(st.entropy).toFixed(2);
+ $("meanHeight").textContent=st.meanHeight.toFixed(2);
+ $("birthMutations").textContent=mutationCounts.birth.toLocaleString("da-DK");
+ $("spontaneousMutations").textContent=mutationCounts.spontaneous.toLocaleString("da-DK");
+ const dominant=st.cnt.indexOf(Math.max(...st.cnt));
+ $("dominantStrategy").textContent=st.total?strategies[dominant].toFixed(3):"–";
+ plot();
+}
+function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)step();draw();raf=requestAnimationFrame(loop);}
+$("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
+$("step").addEventListener("click",()=>{stop();step();draw();});
+$("restart").addEventListener("click",init);
+$("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.random()*1000000);init();});
+for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
+for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
+ $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
+for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature","birthMutation","spontaneousMutation","mutationEpsilon"])$(id).addEventListener("change",()=>{
+  if(id==="neighbors"||id==="curvature")init();else{inputs();draw();}
+});
+canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const hit=cfg.curvature===1?sphereHit((e.clientX-r.left)/r.width*380,(e.clientY-r.top)/r.height*380,380,380):null;
+ const i=hit?hit.i:visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
+canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
+canvas.addEventListener("pointerdown",e=>{
+ if(cfg.curvature!==1)return;
+ sphereDrag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw:sphereYaw,pitch:spherePitch};
+ canvas.setPointerCapture(e.pointerId);canvas.classList.add("dragging");
+});
+canvas.addEventListener("pointermove",e=>{
+ if(cfg.curvature!==1||!sphereDrag||sphereDrag.id!==e.pointerId)return;
+ const side=Math.max(100,canvas.getBoundingClientRect().width);
+ sphereYaw=sphereDrag.yaw+(e.clientX-sphereDrag.x)*Math.PI/side*1.5;
+ spherePitch=Math.max(-Math.PI/2,Math.min(Math.PI/2,sphereDrag.pitch+(e.clientY-sphereDrag.y)*Math.PI/side*1.5));
+ draw();
+});
+function endDrag(e){if(sphereDrag&&sphereDrag.id===e.pointerId){sphereDrag=null;canvas.classList.remove("dragging");}}
+canvas.addEventListener("pointerup",endDrag);canvas.addEventListener("pointercancel",endDrag);
+canvas.addEventListener("wheel",e=>{if(cfg.curvature!==1)return;e.preventDefault();sphereZoom=Math.max(.55,Math.min(1.75,sphereZoom*Math.exp(-e.deltaY*.001)));draw();},{passive:false});
+$("zoomIn").addEventListener("click",()=>{sphereZoom=Math.min(1.75,sphereZoom*1.2);draw();});
+$("zoomOut").addEventListener("click",()=>{sphereZoom=Math.max(.55,sphereZoom/1.2);draw();});
+$("resetSphere").addEventListener("click",()=>{sphereYaw=0;spherePitch=.15;sphereZoom=1;draw();});
+$("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
+window.addEventListener("resize",draw);
+init();
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),mutationCounts:{...mutationCounts},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
+})();
+</script></body></html>
