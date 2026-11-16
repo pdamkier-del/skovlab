@@ -73,7 +73,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="field"><label for="sun">Energi fra lageret pr. træ/sweep</label><input id="sun" type="number" min="0" max="1000" step="0.25" value="1"></div>
 <div class="field"><label for="growthCost">Energiomkostning ved højdevækst</label><input id="growthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
 <div class="field"><label for="birthCost">Energi til nyt træ ved spredning</label><input id="birthCost" type="number" min="0.01" max="1000" step="0.25" value="2"></div>
-<p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger vækst med sandsynlighed 1−s eller angreb med sandsynlighed s. Ved vækst vokser hvert træ med tilstrækkelig energi én højdeenhed og betaler selv vækstomkostningen; energifattige træer vokser ikke. Kun hvis ingen i klumpen kan vokse, vælges angreb automatisk. Ved angreb forsøger <b>kun randtræer</b> at erobre ét tilfældigt tomt eller fremmed nabofelt. Et nyt træ modtager altid energipakken (standard 2) fra modertræet; angreb kan ikke gennemføres uden tilstrækkelig energi. Hvert træ dør individuelt, hvis dets energi når nul.</p>
+<p class="hint"><b>Fælles valg pr. sammenhængende artsklump:</b> Klumpen vælger vækst med sandsynlighed 1−s eller angreb med sandsynlighed s. Ved vækst vokser hvert træ med tilstrækkelig energi én højdeenhed og betaler selv vækstomkostningen; energifattige træer vokser ikke. Hvis klumpens valgte handling er umulig, forsøger den den anden. Hvis hverken vækst eller angreb er muligt, kan klumpen forblive statisk. Ved angreb forsøger <b>kun randtræer</b> at erobre ét tilfældigt tomt eller fremmed nabofelt. Et nyt træ modtager altid energipakken (standard 2) fra modertræet; angreb kan ikke gennemføres uden tilstrækkelig energi. Hvert træ dør individuelt, hvis dets energi når nul.</p>
 <div class="field"><label for="alpha">Lokal energitransport α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
 <p class="hint"><b>Gradvis energitransport:</b> For hvert par nabotræer af samme art overføres ΔE = α(Eᵢ − Eⱼ) ved ét synkront transporttrin pr. sweep. Ved 4 eller 8 naboer bevares energien, og raten er begrænset til 0,12 for at undgå negative energier. Adskilte kolonier deler ikke energi direkte.</p>
 </section>
@@ -198,7 +198,11 @@ function sweepOnce(){
     // One shared choice; growth feasibility remains individual.
     // Only if NO member can grow is the group forced to select attack.
     const canAnyoneGrow=members.some(i=>en[i]+1e-10>=cfg.growthCost&&(!cfg.maxHeight||h[i]<cfg.maxHeight));
-    const grow=canAnyoneGrow&&rng()>=strategies[a];
+    const canAnyoneAttack=members.some(i=>en[i]+1e-10>=cfg.birthCost&&externalNeighbours(i,a).length>0);
+    // Each colony chooses according to s, falling back to the other feasible
+    // action only when its first choice cannot be performed.
+    const prefersGrowth=rng()>=strategies[a];
+    const grow=canAnyoneGrow&&(prefersGrowth||!canAnyoneAttack);
     if(grow){
       for(const i of members){
         if(en[i]+1e-10<cfg.growthCost||(cfg.maxHeight&&h[i]>=cfg.maxHeight))continue;
