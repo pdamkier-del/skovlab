@@ -738,3 +738,16 @@ For **k=+1** er den tidligere udfoldede 2D-projektion erstattet af en drejelig, 
 Interaktion: træk med mus eller finger for rotation om to akser; zoom med musehjul eller +/−; knap til nulstilling. k=0 beholder det kvadratiske gitter; k=−1 beholder den flade hyperbolske skiveprojektion. **Simulationsregler og nabograf er uændrede**. Projektionen er en visuel sfære, ikke et bevis for at den diskrete ringgraf er en eksakt sfærisk tessellering med konstant lokal krumning.
 
 JavaScript-test: k=−1,0,+1 i 40 sweeps på 20×20, inklusive kald af rotations-, zoom- og nulstillingshændelser for k=+1; ingen runtime-fejl. Visuel test i rigtig browser ikke udført.
+
+
+## 16. november 2026 — Kontinuerlig evolution: børnemutation og spontan mutation
+
+Begge mutationsveje er implementeret i den eksisterende højdebaserede skovmodel med Δs-tolerance, lokal højdeudjævning og k=−1/0/+1, inklusive drejelig 3D-sfære for k=+1. Intet optimum for s er programmeret. Mutationer går tilfældigt i begge retninger og begrænses til intervallet [0,1].
+
+**Børnemutation:** Hver vellykket fødsel (overtagelse af tomt eller besat nabofelt) har standardmæssigt 1 % sandsynlighed for at få en strategi s' = s ± dε. Uden mutation arves forælderens art/strategi. **Spontan mutation:** Uafhængigt af fødsler har hver sweep 1 % sandsynlighed for, at én tilfældig levende celle får s' = s ± dε. Gennemsnitligt én spontan mutation pr. 100 sweeps i hele skoven. Standard dε=0,01. Alle tre værdier er justerbare i panelet Mutation og evolution. En mutant får et unikt arts-id og kan selv få efterkommere, så selektion kan ændre den dominerende strategi.
+
+Appen viser antal mutationer af hver type, dominerende levende arts s og de op til 24 mest talrige levende arter; nye mutanter får deterministiske artsfarver. Artsentropi H normaliseres nu til ln(antal levende træer), og grafens anden kurve er største arts andel i stedet for det gamle antal arter / startantal, fordi artsmængden nu er dynamisk. Andelen af fremmede nabopar måles langs faktisk valgt geometris kanter.
+
+**Vigtig begrænsning:** Δs-reglen er stadig en hård spærring, hvis |s_i−s_j|≤Δs. En mutation på præcis 0,01 med Δs=0,01 kan derfor normalt ikke angribe sin moderlinje direkte. Det kan forsinke selektionen. Mutationer garanterer variation, men hverken permanent aktivitet eller at systemet konvergerer mod én optimal strategi.
+
+Kørselstest i JavaScript for k=−1,0,+1, hver 100 sweeps på 20×20 med maksimalt mutationstryk (10 % ved fødsel og 100 % spontan pr. sweep) for at belaste systemet. Der blev registreret hundrede spontane mutationer i hvert forsøg og hundredvis af børnemutationer, ingen ugyldige artshenvisninger eller højder og ingen manglende UI-elementer. Ægte browser-visuel validering ikke udført.
