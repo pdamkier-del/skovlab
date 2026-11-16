@@ -602,3 +602,23 @@ Denne logbog bevares som historik; den aktuelle HTML er endnu ikke manuelt brows
 Når et træ vælger at sprede sig og det udvalgte nabofelt er tomt, etableres et nyt træ **uden energioverførsel**. Det nye træ starter med E=0 og får mulighed for at optage energi fra fælleslageret ved begyndelsen af næste sweep. Hvis energitilførslen ikke løfter det over nul, dør det ved næste handling. Kravet om energipakken b og energioverførsel ved sejr gælder fortsat for angreb på besatte felter. Reglen om, at et træ som ikke kan betale højdevæksten forsøger spredning med 100 % sandsynlighed, er bevaret.
 
 Funktionstest: to kampmåder, 150 sweeps på 20×20 gitter med 40 % startdækning. Ingen negative energier, og energiregnskabsafvigelsen var 0 i begge forsøg. Testet i simuleret JavaScript DOM; endnu ikke visuelt gennemset i en browser.
+
+
+## 16. november 2026 — Reproduktionsenergi og energiudligning i sammenhængende artsgrupper
+
+**Aktuel ændring:** Uanset om nabofeltet er tomt eller besat, skal vellykket spredning overføre en fast energipakke \`b\` (standard 2) fra modertræet til det nye træ. At kolonisere et tomt felt har **ingen ekstra angrebsomkostning**, men den overførte pakke på 2 skal være til rådighed. Et nyfødt træ starter derfor med E=2, ikke E=0, medmindre brugeren ændrer \`b\`.
+
+Hvert sweep deles den **disponible energi** ligeligt inden for hver sammenhængende komponent af levende træer af **samme art**. Komponenterne bestemmes af 4 eller 8 nabofelter alt efter valg, inklusive periodiske kanter hvis de er aktive. To adskilte kolonier af samme art deler **ikke** energi direkte. Den samlede energi i komponenten er uændret efter fordeling: \(E_i \leftarrow (\sum_{j\in C}E_j)/|C|\). JavaScript-koden fordeler afrundingsresten til den sidste celle.
+
+**Opdateringsrækkefølge:** (1) hvert træ, der lever ved sweepets begyndelse, udveksler energi med fælleslageret; (2) sammenhængende artsgrupper udligner energi; (3) træerne handler i tilfældig rækkefølge; (4) grupperne udligner energien igen; (5) træer, som stadig har E=0, dør. Tab i kamp medfører fortsat straks død og overførsel af taberens disponible energi til fælleslageret.
+
+**1. hovedsætning i vores idealiserede ressourcebogføring:**
+\[
+E_{\mathrm{total}}=\sum_{\text{levende træer}}E_i+E_{\mathrm{fælleslager}}
+\quad\text{(konstant).}
+\]
+Energideling, formering, vækst og død er interne overførsler. Den beregnede disponible modelenergi er ikke en komplet fysisk termodynamisk beskrivelse; især mangler varme, temperatur og entropiproduktion.
+
+**Funktionstest:** 20×20 gitter med 5 arter og 40 % startdækning, 180 sweeps med henholdsvis højde- og energibaseret kamp. Energibalancens maksimale absolutte afvigelse var 5,92×10⁻¹¹ og 4,37×10⁻¹¹ modelenergienheder; der forekom ingen negative energiresultater. De to testforløb er ikke statistisk dokumentation for en bestemt evolutionær fordel.
+
+**Vigtigt historisk:** Logbogens tidligere afsnit, hvor tomme felter fik et nyt træ med E=0, er overskrevet af denne regel.
