@@ -10,6 +10,15 @@ header h1{font-size:29px;font-family:Georgia,serif;font-weight:500;margin:0}head
 main,aside{min-width:0;display:flex;flex-direction:column;gap:16px}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
 .panel h2{font:500 23px Georgia,serif;margin:0 0 7px}.hint{color:var(--muted);font-size:12px;margin:5px 0 10px}
+.forest-with-key{display:grid;grid-template-columns:minmax(0,1fr) 154px;gap:13px;align-items:start}
+.forest-key{min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fbfcf8}
+.forest-key h3{font-size:13px;margin:0 0 3px}.forest-key .hint{margin:0 0 9px}
+.forest-species{display:grid;grid-template-columns:1fr;gap:4px;max-height:650px;overflow-y:auto}
+.forest-species-row{display:flex;gap:7px;align-items:center;font-size:12px;padding:5px 4px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.forest-species-row:last-child{border-bottom:0}.forest-species-row.extinct{opacity:.38}
+.forest-species-row .swatch{flex:none;width:12px;height:12px;margin:0}
+.forest-species-name{font-weight:600;flex:1;min-width:0}.forest-species-s{font-weight:650;white-space:nowrap}
+@media(max-width:650px){.forest-with-key{grid-template-columns:1fr}.forest-species{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));max-height:none;gap:3px 10px}.forest-key{padding:9px}}
 .lattice{display:block;width:100%;aspect-ratio:1/1;max-height:650px;object-fit:contain;image-rendering:pixelated;background:#e3e9df;border-radius:8px;cursor:crosshair}
 .stats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}.stats span,.stat{background:var(--soft);padding:9px 12px;border-radius:9px}.stats b{font-size:16px}
 .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.stat small{display:block;color:var(--muted);font-size:11px}.stat b{display:block;font-size:20px;margin-top:2px;font-variant-numeric:tabular-nums}
@@ -33,7 +42,10 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <section class="panel"><h2>Skoven</h2><p class="hint">Hver sammenhængende artsklump vælger samlet at vokse eller angribe. Ved spredning overføres 2 energienheder til hvert nyt træ. Nabotræer af samme art udveksler energi gradvist. Et træ dør, hvis det får nul energi eller taber en kamp.</p>
 <div class="field"><label for="gridView">Visning af gitter <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option></select></div>
 <div id="heightLegend" class="hint" hidden><span id="heightLegendText">Mørkere = lavere · lysere = højere</span><div id="heightLegendBar" style="height:12px;border-radius:5px;background:linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e);margin-top:5px"></div><div style="display:flex;justify-content:space-between"><span>Højde 1</span><span id="heightMaxLegend">Maks. højde</span></div></div>
+<div class="forest-with-key">
 <canvas id="forest" class="lattice" aria-label="Skovgitter"></canvas>
+<div class="forest-key" aria-label="Arter og strategier"><h3>Arter og strategi</h3><p class="hint">s = sandsynlighed for angreb</p><div id="forestSpeciesLegend" class="forest-species"></div></div>
+</div>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Arter <b id="alive">–</b></span><span>Maks. højde <b id="highest">–</b></span></div><div id="inspect">Peg på et felt for at se træets energi og højde.</div></section>
 <section class="panel"><h2>Evolution, entropi og energifordeling</h2>
 <p class="hint">Tre samtidige mål: artsdiversitet, fordeling af disponibel energi mellem træer og rumlig energikorrelation. Ingen af målene er i sig selv termodynamisk entropi.</p>
@@ -328,6 +340,7 @@ function draw(){
  $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
  $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
  $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest);
+ $("forestSpeciesLegend").innerHTML=strategies.map((strategy,k)=>'<div class="forest-species-row'+(st.cnt[k]===0?' extinct':'')+'"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategy.toFixed(3)+'</span></div>').join("");
  const obs=energyDistributionStats(st),sum=st.treeE+st.treeU+store,err=sum-initialTotal;
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");$("alive").textContent=st.alive;$("highest").textContent=st.highest;
  $("entropyArt").textContent=st.ent.toFixed(4);
