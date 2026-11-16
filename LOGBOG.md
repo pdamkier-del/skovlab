@@ -644,3 +644,12 @@ Energi returneres ikke længere automatisk fra levende træer til fælleslageret
 Indstillingen 'Energi retur fra træet pr. sweep' er fjernet fra både HTML og simulationens beregninger.
 
 Funktionstest: 20×20 gitter, fem arter, startdækning 40 %, 150 sweeps med henholdsvis højde- og energibaseret konkurrence. Maksimal energibalanceafvigelse: 5,92×10⁻¹² henholdsvis 6,37×10⁻¹² modelenergienheder. Ingen negative energier registreret.
+
+
+## 16. november 2026 — Tre samtidige statistiske mål for skoven
+
+Det nye panel **Entropi og energifordeling** viser tre tidsserier: (1) arts-Shannon-entropi H_art = −Σ_k p_k ln(p_k); (2) energi-Shannon-entropi H_E = −Σ_i q_i ln(q_i), hvor q_i = E_i/Σ_j E_j for levende træer og fælleslageret er udeladt; og (3) Pearson-korrelationen r_E mellem disponible energier i nabopar af levende træer. Rumlig korrelation beregnes for vandrette og lodrette nabopar, uanset om konkurrence foregår med 4 eller 8 naboer. Periodiske kanter respekteres.
+
+Ved graftegning normaliseres H_art med ln(K), H_E med ln(N_levende), og r_E afbildes som (r_E+1)/2, så alle tre kan vises på 0–1-akse. De rå værdier vises særskilt. Det understreges på siden, at hverken energi-Shannon-entropi eller energikorrelation i sig selv er termodynamisk entropi. Ved ingen træenergi eller utilstrækkelig variation er relevante mål udefinerede; kurven afbrydes for manglende værdier frem for at tegne nul.
+
+Kontrol: 150 sweeps på 20×20-gitter, 5 arter, 40 % startdækning med begge kampformer. Ingen negative energier, og energibalancens største absolutte afvigelse var under 7×10⁻¹². Browser-visuel kontrol udestår.
