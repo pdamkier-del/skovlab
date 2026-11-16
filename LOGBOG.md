@@ -671,3 +671,9 @@ Vi har diskuteret en mulig **fremtidig, separat termodynamisk kontrolmodel**: To
 Alle træer beholder egen energi, lokal gradvis energitransport og individuel død ved E=0. Nyfødte træer kan ikke handle før næste sweep.
 
 **Kodevalidering:** 20×20, 5 arter, 40 % startdækning, 200 sweeps per kombination af højde-/energikamp og 4/8 naboer. Maksimal absolut energibalanceafvigelse under 1,1×10⁻¹¹ modelenergienheder; ingen negative energier. Dette er kontrol af numerik, ikke en garanti for oscillationer eller for populationsmæssig persistens.
+
+## 16. november 2026 — Undgå unødvendige inaktive klumper
+
+I den kollektive klumpdynamik var en mulig kilde til tilsyneladende stilstand, at en klump kunne vælge angreb, selv om ingen randtræer kunne angribe et fremmed/tomt nabofelt. Nu trækkes fortsat et fælles vækst-/angrebsvalg med sandsynlighederne 1−s og s, men hvis denne handling ikke kan gennemføres og alternativet kan, bruges alternativet. Hvis ingen træer kan vokse, forsøger klumpen angreb; hvis ingen kan angribe, vokser de individuelt vækstkompetente træer. Er begge umulige, vil klumpen stadig kunne forblive statisk, hvilket er en reel konsekvens af modellen. Individuel energidød og lokal energitransport er uændret.
+
+Funktionstest: 20×20 med 5 arter, 40 % startdækning, 200 sweeps, begge konkurrenceformer. Maksimal numerisk energibalanceafvigelse under 3×10⁻¹²; ingen negative energier. I begge enkeltforløb endte én art med at dække hele gitteret — et eksempel på mulig evolutionær fiksering, ikke et bevis for universel opførsel.
