@@ -810,3 +810,14 @@ under den tidligere fødselsomkostning, præcis Q-finansiering, utilstrækkelig 
 genetablering efter uddøen og fortsat mutation på levende træer. De eksisterende
 1000-sweep energibevarelsestests for k = −1, 0 og +1 samt mobil/desktop-tests
 bevares.
+
+
+## 17. november 2026 — Periodiske handlingspriser og modelstop
+
+**Formål:** Et fast sammenligningsdesign med tre varianter: (1) konstant energioptag og konstante priser, (2) periodisk energioptag og konstante priser, (3) periodisk energioptag og periodiske priser. Samme frø og initialtilstand er nødvendige, men ikke tilstrækkelige til statistisk evidens; forsøg skal gentages med flere uafhængige seeds.
+
+**Implementeret som valgfrit tilvalg i »02 · Periodisk miljø« (som standard fra):** Perioden T genbruges. Med fasefortegn f=+1 (samme fase) eller −1 (modsat fase) og x=sin(2πt/T) er vækstpris c_v=κ+g(1+f·a_v·x), spredningspris til tomt felt c_s=b(1+f·a_s·x). Parametre g,b≥0 og amplituder 0≤a_v,a_s≤1. Som standard ved aktivering g=b=1, a_v=a_s=0,5 og modsat fase.
+
+**Energibevarelse:** Vækst flytter altid den *konstante* κ=2 (eller brugerens valgte κ) fra reservenergi E til U=κh, mens tillægget c_v−κ går til Q. Spredning betaler først c_s fra E til Q, derefter halveres resterende E og h mellem forælder og afkom. Hvis E≤c_s, foretages ingen spredning (afkom skal have positiv reserve). Ingen nye energikilder; Q+Σ(E+κh) er fortsat konstant. Angreb mod levende træer og spontan etablering ændres ikke. Med funktionen fra er den tidligere gratis spredning og κ-vækst bevaret uændret.
+
+**Stopregel:** Ingen yderligere mekanismer indføres, før vi har gennemført systematiske kontrolforsøg, kontrolleret energibalance og undersøgt population, strategi, artsentropi og periodisk respons på tværs af seeds og geometrier. Denne logbog beskriver implementeringen, ikke empiriske konklusioner.
