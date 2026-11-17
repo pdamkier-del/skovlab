@@ -826,3 +826,10 @@ bevares.
 ## 17. november 2026 — Fasevisning og venstrepanel
 
 Interfacet ændres uden ny biologisk mekanisme: Indstillingerne står til venstre for skoven (ovenfor på smal mobilskærm), med en fælles periode T for de tre synlige, ikke-normaliserede forudvisningskurver r(t), c_v(t) og c_s(t). Hver kurve har selvstændig faseforskyder i grader: φ_r, φ_v, φ_s ∈ [0°,360°]. Kurverne beregnes fra de **samme funktioner som simuleringen**: r(t)=r0[1+a_r sin(2πt/T+φ_r)], c_v(t)=κ+g[1+a_v sin(2πt/T+φ_v)] og c_s(t)=b[1+a_s sin(2πt/T+φ_s)] når pristilvalget er aktiveret; ellers c_v=κ og c_s=0. Kurverne ændres straks ved indtastning; en fuldført ændring genstarter forsøget med det samme seed. Kamp mod eksisterende levende træer har stadig konstant angrebspris. Øvrige mekanismer forbliver uændrede. Nye forsøg må ikke forveksle visualisering med ny fysisk evidens.
+
+
+## 17. november 2026 — Korrigeret visualisering af perioder
+
+**Brugerrettelse:** De tre individuelle forhåndsgrafer skal ikke ligge i indstillingspanelet. Den faktiske visning skal have **én samlet graf direkte under skovens lattice**, med tre samtidige kurver (energioptag fra Q, samlet vækstpris, spredningspris til tomt felt) på **samme tids- og energiakse**. Alle justerbare kontroller ligger i **højre panel** på desktop, herunder fase, amplitude og middelpris for hver kurve. På mobil vises kontrolpanelet ovenfor skoven.
+
+Kun visning og placering ændres: de tidligere uafhængige faseforskydninger og energibevarelsesregler genbruges uændret. Den stiplede markør viser aktuelt sweep i perioden, og aktuelle kurveværdier vises i farveforklaringen. De separate A/B/C-grafer for observeret simulationsdynamik er stadig tilgængelige under skoven som forskningsmålinger og er ikke indstillingsgrafer.
