@@ -833,3 +833,14 @@ Interfacet ændres uden ny biologisk mekanisme: Indstillingerne står til venstr
 **Brugerrettelse:** De tre individuelle forhåndsgrafer skal ikke ligge i indstillingspanelet. Den faktiske visning skal have **én samlet graf direkte under skovens lattice**, med tre samtidige kurver (energioptag fra Q, samlet vækstpris, spredningspris til tomt felt) på **samme tids- og energiakse**. Alle justerbare kontroller ligger i **højre panel** på desktop, herunder fase, amplitude og middelpris for hver kurve. På mobil vises kontrolpanelet ovenfor skoven.
 
 Kun visning og placering ændres: de tidligere uafhængige faseforskydninger og energibevarelsesregler genbruges uændret. Den stiplede markør viser aktuelt sweep i perioden, og aktuelle kurveværdier vises i farveforklaringen. De separate A/B/C-grafer for observeret simulationsdynamik er stadig tilgængelige under skoven som forskningsmålinger og er ikke indstillingsgrafer.
+
+
+## 17. november 2026 — Ingen fast κ: selvvalgt pris for højde og angreb
+
+**Brugerbeslutning:** Fjern en fast nedre strukturpris κ. De tre kurver under lattice repræsenterer nu energioptag r(t), **hele prisen pr. højdeenhed** c_h(t), og **hele prisen for angreb/spredning** c_a(t). Indstillingerne er fortsat i højrepanelet.
+
+**Prismodeller:** Når periodiske priser er slået fra, er c_h(t)=c_h0 og c_a(t)=c_a0, som begge kan sættes helt ned til nul. Når periodiske priser er slået til, er c_h(t)=c_h0[1+a_h sin(2πt/T+φ_h)] og c_a(t)=c_a0[1+a_a sin(2πt/T+φ_a)]. Kurverne har hver sin amplitude og fase. Energioptag har fortsat r(t)=r0[1+a_r sin(2πt/T+φ_r)]. Der er intet skjult fast tillæg eller minimum til c_h eller c_a.
+
+**Ny intern strukturbogføring:** I stedet for at antage U_i=κ h_i gemmes den faktisk investerede strukturelle energi som separat tilstandsvariabel U_i for hvert træ. Ved vækst reduceres E_i med hele c_h(t), U_i øges med samme beløb, og h_i øges med 1. Når et træ spreder sig til tomt nabofelt, flyttes c_a(t) fra E_i til Q, hvorefter E, h og U deles 50/50. Ved kamp mod levende træ betales samme aktuelle c_a(t) til Q. Ved sejrrig kamp opbygges afkommets højde 1 med den aktuelle c_h(t) og en særskilt overført afkomsreserve. Spontan etablering fra Q bruger tilsvarende aktuel højdepris + startreserve. Ved død returneres E_i+U_i til Q. Den lukkede energiinvariant er dermed Q+Σ_i(E_i+U_i)=konstant på trods af varierende c_h(t).
+
+**Modelimplikation:** En højdeenhed kan koste forskelligt afhængigt af skabelsestidspunktet. Derfor er U_i ikke længere proportional med h_i. Dette er en bevidst modelændring og ikke blot en ændring af brugergrænsefladen. Resultater må ikke sammenlignes naivt med ældre simulationer, der brugte gratis spredning og konstant κ.
