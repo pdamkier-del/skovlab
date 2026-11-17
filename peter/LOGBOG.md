@@ -821,3 +821,8 @@ bevares.
 **Energibevarelse:** Vækst flytter altid den *konstante* κ=2 (eller brugerens valgte κ) fra reservenergi E til U=κh, mens tillægget c_v−κ går til Q. Spredning betaler først c_s fra E til Q, derefter halveres resterende E og h mellem forælder og afkom. Hvis E≤c_s, foretages ingen spredning (afkom skal have positiv reserve). Ingen nye energikilder; Q+Σ(E+κh) er fortsat konstant. Angreb mod levende træer og spontan etablering ændres ikke. Med funktionen fra er den tidligere gratis spredning og κ-vækst bevaret uændret.
 
 **Stopregel:** Ingen yderligere mekanismer indføres, før vi har gennemført systematiske kontrolforsøg, kontrolleret energibalance og undersøgt population, strategi, artsentropi og periodisk respons på tværs af seeds og geometrier. Denne logbog beskriver implementeringen, ikke empiriske konklusioner.
+
+
+## 17. november 2026 — Fasevisning og venstrepanel
+
+Interfacet ændres uden ny biologisk mekanisme: Indstillingerne står til venstre for skoven (ovenfor på smal mobilskærm), med en fælles periode T for de tre synlige, ikke-normaliserede forudvisningskurver r(t), c_v(t) og c_s(t). Hver kurve har selvstændig faseforskyder i grader: φ_r, φ_v, φ_s ∈ [0°,360°]. Kurverne beregnes fra de **samme funktioner som simuleringen**: r(t)=r0[1+a_r sin(2πt/T+φ_r)], c_v(t)=κ+g[1+a_v sin(2πt/T+φ_v)] og c_s(t)=b[1+a_s sin(2πt/T+φ_s)] når pristilvalget er aktiveret; ellers c_v=κ og c_s=0. Kurverne ændres straks ved indtastning; en fuldført ændring genstarter forsøget med det samme seed. Kamp mod eksisterende levende træer har stadig konstant angrebspris. Øvrige mekanismer forbliver uændrede. Nye forsøg må ikke forveksle visualisering med ny fysisk evidens.
