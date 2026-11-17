@@ -59,8 +59,26 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 .price-parameters .wave-card{border-color:#e8ede5;padding:8px;margin:7px 0}
 .price-parameters .wave-card .field{margin:6px 0}
 @media(max-width:700px){.equations-compact{grid-template-columns:1fr}.equation-slot{padding:8px 10px}.equation-typeset{font-size:16px}.maintenance-equation-slot{margin-top:7px}}
+
+.research-dashboard{border-left:3px solid #276d55}.research-dashboard h2{font-size:22px}.research-dashboard h3{font:500 16px Georgia,serif;margin:0 0 8px}
+.model-overview{padding:12px 18px}.model-overview>summary{font-size:13px;color:var(--forest)}
+.study-controls{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;align-items:end;margin:14px 0}
+.study-controls .field{margin:0}.study-controls select{width:100%;min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:white}
+.study-baseline{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.study-buttons{display:flex;gap:6px;flex-wrap:wrap}.study-buttons button{padding:8px 10px;font-size:12px}.study-baseline button{padding:9px 14px;border-color:#a9c9b7}.study-baseline .hint{margin:0}
+.study-summary{font-size:12px;color:var(--muted);background:var(--soft);border-radius:8px;padding:9px 11px;margin:5px 0 13px}
+.study-plots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.study-chart{min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff}
+.study-chart canvas{height:225px}.study-chart p.hint{margin:8px 0 0}
+.study-key{display:flex;gap:11px;flex-wrap:wrap;font-size:11px;margin:0 0 7px;color:var(--muted)}
+.study-key i{display:inline-block;width:13px;height:3px;vertical-align:middle;margin-right:4px}
+.study-correlation{font-size:12px;font-weight:650;background:#f4f8f2;padding:8px 10px;border-radius:7px}
+.study-measures{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0}
+.study-measures .stat{min-width:0}.study-measures .stat b{font-size:17px}
+.study-more{margin:10px 0;padding-top:12px}
+.study-more>.research-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:700px){.study-controls,.study-plots{grid-template-columns:1fr}.study-measures,.study-more>.research-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.study-chart canvas{height:205px}}
 </style></head><body>
-<header><div><h1>Skovlaboratoriet</h1><p>Peters lab · energi, evolution og ikke-ligevægt · <span id="appVersion">ae61e8bb2c9e</span></p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
+<header><div><h1>Skovlaboratoriet</h1><p>Peters lab · energi, evolution og ikke-ligevægt · <span id="appVersion">05569f616aae</span></p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout"><main>
 <section class="panel"><h2>Skoven</h2>
 <p class="hint">Træerne vokser, angriber og muterer på et gitter. Hver sammenhængende artsgruppe vælger vækst eller angreb. Optag fra Q begrænser handlinger og overlevelse; kampens vinder afhænger af træernes højde.</p>
@@ -78,14 +96,28 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Levende arter <b id="alive">–</b></span><span>Arter i alt (nogensinde) <b id="speciesTotal">–</b></span><span>Maks. højde <b id="highest">–</b></span></div>
 <div id="inspect">Peg på et felt for at se art, højde og strategi.</div></section>
 
-<section class="panel model-overview" id="modelOverview">
-<div class="panel-kicker">Én samlet simulation</div><h2>Sådan fungerer modellen</h2>
-<p class="hint">Alle forsøg A, B og C bruger <b>de samme træer og de samme regler</b>. Forskellen er kun, hvilke størrelser vi analyserer.</p>
-<div class="model-flow"><div><b>1. Miljø</b><span>Periodisk energiuddeling fra pulje Q</span></div><div class="flow-arrow">→</div><div><b>2. Træer</b><span>Optag til reserve E</span></div><div class="flow-arrow">→</div><div><b>3. Handling</b><span>Vækst, fri spredning, kamp eller død</span></div></div>
-<p class="hint">Ved død returneres E + U til Q. Q + Σ(E + U) er bevaret. U er historisk investeret strukturenergi pr. træ. Startreserve E = 10 og Q = 2L² som standard. Spredning til et tomt nabofelt betaler angrebsprisen: forælderens reserve og struktur deles ligeligt mellem forælder og afkom, så begge får halvdelen af den tidligere E og h. Kamp mod et levende træ følger de almindelige kampregler og betaler angrebsprisen til Q.</p>
-</section><section class="panel"><div class="panel-kicker">Samme model · tre analyser</div><h2>Forsøgsresultater A / B / C</h2><p class="hint">Vælg hvilken analyse du vil se. Grafen viser de faktiske sweeps fra denne kørsel; den dokumenterer ikke i sig selv en faseovergang.</p><div class="analysis-tabs"><button id="tabA" class="analysis-tab is-active" aria-pressed="true" type="button">A · Energi</button><button id="tabB" class="analysis-tab" aria-pressed="false" type="button">B · Evolution</button><button id="tabC" class="analysis-tab" aria-pressed="false" type="button">C · Entropi</button></div></section><section class="panel research-card analysis-panel" id="panelA"><h2>A · Energi og aktivitet</h2><p class="hint">Undersøg om energiuddeling kan opretholde aktive træer, eller om skoven dør ud. Mulige faseovergange kræver flere størrelser og seeds.</p><div class="energy-ledger"><div class="stat"><small>Fælles pulje Q</small><b id="poolOut">–</b></div><div class="stat"><small>Træernes reserve</small><b id="reserveOut">–</b></div><div class="stat"><small>Strukturel U</small><b id="potentialOut">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergyOut">–</b></div><div class="stat"><small>Balancefejl</small><b id="balanceOut">–</b></div></div><div class="research-grid"><div class="stat"><small>Levende andel ρ</small><b id="rhoOut">–</b></div><div class="stat"><small>Gns. træreserve</small><b id="energyOut">–</b></div><div class="stat"><small>Fødsler pr. sweep</small><b id="birthsOut">–</b></div></div><div class="legend"><span><i style="background:#238674"></i>ρ</span><span><i style="background:#c58d48"></i>E / E₀</span><span><i style="background:#6681b9"></i>fødsler / N</span><span><i style="background:#9b6f99"></i>puljens energiandel</span></div><canvas class="plot" id="energyPlot"></canvas></section>
-<section class="panel research-card analysis-panel" id="panelB" hidden><h2>B · Evolution og periodisk miljø</h2><p class="hint">Sammenhold den periodiske energiuddeling med udviklingen i den populationsvægtede angrebsstrategi.</p><div class="research-grid"><div class="stat"><small>Middelstrategi s̄</small><b id="strategyOut">–</b></div><div class="stat"><small>Netto fødsler − dødsfald</small><b id="netOut">–</b></div></div><div class="legend"><span><i style="background:#238674"></i>r(t) / rmax</span><span><i style="background:#c58d48"></i>s̄</span><span><i style="background:#6681b9"></i>ρ</span></div><canvas class="plot" id="climatePlot"></canvas><p class="research-note">Svingende middelstrategi er ikke i sig selv dokumentation for tilpasning.</p></section>
-<section class="panel research-card analysis-panel" id="panelC" hidden><h2>C · Entropi og irreversibilitet</h2><p class="hint">Mål Shannon-artsentropi H = −Σp ln p, dominans og dødsfald. Det er <b>ikke</b> termodynamisk entropiproduktion; den kræver en fysisk konsistent beskrivelse af reservoirer og tidsomvendte processer.</p><div class="research-grid"><div class="stat"><small>Dødsfald pr. sweep</small><b id="deathOut">–</b></div><div class="stat"><small>Dødsfald i alt</small><b id="deathsTotal">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div></div><div class="legend"><span><i style="background:#238674"></i>H / ln N</span><span><i style="background:#c58d48"></i>største arts andel</span><span><i style="background:#6681b9"></i>forskellige nabopar</span></div><canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for artsdiversitet"></canvas><div class="stats"><span>Børnemutationer <b id="birthMutations">0</b></span><span>Spontane mutationer <b id="spontaneousMutations">0</b></span><span>Dominerende s <b id="dominantStrategy">–</b></span></div></section></main><aside><section class="panel unified-controls"><div class="panel-kicker">Kontrolcenter</div><h2>Indstillinger og perioder</h2><p class="hint">Indstil perioder, priser, mutation og geometri her til højre. Den samlede periodegraf vises under skoven. Modelændringer genstarter med samme seed.</p><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div><details class="right-category" open><summary>01 · Simulation</summary><div class="right-category-content">
+<details class="panel model-overview" id="modelOverview"><summary>Model og energiregnskab · sådan fungerer skoven</summary><p class="hint">Alle undersøgelser bruger den samme energibevarende model. Træerne optager energi fra Q, betaler vedligehold, vokser eller angriber. Ved død returneres reserve og strukturenergi til Q.</p><p class="hint">Q + Σ(E + U) er bevaret. Den periodiske graf over skoven viser de planlagte energistrømme; faktisk energioptag begrænses desuden af, hvad der er tilbage i Q.</p></details>
+<section class="panel research-dashboard" id="researchDashboard">
+<div class="panel-kicker">Forskningsområdet</div><h2>Undersøg én variabel ad gangen</h2>
+<p class="hint">Vælg én parameter, gem en reference, og ændr kun den parameter i højrepanelet. De andre indstillinger skal være de samme, hvis forsøgene skal kunne sammenlignes. Graferne nedenfor viser <b>én kørsel</b>, ikke en statistisk dokumenteret sammenhæng.</p>
+<div class="study-controls">
+<div class="field"><label for="studyVariable">Det jeg ændrer mellem forsøg</label><select id="studyVariable">
+<optgroup label="Energioptag"><option value="energyPhase">Energioptagets fase</option><option value="climateAmplitude">Energioptagets amplitude</option><option value="energyInput">Gennemsnitligt energioptag</option></optgroup>
+<optgroup label="Højdepris"><option value="growthPhase">Højdeprisens fase</option><option value="growthPriceAmplitude">Højdeprisens amplitude</option><option value="growthCost">Gennemsnitlig højdepris</option></optgroup>
+<optgroup label="Angrebspris"><option value="spreadPhase">Angrebsprisens fase</option><option value="spreadPriceAmplitude">Angrebsprisens amplitude</option><option value="attackCost">Gennemsnitlig angrebspris</option></optgroup>
+<optgroup label="Vedligeholdelse"><option value="maintenancePhase">Vedligeholdelsens fase</option><option value="maintenanceAmplitude">Vedligeholdelsens amplitude</option><option value="maintenancePerHeight">Vedligeholdelsesstyrken</option></optgroup>
+</select></div>
+<div class="study-baseline"><div class="study-buttons"><button type="button" id="studyCapture">Gem reference</button><button type="button" id="studyJump">Find parameter</button></div><div id="studyStatus" role="status" class="hint">Gem en reference, og justér derefter kun den valgte parameter.</div></div>
+</div>
+<div class="study-summary" id="studySummary">Sammenligning: energioptag og artsentropi over samme sweeps.</div>
+<div class="study-plots">
+<div class="study-chart"><h3>Udvikling over tid</h3><div class="study-key"><span><i style="background:#238674"></i>Shannon-artsentropi H</span><span><i style="background:#c58d48"></i><span id="studyDriverLabel">Energioptag</span></span></div><canvas class="plot" id="studyTimePlot" aria-label="Sammenligning af artsentropi og en valgt miljøvariabel over tid"></canvas><p class="hint">Kun i denne graf er begge kurver skaleret hver for sig til 0–1 for at kunne se timing. Det ændrer ikke de faktiske værdier.</p></div>
+<div class="study-chart"><h3>Følges de ad?</h3><div class="study-key"><span><i style="background:#238674"></i>H (lodret)</span><span><i style="background:#c58d48"></i><span id="studyScatterLabel">Energioptag</span> (vandret)</span></div><canvas class="plot" id="studyScatterPlot" aria-label="Punktdiagram med artsentropi mod den valgte miljøvariabel"></canvas><div class="study-correlation" id="studyCorrelation">Pearson r: – · Kør flere sweeps for at få observationer.</div><p class="hint">Et mønster eller en korrelation i ét forløb er ikke bevis for årsag, evolutionær tilpasning eller faseovergang. Autokorrelation og fælles tidstrends kan være afgørende.</p></div>
+</div>
+<div class="study-measures"><div class="stat"><small>Effektive arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Levende andel ρ</small><b id="rhoOut">–</b></div><div class="stat"><small>Gns. angrebsstrategi</small><b id="strategyOut">–</b></div><div class="stat"><small>Energi-balancefejl</small><b id="balanceOut">–</b></div></div>
+<details class="study-more"><summary>Flere målinger og energiregnskab</summary><div class="energy-ledger"><div class="stat"><small>Fælles pulje Q</small><b id="poolOut">–</b></div><div class="stat"><small>Træernes reserve</small><b id="reserveOut">–</b></div><div class="stat"><small>Strukturel U</small><b id="potentialOut">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergyOut">–</b></div></div><div class="research-grid"><div class="stat"><small>Gns. træreserve</small><b id="energyOut">–</b></div><div class="stat"><small>Fødsler pr. sweep</small><b id="birthsOut">–</b></div><div class="stat"><small>Netto fødsler − dødsfald</small><b id="netOut">–</b></div><div class="stat"><small>Dødsfald pr. sweep</small><b id="deathOut">–</b></div><div class="stat"><small>Dødsfald i alt</small><b id="deathsTotal">–</b></div><div class="stat"><small>Børnemutationer</small><b id="birthMutations">–</b></div><div class="stat"><small>Spontane mutationer</small><b id="spontaneousMutations">–</b></div><div class="stat"><small>Dominerende s</small><b id="dominantStrategy">–</b></div></div></details>
+<p class="hint">Artsentropi er Shannon-entropien H = −Σp ln p, beregnet ud fra artens andel af levende træer. Det er <b>ikke</b> termodynamisk entropi. Sammenlign flere seeds før konklusioner.</p>
+</section></main><aside><section class="panel unified-controls"><div class="panel-kicker">Kontrolcenter</div><h2>Indstillinger og perioder</h2><p class="hint">Indstil perioder, priser, mutation og geometri her til højre. Den samlede periodegraf vises under skoven. Modelændringer genstarter med samme seed.</p><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div><details class="right-category" open><summary>01 · Simulation</summary><div class="right-category-content">
 <div class="field"><label for="gridView">Gittervisning <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option><option value="energy">Energi</option></select></div><div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input type="range" id="size" min="10" max="200" step="5" value="100"></div><div class="field"><label for="species">Antal arter <output id="speciesOut">10</output></label><input type="range" id="species" min="2" max="30" step="1" value="10"></div><div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input type="range" id="fill" min="0.05" max="1" step="0.05" value="1"></div><div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input type="range" id="speed" min="1" max="30" step="1" value="1"></div><div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></div></details><details class="right-category" open><summary>02 · Vækst, angreb og perioder</summary><div class="right-category-content"><div class="periodic-lab"><h3 style="margin:5px 0;font-size:14px">Periodiske parametre</h3><p class="hint">Ligningerne redigeres direkte over grafen under lattice. Åbn flere parametre her, hvis du vil ændre middelpriser, amplituder og faser.</p><div class="field"><label for="climatePeriod">Fælles periode T (sweeps)</label><input id="climatePeriod" type="number" min="2" step="1" value="80"></div><details class="price-parameters" id="priceParameters"><summary>Flere parametre · middelpris, amplitude og fase</summary><div class="wave-card"><div class="wave-card-header wave-energy"><span>1 · Energioptag fra Q</span><span id="climateNow">–</span></div><div class="field"><label for="energyInput">Middeloptag r₀</label><input id="energyInput" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="climateAmplitude">Amplitude (0–1)</label><input id="climateAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="energyPhase">Faseforskydning <output id="energyPhaseOut">0°</output></label><input id="energyPhase" type="range" min="0" max="360" step="5" value="0"></div></div><div class="wave-card"><div class="wave-card-header wave-growth"><span>2 · Pris pr. højdeenhed</span><span id="growthPriceNow">–</span></div><div class="field"><label for="growthCost">Gennemsnitlig højdepris</label><input id="growthCost" type="number" min="0" step="0.1" value="2"></div><div class="field"><label for="growthPriceAmplitude">Amplitude (0–1)</label><input id="growthPriceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="growthPhase">Faseforskydning <output id="growthPhaseOut">180°</output></label><input id="growthPhase" type="range" min="0" max="360" step="5" value="180"></div></div><div class="wave-card"><div class="wave-card-header wave-spread"><span>3 · Pris pr. angreb eller spredning</span><span id="spreadPriceNow">–</span></div><div class="field"><label for="attackCost">Gennemsnitlig angrebspris</label><input id="attackCost" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="spreadPriceAmplitude">Amplitude (0–1)</label><input id="spreadPriceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="spreadPhase">Faseforskydning <output id="spreadPhaseOut">180°</output></label><input id="spreadPhase" type="range" min="0" max="360" step="5" value="180"></div></div><div class="wave-card"><div class="wave-card-header" style="color:#9b6f99"><span>4 · Vedligeholdelsespris</span><span id="maintenancePriceNow">–</span></div><div class="field"><label for="maintenancePerHeight">Basisvedligehold m <output id="maintenancePerHeightOut">0,10</output></label><input id="maintenancePerHeight" type="range" min="0" max="1" step="0.01" value="0.1"></div><div class="field"><label for="maintenanceAmplitude">Amplitude (0–1)</label><input id="maintenanceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="maintenancePhase">Faseforskydning <output id="maintenancePhaseOut">180°</output></label><input id="maintenancePhase" type="range" min="0" max="360" step="5" value="180"></div><p class="hint">Den lilla kurve viser prisen for referencehøjden valgt under lattice; hvert træ betaler for sin egen højde h.</p></div></details><p class="periodic-hint">Alle tre handlingsstrømme er sinusformede i standardligningerne; amplitude 0 giver konstant pris. Rediger formlerne frit inden for de understøttede regneoperationer. Skrivning giver direkte grafvisning; når feltet forlades, starter forsøget igen med samme seed. Energi forbliver bevaret.</p><div hidden><span id="climateRange"></span><span id="climatePhase"></span></div></div><details class="settings-group" open><summary>Øvrige vækst-, kamp- og vedligeholdelsesregler</summary>
 <div class="field"><label for="startEnergy">Startenergi pr. træ (E)</label><input id="startEnergy" type="number" min="0" step="0.5" value="10"></div>
 <p class="hint">Efter optag og diffusion betaler træet vedligehold fra E til Q efter den redigerbare ligning. Det konkrete beløb afhænger af både højde og sweep. Hvis reserven ikke rækker, dør træet; E + U returneres til Q.</p><div class="field"><label for="offspringEnergy">Energi til afkom</label><input id="offspringEnergy" type="number" min="0" step="0.1" value="2"></div>
@@ -468,35 +500,82 @@ function stats(){
 }
 function record(force=false){
  historyStep++;if(!force&&historyStep%historyStride)return;
- const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,leader:st.leader,mix:st.mix,rho:st.density,E:cfg.energyEnabled?st.meanEnergy/Math.max(.01,Math.max(1,cfg.startEnergy)):0,b:events.birthsStep/sp.length,d:events.deathsStep/sp.length,Q:cfg.energyEnabled?energySupply()/Math.max(.01,cfg.energyInput*(1+cfg.climateAmplitude)):0,growthPrice:growthPrice(),spreadPrice:spreadPrice(),poolFrac:cfg.energyEnabled?st.pool/Math.max(1,st.totalEnergy):0,s:st.meanStrategy});
+ const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,Hraw:st.entropy,meanHeight:st.meanHeight,uptake:energySupply(),leader:st.leader,mix:st.mix,rho:st.density,E:cfg.energyEnabled?st.meanEnergy/Math.max(.01,Math.max(1,cfg.startEnergy)):0,b:events.birthsStep/sp.length,d:events.deathsStep/sp.length,Q:cfg.energyEnabled?energySupply()/Math.max(.01,cfg.energyInput*(1+cfg.climateAmplitude)):0,growthPrice:growthPrice(),spreadPrice:spreadPrice(),poolFrac:cfg.energyEnabled?st.pool/Math.max(1,st.totalEnergy):0,s:st.meanStrategy});
  if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
 }
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
-function plot(){
- const c=$("evolutionPlot"),{w,h:hh,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,hh);
- const left=35*d,right=9*d,top=12*d,bottom=22*d;
- g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";
- for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
- if(history.length<2)return;
- const t0=history[0].t,t1=history[history.length-1].t;
- const x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0);
- const y=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v)));
- for(const [key,color] of [["H","#238674"],["leader","#c58d48"],["mix","#6681b9"]]){
-  g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
-  history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
- }
- g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,hh-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,hh-3*d);
+
+const studyMap={
+ energyPhase:{kind:"energy",label:"planlagt energioptag"},
+ climateAmplitude:{kind:"energy",label:"planlagt energioptag"},
+ energyInput:{kind:"energy",label:"planlagt energioptag"},
+ growthPhase:{kind:"height",label:"højdepris"},
+ growthPriceAmplitude:{kind:"height",label:"højdepris"},
+ growthCost:{kind:"height",label:"højdepris"},
+ spreadPhase:{kind:"attack",label:"angrebspris"},
+ spreadPriceAmplitude:{kind:"attack",label:"angrebspris"},
+ attackCost:{kind:"attack",label:"angrebspris"},
+ maintenancePhase:{kind:"maint",label:"vedligeholdelse (referencehøjde)"},
+ maintenanceAmplitude:{kind:"maint",label:"vedligeholdelse (referencehøjde)"},
+ maintenancePerHeight:{kind:"maint",label:"vedligeholdelse (referencehøjde)"}
+};
+let studyBaseline=null;
+function studySeries(){
+ const key=$("studyVariable").value,def=studyMap[key]||studyMap.energyPhase,gh=Number($("graphHeight").value)||10;
+ const rows=history.filter(p=>Number.isFinite(p.Hraw)).map(p=>({
+  t:p.t,H:p.Hraw,x:def.kind==="energy"?p.uptake:def.kind==="height"?p.growthPrice:def.kind==="attack"?p.spreadPrice:maintenanceAt(p.t,gh)
+ })).filter(v=>Number.isFinite(v.x));
+ return {key,def,rows};
 }
-function plotResearch(id,keys){
- const ceiling=Math.max(1,...history.flatMap(p=>keys.map(([key])=>p[key])));
- const c=$(id),{w,h:hh,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,hh);
- const left=35*d,right=9*d,top=12*d,bottom=22*d;
- g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";
- for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((ceiling*(1-k/4)).toFixed(2),left-5*d,y+3*d);}
- if(history.length<2)return;
- const t0=history[0].t,t1=history[history.length-1].t,xx=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0),yy=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v/ceiling)));
- for(const [key,color] of keys){g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();history.forEach((p,i)=>{if(i)g.lineTo(xx(p.t),yy(p[key]));else g.moveTo(xx(p.t),yy(p[key]));});g.stroke();}
- g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,hh-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,hh-3*d);
+function pearson(rows){
+ if(rows.length<3)return null;
+ const mx=rows.reduce((a,b)=>a+b.x,0)/rows.length,my=rows.reduce((a,b)=>a+b.H,0)/rows.length;
+ let xx=0,yy=0,xy=0;
+ for(const p of rows){const dx=p.x-mx,dy=p.H-my;xx+=dx*dx;yy+=dy*dy;xy+=dx*dy;}
+ return xx>1e-16&&yy>1e-16?xy/Math.sqrt(xx*yy):null;
+}
+function drawStudy(){
+ const {key,def,rows}=studySeries(),n=rows.length;
+ $("studyDriverLabel").textContent=def.label;$("studyScatterLabel").textContent=def.label;
+ $("studySummary").textContent="Valgt forsøgsvariabel: "+$("studyVariable").selectedOptions[0].textContent+". Her sammenlignes "+def.label+" med Shannon-artsentropi H=−Σp ln p i samme kørsel. Øvrige parametre holdes faste mellem sammenlignelige forsøg.";
+ const c=cfg[key],base=studyBaseline;
+ if(!base)$("studyStatus").textContent="Gem en reference før første parameterændring. Resultaterne nedenfor er foreløbig kun én kørsel.";
+ else{
+  const changed=Object.keys(base).filter(k=>k!=="speed"&&JSON.stringify(base[k])!==JSON.stringify(cfg[k]));
+  const other=changed.filter(k=>k!==key);
+  $("studyStatus").textContent=other.length?"OBS: "+other.length+" andre indstillinger er ændret siden referencen ("+other.slice(0,3).join(", ")+"). Gem en ny reference eller genskab de faste indstillinger.":changed.length?"Kun valgt parameter ændret: "+String(base[key])+" → "+String(c)+". Sammenlign med referencekørslen, og gentag med flere seeds.":"Reference gemt: "+String(base[key])+". Ændr kun denne parameter i højrepanelet.";
+ }
+ const r=pearson(rows);
+ $("studyCorrelation").textContent=r===null?"Pearson r: ikke defineret · "+n+" observationer (kræver mindst tre punkter og variation i begge størrelser).":"Beskrivende Pearson r = "+r.toFixed(3)+" · "+n+" tidspunkter fra én kørsel";
+ function chartAxes(g,w,hh,d,labelLeft,labelBottom){
+  const left=45*d,right=16*d,top=16*d,bottom=34*d;
+  g.clearRect(0,0,w,hh);g.font=(10*d)+"px system-ui";g.textAlign="right";g.lineWidth=d;
+  for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.strokeStyle="#e4eae2";g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();}
+  g.fillStyle="#66766e";g.textAlign="left";g.fillText(labelLeft,left,11*d);g.textAlign="right";g.fillText(labelBottom,w-right,hh-4*d);
+  return {left,right,top,bottom,tw:w-left-right,th:hh-top-bottom};
+ }
+ function range(vals){if(!vals.length)return [0,1];return [Math.min(...vals),Math.max(...vals)];}
+ function normalize(v,a,b){return Math.abs(b-a)<1e-12 ? 0.5 : (v-a)/(b-a);}
+ const time=$("studyTimePlot"),T=fit(time),tg=time.getContext("2d");
+ const A=chartAxes(tg,T.w,T.h,T.d,"Skaleret 0–1","Sweep");
+ if(n){
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.H));
+  const t0=rows[0].t,t1=rows[n-1].t;
+  for(const [color,access,lo,hi] of [["#238674",p=>p.H,h0,h1],["#c58d48",p=>p.x,x0,x1]]){
+   tg.beginPath();tg.strokeStyle=color;tg.lineWidth=2*T.d;
+   rows.forEach((p,i)=>{const x=A.left+A.tw*(p.t-t0)/Math.max(1,t1-t0),y=A.top+A.th*(1-normalize(access(p),lo,hi));i?tg.lineTo(x,y):tg.moveTo(x,y);});tg.stroke();
+  }
+  tg.fillStyle="#66766e";tg.textAlign="left";tg.fillText(String(t0),A.left,T.h-4*T.d);tg.textAlign="right";tg.fillText(String(t1),T.w-A.right,T.h-4*T.d);
+ }
+ const scatter=$("studyScatterPlot"),P=fit(scatter),pg=scatter.getContext("2d");
+ const B=chartAxes(pg,P.w,P.h,P.d,"H",def.label);
+ if(n){
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.H));
+  pg.font=(10*P.d)+"px system-ui";pg.fillStyle="#66766e";pg.textAlign="right";pg.fillText(h1.toFixed(2),B.left-5*P.d,B.top+3*P.d);pg.fillText(h0.toFixed(2),B.left-5*P.d,B.top+B.th+3*P.d);
+  pg.textAlign="left";pg.fillText(x0.toFixed(2),B.left,P.h-4*P.d);pg.textAlign="right";pg.fillText(x1.toFixed(2),P.w-B.right,P.h-4*P.d);
+  pg.fillStyle="#c58d48";
+  for(const p of rows){pg.beginPath();pg.arc(B.left+B.tw*normalize(p.x,x0,x1),B.top+B.th*(1-normalize(p.H,h0,h1)),2.4*P.d,0,Math.PI*2);pg.fill();}
+ }
 }
 function drawWaves(){
  const T=cfg.climatePeriod,now=sweep%T,gh=Math.max(1,Number($("graphHeight").value)||10);
@@ -570,7 +649,7 @@ function draw(){
  $("spontaneousMutations").textContent=mutationCounts.spontaneous.toLocaleString("da-DK");
  const dominant=st.cnt.indexOf(Math.max(...st.cnt));
  $("dominantStrategy").textContent=st.total?strategies[dominant].toFixed(3):"–";
- drawWaves();plot();plotResearch("energyPlot",[["rho","#238674"],["E","#c58d48"],["b","#6681b9"],["poolFrac","#9b6f99"]]);plotResearch("climatePlot",[["Q","#238674"],["s","#c58d48"],["rho","#6681b9"]]);
+ drawWaves();drawStudy();
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)step();draw();raf=requestAnimationFrame(loop);}
 $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
@@ -594,7 +673,7 @@ for(const id of ["energyInput","climateAmplitude","climatePeriod","growthCost","
  $("climateNow").textContent=energySupply().toFixed(2);$("growthPriceNow").textContent=growthPrice().toFixed(2);$("spreadPriceNow").textContent=spreadPrice().toFixed(2);
  Object.assign(cfg,old);
 });
-$("graphHeight").addEventListener("input",drawWaves);
+$("graphHeight").addEventListener("input",()=>{drawWaves();drawStudy();});
 for(const [kind,id] of Object.entries(fids)){
  $(id).addEventListener("input",()=>{
   try{draftFormulas[kind]=validateFormula($(id).value,kind);statusFormula(id,null);drawWaves();}
@@ -627,9 +706,11 @@ $("zoomIn").addEventListener("click",()=>{sphereZoom=Math.min(1.75,sphereZoom*1.
 $("zoomOut").addEventListener("click",()=>{sphereZoom=Math.max(.55,sphereZoom/1.2);draw();});
 $("resetSphere").addEventListener("click",()=>{sphereYaw=0;spherePitch=.15;sphereZoom=1;draw();});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
-for(const key of ["A","B","C"])$("tab"+key).addEventListener("click",()=>{for(const x of ["A","B","C"]){$("panel"+x).hidden=x!==key;$("tab"+x).classList.toggle("is-active",x===key);$("tab"+x).setAttribute("aria-pressed",String(x===key));}draw();});
+$("studyVariable").addEventListener("change",()=>{studyBaseline=null;drawStudy();});
+$("studyCapture").addEventListener("click",()=>{studyBaseline={...cfg};drawStudy();});
+$("studyJump").addEventListener("click",()=>{const el=$(String($("studyVariable").value));if(!el)return;const section=el.closest(".right-category");if(section)section.open=true;const advanced=el.closest(".price-parameters");if(advanced)advanced.open=true;el.scrollIntoView({behavior:"smooth",block:"center"});el.focus({preventScroll:true});});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),en:Array.from(en),u:Array.from(u),energySupply:energySupply(),pool,energyLedger:{...energyLedger},strategies:Array.from(strategies),mutationCounts:{...mutationCounts},events:{...events},history:history.map(v=>({...v})),config:{...cfg},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.en)en.set(x.en);if(x.u)u.set(x.u);if(x.strategies)strategies=x.strategies.slice();},restart:init,draw,neighbours,energyTick,diffuseEnergy,maintenanceTick,maintenanceAt,validateFormula,growTree,spread,attempt,spontaneousMutation,killTree,combatChance,growthPrice,spreadPrice,fixture:x=>{stop();if(x.cfg)Object.assign(cfg,x.cfg);for(const [kind,id] of Object.entries(fids))activeFormulas[kind]=validateFormula(cfg[id],kind);geometry=buildGeometry();sp=new Int32Array(cfg.L*cfg.L).fill(-1);h=new Float64Array(sp.length);en=new Float64Array(sp.length);u=new Float64Array(sp.length);stamp=new Int32Array(sp.length).fill(-1);for(const [i,t] of Object.entries(x.trees||{})){sp[i]=t[0];h[i]=t[1];en[i]=t[2];u[i]=t.length>3?t[3]:t[1]*cfg.growthCost;}if(x.strategies)strategies=x.strategies.slice();pool=x.pool??0;sweep=x.sweep??0;events={births:0,deaths:0,birthsStep:0,deathsStep:0};mutationCounts={birth:0,spontaneous:0};energyLedger={initial:stats().totalEnergy,injected:0,dissipated:0,recycled:0};rng=x.random===undefined?mulberry32(123):()=>x.random;}};
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),en:Array.from(en),u:Array.from(u),energySupply:energySupply(),pool,energyLedger:{...energyLedger},strategies:Array.from(strategies),mutationCounts:{...mutationCounts},events:{...events},history:history.map(v=>({...v})),config:{...cfg},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.en)en.set(x.en);if(x.u)u.set(x.u);if(x.strategies)strategies=x.strategies.slice();},restart:init,draw,neighbours,energyTick,diffuseEnergy,studySeries,pearson,maintenanceTick,maintenanceAt,validateFormula,growTree,spread,attempt,spontaneousMutation,killTree,combatChance,growthPrice,spreadPrice,fixture:x=>{stop();if(x.cfg)Object.assign(cfg,x.cfg);for(const [kind,id] of Object.entries(fids))activeFormulas[kind]=validateFormula(cfg[id],kind);geometry=buildGeometry();sp=new Int32Array(cfg.L*cfg.L).fill(-1);h=new Float64Array(sp.length);en=new Float64Array(sp.length);u=new Float64Array(sp.length);stamp=new Int32Array(sp.length).fill(-1);for(const [i,t] of Object.entries(x.trees||{})){sp[i]=t[0];h[i]=t[1];en[i]=t[2];u[i]=t.length>3?t[3]:t[1]*cfg.growthCost;}if(x.strategies)strategies=x.strategies.slice();pool=x.pool??0;sweep=x.sweep??0;events={births:0,deaths:0,birthsStep:0,deathsStep:0};mutationCounts={birth:0,spontaneous:0};energyLedger={initial:stats().totalEnergy,injected:0,dissipated:0,recycled:0};rng=x.random===undefined?mulberry32(123):()=>x.random;}};
 })();
 </script></body></html>
