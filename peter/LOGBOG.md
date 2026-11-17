@@ -783,3 +783,30 @@ Under 03 kan κ (pris pr. højdeenhed, standard 2) og angrebsprisen (standard 1)
 ## 2026-11-16 · Logaritmisk vedligeholdelse
 
 Vedligehold ændres fra m × h til m × ln(1 + h) / ln(2), så højde 1 stadig koster m, men store træers pris vokser langsommere. Standard m = 0,1 giver ca. 0,35 ved højde 10 og 0,67 ved højde 100. Betaling til Q, rækkefølgen og dødsreglen er uændrede. Dette erstatter den lineære højdepris; energien bevares fortsat.
+
+
+## 17. november 2026 — Fri spredning og spontan genetablering
+
+**Fri spredning til tomme nabofelter:** Et levende træ kan nu sprede sig til et
+tomt felt langs den valgte lattices faktiske naboforbindelser uden en ekstra
+energipris. Forælderens reserveenergi E og strukturelle energi U = κh deles
+50/50 mellem forælder og afkom. Derfor halveres både forælderens reserve og
+højde, og afkommet får de tilsvarende halvdele. Q ændres ikke, og der betales
+hverken vækstpris, angrebspris eller fast afkomsenergi. Børnemutation anvendes
+stadig på det nye afkom. Kamp mod et levende træ er uændret: angrebsprisen
+betales til Q, og efter en sejr bruges den eksisterende separat finansierede
+afkomsregel.
+
+**Spontan mutation/etablering:** Når den spontane hændelse udløses, vælges nu ét
+tilfældigt latticefelt. Rammes et levende træ, muterer det fortsat efter den
+eksisterende s ± dε-regel og får et nyt arts-id. Rammes et tomt felt, forsøges
+etablering af et nyt træ med tilfældig strategi. Q skal da finansiere præcis
+startreserven plus κ til struktur ved h = 1. Hvis Q ikke rækker, sker intet.
+Dermed kan et fuldstændigt uddødt system genetableres uden ekstern
+energitilførsel, hvis den bevarede energi i Q er stor nok.
+
+Testpakken er udvidet med særskilte kontroller af 50/50-spredning, spredning
+under den tidligere fødselsomkostning, præcis Q-finansiering, utilstrækkelig Q,
+genetablering efter uddøen og fortsat mutation på levende træer. De eksisterende
+1000-sweep energibevarelsestests for k = −1, 0 og +1 samt mobil/desktop-tests
+bevares.
