@@ -844,3 +844,19 @@ Kun visning og placering ændres: de tidligere uafhængige faseforskydninger og 
 **Ny intern strukturbogføring:** I stedet for at antage U_i=κ h_i gemmes den faktisk investerede strukturelle energi som separat tilstandsvariabel U_i for hvert træ. Ved vækst reduceres E_i med hele c_h(t), U_i øges med samme beløb, og h_i øges med 1. Når et træ spreder sig til tomt nabofelt, flyttes c_a(t) fra E_i til Q, hvorefter E, h og U deles 50/50. Ved kamp mod levende træ betales samme aktuelle c_a(t) til Q. Ved sejrrig kamp opbygges afkommets højde 1 med den aktuelle c_h(t) og en særskilt overført afkomsreserve. Spontan etablering fra Q bruger tilsvarende aktuel højdepris + startreserve. Ved død returneres E_i+U_i til Q. Den lukkede energiinvariant er dermed Q+Σ_i(E_i+U_i)=konstant på trods af varierende c_h(t).
 
 **Modelimplikation:** En højdeenhed kan koste forskelligt afhængigt af skabelsestidspunktet. Derfor er U_i ikke længere proportional med h_i. Dette er en bevidst modelændring og ikke blot en ændring af brugergrænsefladen. Resultater må ikke sammenlignes naivt med ældre simulationer, der brugte gratis spredning og konstant κ.
+
+
+## 17. november 2026 — Direkte ligningseditor og vedligeholdelseskurve
+
+**Brugerbestemt interface:** Ét fælles diagram direkte under lattice viser nu fire samtidige energistrømme på samme skala: energioptag fra Q (grøn), pris for +1 højde (orange), pris for angreb/spredning (blå), og vedligeholdelse (lilla). Den lilla kurve gælder den referencehøjde, der indstilles under grafen (standard h=10); i simuleringen betaler hvert træ efter sin egen h. Den stiplede linje viser aktuelle sweep.
+
+**Faktiske redigerbare ligninger i højrepanelet:** Standardfunktionerne er
+
+- r(t)=r0*(1+ar*sin(2*pi*t/T+pr*pi/180));
+- c_h(t)=ch*(1+ah*sin(2*pi*t/T+ph*pi/180));
+- c_a(t)=ca*(1+aa*sin(2*pi*t/T+pa*pi/180));
+- v(t,h)=m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2).
+
+Standardamplituderne er 0,5, og alle udregnes periodisk uden tidligere on/off-kontakt. Amplitude 0 giver konstant værdi. Enhver af de fire ligninger kan ændres i et tekstfelt, og en gyldig ændring visualiseres straks. Ved afslutning af feltet anvendes den samme formel i simuleringsmotoren, og forsøget genstarter med samme seed. Formelparseren accepterer kun tilladte tal, navngivne variable, operatorer og rene matematiske funktioner; ingen eval eller fremmed kode udføres. Der valideres mod negative, ikke-endelige og større end 10^6 energistrømme ved en prøve over perioden og relevante højder. Numerisk runding lige under nul i en sinusdal afrundes til nul. Fejlvisning advarer mod ugyldig formel.
+
+**Energiargument:** Vækst betaler hele c_h(t) fra E til eget historisk lagrede U, angreb betaler hele c_a(t) fra E til Q, vedligehold v(t,h) betales fra E til Q, og energioptag er fra Q til E. Der skabes ikke energi ved parameterændringer. Den invariantsikrede størrelse er Q+Σ(E+U), med separat U per træ. Vedligeholdelse er ikke længere nødvendigvis konstant i tid. Dette er en ny modelændring og skal dokumenteres i efterfølgende forsøgsrapportering.
