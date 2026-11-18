@@ -752,176 +752,48 @@ Appen viser antal mutationer af hver type, dominerende levende arts s og de op t
 
 Kørselstest i JavaScript for k=−1,0,+1, hver 100 sweeps på 20×20 med maksimalt mutationstryk (10 % ved fødsel og 100 % spontan pr. sweep) for at belaste systemet. Der blev registreret hundrede spontane mutationer i hvert forsøg og hundredvis af børnemutationer, ingen ugyldige artshenvisninger eller højder og ingen manglende UI-elementer. Ægte browser-visuel validering ikke udført.
 
-## 2026-11-16 · Peters konservative model og automatisk Pages-artifact
 
-Peters app udvikles fortsat i `peter-dev/index.html`. Tidligere blev en separat
-kopi publiceret i `main/peter/index.html`; der var ingen automatisk forbindelse
-mellem udviklingsbranchen og denne kopi. Et nyt Pages-workflow samler i stedet
-`main` og Peters personlige understi ved build, bevarer den fælles app og
-kontrollerer commit-ID og funktion i den offentlige browser efter deployment.
-Engangsindstillinger og afgrænsningen mod fælles `main` beskrives i `PETER.md`.
+## 2026-11-16 — Peters private Skovlab: forsøg A/B/C og energiregler
 
-Modellen har faste κ = 2 og angrebspris 1, ingen vedligeholdelse og intet puljetab.
-Skjulte optags- og reservelofter er fjernet, fordi de udgjorde ekstra regler ud
-over r(t) og Q. Startpuljen 2L² er bevaret og nu synligt dokumenteret. Afkom er
-fuldt finansieret af forælderen; kamp og efterfølgende fødsel er separate
-energioverførsler. E = 0 udløser død før optag og straks efter energiforbrug;
-positive små reserver er passive frem for at blive dræbt af en numerisk tærskel.
-Se `PETER.md` for de præcise beslutninger og testkommandoer.
+Der er oprettet et tilvalg af dimensionsløs energi i `peter-dev/index.html` og en separat offentlig kopi på `main/peter/index.html`, som kan åbnes på https://pdamkier-del.github.io/skovlab/peter/. **Den fælles simulation i `main/index.html` er uændret.**
 
+Tre forskningspaneler: **A** (energitilførsel, populationstæthed, aktivitet, mulige kritiske tilstande), **B** (periodisk energitilførsel og populationsvægtet strategi) samt **C** (Shannon-artsentropi, dominans og dødsfald). Grafer viser tidsserier, ikke automatiske påstande om faseovergange eller tilpasning. I særdeleshed er Shannon-entropi og dødstællinger **ikke termodynamisk entropiproduktion**.
 
-## 2026-11-16 · Højdeafhængig vedligeholdelse genindført
+Justerbare energiparametre: middeltilførsel Q0, amplituden a, perioden T, **vækstomkostning pr. træ**, **angrebsomkostning pr. forsøg**, **energioverførsel til afkom fra forælderen**, vedligeholdelse, startenergi og maksimumreserve. Før hver sweep modtager levende træer Q(t)=Q0[1+a sin(2πt/T)] og betaler vedligeholdelse; ved underskud dør de. En handling kræver tilstrækkelig reserve. Succesfuld kolonisering betaler afkommets startenergi fra forælderen. Der er ingen energiudveksling gennem tomme celler, og ingen varme-/reservoirregnskab. Energimodellen kan slås fra, så den oprindelige dynamik kan bruges som kontrol. Modelparametre genstarter for reproducerbare forsøg.
 
-Efter brugerens ændrede modelønske betaler træer nu m × h fra reserve til Q hver sweep, efter optag og diffusion og før handlinger. Standard m = 0,1; værdien kan justeres under Vækst og angreb. Mangler træet energi til hele beløbet, eller ville betalingen efterlade E = 0, dør det og returnerer E + U til Q. Højden reduceres ikke hos overlevende træer. Dette erstatter beslutningen ovenfor om ingen vedligeholdelse. Energien bevares; tilbageførsel er ikke en garanti for en altid positiv Q eller vedvarende population.
+Kørselskontrol via den faktiske JavaScript-kode: 20×20, 150 sweeps, Q0=0/0,4/1,3/2,2; ingen ikke-finite energier/højder. Ved lave Q0 blev alle træer uddøde, ved højere Q0 overlevede træer med fortsat aktivitet. Dette er kun en funktionstest og ikke evidens for en kritisk faseovergang. Separat kontrol med energimodel slået fra gennemført. Visuel browser-test og live GitHub Pages-servering ikke uafhængigt verificeret.
 
 
-## 2026-11-16 · Justerbare vækst- og angrebspriser gendannet
+## 2026-11-16 — Oprydning i Peters lab og samlet model
 
-Under 03 kan κ (pris pr. højdeenhed, standard 2) og angrebsprisen (standard 1) igen ændres. κ bruges konsekvent til vækst, afkoms startstruktur, dødsretur og energiregnskab. Prisændringer genstarter simulationen for at undgå omvurdering af eksisterende struktur og deraf kunstig energi. Dette erstatter den tidligere beslutning om faste handlingspriser.
+Egen HTML i `peter-dev/index.html` og webkopien på `main/peter/index.html` er konsolideret. Fælles `main/index.html` er ikke ændret. En synlig modeloversigt angiver én samlet simulation og kæden: periodisk ekstern energitilførsel → fælles pulje → optag og vedligeholdelse → vækst/angreb/død. Klimaet påvirker **kun tilførslen til energipuljen**, ikke angrebssandsynlighed eller andre mikroskopiske regler direkte. Kontrolpanelet angiver formel `Q(t)=Q0[1+a sin(2πt/T)]`, aktuelle værdier, interval og fase, inklusive forklaring af `Q0`, `a` og `T`.
 
+A/B/C vises nu som *analysefaner for den samme model* (A energipulje og aktivitet, B miljø og strategi, C Shannon-entropi og mutation). Dobbeltmålinger i den gamle separate udviklingssektion er fjernet. Variabler er omgrupperet til Simulation, Miljø/fælles energi, Træernes handlinger, Mutation/strategi og Gitter/geometri; avancerede indstillinger er sammenklappelige. Eksisterende id'er og den fysiske dynamik er bevaret.
 
-## 2026-11-16 · Logaritmisk vedligeholdelse
+Automatiseret JS-runtimetest med mock DOM og samtlige nødvendige felter: fladt, sfærisk-lignende og hyperbolsk-lignende gitter, flere tilførsler, 100 sweeps pr. kombination (9 forsøg); maksimal absolut energibalancefejl ca. 3.8e-9 energienheder. Dette er ikke en ægte visuel browser-test. Det numeriske energiregnskab er i abstrakte modelenheder og ikke et termodynamisk entropiregnskab.
 
-Vedligehold ændres fra m × h til m × ln(1 + h) / ln(2), så højde 1 stadig koster m, men store træers pris vokser langsommere. Standard m = 0,1 giver ca. 0,35 ved højde 10 og 0,67 ved højde 100. Betaling til Q, rækkefølgen og dødsreglen er uændrede. Dette erstatter den lineære højdepris; energien bevares fortsat.
 
+## 2026-11-16 — Konservativ pulje Q og højdebaserede angreb (Peters lab)
 
-## 17. november 2026 — Fri spredning og spontan genetablering
+Personlige versioner på `peter-dev/index.html` og `main/peter/index.html` opdateret. Kampvinder afhænger fortsat af højde `P(A vinder)=h_A/(h_A+h_B)=U_A/(U_A+U_B)` med fælles `U=κh`, standard κ=2. Træernes reserver starter på 10. Angrebspris er 1 og returneres til Q; vedligehold returneres ligeledes; død frigiver restreserve og U til Q. Afkom får reserver og strukturel energi finansieret af forælderen. Periodisk variation regulerer loftet for optag fra Q, ikke tilførsel af ny energi. Parvis konservativ energidiffusion sker over nabokanter mellem træer med samme art eller strategiforskel højst Δs; den tidligere abstrakte højdeudjævning er erstattet. Hvis et træ ingen angrebsbare naboer har, kan gruppen kun vokse, hvis energien rækker. Start-Q sat til 2 pr felt så periodisk uddeling har effekt. Puljetab standard 0. Energiregnskab er `Q+Σ(E+U)+kumulativt tab = startenergi`. Test: 3 geometrier × 3 amplituder × 180 sweeps; maksimal absolut balancefejl < 2e-10 energienheder i test. Ved amplituden 1 blev fuld udryddelse observeret i test med positiv pulje tilbage; uden træer findes ingen mekanisme til spontan genkolonisering. Ikke evidens for faseovergang. Browser-visning ikke valideret separat.
 
-**Fri spredning til tomme nabofelter:** Et levende træ kan nu sprede sig til et
-tomt felt langs den valgte lattices faktiske naboforbindelser uden en ekstra
-energipris. Forælderens reserveenergi E og strukturelle energi U = κh deles
-50/50 mellem forælder og afkom. Derfor halveres både forælderens reserve og
-højde, og afkommet får de tilsvarende halvdele. Q ændres ikke, og der betales
-hverken vækstpris, angrebspris eller fast afkomsenergi. Børnemutation anvendes
-stadig på det nye afkom. Kamp mod et levende træ er uændret: angrebsprisen
-betales til Q, og efter en sejr bruges den eksisterende separat finansierede
-afkomsregel.
 
-**Spontan mutation/etablering:** Når den spontane hændelse udløses, vælges nu ét
-tilfældigt latticefelt. Rammes et levende træ, muterer det fortsat efter den
-eksisterende s ± dε-regel og får et nyt arts-id. Rammes et tomt felt, forsøges
-etablering af et nyt træ med tilfældig strategi. Q skal da finansiere præcis
-startreserven plus κ til struktur ved h = 1. Hvis Q ikke rækker, sker intet.
-Dermed kan et fuldstændigt uddødt system genetableres uden ekstern
-energitilførsel, hvis den bevarede energi i Q er stor nok.
+## 18. november 2026 — Implementeret bet-hedging og uforudsigeligt klima uden artsimmunitet
 
-Testpakken er udvidet med særskilte kontroller af 50/50-spredning, spredning
-under den tidligere fødselsomkostning, præcis Q-finansiering, utilstrækkelig Q,
-genetablering efter uddøen og fortsat mutation på levende træer. De eksisterende
-1000-sweep energibevarelsestests for k = −1, 0 og +1 samt mobil/desktop-tests
-bevares.
+**Brugerbestilling:** Erstat beskyttelse af ens/lignende arter med almindelig konkurrence, og tilføj både arvelig bet-hedging og et uforudsigeligt miljø. Formålet er at undersøge løbende evolutionær omsætning af angrebsstrategier, uden at artsdiversitet bliver påtvunget.
 
+### Den nye dynamik
 
-## 17. november 2026 — Periodiske handlingspriser og modelstop
+- **Ingen Δs-immunitet:** Den tidligere skelnegrænse og dens input er fjernet. Nabotræer kan angribes uanset genotype eller fænotype, også hvis de kommer fra samme art. Energiforbrug, højdeafhængig vinderchance og regler for formering er stadig gældende.
+- **Diversified bet-hedging:** Genetisk slægtlinje `a` har arvelig middelstrategi `μ_a` i `strategies[a]` og arvelig variationsbredde `σ_a` i `sigmas[a]`. Hvert træ har en individuel, varig fænotype `s_i` i `phenotypes[i]`, sampled ved etablering som `clip(μ_a + U[-σ_a,σ_a],0,1)`. Frie afkom og afkom efter kamp nedarver arts-id (medmindre fødselsmutation laver ny slægtlinje), men får deres egen fænotype. På hver fødsel kan mutation, hvis aktiveret, lave en ny slægtlinje med ændret `μ` eller `σ`. Spontan mutation på levende træ ændrer også arvelig slægtlinje og genprøver fænotypen. Bet-hedging kan slås fra, hvorefter alle træer i en art har `s_i = μ_a` og den gamle artsgruppebaserede handlingsbeslutning bruges.
+- **Individuelle valg:** Med bet-hedging aktiveret beslutter træet at vokse eller angribe med sin egen `s_i`, så fænotypevariation faktisk kan påvirke konkurrencen. Uden bet-hedging beslutter en sammenhængende artsgruppe samlet som tidligere.
+- **Uforudsigelige klimachok:** En særskilt seed-baseret hash giver én pseudotilfældig multiplikativ faktor pr. klimaperiode på *den planlagte energioptagskapacitet fra Q*. `climateNoise` er styrken 0–1; faktoren er `1 + noise × U[-1,1]`. Det er ikke ekstern energi: hvert optag flytter som hidtil energi fra Q til E, og Q+Σ(E+U) bevares. Klimatidsserien kan gentages ved samme seed. Basisformlen kan stadig redigeres i formelfeltet; den grønne periodekurve viser aktuelt realiseret optagskapacitet inkl. chok.
+- **Diversitetsmål:** Shannon-artsentropi H fra slægtlinje-andele holdes adskilt fra fænotypisk strategientropi, beregnet på ti s-intervaller. Forskningspanel viser også gennemsnitlig arvelig σ og en ny tidsserie med fordelinger mellem lave, mellem og høje angrebsstrategier.
 
-**Formål:** Et fast sammenligningsdesign med tre varianter: (1) konstant energioptag og konstante priser, (2) periodisk energioptag og konstante priser, (3) periodisk energioptag og periodiske priser. Samme frø og initialtilstand er nødvendige, men ikke tilstrækkelige til statistisk evidens; forsøg skal gentages med flere uafhængige seeds.
+### Metodiske forbehold
 
-**Implementeret som valgfrit tilvalg i »02 · Periodisk miljø« (som standard fra):** Perioden T genbruges. Med fasefortegn f=+1 (samme fase) eller −1 (modsat fase) og x=sin(2πt/T) er vækstpris c_v=κ+g(1+f·a_v·x), spredningspris til tomt felt c_s=b(1+f·a_s·x). Parametre g,b≥0 og amplituder 0≤a_v,a_s≤1. Som standard ved aktivering g=b=1, a_v=a_s=0,5 og modsat fase.
+Dette er en **testbar bet-hedging-hypotese**, ikke endnu dokumentation for at bet-hedging vinder: der skal sammenlignes med `betHedging=0` og `climateNoise=0` under parrede seeds samt måles langsigtet overlevelse og slægtlinjeudskiftning. Stokastiske klimafaktorer er her uafhængige *mellem perioder* men konstante i hver periode. Fordelingssamplingen er uniform og klippet ved grænserne, ikke en normalfordeling. Interne fænotyper hører til samme genetiske art; derfor kan strategientropi stige uden at artsentropien stiger. Der er ingen belønning for sjældne arter eller beskyttede angrebsmål.
 
-**Energibevarelse:** Vækst flytter altid den *konstante* κ=2 (eller brugerens valgte κ) fra reservenergi E til U=κh, mens tillægget c_v−κ går til Q. Spredning betaler først c_s fra E til Q, derefter halveres resterende E og h mellem forælder og afkom. Hvis E≤c_s, foretages ingen spredning (afkom skal have positiv reserve). Ingen nye energikilder; Q+Σ(E+κh) er fortsat konstant. Angreb mod levende træer og spontan etablering ændres ikke. Med funktionen fra er den tidligere gratis spredning og κ-vækst bevaret uændret.
+### Verifikation
 
-**Stopregel:** Ingen yderligere mekanismer indføres, før vi har gennemført systematiske kontrolforsøg, kontrolleret energibalance og undersøgt population, strategi, artsentropi og periodisk respons på tværs af seeds og geometrier. Denne logbog beskriver implementeringen, ikke empiriske konklusioner.
-
-
-## 17. november 2026 — Fasevisning og venstrepanel
-
-Interfacet ændres uden ny biologisk mekanisme: Indstillingerne står til venstre for skoven (ovenfor på smal mobilskærm), med en fælles periode T for de tre synlige, ikke-normaliserede forudvisningskurver r(t), c_v(t) og c_s(t). Hver kurve har selvstændig faseforskyder i grader: φ_r, φ_v, φ_s ∈ [0°,360°]. Kurverne beregnes fra de **samme funktioner som simuleringen**: r(t)=r0[1+a_r sin(2πt/T+φ_r)], c_v(t)=κ+g[1+a_v sin(2πt/T+φ_v)] og c_s(t)=b[1+a_s sin(2πt/T+φ_s)] når pristilvalget er aktiveret; ellers c_v=κ og c_s=0. Kurverne ændres straks ved indtastning; en fuldført ændring genstarter forsøget med det samme seed. Kamp mod eksisterende levende træer har stadig konstant angrebspris. Øvrige mekanismer forbliver uændrede. Nye forsøg må ikke forveksle visualisering med ny fysisk evidens.
-
-
-## 17. november 2026 — Korrigeret visualisering af perioder
-
-**Brugerrettelse:** De tre individuelle forhåndsgrafer skal ikke ligge i indstillingspanelet. Den faktiske visning skal have **én samlet graf direkte under skovens lattice**, med tre samtidige kurver (energioptag fra Q, samlet vækstpris, spredningspris til tomt felt) på **samme tids- og energiakse**. Alle justerbare kontroller ligger i **højre panel** på desktop, herunder fase, amplitude og middelpris for hver kurve. På mobil vises kontrolpanelet ovenfor skoven.
-
-Kun visning og placering ændres: de tidligere uafhængige faseforskydninger og energibevarelsesregler genbruges uændret. Den stiplede markør viser aktuelt sweep i perioden, og aktuelle kurveværdier vises i farveforklaringen. De separate A/B/C-grafer for observeret simulationsdynamik er stadig tilgængelige under skoven som forskningsmålinger og er ikke indstillingsgrafer.
-
-
-## 17. november 2026 — Ingen fast κ: selvvalgt pris for højde og angreb
-
-**Brugerbeslutning:** Fjern en fast nedre strukturpris κ. De tre kurver under lattice repræsenterer nu energioptag r(t), **hele prisen pr. højdeenhed** c_h(t), og **hele prisen for angreb/spredning** c_a(t). Indstillingerne er fortsat i højrepanelet.
-
-**Prismodeller:** Når periodiske priser er slået fra, er c_h(t)=c_h0 og c_a(t)=c_a0, som begge kan sættes helt ned til nul. Når periodiske priser er slået til, er c_h(t)=c_h0[1+a_h sin(2πt/T+φ_h)] og c_a(t)=c_a0[1+a_a sin(2πt/T+φ_a)]. Kurverne har hver sin amplitude og fase. Energioptag har fortsat r(t)=r0[1+a_r sin(2πt/T+φ_r)]. Der er intet skjult fast tillæg eller minimum til c_h eller c_a.
-
-**Ny intern strukturbogføring:** I stedet for at antage U_i=κ h_i gemmes den faktisk investerede strukturelle energi som separat tilstandsvariabel U_i for hvert træ. Ved vækst reduceres E_i med hele c_h(t), U_i øges med samme beløb, og h_i øges med 1. Når et træ spreder sig til tomt nabofelt, flyttes c_a(t) fra E_i til Q, hvorefter E, h og U deles 50/50. Ved kamp mod levende træ betales samme aktuelle c_a(t) til Q. Ved sejrrig kamp opbygges afkommets højde 1 med den aktuelle c_h(t) og en særskilt overført afkomsreserve. Spontan etablering fra Q bruger tilsvarende aktuel højdepris + startreserve. Ved død returneres E_i+U_i til Q. Den lukkede energiinvariant er dermed Q+Σ_i(E_i+U_i)=konstant på trods af varierende c_h(t).
-
-**Modelimplikation:** En højdeenhed kan koste forskelligt afhængigt af skabelsestidspunktet. Derfor er U_i ikke længere proportional med h_i. Dette er en bevidst modelændring og ikke blot en ændring af brugergrænsefladen. Resultater må ikke sammenlignes naivt med ældre simulationer, der brugte gratis spredning og konstant κ.
-
-
-## 17. november 2026 — Direkte ligningseditor og vedligeholdelseskurve
-
-**Brugerbestemt interface:** Ét fælles diagram direkte under lattice viser nu fire samtidige energistrømme på samme skala: energioptag fra Q (grøn), pris for +1 højde (orange), pris for angreb/spredning (blå), og vedligeholdelse (lilla). Den lilla kurve gælder den referencehøjde, der indstilles under grafen (standard h=10); i simuleringen betaler hvert træ efter sin egen h. Den stiplede linje viser aktuelle sweep.
-
-**Faktiske redigerbare ligninger i højrepanelet:** Standardfunktionerne er
-
-- r(t)=r0*(1+ar*sin(2*pi*t/T+pr*pi/180));
-- c_h(t)=ch*(1+ah*sin(2*pi*t/T+ph*pi/180));
-- c_a(t)=ca*(1+aa*sin(2*pi*t/T+pa*pi/180));
-- v(t,h)=m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2).
-
-Standardamplituderne er 0,5, og alle udregnes periodisk uden tidligere on/off-kontakt. Amplitude 0 giver konstant værdi. Enhver af de fire ligninger kan ændres i et tekstfelt, og en gyldig ændring visualiseres straks. Ved afslutning af feltet anvendes den samme formel i simuleringsmotoren, og forsøget genstarter med samme seed. Formelparseren accepterer kun tilladte tal, navngivne variable, operatorer og rene matematiske funktioner; ingen eval eller fremmed kode udføres. Der valideres mod negative, ikke-endelige og større end 10^6 energistrømme ved en prøve over perioden og relevante højder. Numerisk runding lige under nul i en sinusdal afrundes til nul. Fejlvisning advarer mod ugyldig formel.
-
-**Energiargument:** Vækst betaler hele c_h(t) fra E til eget historisk lagrede U, angreb betaler hele c_a(t) fra E til Q, vedligehold v(t,h) betales fra E til Q, og energioptag er fra Q til E. Der skabes ikke energi ved parameterændringer. Den invariantsikrede størrelse er Q+Σ(E+U), med separat U per træ. Vedligeholdelse er ikke længere nødvendigvis konstant i tid. Dette er en ny modelændring og skal dokumenteres i efterfølgende forsøgsrapportering.
-
-
-## 17. november 2026 — Kompakt matematisk visning af ligningseditoren
-
-Dette er **udelukkende en interfaceændring**, ikke en ny modelmekanisme. De tre hovedligninger for energioptag, højdepris og angrebspris er flyttet ud af det lange højrepanel og placeret i tre små matematikkort lige **over den fælles kurvegraf under lattice**. Vedligeholdelsesligningen er bevaret i en separat, slank fjerde række; dens lilla kurve bliver i samme diagram. Hvert kort viser matematisk typografi (LaTeX rendret med KaTeX, med browserens MathML som reserve) samt sit eksisterende redigerbare formelfelt. Selve formlen valideres og bruges fortsat af simulationens sikre aritmetiske parser. Højrepanelets øvrige pris-, fase- og amplitudeindstillinger er samlet under en lukket sektion 'Flere parametre', så standardvisningen fylder mindre. Tests undersøger placering på mobil og desktop, opdateret LaTeX-visning og at alle fire formler stadig kan redigeres. Energievolutionen Q+Σ(E+U) er uændret.
-
-
-## 17. november 2026 — Ryddet forskningsområde: én variabel mod artsentropi
-
-**Brugerønske:** De nederste A/B/C-analyser skabte for mange delpaneler uden en tydelig forsøgsmetode. Ét valgt parameterstudie ad gangen er mere forståeligt: fasthold alle andre modelparametre, ændr kun én, og undersøg om dens tidsforløb samvarierer med diversiteten.
-
-**Nyt forskningspanel:** Nederst er A/B/C-fanerne erstattet af ét samlet område med (1) valg af forsøgsvariabel fra tolv parametre for optag, højdepris, angrebspris og vedligehold; (2) knappen *Gem reference*, som gemmer den aktuelle konfiguration og viser en advarsel, hvis der senere ændres andre parametre end den valgte; (3) en tidsserie med Shannon-artsentropi H og den valgte kurve over de samme sweeps; samt (4) et punktdiagram for samme par af målinger og en beskrivende Pearson-korrelationskoefficient. Forsøget ændrer ikke automatikken bag simuleringen. De gamle energimålinger, aktivitet og mutationstællere ligger under *Flere målinger og energiregnskab*, og modelbeskrivelsen er foldet sammen.
-
-**Matematisk og metodisk forbehold:** H = -Σp ln p er beregnet af de levende arters relative antal. Her vises den **rå Shannon-artsentropi**, ikke den gamle normaliserede H/ln(N). Tidsseriegrafen skalerer H og den valgte driver hver for sig til 0–1 alene for visuel sammenligning af timing. Punktdiagrammet bruger faktiske værdier på begge akser. For energioptag er den valgte kurve den planlagte optagsrate r(t), som kan afvige fra faktisk optag, når Q ikke rækker. Pearson-r er beskrivende for **ét enkelt tidsforløb**; autokorrelation, fælles tidstrends, lag og konfoundere forhindrer en umiddelbar kausal fortolkning. Referencelåsen er en kontrol/advarsel, ikke en formel batchparameterlås. Gentagne seeds, længere kørsel og sammenlignede kontrolforsøg kræves for statistiske konklusioner.
-
-**Energiregnskab:** Ingen nye handlinger, energiudvekslinger eller evolutionære regler indført. Q+Σ(E+U) og alle tidligere kurver består, mens resultatpræsentationen og observationshistorikken er udvidet med rå H og optagsrate.
-
-
-## 18. november 2026 — Selvstændig pilotundersøgelse: faseforskydning og artsdiversitet
-
-**Formål:** Undersøge om faseforskydningen mellem sinusformet energioptag (fase 0°) og prisen for højdeøgning påvirker skovens højde, tæthed og Shannon-artsentropi. Resultaterne nedenfor er **reelle browserkørsler af Peters simulationsmotor** (ikke skitserede tal). Reproducerbart script: `scripts/peter.phase-experiment.cjs`; kontrol i GitHub Actions-workflowet `scientific-labs.yml`.
-
-**Kontrolleret design:** Vækstprisens fase = {0°, 90°, 180°, 270°}; øvrige faktorer fastholdes. 8 parrede seeds = {11,23,37,47,59,71,83,97}. L=14 (196 felter), 8 startarter, startdækning 55 %, flad geometri, 4 naboer og periodiske kanter. Perioden T=80 sweeps, energioptag r0=1 med amplitude 0,5/fase 0°, højdepris ch=2 med amplitude 0,5, angrebspris ca=1 med amplitude 0,5/fase 180°. Vedligehold m=0,1 med amplitude 0,5/fase 180°. Startreserve 10, afkomsreserve 2, diffusion 0,08, fødselsmutation 0,1 %, spontan mutation 0 %, dε=0,05, Δs=0,01. Hver kørsel er 1.200 sweeps; vi ser bort fra de første 600 og måler hvert 20. sweep derefter. I hver seed gentages initialbetingelserne med den samme RNG-seed, men små faseskift kan naturligvis senere ændre, hvor mange og hvilke tilfældige begivenheder der indtræffer.
-
-| Fase for højdepris | Middel Shannon-H | Levende andel ρ | Middelhøjde | Middelstrategi s | Q-andel af energi | Uddøde kørsler |
-|---|---:|---:|---:|---:|---:|---:|
-| 0° | 0,0041 | 0,9526 | 5,018 | 0,531 | 0,0359 | 0/8 |
-| 90° | 0,0897 | 0,9630 | 5,836 | 0,541 | 0,0402 | 0/8 |
-| 180° | 0,2023 | 0,9692 | 4,875 | 0,564 | 0,0395 | 0/8 |
-| 270° | 0,0000 | 0,9680 | 5,038 | 0,568 | 0,0447 | 0/8 |
-
-**Observation 1:** Middelhøjden ved 90° er omkring **0,961 højdeenheder større** end ved 180°, og den parvise forskel har **samme fortegn i alle otte seeds**. Der er en målbar fasefølsomhed i dette begrænsede parameterregime. Det er ikke dermed dokumenteret at effekten holder for andre L, amplituder, geometrier eller mutationer.
-
-**Observation 2:** Shannon-artsentropi er næsten altid nul. Ved 180° kommer det største H især fra seeds 47 og 71 (H≈0,941 og ≈0,676), mens mange andre seeds har H≈0. Forskellen i gennemsnitlig entropi på tværs af faser er **ikke robust dokumentation for faseafhængig sameksistens**; den er meget følsom over for få kørsler. Træbestandene er fortsat store (middeltæthed ca. 0,95–0,97). Det er artssammensætning, ikke populationsoverlevelse, som kollapser.
-
-**Observation 3:** Alle 32 kørsler overholdt numerisk energibevarelsen Q+Σ(E+U). Største observerede absolutte afrundingsfejl var under 1,4×10⁻¹⁰.
-
-**Fortolkning og næste test:** Vi bør bruge *middelhøjde* sammen med entropi i forsøgsdiagrammerne; et fladt arts-H er et substantielt resultat, ikke nødvendigvis en grafisk fejl. Modellen har muligvis stærk monodominans under de valgte mutationsbetingelser. Undersøg som et selvstændigt forsøg om stigende spontan mutationsrate fastholder flere arter, med alle andre parametre faste. En model med kontinuerlig mutationsindførsel er dog ikke det samme som stabil økologisk sameksistens; det skal undersøges særskilt.
-
-
-## 18. november 2026 — Selvstændig pilotundersøgelse 2: hjælper spontan mutation artsdiversiteten?
-
-**Problem:** I første forsøg faldt Shannon-H næsten altid til nul på trods af en tæt og levende skov. For at finde årsagen til et uinformativt H-signal var næste isolerede forsøgsfaktor `spontaneousMutation`.
-
-**Design:** Gennemført direkte i Peters simulationsmotor via `scripts/peter.phase-experiment.cjs`. Værdier = {0 %, 0,1 %, 1 %, 10 % spontan mutation/etablering pr. sweep}. Alle andre parametre som ovenstående første pilot, nu med **fast højdeprisfase 180°**. Samme 8 parrede seeds. 1.200 sweeps pr. kørsel, de første 600 kasseret, 30 målinger pr. kørsel med 20-sweep interval. Spontan mutation udvælger højst ét felt per sweep ved sandsynligheden; høj mutation betyder kontinuerlig tilførsel af nye arts-id'er, ikke nødvendigvis økologisk sameksistens.
-
-| Sandsynlighed for spontan mutation | Middel Shannon-H | Middel antal samtidige levende arter | Andel observationer med >1 levende art | Middel antal mutationer efter 1.200 sweeps |
-|---|---:|---:|---:|---:|
-| 0 % | 0,2023 | 1,383 | 25,4 % | 0 |
-| 0,1 % | 0,1837 | 1,383 | 25,0 % | 1,75 |
-| 1 % | 0,0296 | 1,108 | 10,4 % | 12,63 |
-| 10 % | 0,0768 | 1,513 | 44,2 % | 118,63 |
-
-**Faktisk observation:** Sammenhængen mellem mutationsrate og artsentropi er **ikke monoton** i dette lille forsøg. Eksempelvis giver 1 % mutation en lavere middel-H end 0 %, og 10 % skaber ganske vist oftere flere samtidige arter, men meget lav middel-H; den ekstra artsrigdom består typisk af få individer i stærkt ulige store populationer. For seeds 47 og 71 var der mærkbar artsdiversitet ved 0 %, som delvis forsvandt, når mutationsprocesserne ændrede det senere forløb.
-
-**Vigtig begrænsning:** Tallene viser ikke, at mutation i sig selv reducerer diversitet som almen mekanisme. Der er kun otte seeds, resultaterne er meget frøfølsomme, og mutationerne ændrer stokastiske begivenheder i en tidsudvikling, hvor én dominerende art allerede kan overtage. Den logaritmiske Shannon-metrik påvirkes af relative artsandele, ikke blot antallet af arter. Økologisk sameksistens skal i næste runde afprøves med større/andre lattices, forskellige starttilstande, flere uafhængige gentagelser og afgrænset stabilitet over lange tidsforløb.
-
-**Teknisk:** Alle 32 mutationseksperimenter bestod energibevarelsestesten (Q+Σ(E+U)) med absolut fejl <10⁻⁷. Både første og andet pilotforsøg er gemt som reproducerbar browserautomatisering; fulde per-seed-resultater fremgår af GitHub Actions-loggen for `Scientific simulator checks` på branch `peter-dev`, med markørerne `SKOV_EXPERIMENT_START/END` og `SKOV_MUTATION_START/END`.
-
-**Foreløbig prioritering:** (1) Reproducer højdeprissens faseeffekt på middelhøjde på større lattices og flere seeds, da 8/8 parvise forskelle havde samme fortegn. (2) Undersøg under hvilke regler arter sameksisterer uden konstant tilførsel af mutanter. (3) Brug densitet og højde som primære responser indtil entropien er meningsfuld. Undgå at kalde et entropifald 'termodynamisk entropi' eller forveksle en enkelt tidsserie-korrelation med kausalitet.
-
-
-## 18. november 2026 — Responser i forskningspanelet efter pilotfund
-
-Efter de to selvstændige forsøg kan forskningspanelets bruger nu vælge både **forsøgsvariabel (input)** og **responsmål (output)**: gennemsnitlig højde (standard), rå Shannon-artsentropi, levende andel eller populationsvægtet angrebsstrategi. Tidsserier og punktdiagram bruger de valgte responser; de øvrige input skal stadig holdes faste. Valget af middelhøjde som standard er begrundet i den observerede mere ensartede faserespons i den første pilot, ikke i at den tidligere entropimåling var matematisk ugyldig. Ingen træ-, energi- eller evolutionær dynamik ændret. Automatisk browsertest verificerer de fire responsmål. 
+Browserbaserede mekaniktests findes i `scripts/peter-hedging.test.cjs` og er koblet på `scientific-labs.yml`. De kontrollerer angrebsadgang mellem selv identiske arter, afkoms variationsgrænser, klimachoks reproducerbarhed og aktivering, deterministisk genstart med samme seed, energibevarelse under 400 sweeps på tre geometrier samt korrekt energi-/slægtsarv ved spredning og de nye grafer. Den 18. november 2026 bestod disse tests sammen med de øvrige videnskabelige tests i GitHub Actions workflow **44345250744**.
