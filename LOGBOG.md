@@ -776,3 +776,24 @@ Automatiseret JS-runtimetest med mock DOM og samtlige nødvendige felter: fladt,
 ## 2026-11-16 — Konservativ pulje Q og højdebaserede angreb (Peters lab)
 
 Personlige versioner på `peter-dev/index.html` og `main/peter/index.html` opdateret. Kampvinder afhænger fortsat af højde `P(A vinder)=h_A/(h_A+h_B)=U_A/(U_A+U_B)` med fælles `U=κh`, standard κ=2. Træernes reserver starter på 10. Angrebspris er 1 og returneres til Q; vedligehold returneres ligeledes; død frigiver restreserve og U til Q. Afkom får reserver og strukturel energi finansieret af forælderen. Periodisk variation regulerer loftet for optag fra Q, ikke tilførsel af ny energi. Parvis konservativ energidiffusion sker over nabokanter mellem træer med samme art eller strategiforskel højst Δs; den tidligere abstrakte højdeudjævning er erstattet. Hvis et træ ingen angrebsbare naboer har, kan gruppen kun vokse, hvis energien rækker. Start-Q sat til 2 pr felt så periodisk uddeling har effekt. Puljetab standard 0. Energiregnskab er `Q+Σ(E+U)+kumulativt tab = startenergi`. Test: 3 geometrier × 3 amplituder × 180 sweeps; maksimal absolut balancefejl < 2e-10 energienheder i test. Ved amplituden 1 blev fuld udryddelse observeret i test med positiv pulje tilbage; uden træer findes ingen mekanisme til spontan genkolonisering. Ikke evidens for faseovergang. Browser-visning ikke valideret separat.
+
+
+## 18. november 2026 — Implementeret bet-hedging og uforudsigeligt klima uden artsimmunitet
+
+**Brugerbestilling:** Erstat beskyttelse af ens/lignende arter med almindelig konkurrence, og tilføj både arvelig bet-hedging og et uforudsigeligt miljø. Formålet er at undersøge løbende evolutionær omsætning af angrebsstrategier, uden at artsdiversitet bliver påtvunget.
+
+### Den nye dynamik
+
+- **Ingen Δs-immunitet:** Den tidligere skelnegrænse og dens input er fjernet. Nabotræer kan angribes uanset genotype eller fænotype, også hvis de kommer fra samme art. Energiforbrug, højdeafhængig vinderchance og regler for formering er stadig gældende.
+- **Diversified bet-hedging:** Genetisk slægtlinje `a` har arvelig middelstrategi `μ_a` i `strategies[a]` og arvelig variationsbredde `σ_a` i `sigmas[a]`. Hvert træ har en individuel, varig fænotype `s_i` i `phenotypes[i]`, sampled ved etablering som `clip(μ_a + U[-σ_a,σ_a],0,1)`. Frie afkom og afkom efter kamp nedarver arts-id (medmindre fødselsmutation laver ny slægtlinje), men får deres egen fænotype. På hver fødsel kan mutation, hvis aktiveret, lave en ny slægtlinje med ændret `μ` eller `σ`. Spontan mutation på levende træ ændrer også arvelig slægtlinje og genprøver fænotypen. Bet-hedging kan slås fra, hvorefter alle træer i en art har `s_i = μ_a` og den gamle artsgruppebaserede handlingsbeslutning bruges.
+- **Individuelle valg:** Med bet-hedging aktiveret beslutter træet at vokse eller angribe med sin egen `s_i`, så fænotypevariation faktisk kan påvirke konkurrencen. Uden bet-hedging beslutter en sammenhængende artsgruppe samlet som tidligere.
+- **Uforudsigelige klimachok:** En særskilt seed-baseret hash giver én pseudotilfældig multiplikativ faktor pr. klimaperiode på *den planlagte energioptagskapacitet fra Q*. `climateNoise` er styrken 0–1; faktoren er `1 + noise × U[-1,1]`. Det er ikke ekstern energi: hvert optag flytter som hidtil energi fra Q til E, og Q+Σ(E+U) bevares. Klimatidsserien kan gentages ved samme seed. Basisformlen kan stadig redigeres i formelfeltet; den grønne periodekurve viser aktuelt realiseret optagskapacitet inkl. chok.
+- **Diversitetsmål:** Shannon-artsentropi H fra slægtlinje-andele holdes adskilt fra fænotypisk strategientropi, beregnet på ti s-intervaller. Forskningspanel viser også gennemsnitlig arvelig σ og en ny tidsserie med fordelinger mellem lave, mellem og høje angrebsstrategier.
+
+### Metodiske forbehold
+
+Dette er en **testbar bet-hedging-hypotese**, ikke endnu dokumentation for at bet-hedging vinder: der skal sammenlignes med `betHedging=0` og `climateNoise=0` under parrede seeds samt måles langsigtet overlevelse og slægtlinjeudskiftning. Stokastiske klimafaktorer er her uafhængige *mellem perioder* men konstante i hver periode. Fordelingssamplingen er uniform og klippet ved grænserne, ikke en normalfordeling. Interne fænotyper hører til samme genetiske art; derfor kan strategientropi stige uden at artsentropien stiger. Der er ingen belønning for sjældne arter eller beskyttede angrebsmål.
+
+### Verifikation
+
+Browserbaserede mekaniktests findes i `scripts/peter-hedging.test.cjs` og er koblet på `scientific-labs.yml`. De kontrollerer angrebsadgang mellem selv identiske arter, afkoms variationsgrænser, klimachoks reproducerbarhed og aktivering, deterministisk genstart med samme seed, energibevarelse under 400 sweeps på tre geometrier samt korrekt energi-/slægtsarv ved spredning og de nye grafer. Den 18. november 2026 bestod disse tests sammen med de øvrige videnskabelige tests i GitHub Actions workflow **44345250744**.
