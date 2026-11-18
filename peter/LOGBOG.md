@@ -876,3 +876,52 @@ Dette er **udelukkende en interfaceændring**, ikke en ny modelmekanisme. De tre
 **Matematisk og metodisk forbehold:** H = -Σp ln p er beregnet af de levende arters relative antal. Her vises den **rå Shannon-artsentropi**, ikke den gamle normaliserede H/ln(N). Tidsseriegrafen skalerer H og den valgte driver hver for sig til 0–1 alene for visuel sammenligning af timing. Punktdiagrammet bruger faktiske værdier på begge akser. For energioptag er den valgte kurve den planlagte optagsrate r(t), som kan afvige fra faktisk optag, når Q ikke rækker. Pearson-r er beskrivende for **ét enkelt tidsforløb**; autokorrelation, fælles tidstrends, lag og konfoundere forhindrer en umiddelbar kausal fortolkning. Referencelåsen er en kontrol/advarsel, ikke en formel batchparameterlås. Gentagne seeds, længere kørsel og sammenlignede kontrolforsøg kræves for statistiske konklusioner.
 
 **Energiregnskab:** Ingen nye handlinger, energiudvekslinger eller evolutionære regler indført. Q+Σ(E+U) og alle tidligere kurver består, mens resultatpræsentationen og observationshistorikken er udvidet med rå H og optagsrate.
+
+
+## 18. november 2026 — Selvstændig pilotundersøgelse: faseforskydning og artsdiversitet
+
+**Formål:** Undersøge om faseforskydningen mellem sinusformet energioptag (fase 0°) og prisen for højdeøgning påvirker skovens højde, tæthed og Shannon-artsentropi. Resultaterne nedenfor er **reelle browserkørsler af Peters simulationsmotor** (ikke skitserede tal). Reproducerbart script: `scripts/peter.phase-experiment.cjs`; kontrol i GitHub Actions-workflowet `scientific-labs.yml`.
+
+**Kontrolleret design:** Vækstprisens fase = {0°, 90°, 180°, 270°}; øvrige faktorer fastholdes. 8 parrede seeds = {11,23,37,47,59,71,83,97}. L=14 (196 felter), 8 startarter, startdækning 55 %, flad geometri, 4 naboer og periodiske kanter. Perioden T=80 sweeps, energioptag r0=1 med amplitude 0,5/fase 0°, højdepris ch=2 med amplitude 0,5, angrebspris ca=1 med amplitude 0,5/fase 180°. Vedligehold m=0,1 med amplitude 0,5/fase 180°. Startreserve 10, afkomsreserve 2, diffusion 0,08, fødselsmutation 0,1 %, spontan mutation 0 %, dε=0,05, Δs=0,01. Hver kørsel er 1.200 sweeps; vi ser bort fra de første 600 og måler hvert 20. sweep derefter. I hver seed gentages initialbetingelserne med den samme RNG-seed, men små faseskift kan naturligvis senere ændre, hvor mange og hvilke tilfældige begivenheder der indtræffer.
+
+| Fase for højdepris | Middel Shannon-H | Levende andel ρ | Middelhøjde | Middelstrategi s | Q-andel af energi | Uddøde kørsler |
+|---|---:|---:|---:|---:|---:|---:|
+| 0° | 0,0041 | 0,9526 | 5,018 | 0,531 | 0,0359 | 0/8 |
+| 90° | 0,0897 | 0,9630 | 5,836 | 0,541 | 0,0402 | 0/8 |
+| 180° | 0,2023 | 0,9692 | 4,875 | 0,564 | 0,0395 | 0/8 |
+| 270° | 0,0000 | 0,9680 | 5,038 | 0,568 | 0,0447 | 0/8 |
+
+**Observation 1:** Middelhøjden ved 90° er omkring **0,961 højdeenheder større** end ved 180°, og den parvise forskel har **samme fortegn i alle otte seeds**. Der er en målbar fasefølsomhed i dette begrænsede parameterregime. Det er ikke dermed dokumenteret at effekten holder for andre L, amplituder, geometrier eller mutationer.
+
+**Observation 2:** Shannon-artsentropi er næsten altid nul. Ved 180° kommer det største H især fra seeds 47 og 71 (H≈0,941 og ≈0,676), mens mange andre seeds har H≈0. Forskellen i gennemsnitlig entropi på tværs af faser er **ikke robust dokumentation for faseafhængig sameksistens**; den er meget følsom over for få kørsler. Træbestandene er fortsat store (middeltæthed ca. 0,95–0,97). Det er artssammensætning, ikke populationsoverlevelse, som kollapser.
+
+**Observation 3:** Alle 32 kørsler overholdt numerisk energibevarelsen Q+Σ(E+U). Største observerede absolutte afrundingsfejl var under 1,4×10⁻¹⁰.
+
+**Fortolkning og næste test:** Vi bør bruge *middelhøjde* sammen med entropi i forsøgsdiagrammerne; et fladt arts-H er et substantielt resultat, ikke nødvendigvis en grafisk fejl. Modellen har muligvis stærk monodominans under de valgte mutationsbetingelser. Undersøg som et selvstændigt forsøg om stigende spontan mutationsrate fastholder flere arter, med alle andre parametre faste. En model med kontinuerlig mutationsindførsel er dog ikke det samme som stabil økologisk sameksistens; det skal undersøges særskilt.
+
+
+## 18. november 2026 — Selvstændig pilotundersøgelse 2: hjælper spontan mutation artsdiversiteten?
+
+**Problem:** I første forsøg faldt Shannon-H næsten altid til nul på trods af en tæt og levende skov. For at finde årsagen til et uinformativt H-signal var næste isolerede forsøgsfaktor `spontaneousMutation`.
+
+**Design:** Gennemført direkte i Peters simulationsmotor via `scripts/peter.phase-experiment.cjs`. Værdier = {0 %, 0,1 %, 1 %, 10 % spontan mutation/etablering pr. sweep}. Alle andre parametre som ovenstående første pilot, nu med **fast højdeprisfase 180°**. Samme 8 parrede seeds. 1.200 sweeps pr. kørsel, de første 600 kasseret, 30 målinger pr. kørsel med 20-sweep interval. Spontan mutation udvælger højst ét felt per sweep ved sandsynligheden; høj mutation betyder kontinuerlig tilførsel af nye arts-id'er, ikke nødvendigvis økologisk sameksistens.
+
+| Sandsynlighed for spontan mutation | Middel Shannon-H | Middel antal samtidige levende arter | Andel observationer med >1 levende art | Middel antal mutationer efter 1.200 sweeps |
+|---|---:|---:|---:|---:|
+| 0 % | 0,2023 | 1,383 | 25,4 % | 0 |
+| 0,1 % | 0,1837 | 1,383 | 25,0 % | 1,75 |
+| 1 % | 0,0296 | 1,108 | 10,4 % | 12,63 |
+| 10 % | 0,0768 | 1,513 | 44,2 % | 118,63 |
+
+**Faktisk observation:** Sammenhængen mellem mutationsrate og artsentropi er **ikke monoton** i dette lille forsøg. Eksempelvis giver 1 % mutation en lavere middel-H end 0 %, og 10 % skaber ganske vist oftere flere samtidige arter, men meget lav middel-H; den ekstra artsrigdom består typisk af få individer i stærkt ulige store populationer. For seeds 47 og 71 var der mærkbar artsdiversitet ved 0 %, som delvis forsvandt, når mutationsprocesserne ændrede det senere forløb.
+
+**Vigtig begrænsning:** Tallene viser ikke, at mutation i sig selv reducerer diversitet som almen mekanisme. Der er kun otte seeds, resultaterne er meget frøfølsomme, og mutationerne ændrer stokastiske begivenheder i en tidsudvikling, hvor én dominerende art allerede kan overtage. Den logaritmiske Shannon-metrik påvirkes af relative artsandele, ikke blot antallet af arter. Økologisk sameksistens skal i næste runde afprøves med større/andre lattices, forskellige starttilstande, flere uafhængige gentagelser og afgrænset stabilitet over lange tidsforløb.
+
+**Teknisk:** Alle 32 mutationseksperimenter bestod energibevarelsestesten (Q+Σ(E+U)) med absolut fejl <10⁻⁷. Både første og andet pilotforsøg er gemt som reproducerbar browserautomatisering; fulde per-seed-resultater fremgår af GitHub Actions-loggen for `Scientific simulator checks` på branch `peter-dev`, med markørerne `SKOV_EXPERIMENT_START/END` og `SKOV_MUTATION_START/END`.
+
+**Foreløbig prioritering:** (1) Reproducer højdeprissens faseeffekt på middelhøjde på større lattices og flere seeds, da 8/8 parvise forskelle havde samme fortegn. (2) Undersøg under hvilke regler arter sameksisterer uden konstant tilførsel af mutanter. (3) Brug densitet og højde som primære responser indtil entropien er meningsfuld. Undgå at kalde et entropifald 'termodynamisk entropi' eller forveksle en enkelt tidsserie-korrelation med kausalitet.
+
+
+## 18. november 2026 — Responser i forskningspanelet efter pilotfund
+
+Efter de to selvstændige forsøg kan forskningspanelets bruger nu vælge både **forsøgsvariabel (input)** og **responsmål (output)**: gennemsnitlig højde (standard), rå Shannon-artsentropi, levende andel eller populationsvægtet angrebsstrategi. Tidsserier og punktdiagram bruger de valgte responser; de øvrige input skal stadig holdes faste. Valget af middelhøjde som standard er begrundet i den observerede mere ensartede faserespons i den første pilot, ikke i at den tidligere entropimåling var matematisk ugyldig. Ingen træ-, energi- eller evolutionær dynamik ændret. Automatisk browsertest verificerer de fire responsmål. 
