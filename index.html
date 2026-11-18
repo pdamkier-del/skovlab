@@ -473,18 +473,19 @@ function step(){
   if(!members.length)continue;
   const canGrow=members.some(i=>(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9)&&(!cfg.energyEnabled||en[i]>=growthPrice()));
   const canAttack=members.some(i=>external(i,a).some(j=>canTarget(i,j)));
-  const preferGrowth=rng()>=strategies[a],grow=canGrow&&(preferGrowth||!canAttack);
-  if(grow){for(const i of members)if(sp[i]===a)growTree(i);}
-  else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
+  if(cfg.betHedging){shuffle(members);for(const i of members){if(sp[i]!==a||stamp[i]===sweep)continue;const eligibleGrow=(!cfg.maxHeight||h[i]+1<=cfg.maxHeight)&&en[i]>=growthPrice();const eligibleAttack=external(i,a).some(j=>canTarget(i,j));if(eligibleGrow&&(rng()>=phenotypes[i]||!eligibleAttack))growTree(i);else if(eligibleAttack)attempt(i,a);}}
+  else{const preferGrowth=rng()>=strategies[a],grow=canGrow&&(preferGrowth||!canAttack);
+   if(grow){for(const i of members)if(sp[i]===a)growTree(i);}
+   else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}}
  }
  if(cfg.energyEnabled)for(let i=0;i<sp.length;i++)if(sp[i]>=0&&en[i]<=0)killTree(i);
  spontaneousMutation();record();
 }
 function stats(){
- const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0,sumEnergy=0,sumPotential=0,sumStrategy=0;
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];sumEnergy+=en[i];if(cfg.energyEnabled)sumPotential+=u[i];sumStrategy+=strategies[a];total++;highest=Math.max(highest,h[i]);}
- let entropy=0;
- if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
+ const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0,sumEnergy=0,sumPotential=0,sumStrategy=0,sumSigma=0;const phenobins=new Array(10).fill(0);
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];sumEnergy+=en[i];if(cfg.energyEnabled)sumPotential+=u[i];sumStrategy+=phenotypes[i];sumSigma+=sigmas[a]||0;phenobins[Math.min(9,Math.floor(phenotypes[i]*10))]++;total++;highest=Math.max(highest,h[i]);}
+ let entropy=0,traitEntropy=0;
+ if(total){for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}for(const n of phenobins)if(n){const p=n/total;traitEntropy-=p*Math.log(p);}}
  let unlike=0,pairs=0;const L=cfg.L;
  if(geometry){
   for(let k=0;k<geometry.edgeI.length;k++){
@@ -501,11 +502,11 @@ function stats(){
   }
  }
  return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
- alive:cnt.filter(x=>x>0).length,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0,pool:cfg.energyEnabled?pool:0,reserveTotal:cfg.energyEnabled?sumEnergy:0,potentialTotal:sumPotential,totalEnergy:cfg.energyEnabled?pool+sumEnergy+sumPotential:0,balanceError:cfg.energyEnabled?pool+sumEnergy+sumPotential+energyLedger.dissipated-energyLedger.initial:0,meanEnergy:total?sumEnergy/total:0,meanStrategy:total?sumStrategy/total:0,density:total/sp.length};
+ alive:cnt.filter(x=>x>0).length,traitEntropy,meanSigma:total?sumSigma/total:0,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0,pool:cfg.energyEnabled?pool:0,reserveTotal:cfg.energyEnabled?sumEnergy:0,potentialTotal:sumPotential,totalEnergy:cfg.energyEnabled?pool+sumEnergy+sumPotential:0,balanceError:cfg.energyEnabled?pool+sumEnergy+sumPotential+energyLedger.dissipated-energyLedger.initial:0,meanEnergy:total?sumEnergy/total:0,meanStrategy:total?sumStrategy/total:0,density:total/sp.length};
 }
 function record(force=false){
  historyStep++;if(!force&&historyStep%historyStride)return;
- const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,Hraw:st.entropy,meanHeight:st.meanHeight,uptake:energySupply(),leader:st.leader,mix:st.mix,rho:st.density,E:cfg.energyEnabled?st.meanEnergy/Math.max(.01,Math.max(1,cfg.startEnergy)):0,b:events.birthsStep/sp.length,d:events.deathsStep/sp.length,Q:cfg.energyEnabled?energySupply()/Math.max(.01,cfg.energyInput*(1+cfg.climateAmplitude)):0,growthPrice:growthPrice(),spreadPrice:spreadPrice(),poolFrac:cfg.energyEnabled?st.pool/Math.max(1,st.totalEnergy):0,s:st.meanStrategy});
+ const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,Hraw:st.entropy,meanHeight:st.meanHeight,traitEntropy:st.traitEntropy,sigma:st.meanSigma,uptake:energySupply(),leader:st.leader,mix:st.mix,rho:st.density,E:cfg.energyEnabled?st.meanEnergy/Math.max(.01,Math.max(1,cfg.startEnergy)):0,b:events.birthsStep/sp.length,d:events.deathsStep/sp.length,Q:cfg.energyEnabled?energySupply()/Math.max(.01,cfg.energyInput*(1+cfg.climateAmplitude)):0,growthPrice:growthPrice(),spreadPrice:spreadPrice(),poolFrac:cfg.energyEnabled?st.pool/Math.max(1,st.totalEnergy):0,s:st.meanStrategy});
  if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
 }
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
@@ -542,7 +543,7 @@ function pearson(rows){
 }
 function drawStudy(){
  const {key,def,rows,outcome}=studySeries(),n=rows.length;
- const outcomeLabels={meanHeight:"Gennemsnitlig træhøjde",Hraw:"Shannon-artsentropi H",rho:"Levende andel ρ",s:"Gennemsnitlig angrebsstrategi s"};
+ const outcomeLabels={meanHeight:"Gennemsnitlig træhøjde",Hraw:"Shannon-artsentropi H",rho:"Levende andel ρ",s:"Gennemsnitlig angrebsstrategi s",traitEntropy:"Strategidiversitet (10 intervaller)",sigma:"Arvelig variationsbredde σ"};
  const response=outcomeLabels[outcome]||outcomeLabels.meanHeight;
  $("studyOutcomeLabel").textContent=response;$("studyYAxisLabel").textContent=response+" (lodret)";
  $("studyDriverLabel").textContent=def.label;$("studyScatterLabel").textContent=def.label;
@@ -644,10 +645,10 @@ function draw(){
  $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":gridView==="energy"?"linear-gradient(90deg,#233460,#f5c559)":"linear-gradient(90deg,#172a21,#31785c)";
  $("heightMaxLegend").textContent=gridView==="energy"?"Energi ≥ "+Math.max(1,cfg.startEnergy).toFixed(1):"Højde "+Math.max(1,st.highest).toFixed(1);
  const living=st.cnt.map((n,k)=>({n,k})).filter(v=>v.n>0).sort((a,b)=>b.n-a.n);
- $("forestSpeciesLegend").innerHTML=living.slice(0,24).map(({n,k})=>'<div class="forest-species-row"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategies[k].toFixed(3)+'</span></div>').join("")+(living.length>24?'<div class="hint">+'+(living.length-24)+' flere aktive arter</div>':"");
+ $("forestSpeciesLegend").innerHTML=living.slice(0,24).map(({n,k})=>'<div class="forest-species-row"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">μ = '+strategies[k].toFixed(3)+' · σ = '+(sigmas[k]||0).toFixed(3)+'</span></div>').join("")+(living.length>24?'<div class="hint">+'+(living.length-24)+' flere aktive arter</div>':"");
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");
  $("alive").textContent=st.alive;$("speciesTotal").textContent=strategies.length.toLocaleString("da-DK");$("highest").textContent=st.highest.toFixed(1);
- $("effective").textContent=Math.exp(st.entropy).toFixed(2);
+ $("effective").textContent=Math.exp(st.entropy).toFixed(2);$("traitEntropyOut").textContent=st.traitEntropy.toFixed(3);$("hedgeSigmaOut").textContent=st.meanSigma.toFixed(3);
  
  $("climateNow").textContent=cfg.energyEnabled?energySupply().toFixed(2):"fra";$("climateRange").textContent=cfg.energyEnabled?(cfg.energyInput*(1-cfg.climateAmplitude)).toFixed(2)+" – "+(cfg.energyInput*(1+cfg.climateAmplitude)).toFixed(2):"fra";$("climatePhase").textContent=((sweep%cfg.climatePeriod)/cfg.climatePeriod*100).toFixed(0)+" %";$("growthPriceNow").textContent=growthPrice().toFixed(2);$("spreadPriceNow").textContent=spreadPrice().toFixed(2);$("maintenancePriceNow").textContent=maintenanceAt(sweep,Number($("graphHeight").value)).toFixed(2);
  $("poolOut").textContent=st.pool.toFixed(1);$("reserveOut").textContent=st.reserveTotal.toFixed(1);$("potentialOut").textContent=st.potentialTotal.toFixed(1);$("totalEnergyOut").textContent=st.totalEnergy.toFixed(1);$("balanceOut").textContent=st.balanceError.toExponential(1);
@@ -694,7 +695,7 @@ for(const [kind,id] of Object.entries(fids)){
  });
 }
 canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const hit=cfg.curvature===1?sphereHit((e.clientX-r.left)/r.width*380,(e.clientY-r.top)/r.height*380,380,380):null;
- const i=hit?hit.i:visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3)+(cfg.energyEnabled?" · reserve="+en[i].toFixed(2)+" · U="+u[i].toFixed(2):"");});
+ const i=hit?hit.i:visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · fænotype s="+phenotypes[i].toFixed(3)+" · μ="+strategies[a].toFixed(3)+" · σ="+(sigmas[a]||0).toFixed(3)+(cfg.energyEnabled?" · reserve="+en[i].toFixed(2)+" · U="+u[i].toFixed(2):"");});
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
 canvas.addEventListener("pointerdown",e=>{
  if(cfg.curvature!==1)return;
@@ -721,6 +722,6 @@ $("studyCapture").addEventListener("click",()=>{studyBaseline={...cfg};drawStudy
 $("studyJump").addEventListener("click",()=>{const el=$(String($("studyVariable").value));if(!el)return;const section=el.closest(".right-category");if(section)section.open=true;const advanced=el.closest(".price-parameters");if(advanced)advanced.open=true;el.scrollIntoView({behavior:"smooth",block:"center"});el.focus({preventScroll:true});});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),en:Array.from(en),u:Array.from(u),energySupply:energySupply(),pool,energyLedger:{...energyLedger},strategies:Array.from(strategies),mutationCounts:{...mutationCounts},events:{...events},history:history.map(v=>({...v})),config:{...cfg},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.en)en.set(x.en);if(x.u)u.set(x.u);if(x.strategies)strategies=x.strategies.slice();},restart:init,draw,neighbours,energyTick,diffuseEnergy,studySeries,pearson,maintenanceTick,maintenanceAt,validateFormula,growTree,spread,attempt,spontaneousMutation,killTree,combatChance,growthPrice,spreadPrice,fixture:x=>{stop();if(x.cfg)Object.assign(cfg,x.cfg);for(const [kind,id] of Object.entries(fids))activeFormulas[kind]=validateFormula(cfg[id],kind);geometry=buildGeometry();sp=new Int32Array(cfg.L*cfg.L).fill(-1);h=new Float64Array(sp.length);en=new Float64Array(sp.length);u=new Float64Array(sp.length);stamp=new Int32Array(sp.length).fill(-1);for(const [i,t] of Object.entries(x.trees||{})){sp[i]=t[0];h[i]=t[1];en[i]=t[2];u[i]=t.length>3?t[3]:t[1]*cfg.growthCost;}if(x.strategies)strategies=x.strategies.slice();pool=x.pool??0;sweep=x.sweep??0;events={births:0,deaths:0,birthsStep:0,deathsStep:0};mutationCounts={birth:0,spontaneous:0};energyLedger={initial:stats().totalEnergy,injected:0,dissipated:0,recycled:0};rng=x.random===undefined?mulberry32(123):()=>x.random;}};
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),phenotypes:Array.from(phenotypes),sigmas:Array.from(sigmas),h:Array.from(h),en:Array.from(en),u:Array.from(u),energySupply:energySupply(),pool,energyLedger:{...energyLedger},strategies:Array.from(strategies),mutationCounts:{...mutationCounts},events:{...events},history:history.map(v=>({...v})),config:{...cfg},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.en)en.set(x.en);if(x.u)u.set(x.u);if(x.strategies)strategies=x.strategies.slice();if(x.sigmas)sigmas=x.sigmas.slice();if(x.phenotypes)phenotypes.set(x.phenotypes);},restart:init,draw,neighbours,energyTick,diffuseEnergy,studySeries,pearson,external,offspringTrait,climateShock,maintenanceTick,maintenanceAt,validateFormula,growTree,spread,attempt,spontaneousMutation,killTree,combatChance,growthPrice,spreadPrice,fixture:x=>{stop();if(x.cfg)Object.assign(cfg,x.cfg);for(const [kind,id] of Object.entries(fids))activeFormulas[kind]=validateFormula(cfg[id],kind);geometry=buildGeometry();sp=new Int32Array(cfg.L*cfg.L).fill(-1);h=new Float64Array(sp.length);en=new Float64Array(sp.length);u=new Float64Array(sp.length);stamp=new Int32Array(sp.length).fill(-1);phenotypes=new Float64Array(sp.length);if(x.strategies)strategies=x.strategies.slice();sigmas=(x.sigmas||strategies.map(()=>0)).slice();for(const [i,t] of Object.entries(x.trees||{})){sp[i]=t[0];h[i]=t[1];en[i]=t[2];u[i]=t.length>3?t[3]:t[1]*cfg.growthCost;phenotypes[i]=t.length>4?t[4]:strategies[t[0]];}pool=x.pool??0;sweep=x.sweep??0;events={births:0,deaths:0,birthsStep:0,deathsStep:0};mutationCounts={birth:0,spontaneous:0};energyLedger={initial:stats().totalEnergy,injected:0,dissipated:0,recycled:0};rng=x.random===undefined?mulberry32(123):()=>x.random;}};
 })();
 </script></body></html>
