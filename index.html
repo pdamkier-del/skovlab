@@ -96,7 +96,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Levende arter <b id="alive">–</b></span><span>Arter i alt (nogensinde) <b id="speciesTotal">–</b></span><span>Maks. højde <b id="highest">–</b></span></div>
 <div id="inspect">Peg på et felt for at se art, højde og strategi.</div></section>
 
-<details class="panel model-overview" id="modelOverview"><summary>Model og energiregnskab · sådan fungerer skoven</summary><p class="hint">Alle undersøgelser bruger den samme energibevarende model. Træerne optager energi fra Q, betaler vedligehold, vokser eller angriber. Ved død returneres reserve og strukturenergi til Q.</p><p class="hint">Q + Σ(E + U) er bevaret. Den periodiske graf over skoven viser de planlagte energistrømme; faktisk energioptag begrænses desuden af, hvad der er tilbage i Q.</p></details>
+<details class="panel model-overview" id="modelOverview"><summary>Model og energiregnskab · sådan fungerer skoven</summary><p class="hint">Alle undersøgelser bruger den samme energibevarende model. Træerne optager energi fra Q, betaler vedligehold, vokser eller angriber. Ved død returneres reserve og strukturenergi til Q.</p><p class="hint">Q + Σ(E + U) er bevaret. Den periodiske graf viser realiseret klimafaktor for den aktuelle periode. Faktisk optag begrænses stadig af Q.</p></details>
 <section class="panel research-dashboard" id="researchDashboard">
 <div class="panel-kicker">Forskningsområdet</div><h2>Undersøg én variabel ad gangen</h2>
 <p class="hint">Vælg én forsøgsvariabel og ét måltal. Gem en reference, og ændr kun den valgte parameter i højrepanelet. Graferne viser <b>én kørsel</b>; først flere parrede seeds kan afsløre robuste forskelle.</p>
@@ -361,7 +361,7 @@ function colonies(){
 function diffuseEnergy(){
  if(!cfg.energyEnabled||cfg.alpha===0)return;
  const delta=new Float64Array(en.length),rate=Math.min(cfg.alpha,.45/Math.max(1,geometry?geometry.maximumDegree:cfg.neighbors));
- function edge(i,j){if(sp[i]<0||sp[j]<0)return;if(sp[i]!==sp[j]&&Math.abs(strategies[sp[i]]-strategies[sp[j]])>cfg.deltaS+1e-12)return;const f=rate*(en[i]-en[j]);delta[i]-=f;delta[j]+=f;}
+ function edge(i,j){if(sp[i]<0||sp[j]<0||sp[i]!==sp[j])return;const f=rate*(en[i]-en[j]);delta[i]-=f;delta[j]+=f;}
  if(geometry){for(let k=0;k<geometry.edgeI.length;k++)edge(geometry.edgeI[k],geometry.edgeJ[k]);}
  else{const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
   for(let y=0;y<cfg.L;y++)for(let x=0;x<cfg.L;x++){const i=y*cfg.L+x;
@@ -371,15 +371,17 @@ function diffuseEnergy(){
  for(let i=0;i<en.length;i++)if(sp[i]>=0)en[i]=Math.max(0,en[i]+delta[i]);
 }
 // Only distinguishable species can be challenged; vacancies stay open.
-function external(i,a){return neighbours(i).filter(j=>sp[j]<0||(sp[j]!==a&&Math.abs(strategies[a]-strategies[sp[j]])>cfg.deltaS+1e-12));}
+function external(i,a){return neighbours(i);}
 // Mutants get distinct lineage IDs and inherit their new strategy.
 function mutationVariant(parent){
  const old=strategies[parent],eps=cfg.mutationEpsilon;
  const values=[Math.max(0,Math.round((old-eps)*1000)/1000),Math.min(1,Math.round((old+eps)*1000)/1000)].filter(v=>Math.abs(v-old)>1e-9);
  if(!values.length)return parent;
- strategies.push(values[Math.floor(rng()*values.length)]);
+ if(cfg.betHedging&&rng()<.5){const next=Math.max(0,Math.min(.5,(sigmas[parent]||0)+(rng()<.5?-eps:eps)));if(Math.abs(next-(sigmas[parent]||0))>1e-9){strategies.push(old);sigmas.push(next);return strategies.length-1;}}
+ strategies.push(values[Math.floor(rng()*values.length)]);sigmas.push(cfg.betHedging?(sigmas[parent]||0):0);
  return strategies.length-1;
 }
+function offspringTrait(parent){const mean=strategies[parent]||0,spread=cfg.betHedging?(sigmas[parent]||0):0;return Math.min(1,Math.max(0,mean+(rng()*2-1)*spread));}
 function newborn(parent){
  if(rng()<cfg.birthMutation){
   const id=mutationVariant(parent);
@@ -392,27 +394,28 @@ function spontaneousMutation(){
  const i=Math.floor(rng()*sp.length);
  if(sp[i]>=0){
   const id=mutationVariant(sp[i]);
-  if(id!==sp[i]){sp[i]=id;mutationCounts.spontaneous++;}
+  if(id!==sp[i]){sp[i]=id;phenotypes[i]=offspringTrait(id);mutationCounts.spontaneous++;}
   return;
  }
  const structure=growthPrice(),cost=cfg.startEnergy+structure;
  if(pool+1e-12<cost)return;
  pool-=cost;
- strategies.push(Math.round(rng()*1000)/1000);
- sp[i]=strategies.length-1;h[i]=1;en[i]=cfg.startEnergy;u[i]=structure;stamp[i]=sweep;
+ strategies.push(Math.round(rng()*1000)/1000);sigmas.push(cfg.betHedging?rng()*cfg.hedgeWidth:0);
+ sp[i]=strategies.length-1;phenotypes[i]=offspringTrait(sp[i]);h[i]=1;en[i]=cfg.startEnergy;u[i]=structure;stamp[i]=sweep;
  mutationCounts.spontaneous++;events.births++;events.birthsStep++;
 }
 
 
 function wave(t,phase){return Math.sin(2*Math.PI*t/cfg.climatePeriod+phase*Math.PI/180);}
- function energyAt(t){return cfg.energyEnabled?calcKind("energy",t):0;}
+ function climateShock(t){if(!cfg.climateNoise)return 1;const period=Math.floor(Math.max(0,t)/cfg.climatePeriod);let z=(Math.imul((cfg.seed|0)^0x9e3779b9,0x85ebca6b)^Math.imul(period+1,0xc2b2ae35))>>>0;z^=z>>>16;z=Math.imul(z,0x7feb352d);z^=z>>>15;z=Math.imul(z,0x846ca68b);z^=z>>>16;return 1+cfg.climateNoise*(2*(z>>>0)/4294967296-1);}
+ function energyAt(t){return cfg.energyEnabled?calcKind("energy",t)*climateShock(t):0;}
  function growthAt(t){return calcKind("height",t);}
  function spreadAt(t){return calcKind("attack",t);}
  function growthPrice(){return growthAt(sweep);}
  function spreadPrice(){return spreadAt(sweep);}
  function energySupply(){return energyAt(sweep);}
 function maintenanceAt(t,height){return calcKind("maint",t,height);}
-function killTree(i){if(sp[i]<0)return;if(cfg.energyEnabled){const returned=en[i]+u[i];pool+=returned;energyLedger.recycled+=returned;}sp[i]=-1;h[i]=0;en[i]=0;u[i]=0;events.deaths++;events.deathsStep++;}
+function killTree(i){if(sp[i]<0)return;if(cfg.energyEnabled){const returned=en[i]+u[i];pool+=returned;energyLedger.recycled+=returned;}sp[i]=-1;h[i]=0;en[i]=0;u[i]=0;phenotypes[i]=0;events.deaths++;events.deathsStep++;}
 function energyTick(){
  if(!cfg.energyEnabled)return;
  const order=[];for(let i=0;i<sp.length;i++)if(sp[i]>=0)order.push(i);shuffle(order);
@@ -439,12 +442,12 @@ function spread(i,j,a){
  const fee=spreadPrice();if(en[i]<=fee)return;
   en[i]-=fee;pool+=fee;energyLedger.recycled+=fee;
   const childH=h[i]/2,childE=en[i]/2,childU=u[i]/2;
- h[i]=childH;en[i]=childE;u[i]=childU;sp[j]=newborn(a);h[j]=childH;en[j]=childE;u[j]=childU;stamp[j]=sweep;events.births++;events.birthsStep++;
+ h[i]=childH;en[i]=childE;u[i]=childU;sp[j]=newborn(a);phenotypes[j]=offspringTrait(sp[j]);h[j]=childH;en[j]=childE;u[j]=childU;stamp[j]=sweep;events.births++;events.birthsStep++;
 }
 function birth(i,j,a){
  const structure=growthPrice(),cost=cfg.offspringEnergy+structure;
  if(en[i]<cost)return;
- en[i]-=cost;sp[j]=newborn(a);h[j]=1;u[j]=structure;en[j]=cfg.offspringEnergy;stamp[j]=sweep;events.births++;events.birthsStep++;
+ en[i]-=cost;sp[j]=newborn(a);phenotypes[j]=offspringTrait(sp[j]);h[j]=1;u[j]=structure;en[j]=cfg.offspringEnergy;stamp[j]=sweep;events.births++;events.birthsStep++;
  if(en[j]===0)killTree(j);
 }
 function growTree(i){
@@ -591,7 +594,7 @@ function drawWaves(){
  const g=c.getContext("2d"),left=48*d,right=13*d,top=15*d,bottom=28*d;
  g.clearRect(0,0,w,hh);
  const samples=180,curves=[{kind:"energy",color:"#238674"},{kind:"height",color:"#c58d48"},{kind:"attack",color:"#6681b9"},{kind:"maint",color:"#9b6f99"}];
- const values=curves.map(({kind})=>Array.from({length:samples+1},(_,i)=>calcKind(kind,T*i/samples,gh,true)));
+ const basePeriod=Math.floor(sweep/T)*T;const values=curves.map(({kind})=>Array.from({length:samples+1},(_,i)=>kind==="energy"&&cfg.climateNoise?energyAt(basePeriod+T*i/samples):calcKind(kind,T*i/samples,gh,true)));
  const max=Math.max(.1,...values.flat()),topValue=max*1.1;
  const px=i=>left+(w-left-right)*i/samples,py=v=>top+(hh-top-bottom)*(1-v/topValue);
  g.lineWidth=d;g.font=(10*d)+"px system-ui";g.fillStyle="#697a70";g.textAlign="right";
@@ -608,7 +611,7 @@ function drawWaves(){
  g.fillStyle="#697a70";g.font=(11*d)+"px system-ui";
  for(const [t,label] of [[0,"0"],[.5,"T/2"],[1,"T"]]){g.textAlign=t===0?"left":t===1?"center":"right";g.fillText(label,left+(w-left-right)*t,hh-7*d);}
  for(const key of ["energyPhase","growthPhase","spreadPhase","maintenancePhase"])$(key+"Out").textContent=cfg[key]+"°";
- $("energyGraphNow").textContent=calcKind("energy",sweep,gh,true).toFixed(2);
+ $("energyGraphNow").textContent=energySupply().toFixed(2);
  $("growthGraphNow").textContent=calcKind("height",sweep,gh,true).toFixed(2);
  $("spreadGraphNow").textContent=calcKind("attack",sweep,gh,true).toFixed(2);
  $("maintenanceGraphNow").textContent=calcKind("maint",sweep,gh,true).toFixed(2);
