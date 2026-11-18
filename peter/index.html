@@ -62,7 +62,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 
 .research-dashboard{border-left:3px solid #276d55}.research-dashboard h2{font-size:22px}.research-dashboard h3{font:500 16px Georgia,serif;margin:0 0 8px}
 .model-overview{padding:12px 18px}.model-overview>summary{font-size:13px;color:var(--forest)}
-.study-controls{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px;align-items:end;margin:14px 0}
+.study-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end;margin:14px 0}
 .study-controls .field{margin:0}.study-controls select{width:100%;min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:white}
 .study-baseline{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.study-buttons{display:flex;gap:6px;flex-wrap:wrap}.study-buttons button{padding:8px 10px;font-size:12px}.study-baseline button{padding:9px 14px;border-color:#a9c9b7}.study-baseline .hint{margin:0}
 .study-summary{font-size:12px;color:var(--muted);background:var(--soft);border-radius:8px;padding:9px 11px;margin:5px 0 13px}
@@ -78,7 +78,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 .study-more>.research-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:700px){.study-controls,.study-plots{grid-template-columns:1fr}.study-measures,.study-more>.research-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.study-chart canvas{height:205px}}
 </style></head><body>
-<header><div><h1>Skovlaboratoriet</h1><p>Peters lab · energi, evolution og ikke-ligevægt · <span id="appVersion">05569f616aae</span></p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
+<header><div><h1>Skovlaboratoriet</h1><p>Peters lab · energi, evolution og ikke-ligevægt · <span id="appVersion">2cf518f76d0d</span></p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout"><main>
 <section class="panel"><h2>Skoven</h2>
 <p class="hint">Træerne vokser, angriber og muterer på et gitter. Hver sammenhængende artsgruppe vælger vækst eller angreb. Optag fra Q begrænser handlinger og overlevelse; kampens vinder afhænger af træernes højde.</p>
@@ -99,7 +99,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <details class="panel model-overview" id="modelOverview"><summary>Model og energiregnskab · sådan fungerer skoven</summary><p class="hint">Alle undersøgelser bruger den samme energibevarende model. Træerne optager energi fra Q, betaler vedligehold, vokser eller angriber. Ved død returneres reserve og strukturenergi til Q.</p><p class="hint">Q + Σ(E + U) er bevaret. Den periodiske graf over skoven viser de planlagte energistrømme; faktisk energioptag begrænses desuden af, hvad der er tilbage i Q.</p></details>
 <section class="panel research-dashboard" id="researchDashboard">
 <div class="panel-kicker">Forskningsområdet</div><h2>Undersøg én variabel ad gangen</h2>
-<p class="hint">Vælg én parameter, gem en reference, og ændr kun den parameter i højrepanelet. De andre indstillinger skal være de samme, hvis forsøgene skal kunne sammenlignes. Graferne nedenfor viser <b>én kørsel</b>, ikke en statistisk dokumenteret sammenhæng.</p>
+<p class="hint">Vælg én forsøgsvariabel og ét måltal. Gem en reference, og ændr kun den valgte parameter i højrepanelet. Graferne viser <b>én kørsel</b>; først flere parrede seeds kan afsløre robuste forskelle.</p>
 <div class="study-controls">
 <div class="field"><label for="studyVariable">Det jeg ændrer mellem forsøg</label><select id="studyVariable">
 <optgroup label="Energioptag"><option value="energyPhase">Energioptagets fase</option><option value="climateAmplitude">Energioptagets amplitude</option><option value="energyInput">Gennemsnitligt energioptag</option></optgroup>
@@ -107,12 +107,12 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <optgroup label="Angrebspris"><option value="spreadPhase">Angrebsprisens fase</option><option value="spreadPriceAmplitude">Angrebsprisens amplitude</option><option value="attackCost">Gennemsnitlig angrebspris</option></optgroup>
 <optgroup label="Vedligeholdelse"><option value="maintenancePhase">Vedligeholdelsens fase</option><option value="maintenanceAmplitude">Vedligeholdelsens amplitude</option><option value="maintenancePerHeight">Vedligeholdelsesstyrken</option></optgroup>
 </select></div>
-<div class="study-baseline"><div class="study-buttons"><button type="button" id="studyCapture">Gem reference</button><button type="button" id="studyJump">Find parameter</button></div><div id="studyStatus" role="status" class="hint">Gem en reference, og justér derefter kun den valgte parameter.</div></div>
+<div class="field"><label for="studyOutcome">Det jeg vil måle</label><select id="studyOutcome"><option value="meanHeight">Gennemsnitlig højde</option><option value="Hraw">Shannon-artsentropi H</option><option value="rho">Levende andel ρ</option><option value="s">Gennemsnitlig angrebsstrategi s</option></select></div><div class="study-baseline"><div class="study-buttons"><button type="button" id="studyCapture">Gem reference</button><button type="button" id="studyJump">Find parameter</button></div><div id="studyStatus" role="status" class="hint">Gem en reference, og justér derefter kun den valgte parameter.</div></div>
 </div>
-<div class="study-summary" id="studySummary">Sammenligning: energioptag og artsentropi over samme sweeps.</div>
+<div class="study-summary" id="studySummary">Sammenligning: energioptag og gennemsnitlig højde over samme sweeps.</div>
 <div class="study-plots">
-<div class="study-chart"><h3>Udvikling over tid</h3><div class="study-key"><span><i style="background:#238674"></i>Shannon-artsentropi H</span><span><i style="background:#c58d48"></i><span id="studyDriverLabel">Energioptag</span></span></div><canvas class="plot" id="studyTimePlot" aria-label="Sammenligning af artsentropi og en valgt miljøvariabel over tid"></canvas><p class="hint">Kun i denne graf er begge kurver skaleret hver for sig til 0–1 for at kunne se timing. Det ændrer ikke de faktiske værdier.</p></div>
-<div class="study-chart"><h3>Følges de ad?</h3><div class="study-key"><span><i style="background:#238674"></i>H (lodret)</span><span><i style="background:#c58d48"></i><span id="studyScatterLabel">Energioptag</span> (vandret)</span></div><canvas class="plot" id="studyScatterPlot" aria-label="Punktdiagram med artsentropi mod den valgte miljøvariabel"></canvas><div class="study-correlation" id="studyCorrelation">Pearson r: – · Kør flere sweeps for at få observationer.</div><p class="hint">Et mønster eller en korrelation i ét forløb er ikke bevis for årsag, evolutionær tilpasning eller faseovergang. Autokorrelation og fælles tidstrends kan være afgørende.</p></div>
+<div class="study-chart"><h3>Udvikling over tid</h3><div class="study-key"><span><i style="background:#238674"></i><span id="studyOutcomeLabel">Gennemsnitlig højde</span></span><span><i style="background:#c58d48"></i><span id="studyDriverLabel">Energioptag</span></span></div><canvas class="plot" id="studyTimePlot" aria-label="Sammenligning af artsentropi og en valgt miljøvariabel over tid"></canvas><p class="hint">Kun i denne graf er begge kurver skaleret hver for sig til 0–1 for at kunne se timing. Det ændrer ikke de faktiske værdier.</p></div>
+<div class="study-chart"><h3>Følges de ad?</h3><div class="study-key"><span><i style="background:#238674"></i><span id="studyYAxisLabel">Middelhøjde (lodret)</span></span><span><i style="background:#c58d48"></i><span id="studyScatterLabel">Energioptag</span> (vandret)</span></div><canvas class="plot" id="studyScatterPlot" aria-label="Punktdiagram med artsentropi mod den valgte miljøvariabel"></canvas><div class="study-correlation" id="studyCorrelation">Pearson r: – · Kør flere sweeps for at få observationer.</div><p class="hint">Et mønster eller en korrelation i ét forløb er ikke bevis for årsag, evolutionær tilpasning eller faseovergang. Autokorrelation og fælles tidstrends kan være afgørende.</p></div>
 </div>
 <div class="study-measures"><div class="stat"><small>Effektive arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Levende andel ρ</small><b id="rhoOut">–</b></div><div class="stat"><small>Gns. angrebsstrategi</small><b id="strategyOut">–</b></div><div class="stat"><small>Energi-balancefejl</small><b id="balanceOut">–</b></div></div>
 <details class="study-more"><summary>Flere målinger og energiregnskab</summary><div class="energy-ledger"><div class="stat"><small>Fælles pulje Q</small><b id="poolOut">–</b></div><div class="stat"><small>Træernes reserve</small><b id="reserveOut">–</b></div><div class="stat"><small>Strukturel U</small><b id="potentialOut">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergyOut">–</b></div></div><div class="research-grid"><div class="stat"><small>Gns. træreserve</small><b id="energyOut">–</b></div><div class="stat"><small>Fødsler pr. sweep</small><b id="birthsOut">–</b></div><div class="stat"><small>Netto fødsler − dødsfald</small><b id="netOut">–</b></div><div class="stat"><small>Dødsfald pr. sweep</small><b id="deathOut">–</b></div><div class="stat"><small>Dødsfald i alt</small><b id="deathsTotal">–</b></div><div class="stat"><small>Børnemutationer</small><b id="birthMutations">–</b></div><div class="stat"><small>Spontane mutationer</small><b id="spontaneousMutations">–</b></div><div class="stat"><small>Dominerende s</small><b id="dominantStrategy">–</b></div></div></details>
@@ -522,22 +522,26 @@ const studyMap={
 let studyBaseline=null;
 function studySeries(){
  const key=$("studyVariable").value,def=studyMap[key]||studyMap.energyPhase,gh=Number($("graphHeight").value)||10;
+ const outcome=$("studyOutcome").value;
  const rows=history.filter(p=>Number.isFinite(p.Hraw)).map(p=>({
-  t:p.t,H:p.Hraw,x:def.kind==="energy"?p.uptake:def.kind==="height"?p.growthPrice:def.kind==="attack"?p.spreadPrice:maintenanceAt(p.t,gh)
- })).filter(v=>Number.isFinite(v.x));
- return {key,def,rows};
+  t:p.t,H:p.Hraw,y:p[outcome],x:def.kind==="energy"?p.uptake:def.kind==="height"?p.growthPrice:def.kind==="attack"?p.spreadPrice:maintenanceAt(p.t,gh)
+ })).filter(v=>Number.isFinite(v.x)&&Number.isFinite(v.y));
+ return {key,def,rows,outcome};
 }
 function pearson(rows){
  if(rows.length<3)return null;
- const mx=rows.reduce((a,b)=>a+b.x,0)/rows.length,my=rows.reduce((a,b)=>a+b.H,0)/rows.length;
+ const mx=rows.reduce((a,b)=>a+b.x,0)/rows.length,my=rows.reduce((a,b)=>a+(b.y??b.H),0)/rows.length;
  let xx=0,yy=0,xy=0;
- for(const p of rows){const dx=p.x-mx,dy=p.H-my;xx+=dx*dx;yy+=dy*dy;xy+=dx*dy;}
+ for(const p of rows){const dx=p.x-mx,dy=(p.y??p.H)-my;xx+=dx*dx;yy+=dy*dy;xy+=dx*dy;}
  return xx>1e-16&&yy>1e-16?xy/Math.sqrt(xx*yy):null;
 }
 function drawStudy(){
- const {key,def,rows}=studySeries(),n=rows.length;
+ const {key,def,rows,outcome}=studySeries(),n=rows.length;
+ const outcomeLabels={meanHeight:"Gennemsnitlig træhøjde",Hraw:"Shannon-artsentropi H",rho:"Levende andel ρ",s:"Gennemsnitlig angrebsstrategi s"};
+ const response=outcomeLabels[outcome]||outcomeLabels.meanHeight;
+ $("studyOutcomeLabel").textContent=response;$("studyYAxisLabel").textContent=response+" (lodret)";
  $("studyDriverLabel").textContent=def.label;$("studyScatterLabel").textContent=def.label;
- $("studySummary").textContent="Valgt forsøgsvariabel: "+$("studyVariable").selectedOptions[0].textContent+". Her sammenlignes "+def.label+" med Shannon-artsentropi H=−Σp ln p i samme kørsel. Øvrige parametre holdes faste mellem sammenlignelige forsøg.";
+ $("studySummary").textContent="Valgt forsøgsvariabel: "+$("studyVariable").selectedOptions[0].textContent+". Her sammenlignes "+def.label+" med "+response+" i samme kørsel. Øvrige parametre holdes faste mellem sammenlignelige forsøg.";
  const c=cfg[key],base=studyBaseline;
  if(!base)$("studyStatus").textContent="Gem en reference før første parameterændring. Resultaterne nedenfor er foreløbig kun én kørsel.";
  else{
@@ -559,22 +563,22 @@ function drawStudy(){
  const time=$("studyTimePlot"),T=fit(time),tg=time.getContext("2d");
  const A=chartAxes(tg,T.w,T.h,T.d,"Skaleret 0–1","Sweep");
  if(n){
-  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.H));
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.y));
   const t0=rows[0].t,t1=rows[n-1].t;
-  for(const [color,access,lo,hi] of [["#238674",p=>p.H,h0,h1],["#c58d48",p=>p.x,x0,x1]]){
+  for(const [color,access,lo,hi] of [["#238674",p=>p.y,h0,h1],["#c58d48",p=>p.x,x0,x1]]){
    tg.beginPath();tg.strokeStyle=color;tg.lineWidth=2*T.d;
    rows.forEach((p,i)=>{const x=A.left+A.tw*(p.t-t0)/Math.max(1,t1-t0),y=A.top+A.th*(1-normalize(access(p),lo,hi));i?tg.lineTo(x,y):tg.moveTo(x,y);});tg.stroke();
   }
   tg.fillStyle="#66766e";tg.textAlign="left";tg.fillText(String(t0),A.left,T.h-4*T.d);tg.textAlign="right";tg.fillText(String(t1),T.w-A.right,T.h-4*T.d);
  }
  const scatter=$("studyScatterPlot"),P=fit(scatter),pg=scatter.getContext("2d");
- const B=chartAxes(pg,P.w,P.h,P.d,"H",def.label);
+ const B=chartAxes(pg,P.w,P.h,P.d,response,def.label);
  if(n){
-  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.H));
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.y));
   pg.font=(10*P.d)+"px system-ui";pg.fillStyle="#66766e";pg.textAlign="right";pg.fillText(h1.toFixed(2),B.left-5*P.d,B.top+3*P.d);pg.fillText(h0.toFixed(2),B.left-5*P.d,B.top+B.th+3*P.d);
   pg.textAlign="left";pg.fillText(x0.toFixed(2),B.left,P.h-4*P.d);pg.textAlign="right";pg.fillText(x1.toFixed(2),P.w-B.right,P.h-4*P.d);
   pg.fillStyle="#c58d48";
-  for(const p of rows){pg.beginPath();pg.arc(B.left+B.tw*normalize(p.x,x0,x1),B.top+B.th*(1-normalize(p.H,h0,h1)),2.4*P.d,0,Math.PI*2);pg.fill();}
+  for(const p of rows){pg.beginPath();pg.arc(B.left+B.tw*normalize(p.x,x0,x1),B.top+B.th*(1-normalize(p.y,h0,h1)),2.4*P.d,0,Math.PI*2);pg.fill();}
  }
 }
 function drawWaves(){
@@ -707,6 +711,7 @@ $("zoomOut").addEventListener("click",()=>{sphereZoom=Math.max(.55,sphereZoom/1.
 $("resetSphere").addEventListener("click",()=>{sphereYaw=0;spherePitch=.15;sphereZoom=1;draw();});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
 $("studyVariable").addEventListener("change",()=>{studyBaseline=null;drawStudy();});
+$("studyOutcome").addEventListener("change",drawStudy);
 $("studyCapture").addEventListener("click",()=>{studyBaseline={...cfg};drawStudy();});
 $("studyJump").addEventListener("click",()=>{const el=$(String($("studyVariable").value));if(!el)return;const section=el.closest(".right-category");if(section)section.open=true;const advanced=el.closest(".price-parameters");if(advanced)advanced.open=true;el.scrollIntoView({behavior:"smooth",block:"center"});el.focus({preventScroll:true});});
 window.addEventListener("resize",draw);
