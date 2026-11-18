@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Skovlaboratoriet · Up or out</title>
+<title>Skovlaboratoriet · fælles simulation</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <style>
 :root{color-scheme:light;--bg:#f5f5ef;--card:#fffefa;--ink:#202c29;--muted:#68746f;--line:#dce2da;--forest:#276d55;--soft:#eaf2e9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:14px;line-height:1.48}
 header{background:var(--ink);color:white;padding:22px max(20px,calc((100vw - 1360px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px}
 header h1{font-size:29px;font-family:Georgia,serif;font-weight:500;margin:0}header p{color:#d3e0d7;margin:2px 0 0}header a{color:white;text-decoration:underline}
-.layout{max-width:1400px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start}
-main,aside{min-width:0;display:flex;flex-direction:column;gap:16px}
+.layout{max-width:1400px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+main,aside{min-width:0;display:flex;flex-direction:column;gap:16px}main{grid-column:1;grid-row:1}aside{grid-column:2;grid-row:1}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
 .panel h2{font:500 23px Georgia,serif;margin:0 0 7px}.hint{color:var(--muted);font-size:12px;margin:5px 0 10px}
 .forest-with-key{display:grid;grid-template-columns:minmax(0,1fr) 154px;gap:13px;align-items:start}
@@ -39,57 +39,164 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 5px;t
 #inspect{margin-top:8px;min-height:18px;color:var(--muted);font-size:12px}
 .status{background:var(--soft);padding:11px;border-radius:9px;font-size:12px;color:var(--ink)}
 footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 20px 24px}
-@media(max-width:900px){.layout{grid-template-columns:1fr;padding:12px;gap:12px}header{padding:16px}header h1{font-size:24px}aside{order:-1}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lattice{max-height:none}}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:12px;gap:12px}header{padding:16px}header h1{font-size:24px}aside{order:-1;grid-column:1;grid-row:1}main{grid-column:1;grid-row:2}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.lattice{max-height:none}}
+.settings-group{border:1px solid var(--line);background:#f8faf5;border-radius:10px;margin:10px 0;padding:5px 12px}.settings-group>summary{padding:8px 0;font-size:13px}.energy-ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}.energy-ledger .stat{min-width:0}.energy-ledger .stat b{font-size:17px}@media(max-width:650px){.energy-ledger{grid-template-columns:repeat(2,minmax(0,1fr))}}.research-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.research-card{border-left:4px solid #276d55}.research-note{font-size:12px;color:var(--muted)}@media(max-width:650px){.research-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.control-panel .field{margin:9px 0}.panel-kicker{text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:800;color:var(--forest);margin:0 0 5px}.equation-card{font-size:13px;font-weight:650;padding:10px;border:1px solid var(--line);border-radius:8px;background:#f7faf4;text-align:center}.climate-now,.model-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0}.climate-now>div,.model-summary>div{background:var(--soft);padding:10px 8px;border-radius:8px;min-width:0}.climate-now small,.model-summary small{font-size:10px;color:var(--muted);display:block}.climate-now b,.model-summary b{font-size:14px;display:block;font-variant-numeric:tabular-nums;margin-top:2px}.model-flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:12px 0}.model-flow>div:not(.flow-arrow){flex:1;min-width:130px;padding:12px;border:1px solid var(--line);border-radius:9px;background:#f7faf5}.model-flow b,.model-flow span{display:block}.model-flow span{font-size:12px;color:var(--muted)}.flow-arrow{align-self:center;font-size:18px;color:var(--forest)}.analysis-tabs{display:flex;gap:8px}.analysis-tab{flex:1;padding:9px 5px;font-size:12px}.analysis-tab.is-active{background:var(--forest);color:#fff;border-color:var(--forest)}.analysis-panel[hidden]{display:none}@media(max-width:650px){.model-flow{display:block}.model-flow>div{margin:5px 0}.flow-arrow{text-align:center;transform:rotate(90deg)}.climate-now,.model-summary{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.unified-controls{padding:16px}.unified-controls .actions{position:relative;margin:12px 0}.right-category{border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fafbf7;overflow:hidden}.right-category>summary{padding:12px 11px;font-size:13px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}.right-category>summary:before{content:"▸";font-size:12px;color:var(--forest)}.right-category[open]>summary:before{content:"▾"}.right-category[open]>summary{border-bottom:1px solid var(--line);background:#eef4ec}.right-category-content{padding:10px 12px 13px}.right-category-content .field{margin:8px 0}.right-category-content .settings-group{background:#fff;padding:3px 9px}.unified-controls h2{margin:0}.right-category-content .hint{font-size:11px}aside{gap:0}@media(max-width:900px){aside{order:-1}}
+.period-preview{width:100%;height:255px;display:block;border:1px solid var(--line);border-radius:8px;background:#fcfdfb}.period-overview{margin-top:16px;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fbfdf9}.period-overview h3{margin:0 0 4px;font-size:17px;font-family:Georgia,serif;font-weight:500}.period-legend{display:flex;gap:14px;flex-wrap:wrap;margin:9px 0 10px;font-size:12px}.period-legend b{font-variant-numeric:tabular-nums}.period-legend i{display:inline-block;width:12px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}.wave-card{border:1px solid var(--line);background:white;border-radius:10px;padding:9px;margin:10px 0}.wave-card-header{display:flex;justify-content:space-between;font-size:12px;font-weight:700;align-items:center;gap:6px;margin-bottom:6px}.wave-energy{color:#238674}.wave-growth{color:#c58d48}.wave-spread{color:#6681b9}.periodic-hint{font-size:11px;color:var(--muted)}.wave-card .field{margin:6px 0}.wave-card .field label{font-weight:550}.wave-card output{font-variant-numeric:tabular-nums}.formula-field{margin:9px 0;padding:9px;background:#f5f8f3;border:1px solid var(--line);border-radius:8px}.formula-field input{width:100%;padding:9px 8px;border:1px solid #bfccc0;border-radius:6px;background:#fff;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.formula-field.invalid{border-color:#b44b4b;background:#fff3f1}.formula-field.invalid input{border-color:#b44b4b}.formula-status{display:block;font-size:11px;color:#387f5a;margin-top:4px}.formula-field.invalid .formula-status{color:#aa3c36}.period-overview .field{max-width:420px;margin:5px 0 12px}.period-overview .field input[type=range]{width:100%;accent-color:var(--forest)}.equations-compact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:11px 0 8px}
+.equation-slot,.maintenance-equation-slot{min-width:0;background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 10px}
+.equation-slot:nth-child(1){border-top:3px solid #238674}.equation-slot:nth-child(2){border-top:3px solid #c58d48}.equation-slot:nth-child(3){border-top:3px solid #6681b9}
+.maintenance-equation-slot{border-left:3px solid #9b6f99;margin:0 0 9px;padding:7px 10px}
+.equation-typeset{font-family:Georgia,serif;font-size:15px;overflow-x:auto;white-space:nowrap;min-height:32px;padding:2px 0;text-align:left;scrollbar-width:thin}
+.equation-slot .formula-field,.maintenance-equation-slot .formula-field{margin:3px 0 0;padding:0;background:transparent;border:0}
+.equation-slot .formula-field label,.maintenance-equation-slot .formula-field label{font-size:11px!important;font-weight:650!important}
+.equation-slot .formula-field input,.maintenance-equation-slot .formula-field input{padding:6px 8px;font-size:11px;border:1px solid #dbe3db;background:#f9fbf7;border-radius:6px;outline-offset:1px;transition:border-color .15s}
+.equation-slot .formula-field input:focus,.maintenance-equation-slot .formula-field input:focus{border-color:#458d72;background:#fff;box-shadow:0 0 0 2px #458d721f}
+.equations-compact .formula-status,.maintenance-equation-slot .formula-status{display:none}
+.equations-compact .formula-field.invalid .formula-status,.maintenance-equation-slot .formula-field.invalid .formula-status{display:block}
+.price-parameters{margin:10px 0;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff}
+.price-parameters>summary{font-size:12px;padding:3px 1px;color:var(--forest)}
+.price-parameters .wave-card{border-color:#e8ede5;padding:8px;margin:7px 0}
+.price-parameters .wave-card .field{margin:6px 0}
+@media(max-width:700px){.equations-compact{grid-template-columns:1fr}.equation-slot{padding:8px 10px}.equation-typeset{font-size:16px}.maintenance-equation-slot{margin-top:7px}}
+
+.research-dashboard{border-left:3px solid #276d55}.research-dashboard h2{font-size:22px}.research-dashboard h3{font:500 16px Georgia,serif;margin:0 0 8px}
+.model-overview{padding:12px 18px}.model-overview>summary{font-size:13px;color:var(--forest)}
+.study-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end;margin:14px 0}
+.study-controls .field{margin:0}.study-controls select{width:100%;min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:white}
+.study-baseline{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.study-buttons{display:flex;gap:6px;flex-wrap:wrap}.study-buttons button{padding:8px 10px;font-size:12px}.study-baseline button{padding:9px 14px;border-color:#a9c9b7}.study-baseline .hint{margin:0}
+.study-summary{font-size:12px;color:var(--muted);background:var(--soft);border-radius:8px;padding:9px 11px;margin:5px 0 13px}
+.study-plots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.study-chart{min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff}
+.study-chart canvas{height:225px}.study-chart p.hint{margin:8px 0 0}
+.study-key{display:flex;gap:11px;flex-wrap:wrap;font-size:11px;margin:0 0 7px;color:var(--muted)}
+.study-key i{display:inline-block;width:13px;height:3px;vertical-align:middle;margin-right:4px}
+.study-correlation{font-size:12px;font-weight:650;background:#f4f8f2;padding:8px 10px;border-radius:7px}
+.study-measures{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0}
+.study-measures .stat{min-width:0}.study-measures .stat b{font-size:17px}
+.study-more{margin:10px 0;padding-top:12px}
+.study-more>.research-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:700px){.study-controls,.study-plots{grid-template-columns:1fr}.study-measures,.study-more>.research-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.study-chart canvas{height:205px}}
 </style></head><body>
-<header><div><h1>Skovlaboratoriet</h1><p>Up or out · vækst, konkurrence og lokal nabokobling</p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
+<header><div><h1>Skovlaboratoriet</h1><p>Fælles lab · energi, evolution og ikke-ligevægt · <span id="appVersion">shared-energy-1</span></p></div><a href="LOGBOG.md" target="_blank" rel="noopener">Logbog</a></header>
 <div class="layout"><main>
 <section class="panel"><h2>Skoven</h2>
-<p class="hint">Hver sammenhængende klump af én art vælger samlet vækst eller angreb ud fra sin strategi s. Ved vækst bliver hvert træ én højdeenhed højere; kun randtræer kan angribe fremmede eller tomme felter. Angreb afgøres udelukkende af højde.</p>
-<div class="field"><label for="gridView">Gittervisning <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option></select></div>
+<p class="hint">Træerne vokser, angriber og muterer på et gitter. Hver sammenhængende artsgruppe vælger vækst eller angreb. Optag fra Q begrænser handlinger og overlevelse; kampens vinder afhænger af træernes højde.</p>
+
 <div id="heightLegend" class="hint" hidden><span id="heightLegendText">Farve = træhøjde</span><div id="heightLegendBar" style="height:12px;border-radius:5px;background:linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e);margin-top:5px"></div><div style="display:flex;justify-content:space-between"><span>Højde 1</span><span id="heightMaxLegend">Maks. højde</span></div></div>
 <div class="forest-with-key"><canvas id="forest" class="lattice" aria-label="Skovgitter. Ved k=+1 kan sfæren drejes med mus eller finger"></canvas>
 <div class="forest-key" aria-label="Arter og strategier"><h3>Arter og strategi</h3><p class="hint">s = sandsynlighed for angreb</p><div id="forestSpeciesLegend" class="forest-species"></div></div></div>
 <div class="sphere-tools" id="sphereTools"><button id="zoomIn" title="Zoom ind" aria-label="Zoom ind">+</button><button id="zoomOut" title="Zoom ud" aria-label="Zoom ud">−</button><button id="resetSphere">Nulstil visning</button><span class="hint">Træk for at dreje · scroll eller +/− for zoom</span></div>
+<div class="period-overview" id="periodOverview"><h3>Energi, priser og vedligehold · én periode</h3><p class="hint">Klik i de matematiske felter for at redigere. Alle fire kurver bruger samme energiskala; den lilla vises for referencehøjden. Stiplet linje viser aktuelt sweep.</p><div class="equations-compact" aria-label="Redigerbare matematiske ligninger">
+ <div class="equation-slot" id="eqEnergy"><div class="equation-typeset" id="texEnergy" aria-label="Energioptag som matematisk ligning"></div><div class="formula-field" data-formula="formulaEnergy"><label for="formulaEnergy" style="display:block;font-size:12px;font-weight:700;color:#238674">r(t) · redigér ligning</label><input id="formulaEnergy" type="text" spellcheck="false" autocomplete="off" value="r0*(1+ar*sin(2*pi*t/T+pr*pi/180))" aria-describedby="formulaEnergyError"><small class="formula-status" id="formulaEnergyError">Gyldig ligning</small></div></div>
+ <div class="equation-slot" id="eqHeight"><div class="equation-typeset" id="texHeight" aria-label="Højdepris som matematisk ligning"></div><div class="formula-field" data-formula="formulaHeight"><label for="formulaHeight" style="display:block;font-size:12px;font-weight:700;color:#c58d48">cₕ(t) · redigér ligning</label><input id="formulaHeight" type="text" spellcheck="false" autocomplete="off" value="ch*(1+ah*sin(2*pi*t/T+ph*pi/180))" aria-describedby="formulaHeightError"><small class="formula-status" id="formulaHeightError">Gyldig ligning</small></div></div>
+ <div class="equation-slot" id="eqAttack"><div class="equation-typeset" id="texAttack" aria-label="Angrebspris som matematisk ligning"></div><div class="formula-field" data-formula="formulaAttack"><label for="formulaAttack" style="display:block;font-size:12px;font-weight:700;color:#6681b9">cₐ(t) · redigér ligning</label><input id="formulaAttack" type="text" spellcheck="false" autocomplete="off" value="ca*(1+aa*sin(2*pi*t/T+pa*pi/180))" aria-describedby="formulaAttackError"><small class="formula-status" id="formulaAttackError">Gyldig ligning</small></div></div>
+ </div>
+ <div class="maintenance-equation-slot" id="eqMaint"><div class="equation-typeset" id="texMaint" aria-label="Vedligeholdelse som matematisk ligning"></div><div class="formula-field" data-formula="formulaMaint"><label for="formulaMaint" style="display:block;font-size:12px;font-weight:700;color:#9b6f99">v(t,h) · redigér ligning</label><input id="formulaMaint" type="text" spellcheck="false" autocomplete="off" value="m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2)" aria-describedby="formulaMaintError"><small class="formula-status" id="formulaMaintError">Gyldig ligning</small></div></div><div class="period-legend"><span><i style="background:#238674"></i>Energioptag <b id="energyGraphNow">–</b></span><span><i style="background:#c58d48"></i>Højdepris <b id="growthGraphNow">–</b></span><span><i style="background:#6681b9"></i>Angrebspris <b id="spreadGraphNow">–</b></span><span><i style="background:#9b6f99"></i>Vedligehold (h=<b id="graphHeightLabel">10</b>) <b id="maintenanceGraphNow">–</b></span></div><div class="field"><label for="graphHeight">Referencehøjde til vedligeholdelseskurven <output id="graphHeightOut">10</output></label><input id="graphHeight" type="range" min="1" max="100" step="1" value="10"></div><canvas class="period-preview" id="combinedPeriodPlot" aria-label="Samlet graf for energioptag, vækstpris og spredningspris"></canvas></div>
 <div class="stats"><span>Sweep <b id="sweep">0</b></span><span>Træer <b id="trees">–</b></span><span>Levende arter <b id="alive">–</b></span><span>Arter i alt (nogensinde) <b id="speciesTotal">–</b></span><span>Maks. højde <b id="highest">–</b></span></div>
 <div id="inspect">Peg på et felt for at se art, højde og strategi.</div></section>
-<section class="panel"><h2>Udvikling i skoven</h2>
-<div class="metrics"><div class="stat"><small>Artsentropi H (nat)</small><b id="entropyArt">–</b></div><div class="stat"><small>Effektivt antal arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Gennemsnitlig højde</small><b id="meanHeight">–</b></div></div>
-<div class="stats"><span>Børnemutationer <b id="birthMutations">0</b></span><span>Spontane mutationer <b id="spontaneousMutations">0</b></span><span>Dominerende s <b id="dominantStrategy">–</b></span></div>
-<div class="legend"><span><i style="background:#238674"></i>Artsentropi / ln(N)</span><span><i style="background:#c58d48"></i>Største arts andel</span><span><i style="background:#6681b9"></i>Andel forskellige nabopar</span></div>
-<canvas class="plot" id="evolutionPlot" aria-label="Tidsserier for artsdiversitet"></canvas>
-<p class="hint">Shannon-entropi måler artsfordeling, ikke termodynamisk entropi.</p></section>
-</main><aside>
-<section class="panel"><h2>Kør simulationen</h2><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div>
-<div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input type="range" id="size" min="10" max="200" step="5" value="100"></div>
-<div class="field"><label for="species">Antal arter <output id="speciesOut">10</output></label><input type="range" id="species" min="2" max="30" step="1" value="10"></div>
-<div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input type="range" id="fill" min="0.05" max="1" step="0.05" value="1"></div>
-<div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input type="range" id="speed" min="1" max="30" step="1" value="1"></div>
-<div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></section>
-<section class="panel"><h2>Mutation og evolution</h2>
-<div class="field"><label for="birthMutation">Børnemutation (% pr. fødsel)</label><input id="birthMutation" type="number" min="0" max="100" step="0.1" value="1"></div>
-<div class="field"><label for="spontaneousMutation">Spontan mutation (% pr. sweep i hele skoven)</label><input id="spontaneousMutation" type="number" min="0" max="100" step="0.1" value="1"></div>
-<div class="field"><label for="mutationEpsilon">Mutationsstørrelse dε (ændring i s)</label><input id="mutationEpsilon" type="number" min="0.001" max="1" step="0.001" value="0.01"></div>
-<p class="hint">Et nyfødt træ arver normalt moderartens strategi s, men kan mutere s ± dε. Uafhængigt heraf kan ét eksisterende træ mutere spontant hvert sweep. Mutationerne er tilfældige; ingen optimal s er programmeret.</p></section>
-<section class="panel"><h2>Konkurrence og nabokobling</h2>
-<div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div>
-<div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div>
-<p class="hint">Ved angreb mod en anden art skal forskellen mellem strategierne være større end Δs: |sₐ − sᵦ| &gt; Δs. Ellers kan arterne ikke skelnes, og der gennemføres ingen kamp mellem dem. Tomme felter kan stadig overtages. Når en kamp finder sted, afgør højden fortsat vinderen.</p>
-<div class="field"><label for="curvature">Lattice-krumning k</label><select id="curvature"><option value="0">k = 0 · flad (kvadratisk)</option><option value="1">k = +1 · sfærisk (lukket)</option><option value="-1">k = −1 · hyperbolsk (udvidende)</option></select></div>
-<p class="hint" id="curvatureHelp">Fladt kvadratgitter. Periodiske kanter kan vælges.</p>
-<div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div>
-<div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
-<div class="field"><label for="alpha">Lokal højdeudjævning α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div>
-<p class="hint">Nabokobling er en <b>abstrakt modelregel</b>: højdeforskelle udjævnes gradvist mellem nabotræer af samme art. Den ændrer højderne lokalt, men bevarer deres sum under selve udjævningen. Det er ikke fysisk diffusion af træhøjde. Sæt α = 0 for at slå den fra.</p>
-<details><summary>Flere regler</summary>
-<div class="field"><label for="maxHeight">Maksimal højde (0 = ingen)</label><input id="maxHeight" type="number" min="0" max="1000000" step="1" value="0"></div>
-<p class="hint">Hvis en klump vælger en umulig handling, forsøger den den anden. Ved angreb forsøger hvert randtræ én gang; ved tabt kamp dør angriberen, og ved sejr erstattes forsvareren med et træ i højde 1.</p></details></section>
-</aside></div><footer>Skovlaboratoriet · enkel model uden energilager · <a href="LOGBOG.md">Logbog</a></footer>
+
+<details class="panel model-overview" id="modelOverview"><summary>Model og energiregnskab · sådan fungerer skoven</summary><p class="hint">Alle undersøgelser bruger den samme energibevarende model. Træerne optager energi fra Q, betaler vedligehold, vokser eller angriber. Ved død returneres reserve og strukturenergi til Q.</p><p class="hint">Q + Σ(E + U) er bevaret. Den periodiske graf over skoven viser de planlagte energistrømme; faktisk energioptag begrænses desuden af, hvad der er tilbage i Q.</p></details>
+<section class="panel research-dashboard" id="researchDashboard">
+<div class="panel-kicker">Forskningsområdet</div><h2>Undersøg én variabel ad gangen</h2>
+<p class="hint">Vælg én forsøgsvariabel og ét måltal. Gem en reference, og ændr kun den valgte parameter i højrepanelet. Graferne viser <b>én kørsel</b>; først flere parrede seeds kan afsløre robuste forskelle.</p>
+<div class="study-controls">
+<div class="field"><label for="studyVariable">Det jeg ændrer mellem forsøg</label><select id="studyVariable">
+<optgroup label="Energioptag"><option value="energyPhase">Energioptagets fase</option><option value="climateAmplitude">Energioptagets amplitude</option><option value="energyInput">Gennemsnitligt energioptag</option></optgroup>
+<optgroup label="Højdepris"><option value="growthPhase">Højdeprisens fase</option><option value="growthPriceAmplitude">Højdeprisens amplitude</option><option value="growthCost">Gennemsnitlig højdepris</option></optgroup>
+<optgroup label="Angrebspris"><option value="spreadPhase">Angrebsprisens fase</option><option value="spreadPriceAmplitude">Angrebsprisens amplitude</option><option value="attackCost">Gennemsnitlig angrebspris</option></optgroup>
+<optgroup label="Vedligeholdelse"><option value="maintenancePhase">Vedligeholdelsens fase</option><option value="maintenanceAmplitude">Vedligeholdelsens amplitude</option><option value="maintenancePerHeight">Vedligeholdelsesstyrken</option></optgroup>
+</select></div>
+<div class="field"><label for="studyOutcome">Det jeg vil måle</label><select id="studyOutcome"><option value="meanHeight">Gennemsnitlig højde</option><option value="Hraw">Shannon-artsentropi H</option><option value="rho">Levende andel ρ</option><option value="s">Gennemsnitlig angrebsstrategi s</option></select></div><div class="study-baseline"><div class="study-buttons"><button type="button" id="studyCapture">Gem reference</button><button type="button" id="studyJump">Find parameter</button></div><div id="studyStatus" role="status" class="hint">Gem en reference, og justér derefter kun den valgte parameter.</div></div>
+</div>
+<div class="study-summary" id="studySummary">Sammenligning: energioptag og gennemsnitlig højde over samme sweeps.</div>
+<div class="study-plots">
+<div class="study-chart"><h3>Udvikling over tid</h3><div class="study-key"><span><i style="background:#238674"></i><span id="studyOutcomeLabel">Gennemsnitlig højde</span></span><span><i style="background:#c58d48"></i><span id="studyDriverLabel">Energioptag</span></span></div><canvas class="plot" id="studyTimePlot" aria-label="Sammenligning af artsentropi og en valgt miljøvariabel over tid"></canvas><p class="hint">Kun i denne graf er begge kurver skaleret hver for sig til 0–1 for at kunne se timing. Det ændrer ikke de faktiske værdier.</p></div>
+<div class="study-chart"><h3>Følges de ad?</h3><div class="study-key"><span><i style="background:#238674"></i><span id="studyYAxisLabel">Middelhøjde (lodret)</span></span><span><i style="background:#c58d48"></i><span id="studyScatterLabel">Energioptag</span> (vandret)</span></div><canvas class="plot" id="studyScatterPlot" aria-label="Punktdiagram med artsentropi mod den valgte miljøvariabel"></canvas><div class="study-correlation" id="studyCorrelation">Pearson r: – · Kør flere sweeps for at få observationer.</div><p class="hint">Et mønster eller en korrelation i ét forløb er ikke bevis for årsag, evolutionær tilpasning eller faseovergang. Autokorrelation og fælles tidstrends kan være afgørende.</p></div>
+</div>
+<div class="study-measures"><div class="stat"><small>Effektive arter eᴴ</small><b id="effective">–</b></div><div class="stat"><small>Levende andel ρ</small><b id="rhoOut">–</b></div><div class="stat"><small>Gns. angrebsstrategi</small><b id="strategyOut">–</b></div><div class="stat"><small>Energi-balancefejl</small><b id="balanceOut">–</b></div></div>
+<details class="study-more"><summary>Flere målinger og energiregnskab</summary><div class="energy-ledger"><div class="stat"><small>Fælles pulje Q</small><b id="poolOut">–</b></div><div class="stat"><small>Træernes reserve</small><b id="reserveOut">–</b></div><div class="stat"><small>Strukturel U</small><b id="potentialOut">–</b></div><div class="stat"><small>Samlet energi</small><b id="totalEnergyOut">–</b></div></div><div class="research-grid"><div class="stat"><small>Gns. træreserve</small><b id="energyOut">–</b></div><div class="stat"><small>Fødsler pr. sweep</small><b id="birthsOut">–</b></div><div class="stat"><small>Netto fødsler − dødsfald</small><b id="netOut">–</b></div><div class="stat"><small>Dødsfald pr. sweep</small><b id="deathOut">–</b></div><div class="stat"><small>Dødsfald i alt</small><b id="deathsTotal">–</b></div><div class="stat"><small>Børnemutationer</small><b id="birthMutations">–</b></div><div class="stat"><small>Spontane mutationer</small><b id="spontaneousMutations">–</b></div><div class="stat"><small>Dominerende s</small><b id="dominantStrategy">–</b></div></div></details>
+<p class="hint">Artsentropi er Shannon-entropien H = −Σp ln p, beregnet ud fra artens andel af levende træer. Det er <b>ikke</b> termodynamisk entropi. Sammenlign flere seeds før konklusioner.</p>
+</section></main><aside><section class="panel unified-controls"><div class="panel-kicker">Kontrolcenter</div><h2>Indstillinger og perioder</h2><p class="hint">Indstil perioder, priser, mutation og geometri her til højre. Den samlede periodegraf vises under skoven. Modelændringer genstarter med samme seed.</p><div class="actions"><button class="primary" id="run">Start</button><button id="step">Ét sweep</button><button id="restart">Genstart</button><button id="newSeed">Ny skov</button></div><details class="right-category" open><summary>01 · Simulation</summary><div class="right-category-content">
+<div class="field"><label for="gridView">Gittervisning <span id="gridLegendLabel">Farve = art</span></label><select id="gridView"><option value="species">Art</option><option value="height">Træhøjde</option><option value="combined">Art + højde (lysstyrke)</option><option value="energy">Energi</option></select></div><div class="field"><label for="size">Gitterstørrelse L <output id="sizeOut">100</output></label><input type="range" id="size" min="10" max="200" step="5" value="100"></div><div class="field"><label for="species">Antal arter <output id="speciesOut">10</output></label><input type="range" id="species" min="2" max="30" step="1" value="10"></div><div class="field"><label for="fill">Startdækning <output id="fillOut">100 %</output></label><input type="range" id="fill" min="0.05" max="1" step="0.05" value="1"></div><div class="field"><label for="speed">Sweeps pr. billede <output id="speedOut">1</output></label><input type="range" id="speed" min="1" max="30" step="1" value="1"></div><div class="field"><label for="seed">Tilfældigheds-seed</label><input id="seed" type="number" min="1" step="1" value="1"></div></div></details><details class="right-category" open><summary>02 · Vækst, angreb og perioder</summary><div class="right-category-content"><div class="periodic-lab"><h3 style="margin:5px 0;font-size:14px">Periodiske parametre</h3><p class="hint">Ligningerne redigeres direkte over grafen under lattice. Åbn flere parametre her, hvis du vil ændre middelpriser, amplituder og faser.</p><div class="field"><label for="climatePeriod">Fælles periode T (sweeps)</label><input id="climatePeriod" type="number" min="2" step="1" value="80"></div><details class="price-parameters" id="priceParameters"><summary>Flere parametre · middelpris, amplitude og fase</summary><div class="wave-card"><div class="wave-card-header wave-energy"><span>1 · Energioptag fra Q</span><span id="climateNow">–</span></div><div class="field"><label for="energyInput">Middeloptag r₀</label><input id="energyInput" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="climateAmplitude">Amplitude (0–1)</label><input id="climateAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="energyPhase">Faseforskydning <output id="energyPhaseOut">0°</output></label><input id="energyPhase" type="range" min="0" max="360" step="5" value="0"></div></div><div class="wave-card"><div class="wave-card-header wave-growth"><span>2 · Pris pr. højdeenhed</span><span id="growthPriceNow">–</span></div><div class="field"><label for="growthCost">Gennemsnitlig højdepris</label><input id="growthCost" type="number" min="0" step="0.1" value="2"></div><div class="field"><label for="growthPriceAmplitude">Amplitude (0–1)</label><input id="growthPriceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="growthPhase">Faseforskydning <output id="growthPhaseOut">180°</output></label><input id="growthPhase" type="range" min="0" max="360" step="5" value="180"></div></div><div class="wave-card"><div class="wave-card-header wave-spread"><span>3 · Pris pr. angreb eller spredning</span><span id="spreadPriceNow">–</span></div><div class="field"><label for="attackCost">Gennemsnitlig angrebspris</label><input id="attackCost" type="number" min="0" step="0.1" value="1"></div><div class="field"><label for="spreadPriceAmplitude">Amplitude (0–1)</label><input id="spreadPriceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="spreadPhase">Faseforskydning <output id="spreadPhaseOut">180°</output></label><input id="spreadPhase" type="range" min="0" max="360" step="5" value="180"></div></div><div class="wave-card"><div class="wave-card-header" style="color:#9b6f99"><span>4 · Vedligeholdelsespris</span><span id="maintenancePriceNow">–</span></div><div class="field"><label for="maintenancePerHeight">Basisvedligehold m <output id="maintenancePerHeightOut">0,10</output></label><input id="maintenancePerHeight" type="range" min="0" max="1" step="0.01" value="0.1"></div><div class="field"><label for="maintenanceAmplitude">Amplitude (0–1)</label><input id="maintenanceAmplitude" type="number" min="0" max="1" step="0.05" value="0.5"></div><div class="field"><label for="maintenancePhase">Faseforskydning <output id="maintenancePhaseOut">180°</output></label><input id="maintenancePhase" type="range" min="0" max="360" step="5" value="180"></div><p class="hint">Den lilla kurve viser prisen for referencehøjden valgt under lattice; hvert træ betaler for sin egen højde h.</p></div></details><p class="periodic-hint">Alle tre handlingsstrømme er sinusformede i standardligningerne; amplitude 0 giver konstant pris. Rediger formlerne frit inden for de understøttede regneoperationer. Skrivning giver direkte grafvisning; når feltet forlades, starter forsøget igen med samme seed. Energi forbliver bevaret.</p><div hidden><span id="climateRange"></span><span id="climatePhase"></span></div></div><details class="settings-group" open><summary>Øvrige vækst-, kamp- og vedligeholdelsesregler</summary>
+<div class="field"><label for="startEnergy">Startenergi pr. træ (E)</label><input id="startEnergy" type="number" min="0" step="0.5" value="10"></div>
+<p class="hint">Efter optag og diffusion betaler træet vedligehold fra E til Q efter den redigerbare ligning. Det konkrete beløb afhænger af både højde og sweep. Hvis reserven ikke rækker, dør træet; E + U returneres til Q.</p><div class="field"><label for="offspringEnergy">Energi til afkom</label><input id="offspringEnergy" type="number" min="0" step="0.1" value="2"></div>
+<p class="hint"><b>Ingen energi til en handling → passiv efter betalt vedligehold.</b> Træet kan få energi fra Q næste sweep. <b>E = 0 → død.</b> Vækst overfører hele den aktuelle højdepris fra E til træets lagrede strukturenergi U og øger højden med 1. Spredning til tomt felt betaler aktuel angrebspris til Q, og derefter deles E, U og h ligeligt. Kamp mod levende træ betaler samme aktuelle angrebspris til Q. Ved sejrrig kamp kræver etablering af afkom den valgte reserve plus den aktuelle højdepris. Ingen konstant κ eller fast mindstepris.</p>
+<details class="settings-group"><summary>Kamp og højder</summary><div class="status" id="attackFormula">P(A vinder) = hₐ / (hₐ + hᵦ)</div><div class="field"><label for="deltaS">Skelnegrænse Δs <output id="deltaSOut">0,01</output></label><input id="deltaS" type="range" min="0" max="0.20" step="0.01" value="0.01"></div><div class="field"><label for="maxHeight">Maksimal højde (0 = ingen)</label><input id="maxHeight" type="number" min="0" max="1000000" step="1" value="0"></div>
+<p class="hint">Samme art og |sₐ − sᵦ| ≤ Δs er beskyttet mod angreb. Uden lovlige mål kan træet vokse eller være passivt.</p></details></details></div></details><details class="right-category" ><summary>03 · Mutation og evolution</summary><div class="right-category-content">
+<div class="field"><label for="birthMutation">Børnemutation (% pr. fødsel)</label><input id="birthMutation" type="number" min="0" max="100" step="0.1" value="0.1"></div><div class="field"><label for="spontaneousMutation">Spontan mutation/etablering (% pr. sweep i hele skoven)</label><input id="spontaneousMutation" type="number" min="0" max="100" step="0.1" value="0"></div><div class="field"><label for="mutationEpsilon">Mutationsstørrelse dε (ændring i s)</label><input id="mutationEpsilon" type="number" min="0.001" max="1" step="0.001" value="0.05"></div>
+<p class="hint">Ved den angivne sandsynlighed vælges ét tilfældigt latticefelt pr. sweep. Rammes et levende træ, muterer det som før med s ± dε og får nyt arts-id. Rammes et tomt felt, forsøger Q at etablere et nyt træ med tilfældig strategi s: Q betaler præcis startreserve + den aktuelle højdepris til højde 1. Er Q for lille, sker intet. Derfor kan liv opstå igen efter fuldstændig uddøen, hvis Q har nok energi. Børnemutation ved fri spredning er fortsat aktiv.</p></div></details><details class="right-category" ><summary>04 · Geometri og diffusion</summary><div class="right-category-content">
+<div class="field"><label for="alpha">Lokal diffusion af energi α <output id="alphaOut">0,10</output></label><input id="alpha" type="range" min="0" max="0.12" step="0.01" value="0.10"></div><div class="field"><label for="curvature">Lattice-krumning k</label><select id="curvature"><option value="0">k = 0 · flad (kvadratisk)</option><option value="1">k = +1 · sfærisk (lukket)</option><option value="-1">k = −1 · hyperbolsk (udvidende)</option></select></div><p class="hint" id="curvatureHelp">Fladt kvadratgitter. Periodiske kanter kan vælges.</p><div class="field"><label for="neighbors">Naboceller</label><select id="neighbors"><option value="4">4 naboer</option><option value="8">8 naboer</option></select></div><div class="field"><label><span>Periodiske kanter</span><input id="periodic" type="checkbox" checked></label></div>
+<p class="hint">α fordeler reserveenergi mellem ens/lignende nabotræer. Koefficienten begrænses automatisk efter grafens højeste grad for at bevare positive reserver. Krumme gitre er graf-approksimationer.</p></div></details></section></aside></div><footer>Skovlaboratoriet · fælles energipulje, evolution og periodisk miljø · <a href="LOGBOG.md">Logbog</a></footer>
 <script>
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01,curvature:0,birthMutation:.01,spontaneousMutation:.01,mutationEpsilon:.01};
-let rng,sp,h,stamp,strategies,mutationCounts,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null,sphereYaw=0,spherePitch=.15,sphereZoom=1,sphereDrag=null,sphereBuffer=null,sphereCtx=null,sphereImg=null;
+const fids={energy:"formulaEnergy",height:"formulaHeight",attack:"formulaAttack",maint:"formulaMaint"};let activeFormulas={},draftFormulas={};
+function compileFormula(src,kind){
+ if(!src.trim()||src.length>220)throw Error("Ligningen skal være 1–220 tegn.");
+ const tokens=[],re=/\s*([A-Za-z_][A-Za-z_0-9]*|(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[()+\-*/^,])\s*/gy;let pos=0;
+ while(pos<src.length){re.lastIndex=pos;const m=re.exec(src);if(!m)throw Error("Ugyldigt tegn ved position "+(pos+1));tokens.push(m[1]);pos=re.lastIndex;if(tokens.length>120)throw Error("For lang ligning.");}
+ let k=0;const peek=()=>tokens[k],eat=x=>peek()===x?(k++,true):false;
+ const allowed=new Set(["t","T","pi","r0","ar","pr","ch","ah","ph","ca","aa","pa","m","am","pm",...(kind==="maint"?["h"]:[])]);
+ const funcs={sin:[Math.sin,1],cos:[Math.cos,1],tan:[Math.tan,1],ln:[Math.log,1],log:[Math.log10,1],sqrt:[Math.sqrt,1],abs:[Math.abs,1],exp:[Math.exp,1],min:[Math.min,-1],max:[Math.max,-1]};
+ function primary(){
+  if(eat("(")){const a=expr();if(!eat(")"))throw Error("Mangler ).");return a;}
+  const x=peek();if(x===undefined)throw Error("Ufuldstændig ligning.");k++;
+  if(/^[0-9.]/.test(x)){const n=Number(x);if(!Number.isFinite(n))throw Error("Ugyldigt tal.");return()=>n;}
+  if(!/^[A-Za-z_]/.test(x))throw Error("Uventet symbol "+x);
+  if(eat("(")){if(!Object.prototype.hasOwnProperty.call(funcs,x))throw Error("Ukendt funktion: "+x);const a=[];if(!eat(")")){do{a.push(expr());}while(eat(","));if(!eat(")"))throw Error("Mangler ).");}
+   const [fn,n]=funcs[x];if(n>=0&&a.length!==n||n<0&&a.length<1)throw Error("Forkert antal argumenter.");return v=>fn(...a.map(z=>z(v)));
+  }
+  if(!allowed.has(x))throw Error("Ukendt variabel: "+x);return v=>v[x];
+ }
+ function power(){let a=primary();if(eat("^")){const b=unary(),p=a;a=v=>Math.pow(p(v),b(v));}return a;}
+ function unary(){if(eat("+"))return unary();if(eat("-")){const a=unary();return v=>-a(v);}return power();}
+ function term(){let a=unary();while(peek()==="*"||peek()==="/"){const op=tokens[k++],b=unary(),p=a;a=op==="*"?v=>p(v)*b(v):v=>p(v)/b(v);}return a;}
+ function expr(){let a=term();while(peek()==="+"||peek()==="-"){const op=tokens[k++],b=term(),p=a;a=op==="+"?v=>p(v)+b(v):v=>p(v)-b(v);}return a;}
+ const fn=expr();if(k!==tokens.length)throw Error("Uventet tekst.");return fn;
+}
+function vars(t,h=10){return {t,h,T:cfg.climatePeriod,pi:Math.PI,r0:cfg.energyInput,ar:cfg.climateAmplitude,pr:cfg.energyPhase,ch:cfg.growthCost,ah:cfg.growthPriceAmplitude,ph:cfg.growthPhase,ca:cfg.attackCost,aa:cfg.spreadPriceAmplitude,pa:cfg.spreadPhase,m:cfg.maintenancePerHeight,am:cfg.maintenanceAmplitude,pm:cfg.maintenancePhase};}
+function calcFormula(fn,t,h=10){const v=fn(vars(t,h));if(!Number.isFinite(v)||v<-1e-10||v>1e6)throw Error("Resultatet skal være mellem 0 og 1.000.000.");return Math.max(0,v);}
+function validateFormula(src,kind){const fn=compileFormula(src,kind),hs=kind==="maint"?[.5,1,10,100,Math.max(1,cfg.maxHeight||100)]:[10];for(let j=0;j<=64;j++)for(const h of hs)calcFormula(fn,cfg.climatePeriod*j/64,h);return fn;}
+
+const formulaSymbols={r0:"r_0",ar:"a_r",pr:"\\phi_r",ch:"c_h",ah:"a_h",ph:"\\phi_h",ca:"c_a",aa:"a_a",pa:"\\phi_a",am:"a_m",pm:"\\phi_m",pi:"\\pi",sin:"\\sin",cos:"\\cos",tan:"\\tan",ln:"\\ln",log:"\\log",sqrt:"\\sqrt",exp:"\\exp",abs:"\\operatorname{abs}",min:"\\min",max:"\\max"};
+const formulaLabels={energy:"r(t)",height:"c_h(t)",attack:"c_a(t)",maint:"v(t,h)"};
+const formulaDefaultLatex={
+ energy:String.raw`r(t)=r_0\left(1+a_r\sin\left(\frac{2\pi t}{T}+\frac{\phi_r\pi}{180}\right)\right)`,
+ height:String.raw`c_h(t)=c_h\left(1+a_h\sin\left(\frac{2\pi t}{T}+\frac{\phi_h\pi}{180}\right)\right)`,
+ attack:String.raw`c_a(t)=c_a\left(1+a_a\sin\left(\frac{2\pi t}{T}+\frac{\phi_a\pi}{180}\right)\right)`,
+ maint:String.raw`v(t,h)=m\left(1+a_m\sin\left(\frac{2\pi t}{T}+\frac{\phi_m\pi}{180}\right)\right)\frac{\ln(1+h)}{\ln 2}`
+};
+const defaultSource={energy:"r0*(1+ar*sin(2*pi*t/T+pr*pi/180))",height:"ch*(1+ah*sin(2*pi*t/T+ph*pi/180))",attack:"ca*(1+aa*sin(2*pi*t/T+pa*pi/180))",maint:"m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2)"};
+function toLatex(src,kind){
+ if(src.replace(/\s+/g,"")===defaultSource[kind])return formulaDefaultLatex[kind];
+ const parts=src.match(/[A-Za-z_][A-Za-z_0-9]*|(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[()+\-*/^,]/g)||[];
+ return formulaLabels[kind]+"="+parts.map(p=>formulaSymbols[p]||({"*":"\\,","/":"\\,/\\,",",":"\\,","(":"\\left(",")":"\\right)","^":"^"}[p]||p)).join("");
+}
+function renderEquation(kind,src){
+ const target=$("tex"+kind[0].toUpperCase()+kind.slice(1));
+ if(!target)return;
+ const latex=toLatex(src,kind);
+ target.dataset.latex=latex;
+ if(window.katex){
+  try{window.katex.render(latex,target,{throwOnError:true,strict:"ignore",displayMode:false,trust:false});return;}catch(_){}
+ }
+ // Browser-native MathML fallback when the optional KaTeX stylesheet/script cannot load.
+ const escapeMath=x=>x.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+ const safe=src.match(/[A-Za-z_][A-Za-z_0-9]*|(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[()+\-*/^,]/g)||[];
+ const names={r0:"r₀",ar:"aᵣ",pr:"φᵣ",ch:"cₕ",ah:"aₕ",ph:"φₕ",ca:"cₐ",aa:"aₐ",pa:"φₐ",am:"aₘ",pm:"φₘ",pi:"π"};
+ const nodes=safe.map(p=>/^\d|^\./.test(p)?"<mn>"+escapeMath(p)+"</mn>":/^[A-Za-z_]/.test(p)?"<mi>"+escapeMath(names[p]||p)+"</mi>":"<mo>"+escapeMath(p==="*"?"·":p)+ "</mo>").join("");
+ target.innerHTML='<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>'+escapeMath(formulaLabels[kind])+'</mi><mo>=</mo>'+nodes+'</mrow></math>';
+}
+window.addEventListener("load",()=>{for(const [kind,id] of Object.entries(fids)){try{validateFormula($(id).value,kind);renderEquation(kind,$(id).value);}catch(_){}}});
+
+function statusFormula(id,error){const el=$(id).closest(".formula-field");el.classList.toggle("invalid",!!error);$(id+"Error").textContent=error||"Gyldig ligning · direkte forhåndsvisning";$(id).setAttribute("aria-invalid",String(!!error));if(!error){const kind=Object.keys(fids).find(k=>fids[k]===id);if(kind)renderEquation(kind,$(id).value);}}
+function loadFormulas(){for(const [kind,id] of Object.entries(fids)){const fn=validateFormula($(id).value,kind);cfg[id]=$(id).value;activeFormulas[kind]=fn;statusFormula(id,null);}draftFormulas={};}
+function calcKind(kind,t,h=10,preview=false){return calcFormula((preview&&draftFormulas[kind])||activeFormulas[kind],t,h);}
+
+const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,deltaS:.01,curvature:0,birthMutation:.01,spontaneousMutation:.01,mutationEpsilon:.01,energyEnabled:true,energyInput:1,initialPool:2,climateAmplitude:.5,climatePeriod:80,energyPhase:0,growthPhase:180,spreadPhase:180,growthCost:2,growthPriceAmplitude:.5,spreadPriceAmplitude:.5,maintenanceAmplitude:.5,maintenancePhase:180,formulaEnergy:"r0*(1+ar*sin(2*pi*t/T+pr*pi/180))",formulaHeight:"ch*(1+ah*sin(2*pi*t/T+ph*pi/180))",formulaAttack:"ca*(1+aa*sin(2*pi*t/T+pa*pi/180))",formulaMaint:"m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2)",pricePhase:"opposite",attackCost:1,offspringEnergy:2,startEnergy:10,maintenancePerHeight:.1};
+let rng,sp,h,en,u,stamp,strategies,mutationCounts,events,pool=0,energyLedger,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null,sphereYaw=0,spherePitch=.15,sphereZoom=1,sphereDrag=null,sphereBuffer=null,sphereCtx=null,sphereImg=null;
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
 const color=k=>k<colors.length?colors[k]:"hsl("+((k*137.508+40)%360).toFixed(1)+" 60% 42%)";
@@ -108,23 +215,32 @@ function inputs(){
  cfg.periodic=$("periodic").checked;cfg.maxHeight=Math.floor(getNum("maxHeight",0,0));
  cfg.curvature=Number($("curvature").value);$("periodic").disabled=cfg.curvature!==0;
  $("curvatureHelp").textContent=cfg.curvature===0?"Fladt kvadratgitter; periodiske kanter kan vælges.":cfg.curvature===1?"Lukket sfærisk ringgitter: naboforbindelser er syet rundt om kuglen; vises som et udfoldet længde-/breddekort.": "Hyperbolsk ringgitter med eksponentielt voksende antal celler mod randen; vises som en skive. Kanten er åben.";
- cfg.birthMutation=Math.min(1,getNum("birthMutation",0,1)/100);
- cfg.spontaneousMutation=Math.min(1,getNum("spontaneousMutation",0,1)/100);
- cfg.mutationEpsilon=Math.min(1,getNum("mutationEpsilon",.001,.01));
+ cfg.birthMutation=Math.min(1,getNum("birthMutation",0,.1)/100);
+ cfg.spontaneousMutation=Math.min(1,getNum("spontaneousMutation",0,0)/100);
+ cfg.mutationEpsilon=Math.min(1,getNum("mutationEpsilon",.001,.05));
+
+ for(const [key,min,def] of [["energyInput",0,1],["climateAmplitude",0,.5],["climatePeriod",2,80],["offspringEnergy",0,2],["startEnergy",0,10],["maintenancePerHeight",0,.1],["growthCost",0,2],["growthPriceAmplitude",0,.5],["spreadPriceAmplitude",0,.5],["maintenanceAmplitude",0,.5],["attackCost",0,1]])cfg[key]=getNum(key,min,def);
+ 
+  for(const key of ["energyPhase","growthPhase","spreadPhase","maintenancePhase"])cfg[key]=Math.min(360,getNum(key,0,key==="energyPhase"?0:180));
+  cfg.growthPriceAmplitude=Math.min(1,cfg.growthPriceAmplitude);cfg.spreadPriceAmplitude=Math.min(1,cfg.spreadPriceAmplitude);cfg.maintenanceAmplitude=Math.min(1,cfg.maintenanceAmplitude);
+  cfg.climateAmplitude=Math.min(1,cfg.climateAmplitude);cfg.climatePeriod=Math.max(2,Math.floor(cfg.climatePeriod));
  cfg.alpha=Math.min(.12,getNum("alpha",0,.1));cfg.deltaS=Math.min(.2,getNum("deltaS",0,.01));
  $("deltaSOut").textContent=cfg.deltaS.toFixed(2).replace(".",",");
+ $("maintenancePerHeightOut").textContent=cfg.maintenancePerHeight.toFixed(2).replace(".",",");
  $("alphaOut").textContent=cfg.alpha.toFixed(2).replace(".",",");
  for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["speed","speedOut"]])$(out).textContent=$(id).value;
  $("fillOut").textContent=Math.round(cfg.fill*100)+" %";
 }
+$("maintenancePerHeight").addEventListener("input",()=>{$("maintenancePerHeightOut").textContent=Number($("maintenancePerHeight").value).toFixed(2).replace(".",",");});
 function stop(){running=false;$("run").textContent="Start";if(raf)cancelAnimationFrame(raf);raf=0;}
 function init(){
- stop();inputs();rng=mulberry32((cfg.seed*2654435761)>>>0);
+ stop();inputs();loadFormulas();rng=mulberry32((cfg.seed*2654435761)>>>0);
  geometry=buildGeometry();$("sphereTools").style.display=cfg.curvature===1?"flex":"none";canvas.classList.toggle("sphere-active",cfg.curvature===1);
- const N=cfg.L*cfg.L;sp=new Int32Array(N);h=new Float64Array(N);stamp=new Int32Array(N);
- strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);mutationCounts={birth:0,spontaneous:0};
- for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;}else sp[i]=-1;}
- sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
+ const N=cfg.L*cfg.L;sp=new Int32Array(N);h=new Float64Array(N);en=new Float64Array(N);u=new Float64Array(N);stamp=new Int32Array(N);
+ strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);mutationCounts={birth:0,spontaneous:0};events={births:0,deaths:0,birthsStep:0,deathsStep:0};
+ for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);h[i]=1;en[i]=cfg.energyEnabled?cfg.startEnergy:0;u[i]=cfg.energyEnabled?growthAt(0):0;}else sp[i]=-1;}
+ pool=cfg.energyEnabled?cfg.initialPool*N:0;energyLedger={initial:pool,injected:0,dissipated:0,recycled:0};if(cfg.energyEnabled)for(let i=0;i<N;i++)if(sp[i]>=0)energyLedger.initial+=en[i]+u[i];sweep=0;history=[];historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
+ for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]===0)killTree(i);
  bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();
 }
 // Combinatorial approximations of curvature, not exact constant-curvature tilings.
@@ -239,31 +355,18 @@ function colonies(){
   groups.push({species,members});
  }return groups;
 }
-// Abstract, pairwise height smoothing, not diffusion of a physical resource.
-function diffuseHeights(){
- if(cfg.alpha===0)return;
- const delta=new Float64Array(h.length),L=cfg.L;
- if(geometry){
-  const rate=Math.min(cfg.alpha,.9/Math.max(1,geometry.maximumDegree));
-  for(let k=0;k<geometry.edgeI.length;k++){
-   const i=geometry.edgeI[k],j=geometry.edgeJ[k];
-   if(sp[i]<0||sp[i]!==sp[j])continue;
-   const flux=rate*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
-  }
- }else{
-  const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
-  for(let i=0;i<sp.length;i++)if(sp[i]>=0){
-   const x=i%L,y=Math.floor(i/L);
-   for(const [dx,dy] of dirs){
-    let nx=x+dx,ny=y+dy;
-    if(cfg.periodic){nx=(nx+L)%L;ny=(ny+L)%L;}
-    else if(nx<0||nx>=L||ny<0||ny>=L)continue;
-    const j=ny*L+nx;if(j===i||sp[j]!==sp[i])continue;
-    const flux=cfg.alpha*(h[i]-h[j]);delta[i]-=flux;delta[j]+=flux;
-   }
-  }
+// Conservative reserve-energy diffusion between compatible neighboring cells.
+function diffuseEnergy(){
+ if(!cfg.energyEnabled||cfg.alpha===0)return;
+ const delta=new Float64Array(en.length),rate=Math.min(cfg.alpha,.45/Math.max(1,geometry?geometry.maximumDegree:cfg.neighbors));
+ function edge(i,j){if(sp[i]<0||sp[j]<0)return;if(sp[i]!==sp[j]&&Math.abs(strategies[sp[i]]-strategies[sp[j]])>cfg.deltaS+1e-12)return;const f=rate*(en[i]-en[j]);delta[i]-=f;delta[j]+=f;}
+ if(geometry){for(let k=0;k<geometry.edgeI.length;k++)edge(geometry.edgeI[k],geometry.edgeJ[k]);}
+ else{const dirs=cfg.neighbors===8?[[1,0],[0,1],[1,1],[-1,1]]:[[1,0],[0,1]];
+  for(let y=0;y<cfg.L;y++)for(let x=0;x<cfg.L;x++){const i=y*cfg.L+x;
+   for(const [dx,dy] of dirs){let xx=x+dx,yy=y+dy;if(cfg.periodic){xx=(xx+cfg.L)%cfg.L;yy=(yy+cfg.L)%cfg.L;}else if(xx<0||yy<0||xx>=cfg.L||yy>=cfg.L)continue;
+   const j=yy*cfg.L+xx;if(i!==j)edge(i,j);}}
  }
- for(let i=0;i<sp.length;i++)if(sp[i]>=0)h[i]+=delta[i];
+ for(let i=0;i<en.length;i++)if(sp[i]>=0)en[i]=Math.max(0,en[i]+delta[i]);
 }
 // Only distinguishable species can be challenged; vacancies stay open.
 function external(i,a){return neighbours(i).filter(j=>sp[j]<0||(sp[j]!==a&&Math.abs(strategies[a]-strategies[sp[j]])>cfg.deltaS+1e-12));}
@@ -284,47 +387,97 @@ function newborn(parent){
 }
 function spontaneousMutation(){
  if(rng()>=cfg.spontaneousMutation)return;
- let i=-1;
- for(let trial=0;trial<16;trial++){
-  const j=Math.floor(rng()*sp.length);
-  if(sp[j]>=0){i=j;break;}
+ const i=Math.floor(rng()*sp.length);
+ if(sp[i]>=0){
+  const id=mutationVariant(sp[i]);
+  if(id!==sp[i]){sp[i]=id;mutationCounts.spontaneous++;}
+  return;
  }
- if(i<0){
-  const alive=[];
-  for(let j=0;j<sp.length;j++)if(sp[j]>=0)alive.push(j);
-  if(!alive.length)return;
-  i=alive[Math.floor(rng()*alive.length)];
+ const structure=growthPrice(),cost=cfg.startEnergy+structure;
+ if(pool+1e-12<cost)return;
+ pool-=cost;
+ strategies.push(Math.round(rng()*1000)/1000);
+ sp[i]=strategies.length-1;h[i]=1;en[i]=cfg.startEnergy;u[i]=structure;stamp[i]=sweep;
+ mutationCounts.spontaneous++;events.births++;events.birthsStep++;
+}
+
+
+function wave(t,phase){return Math.sin(2*Math.PI*t/cfg.climatePeriod+phase*Math.PI/180);}
+ function energyAt(t){return cfg.energyEnabled?calcKind("energy",t):0;}
+ function growthAt(t){return calcKind("height",t);}
+ function spreadAt(t){return calcKind("attack",t);}
+ function growthPrice(){return growthAt(sweep);}
+ function spreadPrice(){return spreadAt(sweep);}
+ function energySupply(){return energyAt(sweep);}
+function maintenanceAt(t,height){return calcKind("maint",t,height);}
+function killTree(i){if(sp[i]<0)return;if(cfg.energyEnabled){const returned=en[i]+u[i];pool+=returned;energyLedger.recycled+=returned;}sp[i]=-1;h[i]=0;en[i]=0;u[i]=0;events.deaths++;events.deathsStep++;}
+function energyTick(){
+ if(!cfg.energyEnabled)return;
+ const order=[];for(let i=0;i<sp.length;i++)if(sp[i]>=0)order.push(i);shuffle(order);
+ const limit=energySupply();
+ for(const i of order){
+  if(en[i]<=0){killTree(i);continue;}
+  const take=Math.min(pool,limit);if(take>0){pool-=take;en[i]+=take;}
+  if(en[i]<=0)killTree(i);
  }
- const id=mutationVariant(sp[i]);
- if(id!==sp[i]){sp[i]=id;mutationCounts.spontaneous++;}
+
+}
+function maintenanceTick(){
+ if(!cfg.energyEnabled)return;
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){
+  const cost=maintenanceAt(sweep,h[i]);
+  if(en[i]<=cost){killTree(i);continue;}
+  en[i]-=cost;pool+=cost;energyLedger.recycled+=cost;
+ }
+}
+function combatChance(i,j){return h[i]+h[j]>0?h[i]/(h[i]+h[j]):.5;}
+function canTarget(i,j){return sp[j]<0?en[i]>spreadPrice():en[i]>=spreadPrice();}
+function spread(i,j,a){
+ if(sp[i]!==a||sp[j]>=0)return;
+ const fee=spreadPrice();if(en[i]<=fee)return;
+  en[i]-=fee;pool+=fee;energyLedger.recycled+=fee;
+  const childH=h[i]/2,childE=en[i]/2,childU=u[i]/2;
+ h[i]=childH;en[i]=childE;u[i]=childU;sp[j]=newborn(a);h[j]=childH;en[j]=childE;u[j]=childU;stamp[j]=sweep;events.births++;events.birthsStep++;
+}
+function birth(i,j,a){
+ const structure=growthPrice(),cost=cfg.offspringEnergy+structure;
+ if(en[i]<cost)return;
+ en[i]-=cost;sp[j]=newborn(a);h[j]=1;u[j]=structure;en[j]=cfg.offspringEnergy;stamp[j]=sweep;events.births++;events.birthsStep++;
+ if(en[j]===0)killTree(j);
+}
+function growTree(i){
+ const cost=growthPrice();if(sp[i]<0||en[i]<cost||(cfg.maxHeight&&h[i]+1>cfg.maxHeight))return;
+ en[i]-=cost;u[i]+=cost;h[i]++;if(en[i]===0)killTree(i);
 }
 function attempt(i,a){
  if(sp[i]!==a||stamp[i]===sweep)return;
- const opts=external(i,a);if(!opts.length)return;
+ const opts=external(i,a).filter(j=>canTarget(i,j));if(!opts.length)return;
  const j=opts[Math.floor(rng()*opts.length)];
- if(sp[j]<0){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;return;}
- const chance=h[i]+h[j]>0?h[i]/(h[i]+h[j]):.5;
- if(rng()<chance){sp[j]=newborn(a);h[j]=1;stamp[j]=sweep;}
- else{sp[i]=-1;h[i]=0;}
+ if(sp[j]<0)spread(i,j,a);
+ else{
+  const fee=spreadPrice();en[i]-=fee;pool+=fee;energyLedger.recycled+=fee;
+  if(rng()<combatChance(i,j)){killTree(j);birth(i,j,a);}else killTree(i);
+ }
+ if(sp[i]>=0&&en[i]===0)killTree(i);
 }
 function step(){
- sweep++;diffuseHeights();
+ sweep++;events.birthsStep=0;events.deathsStep=0;energyTick();diffuseEnergy();maintenanceTick();
  const groups=shuffle(colonies());
  for(const group of groups){
   const a=group.species,members=group.members.filter(i=>sp[i]===a&&stamp[i]!==sweep);
   if(!members.length)continue;
-  const canGrow=members.some(i=>!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9);
-  const canAttack=members.some(i=>external(i,a).length>0);
+  const canGrow=members.some(i=>(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9)&&(!cfg.energyEnabled||en[i]>=growthPrice()));
+  const canAttack=members.some(i=>external(i,a).some(j=>canTarget(i,j)));
   const preferGrowth=rng()>=strategies[a],grow=canGrow&&(preferGrowth||!canAttack);
-  if(grow){for(const i of members)if(sp[i]===a&&(!cfg.maxHeight||h[i]+1<=cfg.maxHeight+1e-9))h[i]+=1;}
+  if(grow){for(const i of members)if(sp[i]===a)growTree(i);}
   else if(canAttack){shuffle(members);for(const i of members)attempt(i,a);}
  }
- spontaneousMutation();
- record();
+ if(cfg.energyEnabled)for(let i=0;i<sp.length;i++)if(sp[i]>=0&&en[i]<=0)killTree(i);
+ spontaneousMutation();record();
 }
 function stats(){
- const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0;
- for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];total++;highest=Math.max(highest,h[i]);}
+ const cnt=Array(strategies.length).fill(0),sumH=Array(strategies.length).fill(0);let total=0,highest=0,sumEnergy=0,sumPotential=0,sumStrategy=0;
+ for(let i=0;i<sp.length;i++)if(sp[i]>=0){const a=sp[i];cnt[a]++;sumH[a]+=h[i];sumEnergy+=en[i];if(cfg.energyEnabled)sumPotential+=u[i];sumStrategy+=strategies[a];total++;highest=Math.max(highest,h[i]);}
  let entropy=0;
  if(total)for(const n of cnt)if(n){const p=n/total;entropy-=p*Math.log(p);}
  let unlike=0,pairs=0;const L=cfg.L;
@@ -343,28 +496,120 @@ function stats(){
   }
  }
  return{cnt,sumH,total,highest,entropy,meanHeight:total?sumH.reduce((a,b)=>a+b,0)/total:0,
- alive:cnt.filter(x=>x>0).length,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0};
+ alive:cnt.filter(x=>x>0).length,leader:total?Math.max(...cnt)/total:0,mix:pairs?unlike/pairs:0,pool:cfg.energyEnabled?pool:0,reserveTotal:cfg.energyEnabled?sumEnergy:0,potentialTotal:sumPotential,totalEnergy:cfg.energyEnabled?pool+sumEnergy+sumPotential:0,balanceError:cfg.energyEnabled?pool+sumEnergy+sumPotential+energyLedger.dissipated-energyLedger.initial:0,meanEnergy:total?sumEnergy/total:0,meanStrategy:total?sumStrategy/total:0,density:total/sp.length};
 }
 function record(force=false){
  historyStep++;if(!force&&historyStep%historyStride)return;
- const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,leader:st.leader,mix:st.mix});
+ const st=stats();history.push({t:sweep,H:st.total>1?st.entropy/Math.log(st.total):0,Hraw:st.entropy,meanHeight:st.meanHeight,uptake:energySupply(),leader:st.leader,mix:st.mix,rho:st.density,E:cfg.energyEnabled?st.meanEnergy/Math.max(.01,Math.max(1,cfg.startEnergy)):0,b:events.birthsStep/sp.length,d:events.deathsStep/sp.length,Q:cfg.energyEnabled?energySupply()/Math.max(.01,cfg.energyInput*(1+cfg.climateAmplitude)):0,growthPrice:growthPrice(),spreadPrice:spreadPrice(),poolFrac:cfg.energyEnabled?st.pool/Math.max(1,st.totalEnergy):0,s:st.meanStrategy});
  if(history.length>900){history=history.filter((_,i)=>i%2===0);historyStride*=2;}
 }
 function fit(c){const r=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),hh=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}return {w,h:hh,d};}
-function plot(){
- const c=$("evolutionPlot"),{w,h:hh,d}=fit(c),g=c.getContext("2d");g.clearRect(0,0,w,hh);
- const left=35*d,right=9*d,top=12*d,bottom=22*d;
- g.strokeStyle="#dae2dc";g.fillStyle="#75827b";g.font=(10*d)+"px system-ui";g.textAlign="right";
- for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();g.fillText((1-k/4).toFixed(2),left-5*d,y+3*d);}
- if(history.length<2)return;
- const t0=history[0].t,t1=history[history.length-1].t;
- const x=t=>left+(w-left-right)*(t-t0)/Math.max(1,t1-t0);
- const y=v=>top+(hh-top-bottom)*(1-Math.max(0,Math.min(1,v)));
- for(const [key,color] of [["H","#238674"],["leader","#c58d48"],["mix","#6681b9"]]){
-  g.strokeStyle=color;g.lineWidth=2*d;g.beginPath();
-  history.forEach((p,i)=>{if(i)g.lineTo(x(p.t),y(p[key]));else g.moveTo(x(p.t),y(p[key]));});g.stroke();
+
+const studyMap={
+ energyPhase:{kind:"energy",label:"planlagt energioptag"},
+ climateAmplitude:{kind:"energy",label:"planlagt energioptag"},
+ energyInput:{kind:"energy",label:"planlagt energioptag"},
+ growthPhase:{kind:"height",label:"højdepris"},
+ growthPriceAmplitude:{kind:"height",label:"højdepris"},
+ growthCost:{kind:"height",label:"højdepris"},
+ spreadPhase:{kind:"attack",label:"angrebspris"},
+ spreadPriceAmplitude:{kind:"attack",label:"angrebspris"},
+ attackCost:{kind:"attack",label:"angrebspris"},
+ maintenancePhase:{kind:"maint",label:"vedligeholdelse (referencehøjde)"},
+ maintenanceAmplitude:{kind:"maint",label:"vedligeholdelse (referencehøjde)"},
+ maintenancePerHeight:{kind:"maint",label:"vedligeholdelse (referencehøjde)"}
+};
+let studyBaseline=null;
+function studySeries(){
+ const key=$("studyVariable").value,def=studyMap[key]||studyMap.energyPhase,gh=Number($("graphHeight").value)||10;
+ const outcome=$("studyOutcome").value;
+ const rows=history.filter(p=>Number.isFinite(p.Hraw)).map(p=>({
+  t:p.t,H:p.Hraw,y:p[outcome],x:def.kind==="energy"?p.uptake:def.kind==="height"?p.growthPrice:def.kind==="attack"?p.spreadPrice:maintenanceAt(p.t,gh)
+ })).filter(v=>Number.isFinite(v.x)&&Number.isFinite(v.y));
+ return {key,def,rows,outcome};
+}
+function pearson(rows){
+ if(rows.length<3)return null;
+ const mx=rows.reduce((a,b)=>a+b.x,0)/rows.length,my=rows.reduce((a,b)=>a+(b.y??b.H),0)/rows.length;
+ let xx=0,yy=0,xy=0;
+ for(const p of rows){const dx=p.x-mx,dy=(p.y??p.H)-my;xx+=dx*dx;yy+=dy*dy;xy+=dx*dy;}
+ return xx>1e-16&&yy>1e-16?xy/Math.sqrt(xx*yy):null;
+}
+function drawStudy(){
+ const {key,def,rows,outcome}=studySeries(),n=rows.length;
+ const outcomeLabels={meanHeight:"Gennemsnitlig træhøjde",Hraw:"Shannon-artsentropi H",rho:"Levende andel ρ",s:"Gennemsnitlig angrebsstrategi s"};
+ const response=outcomeLabels[outcome]||outcomeLabels.meanHeight;
+ $("studyOutcomeLabel").textContent=response;$("studyYAxisLabel").textContent=response+" (lodret)";
+ $("studyDriverLabel").textContent=def.label;$("studyScatterLabel").textContent=def.label;
+ $("studySummary").textContent="Valgt forsøgsvariabel: "+$("studyVariable").selectedOptions[0].textContent+". Her sammenlignes "+def.label+" med "+response+" i samme kørsel. Øvrige parametre holdes faste mellem sammenlignelige forsøg.";
+ const c=cfg[key],base=studyBaseline;
+ if(!base)$("studyStatus").textContent="Gem en reference før første parameterændring. Resultaterne nedenfor er foreløbig kun én kørsel.";
+ else{
+  const changed=Object.keys(base).filter(k=>k!=="speed"&&JSON.stringify(base[k])!==JSON.stringify(cfg[k]));
+  const other=changed.filter(k=>k!==key);
+  $("studyStatus").textContent=other.length?"OBS: "+other.length+" andre indstillinger er ændret siden referencen ("+other.slice(0,3).join(", ")+"). Gem en ny reference eller genskab de faste indstillinger.":changed.length?"Kun valgt parameter ændret: "+String(base[key])+" → "+String(c)+". Sammenlign med referencekørslen, og gentag med flere seeds.":"Reference gemt: "+String(base[key])+". Ændr kun denne parameter i højrepanelet.";
  }
- g.fillStyle="#75827b";g.textAlign="left";g.fillText("sweep "+t0,left,hh-3*d);g.textAlign="right";g.fillText("sweep "+t1,w-right,hh-3*d);
+ const r=pearson(rows);
+ $("studyCorrelation").textContent=r===null?"Pearson r: ikke defineret · "+n+" observationer (kræver mindst tre punkter og variation i begge størrelser).":"Beskrivende Pearson r = "+r.toFixed(3)+" · "+n+" tidspunkter fra én kørsel";
+ function chartAxes(g,w,hh,d,labelLeft,labelBottom){
+  const left=45*d,right=16*d,top=16*d,bottom=34*d;
+  g.clearRect(0,0,w,hh);g.font=(10*d)+"px system-ui";g.textAlign="right";g.lineWidth=d;
+  for(let k=0;k<=4;k++){const y=top+(hh-top-bottom)*k/4;g.strokeStyle="#e4eae2";g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();}
+  g.fillStyle="#66766e";g.textAlign="left";g.fillText(labelLeft,left,11*d);g.textAlign="right";g.fillText(labelBottom,w-right,hh-4*d);
+  return {left,right,top,bottom,tw:w-left-right,th:hh-top-bottom};
+ }
+ function range(vals){if(!vals.length)return [0,1];return [Math.min(...vals),Math.max(...vals)];}
+ function normalize(v,a,b){return Math.abs(b-a)<1e-12 ? 0.5 : (v-a)/(b-a);}
+ const time=$("studyTimePlot"),T=fit(time),tg=time.getContext("2d");
+ const A=chartAxes(tg,T.w,T.h,T.d,"Skaleret 0–1","Sweep");
+ if(n){
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.y));
+  const t0=rows[0].t,t1=rows[n-1].t;
+  for(const [color,access,lo,hi] of [["#238674",p=>p.y,h0,h1],["#c58d48",p=>p.x,x0,x1]]){
+   tg.beginPath();tg.strokeStyle=color;tg.lineWidth=2*T.d;
+   rows.forEach((p,i)=>{const x=A.left+A.tw*(p.t-t0)/Math.max(1,t1-t0),y=A.top+A.th*(1-normalize(access(p),lo,hi));i?tg.lineTo(x,y):tg.moveTo(x,y);});tg.stroke();
+  }
+  tg.fillStyle="#66766e";tg.textAlign="left";tg.fillText(String(t0),A.left,T.h-4*T.d);tg.textAlign="right";tg.fillText(String(t1),T.w-A.right,T.h-4*T.d);
+ }
+ const scatter=$("studyScatterPlot"),P=fit(scatter),pg=scatter.getContext("2d");
+ const B=chartAxes(pg,P.w,P.h,P.d,response,def.label);
+ if(n){
+  const [x0,x1]=range(rows.map(p=>p.x)),[h0,h1]=range(rows.map(p=>p.y));
+  pg.font=(10*P.d)+"px system-ui";pg.fillStyle="#66766e";pg.textAlign="right";pg.fillText(h1.toFixed(2),B.left-5*P.d,B.top+3*P.d);pg.fillText(h0.toFixed(2),B.left-5*P.d,B.top+B.th+3*P.d);
+  pg.textAlign="left";pg.fillText(x0.toFixed(2),B.left,P.h-4*P.d);pg.textAlign="right";pg.fillText(x1.toFixed(2),P.w-B.right,P.h-4*P.d);
+  pg.fillStyle="#c58d48";
+  for(const p of rows){pg.beginPath();pg.arc(B.left+B.tw*normalize(p.x,x0,x1),B.top+B.th*(1-normalize(p.y,h0,h1)),2.4*P.d,0,Math.PI*2);pg.fill();}
+ }
+}
+function drawWaves(){
+ const T=cfg.climatePeriod,now=sweep%T,gh=Math.max(1,Number($("graphHeight").value)||10);
+ $("graphHeightLabel").textContent=gh;$("graphHeightOut").textContent=gh;
+ const c=$("combinedPeriodPlot"),rect=c.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.round(rect.width*d)),hh=Math.max(1,Math.round(rect.height*d));
+ if(c.width!==w||c.height!==hh){c.width=w;c.height=hh;}
+ const g=c.getContext("2d"),left=48*d,right=13*d,top=15*d,bottom=28*d;
+ g.clearRect(0,0,w,hh);
+ const samples=180,curves=[{kind:"energy",color:"#238674"},{kind:"height",color:"#c58d48"},{kind:"attack",color:"#6681b9"},{kind:"maint",color:"#9b6f99"}];
+ const values=curves.map(({kind})=>Array.from({length:samples+1},(_,i)=>calcKind(kind,T*i/samples,gh,true)));
+ const max=Math.max(.1,...values.flat()),topValue=max*1.1;
+ const px=i=>left+(w-left-right)*i/samples,py=v=>top+(hh-top-bottom)*(1-v/topValue);
+ g.lineWidth=d;g.font=(10*d)+"px system-ui";g.fillStyle="#697a70";g.textAlign="right";
+ for(let k=0;k<=4;k++){
+  const v=topValue*k/4,y=py(v);
+  g.strokeStyle="#e2e9e0";g.beginPath();g.moveTo(left,y);g.lineTo(w-right,y);g.stroke();
+  g.fillText(v.toFixed(1),left-6*d,y+3*d);
+ }
+ curves.forEach(({color},j)=>{
+  g.strokeStyle=color;g.lineWidth=2.5*d;g.beginPath();
+  values[j].forEach((v,i)=>i?g.lineTo(px(i),py(v)):g.moveTo(px(i),py(v)));g.stroke();
+ });
+ const x=left+(w-left-right)*now/T;g.setLineDash([5*d,4*d]);g.strokeStyle="#53655d";g.lineWidth=1.2*d;g.beginPath();g.moveTo(x,top);g.lineTo(x,hh-bottom);g.stroke();g.setLineDash([]);
+ g.fillStyle="#697a70";g.font=(11*d)+"px system-ui";
+ for(const [t,label] of [[0,"0"],[.5,"T/2"],[1,"T"]]){g.textAlign=t===0?"left":t===1?"center":"right";g.fillText(label,left+(w-left-right)*t,hh-7*d);}
+ for(const key of ["energyPhase","growthPhase","spreadPhase","maintenancePhase"])$(key+"Out").textContent=cfg[key]+"°";
+ $("energyGraphNow").textContent=calcKind("energy",sweep,gh,true).toFixed(2);
+ $("growthGraphNow").textContent=calcKind("height",sweep,gh,true).toFixed(2);
+ $("spreadGraphNow").textContent=calcKind("attack",sweep,gh,true).toFixed(2);
+ $("maintenanceGraphNow").textContent=calcKind("maint",sweep,gh,true).toFixed(2);
 }
 function draw(){
  const st=stats(),L=cfg.L,data=img.data,maxLog=Math.log1p(Math.max(1,st.highest));
@@ -377,7 +622,8 @@ function draw(){
   else{
    const base=rgbColor(a);
    const t=Math.min(1,Math.max(0,Math.log1p(h[i])/maxLog));
-   if(gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;
+   if(gridView==="energy"){const u=cfg.energyEnabled?Math.min(1,en[i]/Math.max(.01,Math.max(1,cfg.startEnergy))):0;data[off]=Math.round(35+210*u);data[off+1]=Math.round(52+145*u);data[off+2]=Math.round(96-55*u);
+   }else if(gridView==="height"){const p=t*3,k=Math.min(2,Math.floor(p)),f=p-k;
     for(let c=0;c<3;c++)data[off+c]=Math.round(ramp[k][c]*(1-f)+ramp[k+1][c]*f);
    }else if(gridView==="combined"){const brightness=.24+.76*t;
     for(let c=0;c<3;c++)data[off+c]=Math.round(base[c]*brightness);
@@ -388,21 +634,26 @@ function draw(){
  ctx.drawImage(buffer,0,0,canvas.width,canvas.height);
  }
  $("heightLegend").hidden=gridView==="species";
- $("gridLegendLabel").textContent=gridView==="species"?"Farve = art":gridView==="height"?"Farve = højde (log-skala)":"Farve = art · lysstyrke = højde";
- $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":"Mørkere = lavere · lysere = højere (log-skala)";
- $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":"linear-gradient(90deg,#172a21,#31785c)";
- $("heightMaxLegend").textContent="Højde "+Math.max(1,st.highest).toFixed(1);
+ $("gridLegendLabel").textContent=gridView==="species"?"Farve = art":gridView==="height"?"Farve = højde (log-skala)":gridView==="energy"?"Farve = energireserve":"Farve = art · lysstyrke = højde";
+ $("heightLegendText").textContent=gridView==="height"?"Farve = træhøjde, logaritmisk skala":gridView==="energy"?"Farve = energireserve":"Mørkere = lavere · lysere = højere (log-skala)";
+ $("heightLegendBar").style.background=gridView==="height"?"linear-gradient(90deg,#232b52,#276ea3,#3fbbb0,#d2e66e)":gridView==="energy"?"linear-gradient(90deg,#233460,#f5c559)":"linear-gradient(90deg,#172a21,#31785c)";
+ $("heightMaxLegend").textContent=gridView==="energy"?"Energi ≥ "+Math.max(1,cfg.startEnergy).toFixed(1):"Højde "+Math.max(1,st.highest).toFixed(1);
  const living=st.cnt.map((n,k)=>({n,k})).filter(v=>v.n>0).sort((a,b)=>b.n-a.n);
  $("forestSpeciesLegend").innerHTML=living.slice(0,24).map(({n,k})=>'<div class="forest-species-row"><span class="swatch" style="background:'+color(k)+'"></span><span class="forest-species-name">Art '+(k+1)+'</span><span class="forest-species-s">s = '+strategies[k].toFixed(3)+'</span></div>').join("")+(living.length>24?'<div class="hint">+'+(living.length-24)+' flere aktive arter</div>':"");
  $("sweep").textContent=sweep.toLocaleString("da-DK");$("trees").textContent=st.total.toLocaleString("da-DK");
  $("alive").textContent=st.alive;$("speciesTotal").textContent=strategies.length.toLocaleString("da-DK");$("highest").textContent=st.highest.toFixed(1);
- $("entropyArt").textContent=st.entropy.toFixed(4);$("effective").textContent=Math.exp(st.entropy).toFixed(2);
- $("meanHeight").textContent=st.meanHeight.toFixed(2);
+ $("effective").textContent=Math.exp(st.entropy).toFixed(2);
+ 
+ $("climateNow").textContent=cfg.energyEnabled?energySupply().toFixed(2):"fra";$("climateRange").textContent=cfg.energyEnabled?(cfg.energyInput*(1-cfg.climateAmplitude)).toFixed(2)+" – "+(cfg.energyInput*(1+cfg.climateAmplitude)).toFixed(2):"fra";$("climatePhase").textContent=((sweep%cfg.climatePeriod)/cfg.climatePeriod*100).toFixed(0)+" %";$("growthPriceNow").textContent=growthPrice().toFixed(2);$("spreadPriceNow").textContent=spreadPrice().toFixed(2);$("maintenancePriceNow").textContent=maintenanceAt(sweep,Number($("graphHeight").value)).toFixed(2);
+ $("poolOut").textContent=st.pool.toFixed(1);$("reserveOut").textContent=st.reserveTotal.toFixed(1);$("potentialOut").textContent=st.potentialTotal.toFixed(1);$("totalEnergyOut").textContent=st.totalEnergy.toFixed(1);$("balanceOut").textContent=st.balanceError.toExponential(1);
+ $("rhoOut").textContent=st.density.toFixed(3);$("energyOut").textContent=cfg.energyEnabled?st.meanEnergy.toFixed(2):"fra";$("birthsOut").textContent=events.birthsStep;
+ $("strategyOut").textContent=st.total?st.meanStrategy.toFixed(3):"–";$("netOut").textContent=events.birthsStep-events.deathsStep;
+ $("deathOut").textContent=events.deathsStep;$("deathsTotal").textContent=events.deaths;
  $("birthMutations").textContent=mutationCounts.birth.toLocaleString("da-DK");
  $("spontaneousMutations").textContent=mutationCounts.spontaneous.toLocaleString("da-DK");
  const dominant=st.cnt.indexOf(Math.max(...st.cnt));
  $("dominantStrategy").textContent=st.total?strategies[dominant].toFixed(3):"–";
- plot();
+ drawWaves();drawStudy();
 }
 function loop(){if(!running)return;for(let i=0;i<cfg.speed;i++)step();draw();raf=requestAnimationFrame(loop);}
 $("run").addEventListener("click",()=>{if(running)stop();else{running=true;$("run").textContent="Pause";raf=requestAnimationFrame(loop);}});
@@ -412,11 +663,33 @@ $("newSeed").addEventListener("click",()=>{$("seed").value=1+Math.floor(Math.ran
 for(const id of ["size","species","fill","seed"])$(id).addEventListener("change",init);
 for(const [id,out] of [["size","sizeOut"],["species","speciesOut"],["fill","fillOut"],["speed","speedOut"]])
  $(id).addEventListener("input",()=>{$(out).textContent=id==="fill"?Math.round(Number($(id).value)*100)+" %":$(id).value;if(id==="speed")cfg.speed=Number($(id).value);});
-for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature","birthMutation","spontaneousMutation","mutationEpsilon"])$(id).addEventListener("change",()=>{
-  if(id==="neighbors"||id==="curvature")init();else{inputs();draw();}
+for(const id of ["neighbors","periodic","maxHeight","alpha","deltaS","curvature","birthMutation","spontaneousMutation","mutationEpsilon","energyInput","climateAmplitude","climatePeriod","offspringEnergy","startEnergy","maintenancePerHeight","growthCost","attackCost","maintenanceAmplitude","maintenancePhase","growthPriceAmplitude","spreadPriceAmplitude","energyPhase","growthPhase","spreadPhase"])$(id).addEventListener("change",()=>{
+  init();
 });
+for(const id of ["energyInput","climateAmplitude","climatePeriod","growthCost","attackCost","maintenancePerHeight","maintenanceAmplitude","maintenancePhase","growthPriceAmplitude","spreadPriceAmplitude","energyPhase","growthPhase","spreadPhase"])$(id).addEventListener("input",()=>{
+ const old={...cfg},read=(key,min)=>Math.max(min,Number($(key).value)||0);
+ cfg.energyInput=read("energyInput",0);cfg.climateAmplitude=Math.min(1,read("climateAmplitude",0));cfg.climatePeriod=Math.max(2,Math.floor(read("climatePeriod",2)));
+ cfg.growthCost=read("growthCost",0);
+ cfg.attackCost=read("attackCost",0);
+ for(const key of ["growthPriceAmplitude","spreadPriceAmplitude","maintenanceAmplitude"])cfg[key]=Math.min(1,read(key,0));
+ for(const key of ["energyPhase","growthPhase","spreadPhase","maintenancePhase"])cfg[key]=Math.min(360,read(key,0));cfg.maintenancePerHeight=read("maintenancePerHeight",0);
+ try{drawWaves();}catch(e){/* incomplete input, do not restart */}
+ $("climateNow").textContent=energySupply().toFixed(2);$("growthPriceNow").textContent=growthPrice().toFixed(2);$("spreadPriceNow").textContent=spreadPrice().toFixed(2);
+ Object.assign(cfg,old);
+});
+$("graphHeight").addEventListener("input",()=>{drawWaves();drawStudy();});
+for(const [kind,id] of Object.entries(fids)){
+ $(id).addEventListener("input",()=>{
+  try{draftFormulas[kind]=validateFormula($(id).value,kind);statusFormula(id,null);drawWaves();}
+  catch(e){delete draftFormulas[kind];statusFormula(id,e.message);}
+ });
+ $(id).addEventListener("change",()=>{
+  try{validateFormula($(id).value,kind);init();}
+  catch(e){statusFormula(id,e.message);}
+ });
+}
 canvas.addEventListener("mousemove",e=>{const r=canvas.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*cfg.L),y=Math.floor((e.clientY-r.top)/r.height*cfg.L);if(x<0||x>=cfg.L||y<0||y>=cfg.L)return;const hit=cfg.curvature===1?sphereHit((e.clientX-r.left)/r.width*380,(e.clientY-r.top)/r.height*380,380,380):null;
- const i=hit?hit.i:visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3);});
+ const i=hit?hit.i:visualCell(x,y),a=i<0?-1:sp[i];$("inspect").textContent=a<0?"("+x+", "+y+"): tom celle":"("+x+", "+y+"): art "+(a+1)+" · højde "+h[i].toFixed(2)+" · strategi s="+strategies[a].toFixed(3)+(cfg.energyEnabled?" · reserve="+en[i].toFixed(2)+" · U="+u[i].toFixed(2):"");});
 canvas.addEventListener("mouseleave",()=>{$("inspect").textContent="Peg på et felt for at se art, højde og strategi.";});
 canvas.addEventListener("pointerdown",e=>{
  if(cfg.curvature!==1)return;
@@ -437,8 +710,12 @@ $("zoomIn").addEventListener("click",()=>{sphereZoom=Math.min(1.75,sphereZoom*1.
 $("zoomOut").addEventListener("click",()=>{sphereZoom=Math.max(.55,sphereZoom/1.2);draw();});
 $("resetSphere").addEventListener("click",()=>{sphereYaw=0;spherePitch=.15;sphereZoom=1;draw();});
 $("gridView").addEventListener("change",e=>{gridView=e.target.value;draw();});
+$("studyVariable").addEventListener("change",()=>{studyBaseline=null;drawStudy();});
+$("studyOutcome").addEventListener("change",drawStudy);
+$("studyCapture").addEventListener("click",()=>{studyBaseline={...cfg};drawStudy();});
+$("studyJump").addEventListener("click",()=>{const el=$(String($("studyVariable").value));if(!el)return;const section=el.closest(".right-category");if(section)section.open=true;const advanced=el.closest(".price-parameters");if(advanced)advanced.open=true;el.scrollIntoView({behavior:"smooth",block:"center"});el.focus({preventScroll:true});});
 window.addEventListener("resize",draw);
 init();
-window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),strategies:Array.from(strategies),mutationCounts:{...mutationCounts},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.strategies)strategies=x.strategies.slice();},restart:init};
+window.__skovTest={step,snapshot:()=>({sweep,curvature:cfg.curvature,sp:Array.from(sp),h:Array.from(h),en:Array.from(en),u:Array.from(u),energySupply:energySupply(),pool,energyLedger:{...energyLedger},strategies:Array.from(strategies),mutationCounts:{...mutationCounts},events:{...events},history:history.map(v=>({...v})),config:{...cfg},geometry:geometry?{counts:Array.from(geometry.counts),edges:geometry.edgeI.length,maxDegree:geometry.maximumDegree}:null,...stats()}),set:x=>{if(x.sp)sp.set(x.sp);if(x.h)h.set(x.h);if(x.en)en.set(x.en);if(x.u)u.set(x.u);if(x.strategies)strategies=x.strategies.slice();},restart:init,draw,neighbours,energyTick,diffuseEnergy,studySeries,pearson,maintenanceTick,maintenanceAt,validateFormula,growTree,spread,attempt,spontaneousMutation,killTree,combatChance,growthPrice,spreadPrice,fixture:x=>{stop();if(x.cfg)Object.assign(cfg,x.cfg);for(const [kind,id] of Object.entries(fids))activeFormulas[kind]=validateFormula(cfg[id],kind);geometry=buildGeometry();sp=new Int32Array(cfg.L*cfg.L).fill(-1);h=new Float64Array(sp.length);en=new Float64Array(sp.length);u=new Float64Array(sp.length);stamp=new Int32Array(sp.length).fill(-1);for(const [i,t] of Object.entries(x.trees||{})){sp[i]=t[0];h[i]=t[1];en[i]=t[2];u[i]=t.length>3?t[3]:t[1]*cfg.growthCost;}if(x.strategies)strategies=x.strategies.slice();pool=x.pool??0;sweep=x.sweep??0;events={births:0,deaths:0,birthsStep:0,deathsStep:0};mutationCounts={birth:0,spontaneous:0};energyLedger={initial:stats().totalEnergy,injected:0,dissipated:0,recycled:0};rng=x.random===undefined?mulberry32(123):()=>x.random;}};
 })();
 </script></body></html>
