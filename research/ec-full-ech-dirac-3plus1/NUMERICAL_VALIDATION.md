@@ -1,0 +1,14 @@
+# Reproducible validation and limits
+
+Run `python research/ec-full-ech-dirac-3plus1/code/validate_programme.py` with NumPy, SciPy and SymPy. All tests use deterministic inputs. JSON results retain grids and parameters. There is no 3D time evolution in this release.
+
+1. Local variation: six arbitrary lapse/shift/off-diagonal metrics; original 24-component auxiliary action, ten metric variations, reduced action, full Ward identity, canonical energy and chiral rotation. Typical metric/connection errors are 1e-13 or smaller. The EC source limit is checked against a basis-transformed read-only PR #2 reference excerpt; no old trajectories are rerun.
+2. ADM geometry: arbitrary metric first/second jets, five gauge choices; independent Gauss/Codazzi and metric/extrinsic evolution identities. This is a geometric identity test, with G as source, not a coupled numerical solution.
+3. New mixed constraints: 65/129/257 evaluation nodes. Main Hamiltonian maximum errors 9.70344e-8, 2.46591e-8, 6.21641e-9; refinement ratios 3.935 and 3.967. Momentum vanishes for the explicitly restricted family. All three actions have separate retained collocation solutions.
+4. Reconstructed Cartan curvature: use initial ADM/scalar/Dirac tangent equations and connection derivatives, not a homogeneous curvature formula. Original trace residual converges 9.7033e-8 -> 2.4659e-8 -> 6.2162e-9. H-z is around 1e-13, already limited by the tangent/roundoff probe; halving that probe is an uncertainty check, NOT evidence of second-order convergence. Full Ricci and Kretschmann are saved; finiteness on one slice says nothing about global completeness.
+5. Symbolic scalar momentum/normal evolution equivalence and classical chiral diagonalization pass.
+6. Independent matter conservation: fixed Minkowski background with nonconstant scalar, momentum and all four complex spinor components; 65/129/257/513 spatial nodes. Stress divergence ratios 3.924,3.963,3.984; finest error 2.75166e-9, current 1.07237e-10. Omitting the explicit derivative-interaction stress gives a nonconvergent approximately 3.24e-8 residual. Time derivatives here are local equation-generated tangents, not evolved time steps.
+
+Development corrections: initial 129-node BVP interpolation masked finest finite-difference convergence. Increasing collocation mesh to 1025 and tolerance to 2e-13 resolved this without changing physical data. Conservation needed 513 nodes to distinguish the omitted-term residual from truncation error; again physical data were unchanged. These are discretization corrections, not successful bounce parameter searches.
+
+Not validated: nonlinear spacetime evolution, temporal convergence, generic 3D constrained matter data, hyperbolic gauge implementation, exterior boundaries, physical quantum stress/noise, or Level B bounce.

@@ -1,0 +1,19 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "sympy": "1.14.0",
+  "scope": "local identities and initial data; no spacetime time evolution",
+  "code_sha256": {
+    "curvature.py": "0376da342b6dbe0e843c949c4034c2a066918ac6959809e330ffc0f6ed9fe9d5",
+    "ech.py": "e09289e9b976bd3b33c9eb98d78c86518ba3306374ca4756b2e5c59466ae6c1a",
+    "initial_curvature.py": "a237135c6ecc207f2ef9fa38395556277d74ff4ae4801ca92801fd347bab4409",
+    "initial_data.py": "16f0c878a8a38998112b0a51a7409f4df1cfaf0502715d6a74043fc778b58e4a",
+    "reference_ecd.py": "90521cbafe18a51995a63c335e7cd32c2b40271f9be64254bd3fb67bccdbaff4",
+    "validate_programme.py": "8138796f0770373a9c1fd87b08fce887d210d0f96cb0220611bec60a08a2993e",
+    "verify_adm.py": "e4d3b208771cebe04e4d885553dd09c04ea0af3be5f82807c3d9187f94bbff2b",
+    "verify_canonical.py": "24f43c754ac4ba6e7b767fdcfa7c7d7ba91ef01bec16cb5eaf0b0852e350e24c",
+    "verify_conservation.py": "5b6de47289d9f30bd25dd74df93959b29c3cbcee279cd25c42f68d9dfee29a1f",
+    "verify_local.py": "3c57a1dbbb6765c8fa0fe1cdb3ab0b27c91460262aa4efa235fc93286f3a9d43"
+  }
+}

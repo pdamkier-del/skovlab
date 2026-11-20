@@ -1,0 +1,113 @@
+{
+  "fixed_action_parameters": {
+    "M": 1.0,
+    "beta": 0.25,
+    "c": 10000.0,
+    "mass": 0.1
+  },
+  "arbitrary_ADM_point_tests": [
+    {
+      "case": 0,
+      "lapse": 0.7,
+      "shift": [
+        0.003726636188022053,
+        -0.05654768806431637,
+        0.07936930486897081
+      ],
+      "all_ten_metric_variation_error": 5.0906761445146387e-14,
+      "original_metric_at_fixed_contortion_error": 4.708212986148652e-14,
+      "original_24_contortion_Euler_error": 1.6263032587282567e-14,
+      "axial_Ward_error": 1.3010426069826053e-18,
+      "metric_Clifford_compatibility_error": 6.938893903907228e-18,
+      "ADM_Legendre_energy_error": 4.336808689942018e-19,
+      "PR2_EC_source_limit_error": 1.0566516674266068e-16,
+      "chiral_rotated_Dirac_error": 7.129917430745489e-18
+    },
+    {
+      "case": 1,
+      "lapse": 0.7999999999999999,
+      "shift": [
+        -0.1097732321450093,
+        -0.14187274063020167,
+        0.08844445799494999
+      ],
+      "all_ten_metric_variation_error": 7.914632491057283e-14,
+      "original_metric_at_fixed_contortion_error": 2.0585746648982273e-13,
+      "original_24_contortion_Euler_error": 1.192622389734055e-13,
+      "axial_Ward_error": 6.071532165918825e-18,
+      "metric_Clifford_compatibility_error": 6.938893903907228e-18,
+      "ADM_Legendre_energy_error": 8.673617379884035e-19,
+      "PR2_EC_source_limit_error": 1.0380838064411856e-16,
+      "chiral_rotated_Dirac_error": 1.549547025765368e-17
+    },
+    {
+      "case": 2,
+      "lapse": 0.8999999999999999,
+      "shift": [
+        0.014261622532902772,
+        0.06448902450312814,
+        0.11562481377594303
+      ],
+      "all_ten_metric_variation_error": 3.0191561056769345e-14,
+      "original_metric_at_fixed_contortion_error": 3.900070370821407e-14,
+      "original_24_contortion_Euler_error": 0.0,
+      "axial_Ward_error": 3.469446951953614e-18,
+      "metric_Clifford_compatibility_error": 5.204170427930421e-18,
+      "ADM_Legendre_energy_error": 4.336808689942018e-19,
+      "PR2_EC_source_limit_error": 1.6351551701922183e-16,
+      "chiral_rotated_Dirac_error": 9.764781561863997e-18
+    },
+    {
+      "case": 3,
+      "lapse": 1.0,
+      "shift": [
+        0.19061756411119066,
+        0.07222033621861745,
+        -0.028823994770300995
+      ],
+      "all_ten_metric_variation_error": 5.656933255160368e-14,
+      "original_metric_at_fixed_contortion_error": 7.605071086769222e-14,
+      "original_24_contortion_Euler_error": 2.2531076396964386e-14,
+      "axial_Ward_error": 3.2526065174565133e-19,
+      "metric_Clifford_compatibility_error": 6.111092825806532e-18,
+      "ADM_Legendre_energy_error": 4.336808689942018e-19,
+      "PR2_EC_source_limit_error": 5.989194037114866e-17,
+      "chiral_rotated_Dirac_error": 4.406655836641573e-18
+    },
+    {
+      "case": 4,
+      "lapse": 1.1,
+      "shift": [
+        -0.028687742784968818,
+        -0.13917935009484292,
+        -0.1859517530104035
+      ],
+      "all_ten_metric_variation_error": 7.997706772018554e-14,
+      "original_metric_at_fixed_contortion_error": 5.5582518839261685e-14,
+      "original_24_contortion_Euler_error": 2.4394548880923847e-14,
+      "axial_Ward_error": 3.469446951953614e-18,
+      "metric_Clifford_compatibility_error": 5.222209201006511e-18,
+      "ADM_Legendre_energy_error": 4.336808689942018e-19,
+      "PR2_EC_source_limit_error": 7.979727989493313e-17,
+      "chiral_rotated_Dirac_error": 1.2608774835204999e-17
+    },
+    {
+      "case": 5,
+      "lapse": 1.2,
+      "shift": [
+        0.09340844038871098,
+        -0.05331288397689387,
+        0.09473074868571768
+      ],
+      "all_ten_metric_variation_error": 1.8768927384504863e-13,
+      "original_metric_at_fixed_contortion_error": 1.667264416804759e-13,
+      "original_24_contortion_Euler_error": 3.252606517456513e-14,
+      "axial_Ward_error": 3.2526065174565133e-19,
+      "metric_Clifford_compatibility_error": 6.938893903907228e-18,
+      "ADM_Legendre_energy_error": 1.734723475976807e-18,
+      "PR2_EC_source_limit_error": 8.420559318810146e-17,
+      "chiral_rotated_Dirac_error": 8.491674912349947e-18
+    }
+  ],
+  "scope": "General local metric/source/Dirac tests, not a PDE evolution. Classical Ward identity omits quantum anomalies. EC comparison is an instantaneous source limit, not a claim that scalar phi=0 is a consistent massive-sector evolution."
+}

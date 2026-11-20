@@ -1,0 +1,324 @@
+{
+  "main_action": {
+    "M": 1.0,
+    "beta": 0.25,
+    "c": 10000.0,
+    "mass": 0.1
+  },
+  "cases": [
+    {
+      "mode": "echd",
+      "initial_slice_refinement": [
+        {
+          "nodes": 65,
+          "normal_Theta": -0.008751786441954673,
+          "normal_Theta_dot_min": -3.126965131112451e-05,
+          "normal_Theta_dot_max": -2.966824093415271e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 4.8516852221527256e-08,
+              "auxiliary_H_minus_z_max": 7.756785910809018e-14,
+              "original_trace_residual_max": 9.70333050239076e-08,
+              "full_R_min": 7.366824554184178e-06,
+              "full_R_max": 9.37487875019076e-06,
+              "full_K_min": 4.562118975691501e-09,
+              "full_K_max": 2.3057732633977553e-05,
+              "metric_R_min": 1.0300014888750307e-05,
+              "metric_R_max": 7.277202144449166e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 4.8516852221527256e-08,
+              "auxiliary_H_minus_z_max": 1.9977635395775398e-13,
+              "original_trace_residual_max": 9.703333759857552e-08,
+              "full_R_min": 7.366824519539419e-06,
+              "full_R_max": 9.374878778380124e-06,
+              "full_K_min": 4.5621189749113255e-09,
+              "full_K_max": 2.3057732633973036e-05,
+              "metric_R_min": 1.0300014888750307e-05,
+              "metric_R_max": 7.277202144449166e-05
+            }
+          ]
+        },
+        {
+          "nodes": 129,
+          "normal_Theta": -0.008751786441954673,
+          "normal_Theta_dot_min": -3.1270035972150216e-05,
+          "normal_Theta_dot_max": -2.966748001654824e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 1.2329490868453466e-08,
+              "auxiliary_H_minus_z_max": 7.238098805755801e-14,
+              "original_trace_residual_max": 2.4658866316147027e-08,
+              "full_R_min": 7.438686781546095e-06,
+              "full_R_max": 9.445622607442072e-06,
+              "full_K_min": 4.5760026435879e-09,
+              "full_K_max": 2.309318694454393e-05,
+              "metric_R_min": 1.0332875922166978e-05,
+              "metric_R_max": 7.298589605580991e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 1.2329490868453466e-08,
+              "auxiliary_H_minus_z_max": 1.6812898805717625e-13,
+              "original_trace_residual_max": 2.465888802198294e-08,
+              "full_R_min": 7.438686725267328e-06,
+              "full_R_max": 9.445622633413105e-06,
+              "full_K_min": 4.576002644120932e-09,
+              "full_K_max": 2.3093186944544233e-05,
+              "metric_R_min": 1.0332875922166978e-05,
+              "metric_R_max": 7.298589605580991e-05
+            }
+          ]
+        },
+        {
+          "nodes": 257,
+          "normal_Theta": -0.008751786441954673,
+          "normal_Theta_dot_min": -3.127017282395728e-05,
+          "normal_Theta_dot_max": -2.9667336117905094e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 3.108101410967336e-09,
+              "auxiliary_H_minus_z_max": 8.553584976203339e-14,
+              "original_trace_residual_max": 6.216194633038672e-09,
+              "full_R_min": 7.457102245499224e-06,
+              "full_R_max": 9.463752396365508e-06,
+              "full_K_min": 2.745072512259672e-09,
+              "full_K_max": 2.310215447045186e-05,
+              "metric_R_min": 1.0332226042295869e-05,
+              "metric_R_max": 7.304040242323733e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 3.108101410967336e-09,
+              "auxiliary_H_minus_z_max": 1.6340226765523998e-13,
+              "original_trace_residual_max": 6.216205434540035e-09,
+              "full_R_min": 7.4571022390684414e-06,
+              "full_R_max": 9.463752342329793e-06,
+              "full_K_min": 2.74507251304819e-09,
+              "full_K_max": 2.310215447044901e-05,
+              "metric_R_min": 1.0332226042295869e-05,
+              "metric_R_max": 7.304040242323733e-05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "scalar_GR",
+      "initial_slice_refinement": [
+        {
+          "nodes": 65,
+          "normal_Theta": -0.008749078816132537,
+          "normal_Theta_dot_min": -3.092135255541184e-05,
+          "normal_Theta_dot_max": -2.992148659115338e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 4.875057507639245e-08,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0301616559425568e-05,
+              "full_R_max": 7.277430713865134e-05,
+              "full_K_min": 4.863990392702006e-10,
+              "full_K_max": 1.0136043390133813e-08,
+              "metric_R_min": 1.0301616559425568e-05,
+              "metric_R_max": 7.277430713865134e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 4.875057507639245e-08,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0301616559425568e-05,
+              "full_R_max": 7.277430713865134e-05,
+              "full_K_min": 4.863990392702006e-10,
+              "full_K_max": 1.0136043390133813e-08,
+              "metric_R_min": 1.0301616559425568e-05,
+              "metric_R_max": 7.277430713865134e-05
+            }
+          ]
+        },
+        {
+          "nodes": 129,
+          "normal_Theta": -0.008749078816132537,
+          "normal_Theta_dot_min": -3.092135255541184e-05,
+          "normal_Theta_dot_max": -2.9921290923957945e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 1.238895656323905e-08,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0334393560664838e-05,
+              "full_R_max": 7.29878317567074e-05,
+              "full_K_min": 4.851231151835101e-10,
+              "full_K_max": 1.0180387328051078e-08,
+              "metric_R_min": 1.0334393560664838e-05,
+              "metric_R_max": 7.29878317567074e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 1.238895656323905e-08,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0334393560664838e-05,
+              "full_R_max": 7.29878317567074e-05,
+              "full_K_min": 4.851231151835101e-10,
+              "full_K_max": 1.0180387328051078e-08,
+              "metric_R_min": 1.0334393560664838e-05,
+              "metric_R_max": 7.29878317567074e-05
+            }
+          ]
+        },
+        {
+          "nodes": 257,
+          "normal_Theta": -0.008749078816132537,
+          "normal_Theta_dot_min": -3.092144742790099e-05,
+          "normal_Theta_dot_max": -2.9921301358756458e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 3.122495601335783e-09,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0333714859418443e-05,
+              "full_R_max": 7.304224852326257e-05,
+              "full_K_min": 4.848251687298342e-10,
+              "full_K_max": 1.0198249797978543e-08,
+              "metric_R_min": 1.0333714859418443e-05,
+              "metric_R_max": 7.304224852326257e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 3.122495601335783e-09,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 1.0333714859418443e-05,
+              "full_R_max": 7.304224852326257e-05,
+              "full_K_min": 4.848251687298342e-10,
+              "full_K_max": 1.0198249797978543e-08,
+              "metric_R_min": 1.0333714859418443e-05,
+              "metric_R_max": 7.304224852326257e-05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "einstein_dirac",
+      "initial_slice_refinement": [
+        {
+          "nodes": 65,
+          "normal_Theta": -0.005477225519551976,
+          "normal_Theta_dot_min": -1.5499986423291074e-05,
+          "normal_Theta_dot_max": -1.4500594615004199e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 7.78413479454104e-10,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999634595121961e-06,
+              "full_R_max": 1.1001530076329674e-05,
+              "full_K_min": 1.3640111354477865e-10,
+              "full_K_max": 2.0295121084794178e-10,
+              "metric_R_min": 8.999634595121961e-06,
+              "metric_R_max": 1.1001530076329674e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 7.78413479454104e-10,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999634595121961e-06,
+              "full_R_max": 1.1001530076329674e-05,
+              "full_K_min": 1.3640111354477865e-10,
+              "full_K_max": 2.0295121084794178e-10,
+              "metric_R_min": 8.999634595121961e-06,
+              "metric_R_max": 1.1001530076329674e-05
+            }
+          ]
+        },
+        {
+          "nodes": 129,
+          "normal_Theta": -0.005477225519551976,
+          "normal_Theta_dot_min": -1.5499986423291074e-05,
+          "normal_Theta_dot_max": -1.4500159001973602e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 1.977138706838846e-10,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999923210604594e-06,
+              "full_R_max": 1.1000368678994878e-05,
+              "full_K_min": 1.3635099493374194e-10,
+              "full_K_max": 2.0298682237424942e-10,
+              "metric_R_min": 8.999923210604594e-06,
+              "metric_R_max": 1.1000368678994878e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 1.977138706838846e-10,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999923210604594e-06,
+              "full_R_max": 1.1000368678994878e-05,
+              "full_K_min": 1.3635099493374194e-10,
+              "full_K_max": 2.0298682237424942e-10,
+              "metric_R_min": 8.999923210604594e-06,
+              "metric_R_max": 1.1000368678994878e-05
+            }
+          ]
+        },
+        {
+          "nodes": 257,
+          "normal_Theta": -0.005477225519551976,
+          "normal_Theta_dot_min": -1.5499986423291074e-05,
+          "normal_Theta_dot_max": -1.4500048095718936e-05,
+          "momentum_max": 0.0,
+          "curvature_probes": [
+            {
+              "tangent_step": 0.0001,
+              "Einstein_residual_max": 5.070150391430541e-11,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999996690623124e-06,
+              "full_R_max": 1.10000710372161e-05,
+              "full_K_min": 1.3633823772912512e-10,
+              "full_K_max": 2.029959497300988e-10,
+              "metric_R_min": 8.999996690623124e-06,
+              "metric_R_max": 1.10000710372161e-05
+            },
+            {
+              "tangent_step": 5e-05,
+              "Einstein_residual_max": 5.070150391430541e-11,
+              "auxiliary_H_minus_z_max": 0.0,
+              "original_trace_residual_max": null,
+              "full_R_min": 8.999996690623124e-06,
+              "full_R_max": 1.10000710372161e-05,
+              "full_K_min": 1.3633823772912512e-10,
+              "full_K_max": 2.029959497300988e-10,
+              "metric_R_min": 8.999996690623124e-06,
+              "metric_R_max": 1.10000710372161e-05
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "No spacetime evolution. Normal-time jets use the derived ADM/scalar/Dirac equations; scalar and original trace identities are independently probed from full reconstructed curvature. Geometric Einstein residual includes independent initial constraint truncation.",
+  "interpretation": "All three separately constrained data families are initially contracting and normal-focusing. This is not a trajectory-level no-bounce theorem or a physical quantum source test."
+}

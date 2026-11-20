@@ -1,0 +1,85 @@
+{
+  "parameters": {
+    "M": 1.0,
+    "beta": 0.25,
+    "c": 10000.0,
+    "mass": 0.1
+  },
+  "data": "Periodic varying phi, Pi and all four complex Dirac components; independent centered stress/current divergence versus coupled matter tangent evolution.",
+  "records": [
+    {
+      "nodes": 65,
+      "probes": [
+        {
+          "tangent_step": 0.001,
+          "full_stress_divergence_max": 1.7049643754759154e-07,
+          "current_divergence_max": 6.598445690764941e-09,
+          "omitted_explicit_axial_stress_divergence_max": 1.9522311440124294e-07
+        },
+        {
+          "tangent_step": 0.0005,
+          "full_stress_divergence_max": 1.7049643752260407e-07,
+          "current_divergence_max": 6.598445682294611e-09,
+          "omitted_explicit_axial_stress_divergence_max": 1.9522311481438495e-07
+        }
+      ]
+    },
+    {
+      "nodes": 129,
+      "probes": [
+        {
+          "tangent_step": 0.001,
+          "full_stress_divergence_max": 4.344561552463978e-08,
+          "current_divergence_max": 1.6888144145207684e-09,
+          "omitted_explicit_axial_stress_divergence_max": 6.943240424322206e-08
+        },
+        {
+          "tangent_step": 0.0005,
+          "full_stress_divergence_max": 4.3445615499652305e-08,
+          "current_divergence_max": 1.6888144246851637e-09,
+          "omitted_explicit_axial_stress_divergence_max": 6.943240465742117e-08
+        }
+      ]
+    },
+    {
+      "nodes": 257,
+      "probes": [
+        {
+          "tangent_step": 0.001,
+          "full_stress_divergence_max": 1.0961649276968431e-08,
+          "current_divergence_max": 4.267667683490187e-10,
+          "omitted_explicit_axial_stress_divergence_max": 3.8749537844871916e-08
+        },
+        {
+          "tangent_step": 0.0005,
+          "full_stress_divergence_max": 1.096164933054496e-08,
+          "current_divergence_max": 4.267667717371505e-10,
+          "omitted_explicit_axial_stress_divergence_max": 3.874953829803454e-08
+        }
+      ]
+    },
+    {
+      "nodes": 513,
+      "probes": [
+        {
+          "tangent_step": 0.001,
+          "full_stress_divergence_max": 2.7516584506553834e-09,
+          "current_divergence_max": 1.0723716921357348e-10,
+          "omitted_explicit_axial_stress_divergence_max": 3.242736183259055e-08
+        },
+        {
+          "tangent_step": 0.0005,
+          "full_stress_divergence_max": 2.7516585095241732e-09,
+          "current_divergence_max": 1.0723717090763938e-10,
+          "omitted_explicit_axial_stress_divergence_max": 3.2427362390361744e-08
+        }
+      ]
+    }
+  ],
+  "spatial_stress_error_ratios": [
+    3.9243646467379096,
+    3.963419572143201,
+    3.9836517840436847
+  ],
+  "scope": "Second-order spatial derivative consistency; tangent difference probes are not temporal evolution/refinement. Omitting the explicit derivative-coupling stress does not approach the conserved source."
+}

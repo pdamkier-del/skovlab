@@ -1,0 +1,115 @@
+{
+  "checks": [
+    {
+      "case": 0,
+      "lapse": 0.8,
+      "shift": [
+        -0.04670449788420145,
+        0.22642981159670605,
+        -0.07418431957686755
+      ],
+      "Hamiltonian_Gauss_error": 6.938893903907228e-18,
+      "tangent_probes": [
+        {
+          "tangent_step": 0.001,
+          "momentum_Codazzi_error": 4.303516293324705e-10,
+          "extrinsic_evolution_error": 3.5168617844305583e-10
+        },
+        {
+          "tangent_step": 0.0005,
+          "momentum_Codazzi_error": 1.0763148705628112e-10,
+          "extrinsic_evolution_error": 8.793018743680214e-11
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "lapse": 0.9,
+      "shift": [
+        0.0025977807725401348,
+        0.0013130616187066574,
+        0.25663373778519527
+      ],
+      "Hamiltonian_Gauss_error": 5.551115123125783e-17,
+      "tangent_probes": [
+        {
+          "tangent_step": 0.001,
+          "momentum_Codazzi_error": 1.9025851033527275e-10,
+          "extrinsic_evolution_error": 1.6871932323470062e-10
+        },
+        {
+          "tangent_step": 0.0005,
+          "momentum_Codazzi_error": 4.754521776284548e-11,
+          "extrinsic_evolution_error": 4.216382798460927e-11
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "lapse": 1.0,
+      "shift": [
+        0.07056808297419186,
+        -0.005143142244234428,
+        0.2916931310206054
+      ],
+      "Hamiltonian_Gauss_error": 4.163336342344337e-17,
+      "tangent_probes": [
+        {
+          "tangent_step": 0.001,
+          "momentum_Codazzi_error": 5.056399743352813e-11,
+          "extrinsic_evolution_error": 2.1676397482517373e-10
+        },
+        {
+          "tangent_step": 0.0005,
+          "momentum_Codazzi_error": 1.2652465880558239e-11,
+          "extrinsic_evolution_error": 5.4178411756922173e-11
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "lapse": 1.1,
+      "shift": [
+        -0.11270232258930707,
+        0.17303985362160493,
+        -0.02601758559212208
+      ],
+      "Hamiltonian_Gauss_error": 3.469446951953614e-17,
+      "tangent_probes": [
+        {
+          "tangent_step": 0.001,
+          "momentum_Codazzi_error": 1.9690345014200528e-10,
+          "extrinsic_evolution_error": 1.284364125470061e-10
+        },
+        {
+          "tangent_step": 0.0005,
+          "momentum_Codazzi_error": 4.922143075070107e-11,
+          "extrinsic_evolution_error": 3.2122500839837365e-11
+        }
+      ]
+    },
+    {
+      "case": 4,
+      "lapse": 1.2000000000000002,
+      "shift": [
+        -0.10650073969235348,
+        0.1838693436921413,
+        -0.03517101014697634
+      ],
+      "Hamiltonian_Gauss_error": 1.5612511283791264e-17,
+      "tangent_probes": [
+        {
+          "tangent_step": 0.001,
+          "momentum_Codazzi_error": 6.898075687045147e-11,
+          "extrinsic_evolution_error": 1.4710901767578388e-10
+        },
+        {
+          "tangent_step": 0.0005,
+          "momentum_Codazzi_error": 1.7237431967909167e-11,
+          "extrinsic_evolution_error": 3.677772843213578e-11
+        }
+      ]
+    }
+  ],
+  "scope": "Local geometric identities for arbitrary inhomogeneous jets, not a PDE evolution or a physical bounce."
+}

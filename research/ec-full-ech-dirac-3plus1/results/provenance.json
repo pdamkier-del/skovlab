@@ -1,0 +1,186 @@
+{
+  "issue": {
+    "url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9",
+    "repository_url": "https://api.github.com/repos/pdamkier-del/skovlab",
+    "labels_url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9/labels{/name}",
+    "comments_url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9/comments",
+    "events_url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9/events",
+    "html_url": "https://github.com/pdamkier-del/skovlab/issues/9",
+    "id": 6408506764,
+    "node_id": "I_kwDOVmLagM8AAAABffoNjA",
+    "number": 9,
+    "title": "Full 3+1 Einstein–Cartan–Holst–Dirac: derive coupled field equations and test bounce",
+    "user": {
+      "login": "pdamkier-del",
+      "id": 258844595,
+      "node_id": "U_kgDOD22nsw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/258844595?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/pdamkier-del",
+      "html_url": "https://github.com/pdamkier-del",
+      "followers_url": "https://api.github.com/users/pdamkier-del/followers",
+      "following_url": "https://api.github.com/users/pdamkier-del/following{/other_user}",
+      "gists_url": "https://api.github.com/users/pdamkier-del/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/pdamkier-del/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/pdamkier-del/subscriptions",
+      "organizations_url": "https://api.github.com/users/pdamkier-del/orgs",
+      "repos_url": "https://api.github.com/users/pdamkier-del/repos",
+      "events_url": "https://api.github.com/users/pdamkier-del/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/pdamkier-del/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "labels": [],
+    "state": "open",
+    "locked": false,
+    "assignees": [],
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2026-11-15T19:34:33Z",
+    "updated_at": "2026-11-15T20:02:28Z",
+    "closed_at": null,
+    "assignee": null,
+    "author_association": "OWNER",
+    "issue_field_values": [],
+    "type": null,
+    "active_lock_reason": null,
+    "sub_issues_summary": {
+      "total": 0,
+      "completed": 0,
+      "percent_completed": 0
+    },
+    "issue_dependencies_summary": {
+      "blocked_by": 0,
+      "total_blocked_by": 0,
+      "blocking": 0,
+      "total_blocking": 0
+    },
+    "body": "# Codex task: full 3+1 Einstein–Cartan–Holst–Dirac equations and bounce test\n\n## Objective (fixed by user)\nTake **one single action** that includes BOTH linear and nonlinear (quadratic) Holst terms, a fully dynamical **3+1 spacetime geometry without imposing FLRW, Bianchi, or spherical symmetry**, and **Dirac fermionic matter**. Derive the coupled field equations rigorously and investigate whether a genuine regular torsion-assisted bounce can occur. Treat the derivation as the primary task; implement a numerical search only after validating equations, constraints, source, and EFT assumptions. Never optimize parameters merely to force a bounce.\n\nStart with and verify the precise convention of the previous Holst audit, PR #8 (`codex/ec-holst-variation-audit`):\n```\nS[g,K,ψ] = ∫ d⁴x √−g [ (M²/2) R̃(g,K) + β H(g,K) + c H(g,K)²\n                        + Σ_f L_D,f(g,K,ψ_f) ],\nΓ = LeviCivita(g) + K,    ∇̃_λ g_μν = 0,   M² = 1/(8πG),\nH = ε^{μνρσ} R̃_{μνρσ}    [orientation/index normalization to verify],\nsignature (−,+,+,+).\n```\nUse nonzero β,c in the same model, not separate unrelated actions. Begin with a single Dirac spinor for equation tests; distinguish this *classical spinor* from a physical Pauli-consistent quantum multi-fermion state. Do not claim a physically realistic cloud on the basis of a classical c-number spinor.\n\n## Reuse established work\nRead PR #8 `research/ec-holst-variation-audit/` first: ACTION_CONVENTIONS.md, TETRAD_CONNECTION_VARIATION.md, TORSION_ELIMINATION.md, PSEUDOSCALARON_DERIVATION.md, FERMION_COUPLINGS.md, BOUNCE_CONDITIONS.md, NEXT_ACTION.md. Read PR #2 (`codex/ec-autonomous-programme`) for the full 3+1 ECD constrained solver; PR #3 (`codex/ec-multifield-critical-audit`) and PR #5 (`codex/ec-bounce-programme`) for quantum source bounds and state-validity warnings. Existing branches are unmerged: fetch each explicitly; do not overwrite or merge.\n\n## Scientific deliverables and ordered gates\n1. **Fix fundamental variables and derive equations** via independent metric and contortion variation, `δS/δg^{μν}=0` and `δS/δK_{λμν}=0`, including allowed metric-compatible antisymmetries, Dirac source, and boundary terms. A local spin frame is needed to rigorously define spinors; project tetrad/coframe equations to metric variables and check local Lorentz identities. No free fermion stress after interactions are switched on.\n2. **Treat nonlinear Holst faithfully.** Introduce auxiliary z only with demonstrated Legendre equivalence (`f=β+2cz,U=cz²,z=H`). Solve all 24 contortion equations or reuse independently verified solution, deriving both scalar gradient and axial spin contributions. Substitute back into a single effective action in g, canonical pseudoscalaron φ and ψ. Show the linear Holst c→0 limit, the canonical field range, kinetic positivity, scalar potential, derivative axial coupling and the unique scalar-dependent axial fourfermion term (no double-counted EC term). Reproduce prior PR #8 source equations independently.\n3. **Full ADM 3+1** with arbitrary lapse N(t,x), shift N^i(t,x), spatial metric γ_ij(t,x), extrinsic curvature K_ij (avoid confusing with contortion), spatial scalar φ and conjugate momentum, and Dirac field including constraints/current. Derive Hamiltonian constraint, momentum constraints, γ_ij and extrinsic-curvature evolution, scalar evolution and Dirac evolution. Identify how algebraic torsion is reconstructed and how full torsionful curvature is computed. Include gauge choice/hyperbolicity/principal part, boundary data, and conservation/constraint propagation. No assumed homogeneous metric or fixed shift in the derivation.\n4. **Check independent consistency.** Verify reduced equations against original metric/contortion action, recover GR + Dirac/EC limits, compare to published Holst paper coefficients with explicit conventions, construct meaningful constrained initial data, demonstrate solver convergence. Reuse tested numerical engine only if its discretization and constraints extend consistently to the additional field and changed Dirac sources.\n5. **Investigate bounce critically.** Define observable local expansion of a specified timelike matter/normal congruence or invariant volume with proper-time derivative, not coordinate scale factor. Establish analytic necessary conditions first. The already established healthy canonical pseudoscalaron + total NEC-matter **flat/open FLRW obstruction** is a restricted check, not a general 3+1 no-go. Distinguish focusing from NEC violation, shear/vorticity, curvature-assisted turn, trapping surfaces, collapse versus coordinate/gauge turnaround. Construct constraint-consistent initial data; test at least one controlled inhomogeneous setting, numerical refinement and full Riemann/Cartan curvature. Compare with independently constrained torsion-free control for attribution. No numerical or physical claims outside actually completed domains.\n6. **Physical validity gate:** any Level B claim requires a specified Pauli-compatible fermion state or defensible semiclassical closure, cutoff/renormalization error, fluctuations and stability. If this gate is not met, label classical results mathematical only. Do not silently plug in an unmotivated spinfluid or negative pressure; do not assume one commuting spinor = realistic black-hole cloud. Costly full 3+1 searches are prohibited until a physically meaningful source and constraint-consistent system exist.\n7. **Conclusions:** Clearly separate (A) exact variational results, (B) tested 3+1 PDE/numerics, (C) conditional physical validity, (D) unknowns. Report genuine positive and negative findings; do not claim baby universe, inflation, or reheating based on a local bounce.\n\n## Execution and project delivery\nCreate a **new separate branch and draft PR**; do not edit PR #2/#3/#5/#8 or merge into main. Place outputs in `research/ec-full-ech-dirac-3plus1/` including:\n- MASTER_STATUS.md, FULL_ACTION_AND_VARIATION.md, TORSION_ELIMINATION.md, EFFECTIVE_EQUATIONS.md, ADM_3PLUS1.md, CONSTRAINTS_AND_INITIAL_DATA.md, BOUNCE_CRITERIA.md, NUMERICAL_VALIDATION.md, VALIDITY_AND_FALSIFICATION.md, RESEARCH_LOG.md, NEXT_ACTION.md, SUMMARY_DA.md;\n- reproducible symbolic/algebraic tests, source code, machine-readable results, exact references and error checks as feasible.\nCommit independently verified milestones; report limitations exactly. Work autonomously through as many complete research cycles as execution budget permits, updating NEXT_ACTION.md so a later run can continue without repeating work. Do not promise perpetual background work.\n\n**Primary question to answer:** What are the full inhomogeneous 3+1 Einstein–Cartan–Holst–Dirac evolution and constraint equations from this ONE fixed action, and do any physically controlled, regular, robust torsion-attributable bounce solutions actually follow?",
+    "closed_by": null,
+    "reactions": {
+      "url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9/reactions",
+      "total_count": 0,
+      "+1": 0,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 0,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 0
+    },
+    "timeline_url": "https://api.github.com/repos/pdamkier-del/skovlab/issues/9/timeline",
+    "performed_via_github_app": {
+      "id": 1144995,
+      "client_id": "Iv23liVemv8A9if9v0F2",
+      "slug": "chatgpt-codex-connector",
+      "node_id": "A_kwHOAOQ6Gs4AEXij",
+      "owner": {
+        "login": "openai",
+        "id": 14957082,
+        "node_id": "MDEyOk9yZ2FuaXphdGlvbjE0OTU3MDgy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/14957082?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/openai",
+        "html_url": "https://github.com/openai",
+        "followers_url": "https://api.github.com/users/openai/followers",
+        "following_url": "https://api.github.com/users/openai/following{/other_user}",
+        "gists_url": "https://api.github.com/users/openai/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/openai/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/openai/subscriptions",
+        "organizations_url": "https://api.github.com/users/openai/orgs",
+        "repos_url": "https://api.github.com/users/openai/repos",
+        "events_url": "https://api.github.com/users/openai/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/openai/received_events",
+        "type": "Organization",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "name": "ChatGPT Codex Connector",
+      "description": "Bring ChatGPT and Codex to your GitHub repositories.",
+      "external_url": "https://www.chatgpt.com",
+      "html_url": "https://github.com/apps/chatgpt-codex-connector",
+      "created_at": "2025-02-14T01:37:05Z",
+      "updated_at": "2026-09-23T18:52:59Z",
+      "permissions": {
+        "actions": "write",
+        "checks": "read",
+        "contents": "write",
+        "emails": "read",
+        "issues": "write",
+        "metadata": "read",
+        "pull_requests": "write",
+        "statuses": "read",
+        "workflows": "write"
+      },
+      "events": [
+        "check_run",
+        "check_suite",
+        "commit_comment",
+        "issues",
+        "issue_comment",
+        "pull_request",
+        "pull_request_review",
+        "pull_request_review_comment",
+        "pull_request_review_thread",
+        "repository",
+        "status",
+        "sub_issues"
+      ]
+    },
+    "state_reason": null,
+    "pinned_comment": null
+  },
+  "review_checks": [
+    {
+      "branch": "codex/ec-holst-variation-audit",
+      "path": "research/ec-holst-variation-audit/ACTION_CONVENTIONS.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-holst-variation-audit",
+      "path": "research/ec-holst-variation-audit/TORSION_ELIMINATION.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-holst-variation-audit",
+      "path": "research/ec-holst-variation-audit/FERMION_COUPLINGS.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-autonomous-programme",
+      "path": "research/ec-full-3plus1/ecd.py",
+      "matched": true,
+      "scope": "tested source/frame prefix"
+    },
+    {
+      "branch": "codex/ec-autonomous-programme",
+      "path": "research/ec-autonomous-programme/MASTER_STATUS.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-multifield-critical-audit",
+      "path": "research/ec-multifield-critical-audit/MASTER_STATUS.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-bounce-programme",
+      "path": "research/ec-bounce-programme/MASTER_STATUS.md",
+      "matched": true,
+      "scope": "full document"
+    },
+    {
+      "branch": "codex/ec-bounce-programme",
+      "path": "research/ec-bounce-programme/models/01_quantum_fermions/COHERENT_STATE_BOUND.md",
+      "matched": true,
+      "scope": "full document"
+    }
+  ],
+  "scope": "Local original-action variation, general ADM identities and constrained initial data; no spacetime evolution or quantum-state validity."
+}

@@ -1,0 +1,13 @@
+{
+  "momentum": "p_phi=sqrt(gamma)(Pi-h a), a=-n_mu A^mu; Pi=(phidot-shift^i D_i phi)/N",
+  "Hamiltonian_scalar_interaction": "N sqrtgamma[Pi^2/2+Q^2/2+V+h Asp.Q+g A^2]+(shift.Q) p_phi, with Pi=p_phi/sqrtgamma+h a. Dirac primary momenta must be included separately.",
+  "canonical_density_evolution": "dt p_phi-di(shift^i p_phi)=di[N sqrtgamma(Q^i+h Asp^i)]-N sqrtgamma[Vprime+gprime A^2+hprime(a Pi+Asp.Q)]",
+  "chiral_angle": "-3*atan(4*beta/M**2)/4 + 3*atan(sinh(asinh(4*beta/M**2) + sqrt(6)*phi/(3*M)))/4",
+  "residuals": {
+    "Legendre_momentum": "0",
+    "Hamiltonian": "0",
+    "chiral_angle_derivative": "0",
+    "canonical_vs_normal_scalar_evolution": "0"
+  },
+  "scope": "Classical field identities. Quantum chiral anomalies and reduced fermionic Dirac brackets are not evaluated."
+}
