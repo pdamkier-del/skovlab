@@ -961,3 +961,42 @@ Tidsserien samples ca. hver 20 sweeps, og de aktuelle tal opdateres på præcis 
 **Forskningens videre prioritet:** Validér på større og andre geometrier; mål frosset spektralt gap for største live-komponent, varighed af energifelter og artsid-strukturer, kontroller for blot artstilhørsforhold ved ompermution af artslabels under fast populationstæthed. Overvej om netværk mere naturligt kan forudsige *energiudjævning/overlevelsesrisiko* end artsdiversitet, da Laplace-operatoren direkte bestemmer diffusionsdynamik, mens artstab også styres af angreb, vedligeholdelse og mutation.
 
 **Kilder i bredere forskning:** Nyere oversigter om økologiske early warning signals fremhæver at faresignaler kræver uafhængig prædiktiv validering frem for efterfølgende korrelation, og at ikke alle kollaps har robuste varsler (f.eks. Boettiger 2013 DOI 10.1007/s12080-013-0192-6; oversigt 2026 DOI 10.3390/e28060628). Grafspektralt gap styrer diffusionens relaxationshastighed på en frosset sammenhængende graf; det er ikke automatisk et signal for evolutionært kollaps.
+
+
+## 25. november 2026 — Brugers rumtidsidé: lokal metrik bestemmer transport, og spektral zeta kan måle geometrien
+
+**Forskningsmotiv:** Brugerens egentlige idé er at lade hver rumlig gittercelle indgå i en *geometrisk metrik*, så transporten af energi mellem naboceller afhænger af geometrien — eventuelt en tidsafhængig geometri — og først derefter teste konsekvenserne for konkurrencen. Det er **ikke** identisk med forrige arbejde, der målte et skovnetværks egenværdier efter at arternes rumlige fordeling allerede var opstået.
+
+### Skelnen mellem tre forskningsidéer
+1. Rangordnet træenergi: `E_(n)∝n^−α` kan *hvis det er empirisk opfyldt* motivere en finit harmonisk sum `H_N^(α)` og muligvis Riemanns `ζ(α)` i en relevant uendelig-populationsgrænse. Tidligere data gav ikke evidens for en global Zipf-lov.
+2. En geometrisk, eventuelt rumlig/tidslig **metrik** `g_ab(x,t)` giver Laplace–Beltrami-operatoren `Δ_g` og egenværdier `λ_n` med `ζ_g(s)=Σ_{λ_n>0}λ_n^−s`. Den statiske Riemannske spektrale zeta er ikke automatisk Riemanns zetafunktion, og dens spektrum indeholder ikke generelt et primtal-Eulerprodukt.
+3. En fuld *relativistisk rumtid* kræver Lorentzsk signatur og dynamik for tid/geometri. En tidsafhængig rumlig metrik eller deformabel 2D-flade er en **rumtidsinspireret analogmodel**, ikke generel relativitet, ikke Einsteins ligninger, og ikke fysisk lokal tidsdilatation.
+
+### Geometrisk korrekthed og konservationslov
+Kontinuert diffusion af en energitæthed på en Riemannsk 2D-overflade skrives med Laplace–Beltrami-operator
+`∂_tρ=D(1/√g)∂_a(√g g^{ab}∂_bρ)` for statisk metrik. Ved tidsafhængig metrik skal `∂_t(√g ρ)=D∂_a(√g g^{ab}∂_bρ)` og lokale produktions-/kildetermer håndteres korrekt for at bevare totalintegralet `∫√gρ,d²x`. Den enkelte gittercelles **energi** er derfor ikke det samme som dens **energitæthed** eller areal. I en konservativ diskret model bruges symmetriske kanters flux og passende cellearealer `A_i` (`E_i=A_iρ_i`), eksempelvis `dE_i/dt=Σ_j C_ij(ρ_j−ρ_i)`, `C_ij=C_ji≥0`. Symmetrisk antisymmetrisk flux sikrer `ΣE_i` bevaret. Nødvendigt i den eksisterende simulator: bevar `Q+Σ(E+U)` og mærk at nuværende trædiffusion kun går mellem levende træer af *samme art*. Der skal ikke blot sættes en tilfældig `D_i` på hver celle.
+
+### Første adskilte numeriske *toy*-pilot, ingen ændring i simulator
+Script: `scripts/peter.metric-diffusion-pilot.cjs`. Fladt gitter L=31, med og uden en indlejret glat forhøjning `z(x,y)=7exp(−r²/(2×6²))`. En geometrisk approximativ kantlængde i overfladen `ℓ_ij≈√(1+(z_i−z_j)²)` giver symmetrisk `w_ij=ℓ_ij^{-2}`. Dette er en enkel **kantlednings-proxy**, *ikke* fuld Laplace–Beltrami finite volume med arealmatrix. Start en energipakke på 1 ved midten eller på hældningen, kør 200 diffusionstrin. Kontroller:
+- `flat`: `w=1`;
+- `uniform`: alle kanter `w=mean(w_metric)`, tjekker trivielt reduceret global transport;
+- `metric`: lokal geometridependent `w_ij`;
+- `renormalized`: `w_ij/mean(w)`, kontrollerer at mønstret ikke blot skyldes gennemsnitslavere diffusion.
+Alle løsninger skal bevare energi 1 og undgå negative værdier ved tidsstepping. Mål middelkvadreret distance og returneringssandsynlighed. OBS: Dette beskriver ikke endnu evolution, konkurrencedynamik, spektral zeta, egentlig skalar krumning eller rumtid; det tester kun, om en veldefineret lokal geometri-proxy kan give ikke-triviel transport.
+
+En foreløbig uafhængig numerisk kontrol (Python 31×31, samme formler) gav centerpakket MSD efter 100 trin: fladt 69,69 vs lokal geometrisk 57,33, ~17,7% reduktion. Energi bevaret til numerisk præcision. Da kantvægtene i gennemsnit er mindre end 1 (ca. 0,934), skal **uniform og renormalized kontrollerne** medtages før vi tilskriver forskellen lokal geometri frem for bare mindre samlet diffusionsstyrke.
+
+### Næste afgørende skridt
+1. Færdiggør positive-kant/volumen- og netværkskontroller; valider analytiske simple overflader (plan, cylinder, kugle) med konservativ finite-volume Laplace–Beltrami og konvergens ved grid refinement.
+2. Sammenlign eigenværdier og den relevante `ζ_g(s)` for disse **geometriske** operatorer med en equal-mean-transport kontrol; dynamiske skovnetværk og træarter holdes faste indledningsvist.
+3. Først derefter aktiver en **valgfri** metrisk variant i Skovlaboratoriets diffusion (default OFF og samme seed), mens energi/arter/angreb/vedligeholdelse er helt uændrede. Parrede seeds, klima/kurvatur/struktur kontrol og multi-size.
+4. Afprøv tidsafhængig metrik som et separat modellag. En "lokal tidsrate" kræver et meningsfuldt valg af lapse og relatering til den øvrige evolutionære dynamik og skal ikke skjules i en tilfældig diffusionsfaktor.
+5. Undersøg **om** den lokale metrik og spektral zeta forudsiger evolutionær fitness, artsdiversitet og strategiomsætning ud over direkte kendte netværksegenskaber.
+
+### Litteratur
+- Finite-volume diffusion på krumme overflader: https://pmc.ncbi.nlm.nih.gov/articles/PMC2346449/
+- Diskrete lokale bevarelseslove: https://epubs.siam.org/doi/10.1137/130921805
+- Laplace–Beltrami og spektral zeta: https://ammann.app.uni-regensburg.de/talks/2015GK-spectral-zeta.pdf
+- Om graf-Laplacians approksimation af geometrisk Laplace–Beltrami: https://arxiv.org/abs/math/0612777
+
+**Princip:** Bevar de nuværende simulatorregler uændrede, indtil vi har en verificeret geometrisk operator. Lad hverken Riemann-gassens primtal eller spektrets egenværdier blive kodet ind på forhånd.
