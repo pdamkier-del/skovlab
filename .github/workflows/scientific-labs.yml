@@ -69,4 +69,6 @@ jobs:
         run: |
           export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
           node --test scripts/peter.network-research.test.cjs
+      - name: Geometry-derived diffusion pilot without tree rule changes
+        run: node scripts/peter.metric-diffusion-pilot.cjs
       - run: npm run test:browser
