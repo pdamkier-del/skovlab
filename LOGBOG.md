@@ -1000,3 +1000,15 @@ En foreløbig uafhængig numerisk kontrol (Python 31×31, samme formler) gav cen
 - Om graf-Laplacians approksimation af geometrisk Laplace–Beltrami: https://arxiv.org/abs/math/0612777
 
 **Princip:** Bevar de nuværende simulatorregler uændrede, indtil vi har en verificeret geometrisk operator. Lad hverken Riemann-gassens primtal eller spektrets egenværdier blive kodet ind på forhånd.
+
+
+### Ekstra kontrol: Er effekten bare en lavere gennemsnitlig diffusionsrate?
+
+Uafhængig NumPy-genberegning af `scripts/peter.metric-diffusion-pilot.cjs` med præcis samme 31×31-setup, overflade og 100 Euler-trin. `w_mean=0.933848`; mindst ét `w=0.67028`, størst `≈0.999982`. Energisum i hver kontrol 1.0000000000 efter 100 trin (inden for numerisk præcision).
+
+| Startsted, MSD efter 100 | Flad w=1 | Ens w=mean | Lokal geometri w_ij | Lokal w_ij/mean |
+|---|---:|---:|---:|---:|
+| Center | 69.690 | 65.556 | 57.331 | 61.223 |
+| På hældning | 65.286 | 61.681 | 58.375 | 61.894 |
+
+**Fortsat positiv effekt efter kontrol:** I centercasen er lokalt vægtet transport mere koncentreret (lavere MSD), selv når den lokale vægt renormaliseres til gennemsnit 1 (61.223 mod 69.690). Det demonstrerer at *mønstret* af ledningsevner har betydning ud over gennemsnittet. På hældningen giver normalisering ca. samme MSD som ens-gennemsnits-kontrollen, så effekten er **positionsafhængig**. Det beviser ikke, at skalar krumning (frem for lokale hældninger/anisotropi eller randvirkninger) er den fysiske årsag. Næste kontrol bør skelne isometrisk formændring fra ikke-isometrisk krumning og bruge en konsistent arealvægtet finite-volume-metode. Der er endnu **ingen** ændringer af træregler, artsdiversitet eller zetafunktioner for denne prototype.
