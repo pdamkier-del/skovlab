@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skovlaboratoriet · Fundamental fysik</title>
+<style>
+:root{color-scheme:light;--paper:#f8f6ee;--panel:#fffdf8;--ink:#152e28;--muted:#4d625b;--line:#d6ddd2;--green:#1b7062;--ochre:#97521d;--blue:#365d8c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+main{width:min(1080px,100% - 32px);margin:36px auto 64px}h1,h2{font-family:Georgia,serif;font-weight:normal;line-height:1.06;margin:0}h1{font-size:clamp(2.7rem,6vw,5rem);max-width:15ch}h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:.6rem}p{margin:.6rem 0;color:var(--muted)}header{border-bottom:1px solid var(--line);padding-bottom:1.6rem}header p{max-width:62ch}
+nav{display:flex;flex-wrap:wrap;gap:.55rem;margin:1.25rem 0}button,select{font:inherit;color:inherit;background:var(--panel);border:1px solid #aebdb1;border-radius:.7rem;padding:.45rem .7rem}button{cursor:pointer}button[aria-current=true]{background:var(--ink);color:white;border-color:var(--ink)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:3px}section{padding:clamp(1rem,3vw,2rem);background:var(--panel);border:1px solid var(--line);border-radius:1rem}[hidden]{display:none !important}
+.controls{display:flex;flex-wrap:wrap;align-items:end;gap:1rem;margin:1.3rem 0}.controls label{display:grid;gap:.22rem;font-weight:600;font-size:.88rem}.controls input{accent-color:var(--green);width:170px}.chart{width:100%;overflow:auto}svg{display:block;width:100%;min-width:420px;height:auto}svg text{font:13px system-ui;fill:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.86rem;color:var(--muted)}.legend span::before{content:"";display:inline-block;width:.85rem;height:.19rem;margin-right:.4rem;vertical-align:middle;background:var(--series)}output{display:block;margin:.7rem 0;font-weight:650;font-variant-numeric:tabular-nums}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}figure{margin:0}canvas{width:100%;display:block;image-rendering:pixelated;border-radius:.35rem;border:1px solid var(--line)}figcaption{margin-top:.35rem;color:var(--muted);font-size:.88rem}footer{margin-top:1.1rem;font-size:.88rem}a{color:var(--green)}
+</style>
+</head>
+<body>
+<main>
+<header><h1>Fundamental fysik i Skovlaboratoriet</h1><p>Prøv tidsvending, mål kræfter mellem fluktuerende felter, og se hvordan lokal feedback ændrer energiens spredning.</p></header>
+<nav aria-label="Vælg forsøg">
+<button type="button" data-panel="arrow" aria-current="true">Tidens pil</button>
+<button type="button" data-panel="force" aria-current="false">Casimir-kraft</button>
+<button type="button" data-panel="metric" aria-current="false">Energi og geometri</button>
+<button type="button" data-panel="wave" aria-current="false">Vend bølgen</button>
+</nav>
+<section id="arrow">
+<h2>Kan rækkefølgen aflæses?</h2>
+<p>En positiv score betyder, at den fremadrettede model i gennemsnit tildeler testord højere log-sandsynlighed. Vælg en skov og kontrollér først driften mellem tidsvinduer.</p>
+<div class="controls">
+<label>Forsøg <select id="arrow-model"></select></label>
+<label id="arrow-size-label">Gitter <select id="arrow-size"><option>10</option><option selected>20</option></select></label>
+<label id="arrow-observable-label">Observabel <select id="arrow-observable">
+<option value="reserve">Reserve</option><option value="variance">Reservevarians</option><option value="roughness">Ruhed</option><option value="structure">Strukturenergi</option><option value="pool">Pulje</option><option value="height">Højde</option><option value="up">Energi i øverste halvdel</option><option value="down">Energi i nederste halvdel</option></select></label>
+<label id="arrow-lag-label">Lag i sweeps <select id="arrow-lag"><option>2</option><option>8</option><option>32</option></select></label>
+<label id="ratchet-observed-label" hidden>Observeret tilstand <select id="ratchet-observed"><option value="3">Kun position</option><option value="6">Position og felt</option></select></label>
+</div>
+<output id="arrow-note" aria-live="polite"></output>
+<div class="chart" id="arrow-chart"></div><div class="legend" id="arrow-legend"></div>
+<details id="stationarity"><summary>Fire sene tidsvinduer</summary><div id="station-checks"></div></details>
+<details id="word-details" hidden><summary>De mest asymmetriske ord i den uafhængige gentagelse</summary><div id="word-values"></div></details>
+</section>
+<section id="force" hidden>
+<h2>En kraft fra feltets fluktuationer</h2>
+<p>To bindinger ændrer fluktuationerne i et klassisk Gaussisk felt. Flyt den anden binding en gitterenhed udad. Den negative forskel i fri energi er kraften i den retning.</p>
+<div class="controls">
+<label>Dimension <select id="force-dim"><option>1</option><option selected>2</option><option>3</option></select></label>
+<label>Gitter <select id="force-size"><option>32</option><option selected>64</option><option>128</option></select></label>
+<label>Feltmasse <select id="force-mass"><option>.12</option><option selected>.3</option><option>.65</option></select></label>
+<label>Bindingsstyrke <select id="force-strength"><option>0</option><option selected>1</option><option>4</option></select></label>
+<label>Mål <select id="force-observable"><option value="force">Diskret kraft</option><option value="free">Interaktionsfri energi</option><option value="energy_cov">Kovarians af feltenergi</option></select></label>
+</div>
+<div class="chart" id="force-chart"></div><div class="legend" id="force-legend"></div>
+<output id="force-note" aria-live="polite"></output>
+</section>
+<section id="metric" hidden>
+<h2>Bryder to toppe superposition?</h2>
+<p>Høj energi forøger det lokale celleareal i denne variant. Det dæmper den lokale densitetsgradient. Til højre trækkes de to separate toppes felter fra det fælles forløb.</p>
+<div class="controls">
+<label>Afstand <select id="metric-distance"><option>3</option><option selected>6</option><option>9</option></select></label>
+<label>Kobling β <select id="metric-beta"><option>0</option><option>1</option><option selected>4</option></select></label>
+<label>Tid <input id="metric-time" type="range" min="0" max="8" value="4"></label><button type="button" id="metric-play">Afspil</button>
+</div>
+<div class="fields">
+<figure><canvas id="metric-field" width="48" height="48" role="img" aria-label="Energifelt fra to toppe"></canvas><figcaption>Energi pr. referenceareal · fast farveskala 0–2,1</figcaption></figure>
+<figure><canvas id="metric-residual" width="48" height="48" role="img" aria-label="Positiv og negativ superpositionsafvigelse"></canvas><figcaption>Superpositionsafvigelse · blå negativ · brun positiv</figcaption></figure>
+</div>
+<output id="metric-note" aria-live="polite"></output>
+</section>
+<section id="wave" hidden>
+<h2>En tidspil, der kan vendes</h2>
+<p>Den lokale bølgeligning spreder en koncentreret energipakke. Vend alle hastigheder, og se pakken samles igen. Shannon-entropien her måler, hvor bredt energien er fordelt.</p>
+<div class="controls">
+<label>Afspilningspunkt <input id="wave-step" type="range" min="0" max="9" value="0"></label><button id="wave-play" type="button">Afspil</button>
+</div>
+<div class="chart" id="wave-chart"></div><div class="legend" id="wave-legend"></div><output id="wave-note" aria-live="polite"></output>
+</section>
+</main>
+<script type="application/json" id="experiment-data">__EMBEDDED_DATA__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById("experiment-data").textContent);
+const $=id=>document.getElementById(id);
+const colors=["#1b7062","#97521d","#365d8c"];
+const format=(x,n=3)=>Math.abs(x)>0&&Math.abs(x)<.001?x.toExponential(2):x.toLocaleString("da",{maximumFractionDigits:n});
+const labels={shared_original:"Fælles · originale regler",peter_original:"Peter · originale regler",peter_bounded:"Peter · højdeloft",peter_no_diffusion:"Peter · højdeloft, α = 0",peter_no_combat:"Peter · højdeloft, kamp og spredning blokeret",reversibel:"Ratchet · reversibel",drevet:"Ratchet · drevet",stall:"Ratchet · drevet ved nul strøm"};
+for(const [value,label] of Object.entries(labels)) $("arrow-model").add(new Option(label,value));
+$("arrow-model").value="stall";
+function graph(id,legend,series,xLabel,yLabel,zero=false){
+  const container=$(id), key=$(legend);
+  if(!series.some(s=>s.points.length)){container.textContent="Tilstanden varierer for lidt til at definere sekvensord.";key.textContent="";return;}
+  const all=series.flatMap(s=>s.points);
+  const xs=all.map(p=>p[0]), ys=all.flatMap(p=>p.slice(1));
+  if(zero)ys.push(0);
+  const xmin=Math.min(...xs), xmax=Math.max(...xs), ymin=Math.min(...ys), ymax=Math.max(...ys);
+  const dy=ymax-ymin || 1;
+  const low=ymin-.08*dy, high=ymax+.08*dy;
+  const X=x=>82+610*(x-xmin)/(xmax-xmin||1);
+  const Y=y=>250-225*(y-low)/(high-low);
+  let markup='<svg viewBox="0 0 730 300" role="img" aria-label="'+yLabel+'">';
+  for(let i=0;i<=4;i++){
+    const y=low+(high-low)*i/4, x=xmin+(xmax-xmin)*i/4;
+    markup+=`<path d="M82,${Y(y)}H692" stroke="#d6ddd2"/><text x="75" y="${Y(y)+4}" text-anchor="end">${format(y)}</text><text x="${X(x)}" y="269" text-anchor="middle">${format(x)}</text>`;
+  }
+  if(zero)markup+=`<path d="M82,${Y(0)}H692" stroke="#6d7c72" stroke-dasharray="4 4"/>`;
+  markup+=`<text x="388" y="290" text-anchor="middle">${xLabel}</text><text x="4" y="16">${yLabel}</text>`;
+  for(const [i,s] of series.entries()){
+    const c=colors[i];
+    if(s.points.length && s.points[0].length===4) {
+      for(const [x,,a,b] of s.points) markup+=`<path d="M${X(x)},${Y(a)}V${Y(b)}" stroke="${c}" stroke-width="2" opacity=".55"/>`;
+    }
+    if(!s.dots) markup+=`<polyline points="${s.points.map(([x,y])=>X(x)+","+Y(y)).join(" ")}" fill="none" stroke="${c}" stroke-width="2.5"/>`;
+    if(s.dots||s.points.length<10)for(const [x,y] of s.points)markup+=`<circle cx="${X(x)}" cy="${Y(y)}" r="3" fill="${c}"/>`;
+  }
+  container.innerHTML=markup+"</svg>";
+  key.innerHTML=series.map((s,i)=>`<span style="--series:${colors[i]}">${s.label}</span>`).join("");
+}
+function arrow(){
+  const model=$("arrow-model").value, isForest=model.includes("_"), L=+$("arrow-size").value;
+  for(const id of ["arrow-size","arrow-observable","arrow-lag"])$(id+"-label").hidden=!isForest;
+  $("ratchet-observed-label").hidden=isForest;
+  $("stationarity").hidden=!isForest;
+  $("word-details").hidden=model!=="shared_original";
+  if(model==="shared_original"){
+    const words=data.words.filter(r=>r.L===L&&r.lag===2).sort((a,b)=>(b.test_forward-b.test_reverse)-(a.test_forward-a.test_reverse)).slice(0,4);
+    $("word-values").innerHTML=words.map(r=>`<p>${r.word} · fremad ${format(100*r.test_forward,2)} % · tidsvendt ${format(100*r.test_reverse,2)} %</p>`).join("");
+  }
+  if(isForest){
+    const stats=data.stationarity.filter(r=>r.model===model&&r.L===L);
+    const late=data.forest.filter(r=>r.model===model&&r.L===L&&r.observable===$("arrow-observable").value&&r.lag==+$("arrow-lag").value);
+    const passed=stats.every(r=>r.equivalent);
+    $("arrow-note").textContent=stats.length?(passed?"De valgte middelværdier bestod driftkontrollen.":"Mindst én middelværdi driver stadig. Tidsasymmetrien kan stamme fra drift."):"Ingen data.";
+    $("station-checks").innerHTML=stats.map(r=>`<p>${r.observable} · ${[r.w1,r.w2,r.w3,r.w4].map(v=>format(v)).join(" → ")} · ${r.constant?"konstant mellem runs":r.equivalent?"inden for margen":"driftkontrol fejlet"}</p>`).join("");
+    const series=[{label:"Testscore og 95 % seedinterval",points:late.map(r=>[r.n,r.kl,r.lo,r.hi])}];
+    if(model==="shared_original"&&$("arrow-observable").value==="reserve"){
+      const validation=data.replication.filter(r=>r.L===L&&r.start===2400&&r.stop===3600&&r.bins==="quartiles"&&r.lag==+$("arrow-lag").value);
+      if(validation.length)series.push({label:"Uafhængig gentagelse",points:validation.map(r=>[r.n,r.kl,r.lo,r.hi])});
+    }
+    graph("arrow-chart","arrow-legend",series,"Ordlængde","nat pr. ord",true);
+  }else{
+    const a=data.ratchet.filter(r=>r.model===model&&r.alphabet==+$("ratchet-observed").value);
+    $("arrow-note").textContent="Middelstrøm "+format(a[0].drift)+" · fuld KL-rate "+format(a[0].sigma)+" nat pr. trin";
+    graph("arrow-chart","arrow-legend",[{label:"Eksakt KL",points:a.map(r=>[r.n,r.exact])},{label:"Holdout og 95 % seedinterval",dots:true,points:a.filter(r=>r.kl!==null).map(r=>[r.n,r.kl,r.lo,r.hi])}],"Ordlængde","nat pr. ord",true);
+  }
+}
+function force(){
+  const dim=+$("force-dim").value,L=+$("force-size").value,mass=+$("force-mass").value,k=+$("force-strength").value;
+  const observable=$("force-observable").value,field=observable==="energy_cov"?"cov":observable;
+  const g=data.casimir.filter(r=>r.dim===dim&&r.L===L&&r.mass===mass&&r.strength===k);
+  const mc=data.casimir_mc.filter(r=>r.dim===dim&&r.L===L&&r.mass===mass&&r.strength===(k||1)&&r.r<L/2-1);
+  const units={force:"Kraft · kBT pr. gitterenhed",free:"Interaktionsfri energi · kBT",energy_cov:"Kovarians af feltenergi"};
+  graph("force-chart","force-legend",[{label:"Eksakt gitterresultat",points:g.map(r=>[r.r,r[observable]])},
+    ...(mc.length&&(k||observable==="energy_cov")?[{label:"Monte Carlo og 95 % interval",dots:true,points:mc.map(r=>[r.r,r[field],r[field+"_lo"],r[field+"_hi"]])}]:[])],"Afstand i gitterenheder",units[observable],true);
+  $("force-note").textContent=k?"Ved afstand 4 er den diskrete kraft "+format(g.find(r=>r.r===4).force)+" kBT pr. gitterenhed.":"Kraften er nul med bindingsstyrke nul. Feltets egen kovarians kan stadig være positiv.";
+}
+function paint(id,values,color){
+  const view=$(id),ctx=view.getContext("2d"),img=ctx.createImageData(48,48);
+  values.forEach((v,i)=>{
+    const y=i%48, x=Math.floor(i/48);
+    img.data.set([...color(v),255],4*(y*48+x));
+  });
+  ctx.putImageData(img,0,0);
+}
+function mix(a,b,w){return a.map((x,i)=>Math.round(x+(b[i]-x)*Math.min(1,Math.max(0,w))));}
+function metric(){
+  const key=$("metric-distance").value+"/"+$("metric-beta").value;
+  const frame=data.frames[key][+$("metric-time").value];
+  const limit=Math.max(...frame.residual.map(Math.abs),.00001);
+  paint("metric-field",frame.field,v=>mix([248,246,238],[21,91,77],Math.sqrt(v/2.1)));
+  paint("metric-residual",frame.residual,v=>mix([248,246,238],v<0?[48,83,141]:[176,86,28],Math.abs(v)/limit));
+  $("metric-note").textContent="Tid "+format(frame.t)+" · maksimal energi "+format(frame.range[1])+
+    " · største absolutte residual "+format(Math.max(...frame.residual.map(Math.abs)))+".";
+}
+function wave(){
+  const frame=data.wave[+$("wave-step").value];
+  graph("wave-chart","wave-legend",[{label:"Lokal bølgeenergi",points:frame.energy.map((e,i)=>[(i-128)/4,e])}],"Position","Energi pr. plads",true);
+  $("wave-note").textContent=(frame.stage==="forward"?"Fremad":"Med vendte hastigheder")+" · tid "+format(frame.t)+
+    " · ændring i Shannon-entropi "+format(frame.entropy_delta)+" nat";
+}
+const render={arrow,force,metric,wave};
+for(const button of document.querySelectorAll("nav button")){
+  button.addEventListener("click",()=>{
+    for(const other of document.querySelectorAll("nav button")){
+      const selected=other===button;
+      other.setAttribute("aria-current",selected);
+      $(other.dataset.panel).hidden=!selected;
+    }
+    render[button.dataset.panel]();
+  });
+}
+for(const [panel,draw] of Object.entries(render)){
+  $(panel).addEventListener("input",draw);
+}
+for(const [name,slider] of [["metric","metric-time"],["wave","wave-step"]]){
+  const button=$(name+"-play");
+  let timer;
+  button.addEventListener("click",()=>{
+    function stop(){clearInterval(timer);timer=undefined;button.textContent="Afspil";}
+    if(timer){stop();return;}
+    const range=$(slider);
+    range.value=0;
+    render[name]();
+    button.textContent="Pause";
+    timer=setInterval(()=>{
+      range.value=+range.value+1;
+      render[name]();
+      if(+range.value===+range.max||$(name).hidden)stop();
+    },500);
+  });
+}
+arrow();
+</script>
+</body>
+</html>
