@@ -119,7 +119,7 @@ footer{color:var(--muted);font-size:12px;max-width:1400px;margin:auto;padding:0 
 <div class="study-measures"><div class="stat"><small>Åbne diffusionskanter</small><b id="netEdgesOut">–</b></div><div class="stat"><small>Største energifællesskab</small><b id="netLargestOut">–</b></div><div class="stat"><small>Adskilte levende fællesskaber</small><b id="netComponentsOut">–</b></div></div>
 <div class="study-key" style="margin-top:10px"><span><i style="background:#238674"></i>Aktive kanter, andel af alle kanter</span><span><i style="background:#6681b9"></i>Største fællesskab, andel af levende træer</span></div>
 <canvas class="plot" id="networkHistoryPlot" aria-label="Udvikling i diffusionsforbindelser og største sammenhængende energifællesskab"></canvas>
-<p class="hint">Kun naboer af samme art kan udveksle reserveenergi. Tomme felter og nabotræer af forskellige arter afbryder forbindelserne. Ét energifællesskab er en sammenhængende gruppe af sådanne naboer. Målingerne er andele fra 0 til 1, ikke en spektral zetafunktion.</p>
+<p class="hint">Kun naboer af samme art kan udveksle reserveenergi. Tomme felter og nabotræer af forskellige arter afbryder forbindelserne. Ét energifællesskab er en sammenhængende gruppe af sådanne naboer. Målingerne er andele fra 0 til 1, ikke en spektral zetafunktion. Grafen gemmer en måling hver 20 sweeps; tallene ovenfor opdateres for den aktuelle sweep, når panelet er åbent.</p>
 <p class="hint"><b>Hvad leder vi efter?</b> Om mere sammenhængende energinetværk forudsiger artsdiversitet 100 sweeps senere, <em>udover</em> det vi allerede ved fra antallet af arter, den aktuelle artsentropi og trædækningen. Den test kræver flere seeds — ikke blot en enkelt kurve.</p>
 <p class="hint">Se den løbende artsentropi i forskningsmålene ovenfor ved at vælge «Shannon-artsentropi H». Resultaterne og eventuelle negative fund står i <a href="LOGBOG.md" target="_blank" rel="noopener">forskningslogbogen</a>.</p>
 </details>
@@ -205,7 +205,7 @@ function loadFormulas(){for(const [kind,id] of Object.entries(fids)){const fn=va
 function calcKind(kind,t,h=10,preview=false){return calcFormula((preview&&draftFormulas[kind])||activeFormulas[kind],t,h);}
 
 const cfg={L:100,K:10,fill:1,speed:1,seed:1,neighbors:4,periodic:true,maxHeight:0,alpha:.1,climateNoise:.4,betHedging:true,hedgeWidth:.25,curvature:0,birthMutation:.01,spontaneousMutation:.01,mutationEpsilon:.01,energyEnabled:true,energyInput:1,initialPool:2,climateAmplitude:.5,climatePeriod:80,energyPhase:0,growthPhase:180,spreadPhase:180,growthCost:2,growthPriceAmplitude:.5,spreadPriceAmplitude:.5,maintenanceAmplitude:.5,maintenancePhase:180,formulaEnergy:"r0*(1+ar*sin(2*pi*t/T+pr*pi/180))",formulaHeight:"ch*(1+ah*sin(2*pi*t/T+ph*pi/180))",formulaAttack:"ca*(1+aa*sin(2*pi*t/T+pa*pi/180))",formulaMaint:"m*(1+am*sin(2*pi*t/T+pm*pi/180))*ln(1+h)/ln(2)",pricePhase:"opposite",attackCost:1,offspringEnergy:2,startEnergy:10,maintenancePerHeight:.1};
-let networkCache=null,rng,sp,h,en,u,stamp,phenotypes,strategies,sigmas,mutationCounts,events,pool=0,energyLedger,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null,sphereYaw=0,spherePitch=.15,sphereZoom=1,sphereDrag=null,sphereBuffer=null,sphereCtx=null,sphereImg=null;
+let networkCache=null,networkViewCache=null,rng,sp,h,en,u,stamp,phenotypes,strategies,sigmas,mutationCounts,events,pool=0,energyLedger,sweep,history,historyStride=1,historyStep=0,running=false,raf=0,gridView="species",bufctx,img,geometry=null,sphereYaw=0,spherePitch=.15,sphereZoom=1,sphereDrag=null,sphereBuffer=null,sphereCtx=null,sphereImg=null;
 const canvas=$("forest"),ctx=canvas.getContext("2d"),buffer=document.createElement("canvas");
 const colors=["#31785c","#c38a45","#627fac","#a16c91","#79a46f","#b05f52","#5f9990","#b5a253","#706fa7","#8f7558"];
 const color=k=>k<colors.length?colors[k]:"hsl("+((k*137.508+40)%360).toFixed(1)+" 60% 42%)";
@@ -250,7 +250,7 @@ function init(){
  const N=cfg.L*cfg.L;sp=new Int32Array(N);h=new Float64Array(N);en=new Float64Array(N);u=new Float64Array(N);stamp=new Int32Array(N);phenotypes=new Float64Array(N);
  strategies=Array.from({length:cfg.K},()=>Math.round(rng()*1000)/1000).sort((a,b)=>a-b);sigmas=strategies.map(()=>cfg.betHedging?rng()*cfg.hedgeWidth:0);mutationCounts={birth:0,spontaneous:0};events={births:0,deaths:0,birthsStep:0,deathsStep:0};
  for(let i=0;i<N;i++){if(rng()<cfg.fill){sp[i]=Math.floor(rng()*cfg.K);phenotypes[i]=offspringTrait(sp[i]);h[i]=1;en[i]=cfg.energyEnabled?cfg.startEnergy:0;u[i]=cfg.energyEnabled?growthAt(0):0;}else sp[i]=-1;}
- pool=cfg.energyEnabled?cfg.initialPool*N:0;energyLedger={initial:pool,injected:0,dissipated:0,recycled:0};if(cfg.energyEnabled)for(let i=0;i<N;i++)if(sp[i]>=0)energyLedger.initial+=en[i]+u[i];sweep=0;history=[];networkCache=null;historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
+ pool=cfg.energyEnabled?cfg.initialPool*N:0;energyLedger={initial:pool,injected:0,dissipated:0,recycled:0};if(cfg.energyEnabled)for(let i=0;i<N;i++)if(sp[i]>=0)energyLedger.initial+=en[i]+u[i];sweep=0;history=[];networkCache=null;networkViewCache=null;historyStride=1;historyStep=0;buffer.width=cfg.L;buffer.height=cfg.L;
  for(let i=0;i<N;i++)if(sp[i]>=0&&en[i]===0)killTree(i);
  bufctx=buffer.getContext("2d");img=bufctx.createImageData(cfg.L,cfg.L);record(true);draw();
 }
@@ -604,7 +604,7 @@ function drawStudy(){
 }
 function drawNetworkHistory(){
  const box=$("networkResearch");if(!box)return;
- const m=networkCache||activeNetworkMetrics();
+ const m=box.open?(networkViewCache&&networkViewCache.sweep===sweep?networkViewCache.metrics:(networkViewCache={sweep,metrics:activeNetworkMetrics()}).metrics):(networkCache||activeNetworkMetrics());
  $("netEdgesOut").textContent=(100*m.edgeFraction).toFixed(1)+" %";
  $("netLargestOut").textContent=(100*m.largestShare).toFixed(1)+" %";
  $("netComponentsOut").textContent=m.liveComponents.toLocaleString("da-DK");
