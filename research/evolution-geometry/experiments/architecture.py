@@ -8,7 +8,11 @@ import pandas as pd
 
 parser=argparse.ArgumentParser()
 parser.add_argument("results",type=Path)
-out=parser.parse_args().results
+stage=parser.add_mutually_exclusive_group()
+stage.add_argument("--focused",action="store_true")
+stage.add_argument("--replicate",action="store_true")
+args=parser.parse_args()
+out=args.results
 out.mkdir(exist_ok=True,parents=True)
 
 axes=[1,2,3]
@@ -17,12 +21,22 @@ codes=np.array([0,1,1,2,1,2,2,3])
 sides=[(axis,sign) for axis in axes for sign in [-1,1]]
 rows=[]
 networks=[]
-for L in [10,16]:
-    for environment in ["uniform","layered","patches"]:
-        for start in ["balanced","line_biased","space_biased"]:
-            for mode in ["selection","neutral","decoupled"]:
+stationarity=[]
+environments=["strong_layers","strong_islands"] if args.focused else ["uniform","layered","patches"]
+starts=["balanced"] if args.focused else ["balanced","line_biased","space_biased"]
+sizes=[10,16]
+modes=["selection","neutral","decoupled"]
+if args.replicate:
+    environments=["strong_layers","rotated_layers"]
+    starts=["line_biased","space_biased"]
+    sizes=[16]
+    modes=["selection","neutral"]
+for L in sizes:
+    for environment in environments:
+        for start in starts:
+            for mode in modes:
                 runs=12
-                rng=np.random.default_rng(81249)
+                rng=np.random.default_rng(17071 if args.replicate else 81249)
                 probabilities={"balanced":[1/9]*6+[1/3],
                                "line_biased":[.27,.27,.27,.05,.05,.05,.04],
                                "space_biased":[.025,.025,.025,.025,.025,.025,.85]}[start]
@@ -53,6 +67,11 @@ for L in [10,16]:
                                          open_fraction,es,balance))
                             if index<4 and t in [0,300,800] and start=="balanced":
                                 networks.append((L,environment,mode,index+1,t,traits[index].ravel().tolist()))
+                    if args.focused and t>=400 and t%2==0:
+                        means=E.mean(axis=(1,2,3))
+                        roughness=np.mean((E-np.roll(E,1,1))**2,axis=(1,2,3))
+                        for j in range(runs):
+                            stationarity.append((L,environment,mode,j+1,t,means[j],roughness[j]))
                     if t==800:
                         break
                     # Local season redistributes Q_i to E_i. Its form contains no trait reward.
@@ -61,8 +80,13 @@ for L in [10,16]:
                         pump=.14+.08*np.cos(theta)
                     elif environment=="layered":
                         pump=.14+.08*np.cos(theta+2*np.pi*x)
-                    else:
+                    elif environment=="patches":
                         pump=.14+.08*np.cos(theta+2*np.pi*(x+y+z)) * np.cos(2*np.pi*y)
+                    elif environment in ["strong_layers","rotated_layers"]:
+                        coordinate=x if environment=="strong_layers" else y
+                        pump=.03+.47*(coordinate<.35)
+                    else:
+                        pump=.03+.47*((x-.5)**2+(y-.5)**2+(z-.5)**2<.27**2)
                     paid=pump*Q
                     returned=.13*E
                     E+=paid-returned
@@ -83,7 +107,8 @@ for L in [10,16]:
                         candidate[active]=np.roll(traits,step,axis)[active]
                         neighbour_E[active]=np.roll(E,step,axis)[active]
                     advantage=neighbour_E-E
-                    replacement=.20/(1+np.exp(-6*advantage)) if mode!="neutral" else .1
+                    contrast=18 if args.focused or args.replicate else 6
+                    replacement=.20/(1+np.exp(-contrast*advantage)) if mode!="neutral" else .1
                     traits=np.where(rng.random(E.shape)<replacement,candidate,traits)
                     # Symmetric graph-bit mutations on nonempty subsets.
                     mutation=rng.random(E.shape)<.003
@@ -92,5 +117,10 @@ for L in [10,16]:
                     traits=np.where(mutation&(new>0),new,traits)
 cols=["L","env","start","mode","seed","t","rank1","rank2","rank3","axis_x","axis_y","axis_z","edges",
       "reserve_sd","balance"]
-pd.DataFrame(rows,columns=cols).to_csv(out/"architecture.csv",index=False)
-(out/"architectures.json").write_text(json.dumps(networks,separators=(",",":")))
+suffix="_focused" if args.focused else "_replicate" if args.replicate else ""
+pd.DataFrame(rows,columns=cols).to_csv(out/f"architecture{suffix}.csv",index=False)
+if networks:
+    (out/f"architectures{suffix}.json").write_text(json.dumps(networks,separators=(",",":")))
+if args.focused:
+    pd.DataFrame(stationarity,columns=["L","env","mode","seed","t","reserve","roughness"]
+                 ).to_csv(out/"architecture_time.csv",index=False)

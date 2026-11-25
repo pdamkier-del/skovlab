@@ -39,7 +39,7 @@ def curvature(n,edges):
     for i,j in edges:
         adjacent[i].add(j)
         adjacent[j].add(i)
-    sample=rng.choice(len(edges),size=min(60,len(edges)),replace=False)
+    sample=np.random.default_rng(55593).choice(len(edges),size=min(96,len(edges)),replace=False)
     values=[]
     for i,j in edges[sample]:
         a,b=adjacent[i],adjacent[j]
@@ -57,7 +57,7 @@ def curvature(n,edges):
     return a.mean(),np.mean(a< -1e-10),np.mean(abs(a)<=1e-10),np.mean(a>1e-10)
 
 
-def measures(n,edges):
+def measures(n,edges,exact=False):
     if not len(edges):
         return [0,1]+[np.nan]*(4+2*len(times)-1)
     i,j=edges.T
@@ -69,11 +69,11 @@ def measures(n,edges):
     B=A[subset][:,subset]
     D=diags(np.asarray(B.sum(axis=1)).ravel()**-.5)
     transition=(eye(len(subset),format="csr")+D@B@D)*.5
-    if len(subset)<=500:
+    if exact or len(subset)<=500:
         eig=np.linalg.eigvalsh(transition.toarray())
         heat=np.mean(eig[:,None]**times,axis=0)
     else:
-        z=rng.choice([-1.,1.],size=(len(subset),24))
+        z=np.random.default_rng(66055).choice([-1.,1.],size=(len(subset),36))
         evolved=z.copy()
         heat=[]
         next_sample=0
@@ -134,7 +134,12 @@ def forest():
 
 def architecture():
     rows=[]
-    for L,env,mode,seed,t,traits in read_data(out/"architectures.json"):
+    inputs=[]
+    for name in ["architectures.json","architectures_focused.json"]:
+        p=out/name
+        if p.is_file() or Path(str(p)+".gz").is_file():
+            inputs.extend(read_data(p))
+    for L,env,mode,seed,t,traits in inputs:
         trait=np.array(traits)
         edges=lattice(L,3)
         i,j=edges.T
@@ -166,7 +171,8 @@ def calibrate():
         edges=lattice(L,d)
         rows.append((f"torus_{d}D",d,len(np.unique(edges)),*measures(L**d,edges)))
     n,edges=gasket(6)
-    rows.append(("sierpinski",2*np.log(3)/np.log(5),n,*measures(n,edges)))
+    rows.append(("sierpinski",2*np.log(3)/np.log(5),n,*measures(n,edges,exact=True)))
+    rows.append(("sierpinski_stochastic",2*np.log(3)/np.log(5),n,*measures(n,edges)))
     pd.DataFrame(rows,columns=["model","theory","N"]+metric_cols).to_csv(out/"calibration.csv",index=False)
 
 
