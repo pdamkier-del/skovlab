@@ -877,3 +877,44 @@ Disse værdier er en **matematisk kontrol for gitteret**, ikke et emergent evolu
 
 ### Foreløbig fortolkning
 **Ingen påvist spontan Zipf- eller Riemann-zeta-struktur i reserverne.** De enkle screeningmodeller taler imod en enkel global potenslov. Vi har endnu ikke testet en *afgrænset høj-energi-hale* med korrekt MLE/x_min/KS eller holdout-data, så det er ikke legitimt at udelukke enhver form for lokal skaleringslov. Den næste prioritet er faktisk spektrum for den artsafhængige levende diffusionsgraf (script `scripts/peter.spectral-pilot.cjs`) og stærkere distributionsinferens.
+
+
+## 25. november 2026 — Faktiske dynamiske Laplace-spektre på skovens levende artsnetværk
+
+**Kørslen:** GitHub Actions `45656392947`, success. Script `scripts/peter.spectral-pilot.cjs` diagonaliserer de *eksakte endelige matricer* numerisk med symmetriske Jacobi-rotationer. Egenværdier valideret med `tr(L)=2m` til ~1e−13 og ingen betydelige negative eigenværdier. Ingen simulationregler ændret.
+
+### Protokol
+27 frosne grafer = geometrier 0,+1,−1 × seeds 11,23,37 × t=0,150,300, gitter L=10 (100 knuder), otte initialarter, klimaNoise .6, diffusion .1, betHedging til, øvrige parametre fastholdt. Der blev dannet to Laplace-matricer for hvert sample: (1) **statisk nabogeometri** med alle 100 knuder og enhver underliggende geometri-kant; (2) **dynamisk diffusiv graf**, der kun bevarer kanter mellem to *levende* nabotræer af samme art, nøjagtigt som originalfunktion `diffuseEnergy()`. Isolerede og ubeboede felter bevares som nulegenværdier i hele 100×100-operatoren. `ζ_G(s)=Σ_{λ>0}λ^{-s}` med eigenværdier fra den unormaliserede kombinatoriske Laplacian. Den virkelige Euler-diffusion har yderligere faktor `d=min(alpha,.45/maxDegree)`, hvilket skal med ved absolutte relaxationshastigheder.
+
+### Målinger: middel over 3 seeds, t=300
+| Geometri | Antal statiske kanter | Aktive kanter | Nulmodi (aktive graf) | mindste λ>0 | ζ_aktiv(1) | Levende arter |
+|---|---:|---:|---:|---:|---:|---:|
+| k=0 | 200 | 61.333 | 49.667 | 0.082291 | 99.789 | 1.667 |
+| k=+1 | 196 | 53.667 | 55.667 | 0.064240 | 56.968 | 2.333 |
+| k=−1 | 175 | 48.333 | 58.000 | 0.035191 | 81.959 | 2.000 |
+
+Underliggende geometriers statiske spektrum (identisk på tværs af seeds, samme L=10):
+| Geometri | λ_min(>0), statisk | ζ_statisk(1) | nullitet |
+|--|--:|--:|--:|
+| k=0 | 0.381966 | 41.495383 | 1 |
+| k=+1 | 0.154434 | 47.639678 | 1 |
+| k=−1 | 0.085349 | 68.045430 | 1 |
+
+### Interne tidsændringer (flad geometri, middel over 3 seeds)
+- Ved t=0: 6.333 aktive kanter, 93.667 nulmodi, 8 levende arter; meget få nabopar har samme art i tilfældigt startet skov.
+- Ved t=150: 51 aktive kanter, 53.667 nulmodi, 2.333 levende arter, ζ_aktiv(1)≈83.37.
+- Ved t=300: 61.333 aktive kanter, 49.667 nulmodi, 1.667 levende arter, ζ_aktiv(1)≈99.79.
+
+Dette er et **matematisk observerbart negativt fund** i forhold til antagelsen om at det fulde gitter direkte styrer energidiffusionen: den virkelige diffusion foregår i stærkt opdelte, artsafgrænsede komponenter. Antallet af nulmodi er en direkte netværkstopologisk invariant. Den voksende aktive kantandel fra start til t=300 følger bl.a. vækst af monokulturlignende klynger og behøver ikke betyde mere artsdiversitet.
+
+**Forbehold:** Kun 3 seeds og 300 sweeps, ingen signifikans- eller kausaltest. De dynamiske `ζ(1)`-tal domineres potentielt af få næsten-nul eigenværdier og er ikke direkte sammenlignelige på tværs af forskellige nulliteter uden passende normalisering/conditionering. Den valgte grafoperator beskriver *kun diffusionstrinnet på et frosset snapshot*, ikke alle processer i modellen og ikke stabiliteten af den fulde evolutionære dynamik. De positive/negative geometrier er algoritmiske ringgitter, ikke nøjagtige konstantkrumme flader. Næste skridt: fra-til-seed holdout, L=10–30 med sparse eigensolver, dynamikkomponenters andel af levende træer, nullitet uden tomme knuder, diffusion-only perturbationstest og prædiktion af efterfølgende H/strategiombytning med tidsforskudt regression.
+
+### Hypotesestatus efter to pilotundersøgelser
+- **Global Zipf i reserveenergi:** foreløbig *ikke understøttet* (anden rangfunktion bedre; endnu ingen formel tailsammenligning).
+- **Riemann ζ(α) som faktisk fysisk energifordelingslov:** *ikke understøttet*. Den endelige sum `H_N^(α)` er fortsat matematisk korrekt ved antaget ranglov, men ikke empirisk bekræftet.
+- **Spektral zeta for aktiv skovdiffusion:** **beregnet og matematisk veldefineret**, stærkt afvigende fra statisk gitter-zeta. **Ingen kausal forbindelse til artsdiversitet endnu.**
+- **SOC/kritiske eksponenter/faseovergange:** endnu *ikke testet tilstrækkeligt*, kræver finite-size scaling og kaskadeanalyse.
+- **Primtal/Eulerprodukt/Lee–Yang-nulpunkter:** ingen fund; spekulativt i denne model uden pålagt struktur.
+
+### Genkørsel
+`node scripts/peter.number-theory-pilot.cjs` og `node scripts/peter.spectral-pilot.cjs` med statisk server på port 8000 og Playwright Chromium; GitHub workflow `scientific-labs.yml` kører begge og eksisterende tests. Resultaterne mærkes `SKOV_ZETA_PILOT_START/END` og `SKOV_SPECTRAL_PILOT_START/END` i CI logs. De enkelte per-seed resultater findes der og skal opbevares som grundlag for konfidensintervaller og ekstern reproduktion.
