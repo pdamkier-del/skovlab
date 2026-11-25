@@ -4,7 +4,7 @@
 // No eigenvalue claim: graph topology is a cheap spectral proxy (component count = nullity).
 const {chromium}=require("playwright");
 const seeds=[11,23,37,47,59,71,83,97,103,127,149,167,191,211,227,241,263,281,307,331];
-const sizes=[12,20],climates=[0,.6],times=[100,200,300],lag=100;
+const sizes=[10,20],climates=[0,.6],times=[100,200,300],lag=100;
 function metrics(sp,adj) {
  const N=sp.length,seen=new Uint8Array(N);
  let edges=0,allEdges=0,components=0,largest=0,live=0;
