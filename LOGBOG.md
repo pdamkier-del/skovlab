@@ -828,3 +828,52 @@ Browserbaserede mekaniktests findes i `scripts/peter-hedging.test.cjs` og er kob
 
 ### Reproducerbare pilotmålinger
 `scripts/peter.number-theory-pilot.cjs` producerer seed-/størrelsesstratificerede rank-fits og eksakte statiske torus-eigenværdier via GitHub Actions `scientific-labs.yml`. Ikke konkludér fra graf eller fit alene. Resultater, herunder negative fund, tilføjes i en separat logbogssektion efter vellykket kørsel.
+
+
+## 25. november 2026 — Faktiske numeriske resultater: rangeret energi og zeta-reference
+
+**Kørslen:** GitHub Actions `45655852924`, gennemført med success. `node scripts/peter.number-theory-pilot.cjs` på den *uændrede* `peter-dev/index.html`. Alle 7 mekaniktests, 24 andre tests og eksisterende browserchecks bestod.
+
+### Protokol
+48 uafhængige runs = 3 gitterstørrelser (10,20,30) × 4 seeds (11,23,37,47) × klimastøj (0,0.6) × diffusion (0,0.1). Hvert forløb = 500 sweeps. Snapshots ved sweep 300, 400 og 500: **144 tidskorrelerede målinger, ikke 144 uafhængige replikater**. Øvrige værdier fastholdt: 8 startarter, dækning 0.55, beta-hedging aktiv, variationsbredde .25, mutation 0.1 % pr. fødsel, 4 naboer, flad geometri, periodisk rand, energioptag 1, klimaamplitude .5, klimaperiode 80, vedligeholdelse .1, angrebspris 1, vækstpris 2. Observeret energi-balancefejl under 7e−9 i alle betingelser.
+
+Enkel *beskrivende* regressionsscreening på rangordnede positive reserveenergier `en[i]`:
+- Potenslov: OLS `log E_r = a - α log r`;
+- Alternativ A: krum `log E_r = a+b log r+c(log r)^2`;
+- Alternativ B: eksponentiel rangkurve `log E_r = a+b r/n`.
+Der sammenlignes gennemsnitlig RMSE på *samme* data. En eksponentiel rangkurve svarer ikke i sig selv til en eksponentialfordeling af råenergierne; denne screening er **ikke** Clauset-MLE, KS eller test af et probabilistisk distributionsvalg.
+
+### Samlet negativt fund
+**Den eksponentielle rangkurve havde lavere log-RMSE end potensloven i ALLE 12 parameterkombinationer**, og lavere end den krumme log-rank-model i alle 12. For 20×20, klimastøj=0, diffusion=0, var RMSE: potenslov 0.6901, krum log-rank 0.4927, eksponentiel rangkurve 0.3864. Tilsvarende var mean R² for potenslov blot ca. 0.529 (deskriptivt og ikke særligt overbevisende).
+
+Gennemsnitlig OLS-rangeksponent `α` for reserver:
+| L | Klimastøj | Diffusion 0 | Diffusion .1 |
+|--|--:|--:|--:|
+| 10 | 0 | 0.8848 | 0.7537 |
+| 10 | .6 | 0.6463 | 0.6983 |
+| 20 | 0 | 0.8094 | 0.7246 |
+| 20 | .6 | 0.6893 | 0.6369 |
+| 30 | 0 | 0.7818 | 0.7120 |
+| 30 | .6 | 0.6485 | 0.6731 |
+
+Alle gennemsnit <1, og ingen tydelig tiltrækning til α=1. Eksempel på kontrast ved L=30, α_diff=0: klimastøj 0 med `α_rank≈.782`, støj .6 med `α_rank≈.649`. Men der er kun 4 uafhængige seeds og 500 sweeps; dette må ikke fortolkes som verificeret kausal effekt eller universel exponent.
+
+**Størrelse / diversitet:** Ved klima=0, diffusion=0 var gennemsnitligt antal overlevende arter: L10 = 1.167; L20 = 3.500; L30 = 5.250. Shannon H: 0.0932; 0.7567; 0.8322. En oplagt alternativ forklaring er *langsommere artstab i store gitre* og ikke en faseovergang. Tætheden lå omkring 0.53–0.56; sammenlign derfor også occupancy, ikke blot arternes absolutte antal. Højere genetisk artsrigdom med L alene er ikke bevis på kritikalitet.
+
+**Reserver vs totaltræenergi:** Der findes også rangregressionsestimater for `en[i]+u[i]` i råoutputtet, og disse er typisk lidt større end reservernes rangeksponent i de 12 forhold. Forskellen understreger behovet for præcis energidefinition.
+
+### Den *statiske*, eksakt beregnede flade gitterreferences spektral-zeta
+
+Referencegraf: 4-nabo periodisk `L×L` kvadratisk gitter, **ikke den faktiske dynamiske diffusionsgraf**. Eksakte analytiske egenværdier:
+`λ_{kl}=4−2cos(2πk/L)−2cos(2πl/L)`, (k,l) ikke begge nul.
+
+| Side L | Pos. egenværdier | λ_min(>0) | ζ_graph(1) | ζ_graph(2) |
+|---|---:|---:|---:|---:|
+| 10 | 99 | 0.381966 | 41.495383 | 43.633036 |
+| 20 | 399 | 0.097887 | 210.191558 | 644.063612 |
+| 30 | 899 | 0.043705 | 531.045602 | 3196.522121 |
+
+Disse værdier er en **matematisk kontrol for gitteret**, ikke et emergent evolutionært resultat: spektral-zeta følger direkte af den valgte geometri. Den voksende ζ(2) med L kan skyldes lavfrekvente diffusionsmodi, men beviser ikke, at skoven er kritisk.
+
+### Foreløbig fortolkning
+**Ingen påvist spontan Zipf- eller Riemann-zeta-struktur i reserverne.** De enkle screeningmodeller taler imod en enkel global potenslov. Vi har endnu ikke testet en *afgrænset høj-energi-hale* med korrekt MLE/x_min/KS eller holdout-data, så det er ikke legitimt at udelukke enhver form for lokal skaleringslov. Den næste prioritet er faktisk spektrum for den artsafhængige levende diffusionsgraf (script `scripts/peter.spectral-pilot.cjs`) og stærkere distributionsinferens.
