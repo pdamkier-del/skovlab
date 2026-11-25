@@ -917,3 +917,45 @@ Dette er et **matematisk observerbart negativt fund** i forhold til antagelsen o
 
 ### Genkørsel
 `node scripts/peter.number-theory-pilot.cjs` og `node scripts/peter.spectral-pilot.cjs` med statisk server på port 8000 og Playwright Chromium; GitHub workflow `scientific-labs.yml` kører begge og eksisterende tests. Resultaterne mærkes `SKOV_ZETA_PILOT_START/END` og `SKOV_SPECTRAL_PILOT_START/END` i CI logs. De enkelte per-seed resultater findes der og skal opbevares som grundlag for konfidensintervaller og ekstern reproduktion.
+
+## 25. november 2026 — Kan diffusionsnetværket forudsige fremtidig artsdiversitet?
+
+**Videnskabeligt spørgsmål:** Forbedrer observeret aktuel diffusionsnetværksstruktur en `H(t+100)`-prognose ud over `H(t)`, det levende artsantal, trædækningen, gennemsnitlig individuel s, L, klimastøj og tidspunkt? Dette er en egentlig tidsforskudt holdout-test, men endnu ikke en kausalitetstest.
+
+### Reproduktion
+Faktisk browsermotor, **ingen regler ændret**, GitHub Actions `45658728471` på hovedanalysen i `scripts/peter.spectral-prediction.cjs`. 20 uafhængige seeds × 2 størrelser L=10 og 20 × 2 støjniveauer 0 og 0.6 = **80 kørsler**. Hver simulation løber til 400 sweeps; prædiktorer ved t=100,200,300; respons ved t+100. **240 tidskorrelerede observationer fra 80 runs**. Holdout opdelt efter seed for at undgå den groveste pseudoreplikation: 12 træningsseeds og 8 helt nye testseeds; test-sættet har 96 observationer fra 32 uafhængige forløb. Samme seed parres mellem størrelse og klimabetingelse.
+
+Betingelser: startdækning 0.55, K=8, 4 naboer, periodisk fladt gitter, alpha=0.1, betHedging til, hedgeWidth .25, climateAmplitude .5, period 80, birthMutation=0.1%, spontane mutationer fra, øvrige parametre som seneste model. `Q+Σ(E+U)` kontrolleres med afvigelse < 1e-6.
+
+**Prædiktormodeller:** Simpel ridge-OLS (straffeparameter 5, standardiserede features kun fra train); baseline features: H(t), artsantal(t), levende andel(t), s(t), L, klimastøj, t. Eksperiment model: samme + tre topologiske mål `activeEdgeFraction`, `componentPerTree`, `largestComponentShare`. Ingen mål fra fremtiden anvendes som input. Den passive baseline `H(t+100)=H(t)` testes også. Netværksfeatures er **topologiske mål**, ikke endnu numeriske Laplace-egenværdier. Antal komponenter er dog Laplace-nullitet for live-grafen, hvilket gør det til et direkte spektralt relateret mål. Netværket er artsafgrænset præcis som den faktiske `diffuseEnergy`.
+
+### Resultater på helt nye seeds (96 korrelerede holdout-snapshots)
+| Metode | MAE for H(t+100) | RMSE |
+|---|---:|---:|
+| Ren vedvaren: H(t+100)=H(t) | 0.288540 | 0.421829 |
+| Baseline med aktuelle miljø-/artsdata | **0.212007** | **0.285641** |
+| Baseline plus diffusionsnetværkets 3 mål | 0.215780 | 0.290526 |
+| Baseline plus 2 mål uden største komponent | 0.217061 | 0.291038 |
+
+Netværksvariablerne gør her fejlmålet **ca. 1.8% dårligere** i MAE sammenlignet med rimelig baseline; ingen påvist ekstra prognosekraft. Ved L=10 er MAE .16658 baseline mod .17451 udvidet; ved L=20 .25743 mod .25705 (meget lille forbedring, ikke robust). Ved klima 0: baseline .21681, udvidet .21850; ved klima .6: baseline .20721, udvidet .21306. Konklusionen om den samlede pilot er derfor negativ.
+
+Gennemsnit over de 240 snapshots: 25.58% af alle underliggende kanter er aktive same-species-diffusionsforbindelser, 27.45 levende komponenter, største sammenhængende diffusionsgruppe dækker ca. 38.99% af levende træer (bemærk dette mål kan være stor selv når monodominans forekommer).
+
+**Fejlkilder / ikke konkluder:**
+- Der er kun otte holdout-seeds og tre korrelerede tidspunkter per forløb. Det er en intern numerisk pilot uden konfidensinterval eller test på nye klima-/geometrifamilier.
+- At netværksmålene afhænger af *nuværende* artsmærkater gør dem stærkt kollineære med H og artsantal. En negativ mer-værdi betyder ikke at spektral information generelt er ubrugelig.
+- Modellen har ikke direkte testet eigenværdier ved tid t mod fremtidigt H — kun tre billige grafmål. Tidligere `peter.spectral-pilot.cjs` diagonaliserede de aktuelle Laplace-matricer, men uden tidsforskudt prediktion.
+- Hurtig evolutionær artsudryddelse uden ekstra nye arter (lav fødselsmutationsrate) kan dominere. Forudsigelser ved t=300 har ofte H=0 senere.
+- MAE vs RMSE og penaliseringsstyrke er ikke optimeret med en separat validation split; parameter-scan og tidslag skal forudregistreres ved stærkere replikation.
+
+### Minimal HTML-visning til forståelse (kun måling, ingen regelændringer)
+`peter-dev/index.html` har nu et sammenklappeligt afsnit `Forskning · energinetværk og artsdiversitet` i eksisterende Forskningsområdet:
+- andel levende same-species diffusionskanter ud af underliggende kanter,
+- største sammenhængende live-energifællesskab som andel af levende træer,
+- antal separate levende energifællesskaber,
+- tidsserie af de første to mål, forklaring på deres betydning og tydelig advarsel om at kurverne **ikke** er en prædiktion.
+Tidsserien samples ca. hver 20 sweeps, og de aktuelle tal opdateres på præcis aktuel sweep, når panelet er åbent. Energiregnskab, konkurrencemekanik og afkomsbet-hedging er uændrede.
+
+**Forskningens videre prioritet:** Validér på større og andre geometrier; mål frosset spektralt gap for største live-komponent, varighed af energifelter og artsid-strukturer, kontroller for blot artstilhørsforhold ved ompermution af artslabels under fast populationstæthed. Overvej om netværk mere naturligt kan forudsige *energiudjævning/overlevelsesrisiko* end artsdiversitet, da Laplace-operatoren direkte bestemmer diffusionsdynamik, mens artstab også styres af angreb, vedligeholdelse og mutation.
+
+**Kilder i bredere forskning:** Nyere oversigter om økologiske early warning signals fremhæver at faresignaler kræver uafhængig prædiktiv validering frem for efterfølgende korrelation, og at ikke alle kollaps har robuste varsler (f.eks. Boettiger 2013 DOI 10.1007/s12080-013-0192-6; oversigt 2026 DOI 10.3390/e28060628). Grafspektralt gap styrer diffusionens relaxationshastighed på en frosset sammenhængende graf; det er ikke automatisk et signal for evolutionært kollaps.
