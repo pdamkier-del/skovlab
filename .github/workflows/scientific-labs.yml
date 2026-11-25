@@ -51,4 +51,10 @@ jobs:
         run: |
           export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
           node scripts/peter.number-theory-pilot.cjs
+      - name: Frozen dynamic forest spectral zeta pilot (no physics changes)
+        env:
+          SKOV_URL: http://127.0.0.1:8000/
+        run: |
+          export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
+          node scripts/peter.spectral-pilot.cjs
       - run: npm run test:browser
