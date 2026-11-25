@@ -28,7 +28,7 @@ test("live research section shows graph and faithful metric labels",async()=>{
  await page.evaluate(()=>{
   document.getElementById("size").value=10;
   document.getElementById("seed").value=19;
-  __skovTest.restart();for(let i=0;i<30;i++)__skovTest.step();__skovTest.draw();
+  __skovTest.restart();for(let i=0;i<31;i++)__skovTest.step();__skovTest.draw();
  });
  await page.locator("#networkResearch summary").click();
  assert.ok(await page.locator("#networkHistoryPlot").evaluate(el=>el.width>40&&el.height>40));
