@@ -4,9 +4,14 @@ const {execFileSync} = require('node:child_process');
 
 const root = path.resolve(__dirname, '../..');
 const base = 'cb5877888f5dc8fea06b8224f891a04a4be3302d';
-function loadModel(file, onStage) {
+function loadModel(file, onStage, makeGeometry) {
   const html = execFileSync('git', ['show', base + ':' + file], {cwd: root, encoding:'utf8'});
   let script = html.split('<script>')[1].split('\n$("run").addEventListener')[0];
+  if (makeGeometry) {
+    const initialize = "geometry=buildGeometry();";
+    if (!script.includes(initialize)) throw Error("Unknown geometry initialization");
+    script = script.replace(initialize, "geometry=researchGeometry(cfg.L,cfg.seed);");
+  }
   if (onStage) {
     const phases = "energyTick();diffuseEnergy();maintenanceTick();";
     const final = "spontaneousMutation();record();";
@@ -30,7 +35,7 @@ function loadModel(file, onStage) {
     elements.set(id, {...blank(), checked:/\bchecked\b/.test(attrs),
       value:value ?? content ?? first.match(/value="([^"]+)"[^>]*\bselected\b/)?.[1] ?? first.match(/value="([^"]+)"/)?.[1]});
   }
-  const sandbox = {traceStage:onStage, window:{addEventListener(){}}, document:{
+  const sandbox = {traceStage:onStage, researchGeometry:makeGeometry, window:{addEventListener(){}}, document:{
     getElementById(id){if(!elements.has(id)) elements.set(id, blank()); return elements.get(id);},
     createElement:blank
   }};
@@ -44,7 +49,7 @@ function loadModel(file, onStage) {
         try {init();} finally {inputs=readInputs;}
       },
       step, diffuseEnergy, energyTick, neighbours, stats, killTree,
-      state:()=>({sp,h,en,u,pool,sweep,geometry,alpha:cfg.alpha}),
+      state:()=>({sp,h,en,u,pool,sweep,geometry,strategies,alpha:cfg.alpha}),
       setPool:value=>{pool=value;},
       resetLedger:()=>{energyLedger.initial=stats().totalEnergy;},
       random:mulberry32

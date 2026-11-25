@@ -1,0 +1,31 @@
+# Inerti, feltstrukturer og fluktuationskræfter
+
+Denne forsøgsserie blev påbegyndt som en fysisk opfølgning på Skovlaboratoriet. Efter præciseringen om evolution og emergent rumtid bruges den som **fysisk reference** for, hvad man faktisk skal måle, før et netværksfænomen kan omtales som masse, kraft eller Lorentz-symmetri. Evolutionstests ligger særskilt i [forskningssporet om rumtid](../../evolution-geometry/README.md). Alle felteksperimenterne her har foreskrevne Hamiltonfunktioner og ingen selektion.
+
+[Analytiske hypoteser](DERIVATION.md) · [Rådata](results/)
+
+## Resultater
+
+**1. En energibevarelsesbaseret sonde bliver tungere, mens hvilenergien falder.** En Newtonsk sonde med bar masse 0,65 fik en lokal kobling til et dynamisk Klein–Gordon-felt. Ved lille impuls 0,04, kobling 2 og gittertrin 0,05 måltes inertimassen **1,29047**, mod **1,28981** fra feltets translationelle kinetiske energi. Samtidig faldt hvilenergien med **1,01189**. Spektralforudsigelsen skalerer som koblingen i anden. Uden feltkobling fås bar masse. Korte impulser exciterede tydelige oscillationer i hastigheden. Det er en konkret falsifikation af idéen om, at ekstra inerti altid svarer til ekstra hvilenergi i et lokalt, konservativt system.
+
+**2. En partikel-fri breather opfører sig anderledes.** Vi målte hvilenergi fra den lokale energitæthed, inertimasse fra hældningen \(dP/dv\), og \(c\) fra en selvstændig bølgemåling. For forskellen mellem to interne frekvenser, på fineste gitter og ved \(c=0,7,1,1,4\), gav \(c^2\Delta M/\Delta E\) henholdsvis **0,99966, 0,99974 og 0,99974**. Den analytiske boostede profil blev brugt til at starte nogle forløb. Derfor gennemførte vi et andet forsøg fra hvilende, uboostede profiler. En svag rumlig gradient i onsite-potentialet gav en beregnelig impuls. Inertimasse fra impuls divideret med målt drifthastighed gav de tre differensforhold **1,00223, 1,00108 og 1,00042** ved den viste svage påvirkning. Den gradient er en specifik feltkobling. Den bruges til at måle inerti frem for at definere breatherens masse. Det er en numerisk reproduktion af en Lorentz-invariant kontinuumsmodels masse-energi-relation under gitterforfinelse. Bølgeloven blev valgt til at have den symmetri i kontinuumsgrænsen. [Ablowitz m.fl.](https://doi.org/10.1103/PhysRevLett.30.1262) · [Manton](https://doi.org/10.1016/0550-3213(79)90309-2)
+
+**3. Gitterets tilnærmede Lorentz-symmetri bryder synligt sammen.** Ved dimensionsløst bølgetal \(ka=0,05\) lå fasehastigheden højst 0,01 % under \(c\) i de målte retninger. Ved \(ka=2,4\) var den henholdsvis **0,790c** langs en akse og **0,901c** langs diagonalen. Et lokalt gitter kan altså have en isotrop effektiv bølgekegle ved lange bølgelængder og en foretrukken gitterstruktur ved korte. En maksimal rækkevidde i ét diskret tidstrin og den målte langbølgehastighed \(c\) er forskellige størrelser.
+
+**4. Feltstrukturer kan trække i hinanden.** To komplekse feltpakker, Q-balls, interagerede via et tredje lokalt scalarfelt. Ved afstand 12, ens intern frekvens og kobling 0,07 blev den venstre pakkes kraft **+0,001525**, mod den frosne kildeberegnings **+0,001465**. Ved modsat fortegn blev kraften **−0,001492**. Nulkobling gav nul. Felterne havde ingen særskilte partikelkoordinater, og efter initialiseringen blev mediatorfeltet udviklet med naboreglen. Koblingen bruger \(\int|\psi|^2dx\), hvis forhold til hvilenergien i eksemplerne er **1,44** og **1,12**. Tiltrækningen er derfor en scalar vekselvirkning med en specifik ladning. Ækvivalensprincippet følger ikke.
+
+**5. Afstandsloven afhænger af koblingen.** På et uendeligt 3D-gitter med lille feltmasse gav afstande 6–14 tilpassede krafteksponenter på **2,04** for en lineær monopolkilde, **3,18** for klassiske termiske feltbindinger og **4,14** for langsgående dipoler. At vende kildens eller dipolens fortegn vender den tilsvarende lineære kraft. Længere ude giver feltmassen afskærmning. Med en eksplicit kvantisering af den *samme harmoniske operator* gav bindingskraften fra nulpunktssummen en eksponent **4,12** i samme interval. Kvantiseringen er en selvstændig fysisk antagelse. Den klassiske statiske Poisson-analogi kan give en (1/r^2)-kraft uden at forklare gravitation.
+
+**6. Zeta, varmekerne og fri energi gav samme tal.** På 90 kombinationer af dimension, feltmasse, afstand og bindingsstyrke stemte det relative varmesporintegral og lav-rang determinanten overens inden for \(2,2\times10^{-13}\). Den numeriske afledning af den relative zeta ved nul matchede inden for \(6,9\times10^{-9}\). På et 12×12-gitter ved afstand 2 var \(F_{\rm int}/k_BT=-0,016019\) i det klassiske bindingsforsøg. For kvantiserede harmoniske moder var nulpunktets interaktionsenergi **−0,001512** i enheder med \(\hbar=1\). Forskellige funktioner af samme spektrum beskriver forskellige fysiske mål. [Kirsten](https://doi.org/10.1063/1.59656) · [Dean & Gopinathan](https://doi.org/10.1103/PhysRevE.81.041126)
+
+**7. To former for langlivet lokalisering.** De ikke-lineære sine–Gordon-pakker beholdt mindst **99,5 %** af energien i deres bevægelige målevindue efter 54 tidsenheder. Den lineariserede kontrol med samme initialdata beholdt **36–72 %**. En anden mekanisme er en bevaret faseladning. 1D Q-balls havde \(E/Q<1\) og beholdt mindst **99,2 %** i målevinduet til tid 120 på de afprøvede gitre og forstyrrelser. Radialt fandt vi også 2D- og 3D-profiler. Den fundne 3D-gren krydsede tærsklen \(E/Q=1\), mens svagere, brede profiler lå over tærsklen. Et uafhængigt 2D-gitter bevarede mindst **99,6 %** til tid 80 for den afprøvede bundne profil. Den finite tidsmåling og energitærsklen erstatter ikke en fuld stabilitetsanalyse. Derrick-testen for statiske lumps har andre forudsætninger, fordi breatheren og Q-ballens felt begge varierer i tid. [Coleman](https://doi.org/10.1016/0550-3213(85)90286-X) · [Derrick](https://doi.org/10.1063/1.1704233)
+
+## Reproduktion
+
+Brug afhængighederne i [requirements.txt](../requirements.txt). Fra repositoryets rod køres
+
+```bash
+bash research/fundamental-physics/matter/reproduce.sh
+```
+
+Hver simulation skriver egne CSV-filer med alle parametre. De deterministiske tal sammenlignes på tværs af gitterbredde, impuls, kobling, dimension, afstand, perturbation og målevinduer. De angivne tal er resultater for bestemte parametre, ikke målte usikkerheder fra uafhængige laboratorier.
