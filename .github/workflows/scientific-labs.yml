@@ -45,4 +45,10 @@ jobs:
         run: |
           export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
           node --test scripts/peter-hedging.test.cjs
+      - name: First empirical power-law and spectral-zeta pilot (no physics changes)
+        env:
+          SKOV_URL: http://127.0.0.1:8000/
+        run: |
+          export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
+          node scripts/peter.number-theory-pilot.cjs
       - run: npm run test:browser
