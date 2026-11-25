@@ -25,3 +25,7 @@ Kørslerne med 3D-arkitektur tager længst. Reproduktionsscriptet tager en valgf
 | `clock_ambiguity.csv` | Sammenligning af signaltid, afstand og urhastighed i to konformt relaterede optiske grafbeskrivelser. |
 
 De store gitre bruger en frøfast stokastisk sporvurdering på de frosne grafer. Bootstrapintervallerne resampler **hele simulationsseeds** og omfatter ikke systematiske afvigelser fra endelig gitterstørrelse. På de originale ringgitre angiver `geometry` simulatorens etiketter −1, 0 og +1. De gradmatchede substrater er `cliques`, `torus` og `regular`.
+
+## PUK
+
+[Forundersøgelse, fire projektkandidater og offline-laboratorium](puk/README.md).

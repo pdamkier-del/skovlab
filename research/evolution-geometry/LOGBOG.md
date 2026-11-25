@@ -21,3 +21,7 @@
 9. De sene reserver i den lokale model viste også langsom drift. En fremadrettet score fandtes i flere kontrolregler. Det gav ingen robust isoleret forstærkning af tidspilen ved selektion.
 10. Begge optiske beskrivelser gav samme signalankomster ved samme lokale c. Forskellige urhastigheder og afstande bestod. H5 kræver derfor selvstændige ur- og signalmålinger, og hypotesen bevares.
 11. Gemte de selvstændige feltreferencer for inerti, masse–energi-relationen, Lorentz-grænsen, Q-balls og relative zetafunktioner i `research/fundamental-physics/matter/`. De giver kommende fysiske kalibreringer. De evolutionære fund står særskilt i denne rapports H1–H5.
+
+## PUK-forundersøgelse samme dag
+
+Se [PUK-logbogen](puk/LOGBOG.md) og [rapporten med de fire kandidater](puk/RAPPORT.md). Ét-bit-modellen bevarer H3-fænomenet i reduceret form. To gradmatchede arvelige grafer viser et kontrolleret fortegnsskift i H2. H1–H5 er fortsat hovedhypoteserne, inklusive negative fund og H5's optiske identifikationsproblem.

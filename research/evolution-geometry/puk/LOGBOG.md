@@ -1,0 +1,12 @@
+# Logbog · PUK-forundersøgelse
+
+## 25. november 2026
+
+1. Videreførte alle fem [gemte hypoteser](../HYPOTHESES.md) og den gradmatchede nulundersøgelse fra foregående forskningsrunde. Gik fra en 3D-variant med syv transportgenotyper til 2D med en enkel binær tværgående kanttilladelse. Den reducerede model beholdt fødsel, arv, mutation, energibaseret selektion og lokalt energiregnskab.
+2. Fandt mindre tværtransport end ved neutral arv. Tjekkede mutationsfri, frossen og frakoblet kontrol, åbne og periodiske rande samt forskellige gitterstørrelser. Oprindelig rapportkode talte anlæg i stedet for den frosne graf i kontrolmålet for åbne kanter. Rettede det og genkørte data.
+3. Observerede aftagende kontrast med systemstørrelse ved én ressourcezone. Genkørte med periodisk gentagne lag af fast bredde. Selektionseffekten bestod ved større gitter. Noterede grænsetæthed som testbar forklaring, ikke som demonstreret asymptotisk skalalov.
+4. Udledte harmonisk middel i to-plads-tilfældet og \(\beta T\)-invarians for den fulde lineære energilov. Sammenlignede identiske tilfældige tal på fem energiniveauer. Beregnede også den effektive transporttensor fra en periodisk celleopgave og testede de helt åbne og helt lukkede grænser.
+5. Isolerede en gradmatchet omkobling i moduler med lokal energirecirkulation. Fandt receiver-kontraster fra de eksakte stationære energier. Ved endelig lokal afslapning og i den adiabatiske reference vendte det favoriserede krumningsfortegn som forudsagt. Kontroller viste, at frosset habitat kan skabe delvis indirekte korrelation mellem arveanlæg og egnethed. Bevarede H2 som et spørgsmål om selvstændig forklaringskraft af kurvatur.
+6. Reducerede populationsdynamikken til fire moduler med enkeltvise genotypeændringer for at kunne beregne eksakte stisandsynligheder. De neutrale kontroller var reversible. Heterogen, frakoblet fitness kunne give større irreversibilitet end den arvelige kobling. Det grove antal skjulte par-KL eksakt. Tilføjede længere ord og 4-cykler som efterprøvelige mål.
+7. Bevarede H5 som det krævende mål. Samlede den finite optiske tvetydighed med en uafhængig urtest og et godt falsifikationskrav for en lille PUK. Skrev fire projektkandidater med analytisk kerne, efterprøvning og omfang.
+8. Verificerede fire HTML-paneler, vælgerne, to-plads-animationen og urkontrollen i Chromium. Den største rå, absolutte energibalanceafvigelse i de reducerede populationsforsøg var mindre end 10⁻¹².

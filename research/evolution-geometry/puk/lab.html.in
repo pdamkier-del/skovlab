@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evolution og rumtid · PUK-laboratorium</title>
+<style>
+:root{--paper:#f6f4e9;--surface:#fffdf9;--ink:#162f29;--muted:#50655e;--line:#d6ded1;--green:#1b6c60;--blue:#3f5f8e;--ochre:#9a5427}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}main{width:min(1000px,100% - 32px);margin:36px auto 60px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.1;font-weight:normal;margin:0}h1{font-size:clamp(2.6rem,7vw,4.6rem);max-width:17ch}h2{font-size:clamp(1.8rem,4vw,2.65rem)}h3{font-size:1.4rem}p{color:var(--muted);margin:.75rem 0}header{border-bottom:1px solid var(--line);padding-bottom:1rem}nav{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.25rem 0}
+button,select{background:var(--surface);border:1px solid #aebcae;border-radius:.65rem;padding:.45rem .7rem;color:var(--ink);font:inherit}button{cursor:pointer}button[aria-current=true]{background:var(--ink);color:white}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+section{border:1px solid var(--line);border-radius:1rem;background:var(--surface);padding:clamp(1rem,3vw,2rem);margin-bottom:1rem}[hidden]{display:none!important}
+.controls{display:flex;flex-wrap:wrap;gap:.8rem;align-items:end;margin:1rem 0}.controls label{display:grid;gap:.24rem;font-weight:600;font-size:.88rem}
+input[type=range]{accent-color:var(--green);width:160px}svg{width:100%;min-width:370px;height:auto;display:block}svg text{font:13px system-ui;fill:var(--muted)}.chart{overflow:auto}
+.legend{display:flex;gap:.5rem 1.15rem;flex-wrap:wrap;font-size:.87rem}.legend span::before{content:"";display:inline-block;width:.85rem;height:.18rem;background:var(--color);vertical-align:middle;margin-right:.35rem}
+output{display:block;font-variant-numeric:tabular-nums;margin-top:.8rem;font-weight:650}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.cell{border:1px solid var(--line);border-radius:.7rem;padding:.65rem}.meter{height:10px;border-radius:8px;overflow:hidden;background:#e3e8df;margin-top:.45rem}.meter i{display:block;background:var(--green);height:100%;transition:width .13s}
+details{border-top:1px solid var(--line);margin-top:1.55rem;padding-top:1rem}summary{cursor:pointer;font-weight:600}a{color:var(--green)}
+</style>
+</head>
+<body><main>
+<header><h1>Evolution og emergent rumtid</h1><p>Prøv arvelig energitransport, skift en modtager i et krumt netværk, og se hvilke signaler der kan afsløre tidens retning.</p></header>
+<nav aria-label="Forsøg">
+<button type="button" data-panel="transport" aria-current="true">Transportretninger</button>
+<button type="button" data-panel="curvature" aria-current="false">Krumning</button>
+<button type="button" data-panel="arrow" aria-current="false">Tidens pil</button>
+<button type="button" data-panel="clocks" aria-current="false">Signaltid og ure</button>
+</nav>
+<section id="transport">
+<h2>Skal en tværgående kanal åbnes?</h2>
+<p>Ét arveligt bit gør det muligt at lede energi på tværs. Sammenlign selektion med neutral arv, en frossen graf og en graf med alle kanter åbne.</p>
+<div class="controls">
+<label>Forsøgsserie <select id="transport-group"><option value="controls">Selektion og kontroller</option><option value="starts">Startfordeling og grænser</option><option value="energy">Energiskalering</option><option value="interfaces">Ét eller flere ressourcelag</option></select></label>
+<label>Opsætning <select id="transport-case"></select></label>
+</div>
+<div class="chart" id="transport-chart"></div><div class="legend" id="transport-legend"></div><output id="transport-note" aria-live="polite"></output>
+<details>
+<summary>Prøv den samme energiregel på to pladser</summary>
+<div class="controls">
+<label>Kold pumpesats <input id="cold" type="range" min=".03" max=".5" step=".01" value=".03"></label>
+<label>Kantens transport <input id="diffusion" type="range" min="0" max=".3" step=".01" value=".16"></label>
+<button id="play" type="button">Kør lokal udveksling</button>
+</div>
+<div class="pair">
+<div class="cell">Varm plads<div class="meter"><i id="hot-bar"></i></div></div>
+<div class="cell">Kold plads<div class="meter"><i id="cold-bar"></i></div></div>
+</div>
+<output id="local-note" aria-live="polite"></output>
+</details>
+</section>
+<section id="curvature" hidden>
+<h2>Hvilket krumningsfortegn vinder?</h2>
+<p>De to arvelige grafer har 16 celler og samme nabograd. Flyt modtageren, og sammenlign den energi, de hver især kan bringe frem.</p>
+<div class="controls">
+<label>Modtager <select id="receiver"></select></label>
+<label>Afslapning <select id="relaxation"><option value="12">12 lokale trin pr. generation</option><option value="0">Fuld ligevægt før konkurrence</option></select></label>
+</div>
+<output id="curvature-note" aria-live="polite"></output>
+<div class="chart" id="curvature-chart"></div><div class="legend" id="curvature-legend"></div>
+</section>
+<section id="arrow" hidden>
+<h2>Hvor gemmer tidspilen sig?</h2>
+<p>Fire moduler på en ring giver 16 tilstande. Sammenlign at kende hele rækkefølgen rundt om ringen med kun at tælle antallet af åbne moduler.</p>
+<div class="controls">
+<label>Ressourcefordeling <select id="layout"><option value="alternating">Skiftevis modtager</option><option value="mixed">Tre ens, én anderledes</option><option value="same_plus">Alle modtager 3</option><option value="same_minus">Alle modtager 8</option></select></label>
+<label>Mutationsrate <select id="mutation"><option>.001</option><option selected>.01</option><option>.05</option></select></label>
+</div>
+<div class="chart" id="arrow-chart"></div><div class="legend" id="arrow-legend"></div><output id="arrow-note" aria-live="polite"></output>
+</section>
+<section id="clocks" hidden>
+<h2>To ure med samme signalankomst</h2>
+<p>Gang afstanden og den lokale hastighed, hvormed uret tikker pr. koordinattid, med samme faktor. Sammenlign den målte egentid med signalets ankomst.</p>
+<div class="controls"><label>Lokal skaleringsfaktor <input id="factor" type="range" min=".4" max="2.4" step=".1" value="1"></label></div>
+<output id="clock-note" aria-live="polite"></output>
+</section>
+</main>
+<script id="dataset" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById("dataset").textContent);
+const $=id=>document.getElementById(id);
+const colors=["#1b6c60","#3f5f8e","#9a5427","#78649d","#9a4b6a"];
+const names={selection:"Selektion",neutral:"Neutral arv",frozen:"Frossen graf",decoupled:"Frakoblet graf",no_mutation:"Uden mutation"};
+const fmt=(v,n=3)=>v.toLocaleString("da-DK",{maximumFractionDigits:n});
+const percent=v=>fmt(v*100,1)+" %";
+
+function graph(id,legend,series,xLabel,yLabel,maximum){
+ const box=$(id),key=$(legend);
+ if(!series.length){box.textContent="Populationsforsøget blev kørt med modtager 3 og 8.";key.textContent="";return;}
+ const maxX=Math.max(...series.flatMap(s=>s.points.map(row=>row[0])));
+ const hi=maximum||1.08*Math.max(1e-8,...series.flatMap(s=>s.points.map(row=>row[3]??row[1])));
+ const x=t=>82+596*t/maxX, y=z=>235-202*z/hi;
+ let svg='<svg viewBox="0 0 710 281" role="img" aria-label="'+yLabel+'">';
+ for(let i=0;i<5;i++){
+   const a=hi*i/4,b=maxX*i/4;
+   svg+=`<path d="M82,${y(a)}H678" stroke="#d6ded1"/><text x="74" y="${y(a)+4}" text-anchor="end">${fmt(a,6)}</text><text x="${x(b)}" y="251" text-anchor="middle">${fmt(b)}</text>`;
+ }
+ svg+=`<text x="380" y="272" text-anchor="middle">${xLabel}</text><text x="8" y="19">${yLabel}</text>`;
+ for(const [i,seriesItem] of series.entries()){
+   const c=colors[i];
+   svg+=`<polyline points="${seriesItem.points.map(([a,b])=>x(a)+","+y(b)).join(" ")}" fill="none" stroke="${c}" stroke-width="2.5"/>`;
+   for(const [a,b,lo,hi] of seriesItem.points){
+     if(lo!==undefined)svg+=`<path d="M${x(a)},${y(lo)}V${y(hi)}" stroke="${c}" opacity=".6"/>`;
+     svg+=`<circle cx="${x(a)}" cy="${y(b)}" r="3.2" fill="${c}"/>`;
+   }
+ }
+ box.innerHTML=svg+"</svg>";
+ key.innerHTML=series.map((s,i)=>`<span style="--color:${colors[i]}">${s.name}</span>`).join("");
+}
+const seriesPoints=(rows)=>rows.sort((a,b)=>a.t-b.t).map(r=>[r.t,r.mean,r.lo,r.hi]);
+function transport(){
+ const group=$("transport-group").value, value=$("transport-case").value;
+ let rows=data.minimal, series=[];
+ if(group==="controls"){
+   const [n,env]=value.split("/");
+   rows=rows.filter(r=>r.L===+n&&r.env===env&&r.start===.5&&r.energy_density===2&&r.beta===14&&r.periodic);
+   series=Object.entries(names).map(([k,label])=>({name:label,points:seriesPoints(rows.filter(r=>r.mode===k))}));
+ }else if(group==="starts"){
+   const [env,periodic]=value.split("/");
+   rows=rows.filter(r=>r.L===24&&r.env===env&&r.energy_density===2&&r.beta===14&&r.periodic===(periodic==="true")&&r.mode==="selection");
+   series=[.15,.85].map(s=>({name:"Start "+percent(s),points:seriesPoints(rows.filter(r=>r.start===s))}));
+ }else if(group==="interfaces"){
+   const n=+value;
+   series=["x","repeated"].flatMap(env=>["selection","neutral"].map(mode=>({
+     name:(env==="x"?"Ét lag":"Gentagne lag")+" · "+names[mode],
+     points:seriesPoints(data.interfaces.filter(r=>r.L===n&&r.env===env&&r.mode===mode))
+   })));
+ }else{
+   const m=+value;
+   rows=rows.filter(r=>r.L===24&&r.env==="x"&&r.start===.5&&r.energy_density===m&&r.mode==="selection"&&r.periodic);
+   series=[14,28/m].map((beta,i)=>({name:i?"β · T fastholdt":"β = 14",points:seriesPoints(rows.filter(r=>r.beta===beta))}));
+ }
+ graph("transport-chart","transport-legend",series,"Sweep","Andel med anlæg for tværgående ledning",1);
+ $("transport-note").textContent=series.map(s=>s.name+" ved sweep 480: "+percent(s.points.at(-1)[1])).join(" · ");
+}
+function transportOptions(){
+ const group=$("transport-group").value;
+ const options={
+   controls:[[12,"x"],[24,"x"],[40,"x"],[12,"uniform"],[24,"uniform"],[40,"uniform"]].map(([n,e])=>[n+"/"+e,n+"×"+n+" · "+(e==="x"?"lag langs y":"ensartet")]),
+   starts:[["x","true"],["x","false"],["y","true"],["y","false"]].map(([e,p])=>[e+"/"+p,(e==="x"?"Gradient på tværs":"Gradient langs kanaler")+" · "+(p==="true"?"periodisk":"åben rand")]),
+   energy:[.5,1,4,8].map(x=>[x,"Lokal startenergi "+fmt(x)]),
+   interfaces:[12,24,36,48].map(x=>[x,x+"×"+x])
+ };
+ $("transport-case").replaceChildren(...options[group].map(([k,v])=>new Option(v,k)));
+ if(group==="controls")$("transport-case").value="24/x";
+ transport();
+}
+for(let r=1;r<=15;r++) $("receiver").add(new Option("Celle "+r,r));
+$("receiver").value="3";
+function curvature(){
+ const r=+$("receiver").value,steps=+$("relaxation").value;
+ const e=data.equilibria.find(v=>v.receiver===r);
+ $("curvature-note").textContent="Modtagerreserve · positivt motiv "+fmt(e.cluster_reserve,4)+" · negativt motiv "+fmt(e.open_reserve,4);
+ const rows=data.motifs.filter(v=>v.receiver===r&&v.relaxation_steps===steps);
+ const series=rows.length?["selection","neutral","frozen","decoupled"].map(k=>({name:names[k],points:seriesPoints(rows.filter(v=>v.mode===k))})):[];
+ graph("curvature-chart","curvature-legend",series,"Generation","Andel med positivt krumt motiv",1);
+}
+function arrow(){
+ const a=data.markov.filter(v=>v.layout===$("layout").value&&v.mutation===+$("mutation").value);
+ const series=a.map(r=>({name:names[r.mode],points:[[1,r.full_KL],[2,Math.max(0,r.count_KL)],[3,Math.max(0,r.D3/2)],[4,Math.max(0,r.D4/3)],[5,Math.max(0,r.D5/4)]]}));
+ graph("arrow-chart","arrow-legend",series,"1 = fuld tilstand · 2–5 = længde af tælleord","KL pr. overgang");
+ $("arrow-note").textContent="Største cykelaffinitet med selektion: "+fmt(a.find(v=>v.mode==="selection").max_cycle_affinity,6)+" nat. Et tællepar har eksakt nul KL.";
+}
+function clocks(){
+ const f=+$("factor").value,c=1.7;
+ $("clock-note").textContent="Afstand "+fmt(f)+" · lokal egentid under signal "+fmt(f/c)+" · ankomst på fælles koordinatur "+fmt(1/c)+" · lokal c = "+fmt(c);
+}
+let timer;
+function local(){
+ clearInterval(timer);
+ const a=[.5,+$("cold").value], D=+$("diffusion").value;
+ const e=[.7,.7],q=[1.3,1.3];
+ const target=D===0?a.map(r=>2*r/(r+.13)):[4/(2+.13/a[0]+.13/a[1]),4/(2+.13/a[0]+.13/a[1])];
+ let steps=0;
+ function show(){
+   ["hot","cold"].forEach((k,i)=>{$(k+"-bar").style.width=percent(e[i]/4).replace(",",".");});
+   $("local-note").textContent="Trin "+steps+" · reserver "+e.map(v=>fmt(v)).join(" / ")+" · ligevægt "+target.map(v=>fmt(v)).join(" / ")+" · total energi "+fmt(e[0]+e[1]+q[0]+q[1]);
+ }
+ show();
+ timer=setInterval(()=>{
+   for(let sub=0;sub<4;sub++){
+     for(let i=0;i<2;i++){const d=a[i]*q[i]-.13*e[i];e[i]+=d;q[i]-=d;}
+     const f=D*(e[1]-e[0]);e[0]+=f;e[1]-=f;steps++;
+   }
+   show();
+   if(steps===240)clearInterval(timer);
+ },30);
+}
+const views={transport,curvature,arrow,clocks};
+for(const button of document.querySelectorAll("nav button")){
+ button.addEventListener("click",()=>{
+   for(const other of document.querySelectorAll("nav button")){
+     const selected=button===other;
+     other.setAttribute("aria-current",selected);
+     $(other.dataset.panel).hidden=!selected;
+   }
+   views[button.dataset.panel]();
+ });
+}
+$("transport-group").addEventListener("change",transportOptions);
+$("transport-case").addEventListener("change",transport);
+for(const [view,controls] of Object.entries({curvature:["receiver","relaxation"],arrow:["layout","mutation"],clocks:["factor"]}))
+ for(const id of controls)$(id).addEventListener("input",views[view]);
+$("play").addEventListener("click",local);
+transportOptions();curvature();arrow();clocks();
+</script>
+</body></html>
