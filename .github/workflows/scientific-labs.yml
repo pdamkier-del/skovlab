@@ -63,4 +63,10 @@ jobs:
         run: |
           export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
           node scripts/peter.spectral-prediction.cjs
+      - name: Validate live scientific network research panel
+        env:
+          SKOV_URL: http://127.0.0.1:8000/
+        run: |
+          export CHROMIUM_PATH="$(node -e 'console.log(require("playwright").chromium.executablePath())')"
+          node --test scripts/peter.network-research.test.cjs
       - run: npm run test:browser
