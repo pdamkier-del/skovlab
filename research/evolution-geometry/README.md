@@ -29,3 +29,7 @@ De store gitre bruger en frøfast stokastisk sporvurdering på de frosne grafer.
 ## PUK
 
 [Forundersøgelse, fire projektkandidater og offline-laboratorium](puk/README.md).
+
+## V2 · Harmonisk Einstein–Klein–Gordon
+
+[Rapport, udledninger, rådata og offline-laboratorium](v2/README.md).
