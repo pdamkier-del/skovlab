@@ -14,7 +14,7 @@ output{display:block;font-weight:600;font-variant-numeric:tabular-nums}.legend{d
 .legend span::before{content:"";display:inline-block;width:.9rem;height:.2rem;background:var(--series);vertical-align:middle;margin-right:.35rem}
 @media(max-width:840px){.charts{grid-template-columns:1fr}}
 </style></head><body><main>
-<header><h1>Regge-laboratoriet V3</h1><p>Felt og kantlængder udvikles sammen i en periodisk, homogen Regge-ansats. Vælg en måleserie for at sammenligne energi, krumning og spektral dimension.</p></header>
+<header><h1>Regge-laboratoriet V3</h1><p>Felt og kantlængder udvikles sammen i en periodisk, homogen Regge-ansats. Vælg en måleserie for at sammenligne energi, krumning og spektral dimension.</p><p><a href="reduction/lab.html">Produktreduktion og inhomogene variationer</a></p></header>
 <div class="controls">
 <label>Forsøgsserie<select id="kind">
 <option value="mass_refine">Massivt felt · aksial</option><option value="affine_control">Massivt felt · affin kontrol</option>

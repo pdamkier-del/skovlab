@@ -42,3 +42,7 @@ De store gitre bruger en frøfast stokastisk sporvurdering på de frosne grafer.
 ### Implementeret V3-checkpoint
 
 [Fast-dimensionel Lorentzisk Regge-motor, verificeret homogen dynamik, rådata og HTML](v3/README.md).
+
+### V3 · Produktreduktion
+
+Nyt [forskningscheckpoint](v3/reduction/README.md) med Einstein–Hilbert- og Regge-produktreduktion, den lokale radiusvariation og inhomogene kanttests. [Interaktivt laboratorium](v3/reduction/lab.html).

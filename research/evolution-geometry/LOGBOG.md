@@ -29,3 +29,7 @@ Se [PUK-logbogen](puk/LOGBOG.md) og [rapporten med de fire kandidater](puk/RAPPO
 ## V3 · 26. november 2026
 
 [Logbog for Lorentzisk Regge, skalarkobling, afviste løsningsforsøg og overgangsproblemet](v3/LOGBOG.md).
+
+## 26. november 2026 · Grundmodel V3, produktreduktion
+
+Periodisk produktfaktorisering og åbne hjørneled verificeret. Den udeladte radiusligning begrænser fastfrysning. Frie inhomogene residualer og aksial kontinuumsafvigelse på skæve gitre dokumenteret. Se [V3-logbogen](v3/LOGBOG.md) og [forskningsmappen](v3/reduction/README.md).

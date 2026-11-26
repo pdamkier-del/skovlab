@@ -27,3 +27,7 @@ Gyldige sektioner er `mesh`, `wave`, `homogeneous`, `slab` og `all`. En fuld kø
 - `slab_attempts.csv` indeholder negative inhomogene forsøg. `discarded_modes.csv` måler de uafhængige kantrester på to accepterede homogene plader. `verification.csv`, `cone.csv`, `controls.csv`, `dispersion.csv` og `wave.csv` indeholder de tilsvarende kontroller.
 
 Download `lab.html` og åbn det i en browser. Det har alle nødvendige data indlejret og kan vises offline. Halve plader og afviste løsninger bruges kun på den måde, som råtabellerne angiver.
+
+## Produktreduktion og inhomogene variationer
+
+Se [det nye V3-checkpoint](reduction/README.md) og [offline-forsøgene](reduction/lab.html) for produktfaktorisering, radionligningen, randresidualer og skæve gitre.

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grundmodel V3 · Den ekstra dimension</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#10171d;color:#e7edef}
+*{box-sizing:border-box}
+main{max-width:1050px;margin:auto;padding:3rem clamp(1rem,4vw,3rem)}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.06;margin-bottom:1rem}
+p{max-width:75ch;color:#b8c8cd;line-height:1.6}
+a{color:#8de2da}label{display:inline-flex;align-items:center;gap:.65rem;margin:.4rem 1rem .4rem 0}
+select{background:#223039;border:1px solid #52717b;padding:.55rem;border-radius:.35rem;font:inherit;color:inherit}
+section{margin-top:1.5rem;padding:1.25rem;background:#18232c;border:1px solid #30414d;border-radius:.7rem}
+canvas{width:100%;height:360px;display:block}output{display:block;font-variant-numeric:tabular-nums;color:#d7eae7}
+.legend{min-height:1.5rem}.table{overflow:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:.65rem;border-bottom:1px solid #30414d;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body><main>
+<a href="../lab.html">Grundmodel V3</a>
+<h1>Den ekstra dimension</h1>
+<p>Undersøg fiberens længde, feltets udbredelse og de uafhængige kantligninger. Kurverne viser reproducerede referenceforsøg.</p>
+<section>
+<label>Forsøg <select id="mode"><option value="radion">Dynamisk fiberlængde</option><option value="wave">Bølger på skæve gitre</option><option value="slab">Kantresidualer</option></select></label>
+<label id="shearControl">Forskydning β <select id="shear"><option>.25</option><option>0</option><option>-.25</option></select></label>
+<p id="description"></p>
+<div id="legend" class="legend"></div>
+<canvas id="chart" role="img" aria-label="Graf for det valgte forsøg"></canvas>
+<label>Datapunkt <select id="point"></select></label><output id="readout" aria-live="polite"></output>
+</section>
+<section><h2>Regge-virkning på et produktgitter</h2>
+<label>Fiber <select id="boundary"><option value="True">Periodisk</option><option value="False">Åben</option></select></label>
+<div class="table"><table><thead><tr><th>Basis D</th><th>Feltoperator</th><th>S<sub>høj</sub> − LS<sub>basis</sub></th><th>Hjørneled</th></tr></thead><tbody id="products"></tbody></table></div>
+</section>
+</main>
+<script>
+const data=__RESULTS__;
+const $=id=>document.getElementById(id);
+const colors=['#8de2da','#ffbd87','#c2aafa'];
+const series=(rows,key,value,x,y,name)=>({name,points:rows.filter(r=>r[key]===value).map(r=>[+r[x],+r[y]]).sort((a,b)=>a[0]-b[0])});
+let active;
+function settings(){
+  if($('mode').value==='radion')return {x:'Tid',y:'Længde L',description:'Homogen kontinuumreference med to basisrumretninger. Samtlige kurver starter med samme fiberlængde og nul fiberhastighed.',
+    lines:[['massless','Masseløst'],['massive','Massivt'],['vacuum_offset','Kosmologisk konstant']].map(([key,name])=>series(data.radion,'scenario',key,'time','L',name))};
+  if($('mode').value==='wave'){
+    const rows=data.sheared_waves.filter(r=>+r.shear===+$('shear').value && +r.kx>0);
+    return {x:'Gitterafstand Δx',y:'Frekvens ω',description:'Positiv bølgevektor. Den fulde affine operator følger den analytiske lyskegle ved raffinering.',
+      lines:[series(rows,'operator','affine','dx','omega','Affin'),series(rows,'operator','axial','dx','omega','Aksial'),series(rows,'operator','affine','dx','physical','Analytisk')]};
+  }
+  return {x:'Feltperturbation',y:'log₁₀ af kantresidual',description:'Hver kurve viser maksimum over uafhængige rumlige og timelige variationer med henholdsvis fast og justerbar rand.',
+    lines:['fixed','adjusted'].map((key,i)=>series(data.slab.map(r=>({...r,max:Math.log10(Math.max(+r.spatial_residual,+r.timelike_residual))})),'boundary',key,'amplitude','max',['Fast rand','Justeret rand'][i]))};
+}
+function render(){
+  const c=$('chart'),dpr=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;
+  c.width=w*dpr;c.height=h*dpr;
+  const ctx=c.getContext('2d');ctx.scale(dpr,dpr);
+  const {lines,x,y}=active,points=lines.flatMap(l=>l.points);
+  const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+  const x0=Math.min(...xs),x1=Math.max(...xs);
+  let y0=Math.min(...ys),y1=Math.max(...ys);
+  const pad=(y1-y0||.01)*.15;y0-=pad;y1+=pad;
+  const X=v=>66+(v-x0)/(x1-x0)*(w-86),Y=v=>h-48-(v-y0)/(y1-y0)*(h-74);
+  ctx.font='12px system-ui';ctx.fillStyle='#b8c8cd';
+  ctx.fillText(y,12,15);ctx.fillText(x,w/2,h-6);
+  for(let i=0;i<5;i++){
+    const v=y0+i*(y1-y0)/4;
+    ctx.strokeStyle='#364c57';ctx.beginPath();ctx.moveTo(65,Y(v));ctx.lineTo(w-20,Y(v));ctx.stroke();
+    ctx.fillText(v.toPrecision(4),6,Y(v)+4);
+    const u=x0+i*(x1-x0)/4;ctx.fillText(u.toPrecision(2),X(u)-11,h-29);
+  }
+  const selected=+($('point').value||0);
+  lines.forEach(({points},i)=>{
+    ctx.strokeStyle=ctx.fillStyle=colors[i];ctx.lineWidth=2;
+    ctx.beginPath();points.forEach(([a,b],j)=>j?ctx.lineTo(X(a),Y(b)):ctx.moveTo(X(a),Y(b)));ctx.stroke();
+    const [a,b]=points[selected];ctx.beginPath();ctx.arc(X(a),Y(b),5,0,2*Math.PI);ctx.fill();
+  });
+  $('readout').textContent=lines.map(l=>l.name+' '+l.points[selected][1].toPrecision(7)).join('  ·  ');
+}
+function update(){
+  active=settings();$('description').textContent=active.description;
+  $('legend').replaceChildren(...active.lines.map((line,i)=>{
+    const item=document.createElement('span');item.style.color=colors[i];item.textContent=line.name+'　';return item;
+  }));
+  $('shearControl').hidden=$('mode').value!=='wave';
+  $('shearControl').style.display=$('shearControl').hidden?'none':'inline-flex';
+  $('point').replaceChildren(...active.lines[0].points.map(([x],i)=>new Option(x,i)));
+  render();
+}
+function products(){
+  $('products').replaceChildren(...data.product.filter(r=>r.periodic===$('boundary').value).map(r=>{
+    const row=document.createElement('tr');
+    for(const v of [r.D,r.matter+(r.perturbed==='True'?' (krumt)':' (fladt)'),(+r.action_error).toExponential(4),(+r.joints).toExponential(4)]){
+      row.insertCell().textContent=v;
+    }
+    return row;
+  }));
+}
+$('mode').onchange=$('shear').onchange=update;$('point').onchange=render;$('boundary').onchange=products;
+new ResizeObserver(render).observe($('chart'));update();products();
+</script>
+</body></html>
