@@ -1,0 +1,17 @@
+# Dimensionsamplituder – foreløbig forskningsidé
+26. november 2026. Gemmes som selvstændigt, ikke valideret forslag. GRUNDMODEL_V2.md og H1–H5 ændres ikke.
+
+## Forskningsfokus
+Kan gensidig dynamik mellem energifelt og Einstein-geometri via stationær virkning favorisere en dimensionalitet gennem dynamisk stabilitet? Fysisk selektion betyder her differentiel persistens/robusthed, ikke nødvendigvis darwinistisk reproduktion. PLA indebærer ikke energiminimering eller tiltrækning mod stabile tilstande. Feltet behøver ikke oscillere i fremtidige varianter; V2's harmoniske felt bevares som reference, masseløst felt og vakuum er mulige kontroller. Spin/Einstein–Cartan udskydes.
+
+## Celleidé
+Lokale energibærere bundet til koordinatceller. Felt phi og geometri g påvirker hinanden. Heltallige dimensionstilstande n=1,...,N; hierarki x,xy,xyz,..., interaktion gennem fælles akser som mulig diskret realisering. Uniform begyndelsesfordeling er en foreslået kontrol, ikke fysisk neutralt mål. Lokal energi udledes af stress-tensor; afstand og tid af metrik. Ingen fitnessfunktion, intet foreskrevet 1/n-potentiale.
+
+## Nyt ansatz
+c_i=(c_i1,...,c_iN), p_in=|c_in|², sum p_in=1. For en reduceret model med fælles tidsparameter og konsistent identificerede sektorvariable foreslås L=sum_n |c_n|² L_n[phi,g_n] + i hbar/2 (c† dot c - dot c† c) - c† J c. L_n er tids-Lagrangefunktionen fra Einstein–Hilbert plus skalarfelt ved fast n; J er Hermitisk overgangsmatrix, eventuelt afhængig af felt og geometri. Formelt i hbar dot c = (J-diag(L_n))c ved variation i c† (for J uafhængig af c, og uafhængige sektorvariable). Variation i felt og geometri skal udføres på samme fælles action. Diagonale -L_n er ikke generelt fysiske energier. J=0 giver konstante populationssandsynligheder; unitær udvikling alene giver ingen generisk selektion. Alternativ klassisk sandsynlighedsdynamik eller kompaktifikation bevares som muligheder.
+
+## Åbne problemer
+Forskellige n har forskellige metrikdimensioner, integrationsmål, felt- og gravitationsenheder. Kræver fælles konfigurationsrum, matching og constraints, fælles tidsbeskrivelse, sektor-/randled og normalisering. Vægtning af L_n er følsom over for totale tidsafledte og gaugevalg, når p varierer; skal behandles før fysisk fortolkning. Lokale amplituder kræver definition af fælles nabointeraktion og geometrisk konsistens; den viste action er kun en reduceret global ansats. J kan ikke udledes af uændret fast-dimensionel GR alene. Skal genfinde GR i hver isoleret fast-n sektor; skeln fundamental, aktiv og målt effektiv dimension. n=1 er degenereret i standard Einstein–Hilbert. Ingen påstand om fuld kvantegravitation. Start eventuelt med 3D/4D og test J=0 kontrol, norm og total energibalance. Undersøg om fysiske forstyrrelser og feltkobling giver robust persistens uden foreskrevet optimum.
+
+## Status
+V2-rapport ved commit 0e8dbe5: svagfeltets skalastivhed E''(1)=2(4-n)T; mu M=(n-6)T/(n-2); n=6 algebraisk tærskelprofil. Kendte fysiske resultater genfundet, ikke bevis for dimensionsselektion. Bianchi-I kompakt cirkel gav ændret effektiv spektral dimension ved fast fundamental dimension. Ingen demonstration af reproduktion eller emergent rumtid. Alle fem hypoteser og måleprotokol bevares. Ingen implementering af dette ansatz eller produktionsændringer.
