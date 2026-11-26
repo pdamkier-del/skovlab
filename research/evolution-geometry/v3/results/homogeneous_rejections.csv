@@ -1,0 +1,6 @@
+case,n,h0,ell0,last_step,rejected_residual,reason
+mass_refine,2,0.06,0.25,2,5.588481199176814e-09,DEL/lapse
+mass_refine,3,0.06,0.25,2,4.267256226197926e-09,DEL/lapse
+quartic,3,0.1,1.0,2,5.817259533303766e-09,DEL/lapse
+lambda_vacuum,2,0.2,1.0,1,2.9938274662252387e-08,DEL/lapse
+lambda_vacuum,2,0.1,1.0,1,4.815182613800274e-09,DEL/lapse

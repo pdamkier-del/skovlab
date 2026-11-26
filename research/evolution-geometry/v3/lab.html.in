@@ -1,0 +1,89 @@
+<!doctype html><html lang="da"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Skovlaboratoriet · Regge V3</title>
+<style>
+:root{--ink:#143129;--muted:#4f665d;--paper:#f6f3e8;--card:#fffdf6;--line:#d7ded0}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+main{width:min(1180px,calc(100% - 32px));margin:35px auto 60px}h1,h2{font:normal clamp(2.3rem,6vw,4.4rem)/1.04 Georgia,serif;margin:0}h2{font-size:1.55rem}
+header{border-bottom:1px solid var(--line);padding-bottom:.9rem}p{color:var(--muted);margin:.65rem 0}
+.controls{display:flex;flex-wrap:wrap;gap:1rem;margin:1.2rem 0}.controls label{display:grid;gap:.25rem;font-size:.9rem;font-weight:650}
+select{font:inherit;background:var(--card);color:inherit;border:1px solid #a9bbad;border-radius:.55rem;padding:.45rem .65rem}
+select:focus-visible{outline:3px solid #426989;outline-offset:3px}
+.charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}section,aside{background:var(--card);border:1px solid var(--line);padding:1.05rem;border-radius:.8rem}
+aside{margin-top:1rem}svg{display:block;width:100%;height:auto}svg text{font:12px system-ui;fill:var(--muted)}
+output{display:block;font-weight:600;font-variant-numeric:tabular-nums}.legend{display:flex;gap:1.15rem;margin:.7rem 0;font-size:.87rem}
+.legend span::before{content:"";display:inline-block;width:.9rem;height:.2rem;background:var(--series);vertical-align:middle;margin-right:.35rem}
+@media(max-width:840px){.charts{grid-template-columns:1fr}}
+</style></head><body><main>
+<header><h1>Regge-laboratoriet V3</h1><p>Felt og kantlængder udvikles sammen i en periodisk, homogen Regge-ansats. Vælg en måleserie for at sammenligne energi, krumning og spektral dimension.</p></header>
+<div class="controls">
+<label>Forsøgsserie<select id="kind">
+<option value="mass_refine">Massivt felt · aksial</option><option value="affine_control">Massivt felt · affin kontrol</option>
+<option value="massless">Masseløst felt</option><option value="quartic">Kvartisk felt</option>
+<option value="weak_coupling">Massivt felt · svagere G</option><option value="lambda_vacuum">Vakuum med Λ · første plade</option>
+</select></label><label>Indledende tidsafstand<select id="step"></select></label>
+<label>Størrelse på rumproben<select id="probe"><option>16</option><option>32</option><option selected>64</option></select></label>
+</div>
+<div class="legend" id="legend"></div>
+<div class="charts">
+<section><h2>Energi pr. dimension</h2><p>Skalarfeltets estimat pr. rumcelle, ρaⁿ.</p><div id="energy"></div></section>
+<section><h2>Krumning pr. dimension</h2><p>Indre Regge-krumning. Prikket kurve viser FLRW-referencen.</p><div id="curvature"></div></section>
+<section><h2>Effektiv dimensionalitet</h2><p>Varmekernemål på den periodiske forlængelse af hver rumskive.</p><div id="dimension"></div></section>
+</div>
+<aside><h2>Egentid, entropi og constraint</h2><p>Struttens egentid måles mellem samme hjørne på to skiver. Shannon-entropien bruger energisandele på skiven.</p>
+<output id="diagnostic" aria-live="polite"></output><p id="rejected" aria-live="polite"></p></aside>
+</main><script id="data" type="application/json">__DATA__</script><script>
+"use strict";
+const $=id=>document.getElementById(id);
+const data=JSON.parse($("data").textContent);
+const colors={2:"#1b7160",3:"#8b4e27"};
+const fmt=(n,d=4)=>n===null?"—":n.toLocaleString("da-DK",{maximumFractionDigits:d});
+function plot(id,grouped,ykey,isCurvature=false){
+ const flat=grouped.flatMap(([n,r])=>r.filter(v=>v[ykey]!==null).map(v=>[n,v]));
+ if(!flat.length){$(id).textContent="Krumning mellem plader kræver mindst to accepterede plader.";return;}
+ const time=r=>isCurvature?r.time-r.duration:r.time;
+ const x0=Math.min(...flat.map(([,r])=>time(r))),x1=Math.max(...flat.map(([,r])=>time(r)));
+ const values=flat.flatMap(([,r])=>isCurvature?[r[ykey],r.ricci_reference]:[r[ykey]]);
+ const min=Math.min(...values),max=Math.max(...values),delta=max-min||Math.max(.001,abs(max)*.05);
+ const lo=min-.10*delta,hi=max+.10*delta;
+ const px=x=>66+271*(x-x0)/(x1-x0||1),py=y=>184-154*(y-lo)/(hi-lo);
+ let svg='<svg viewBox="0 0 355 225" role="img" aria-label="'+id+'">';
+ for(let i=0;i<=4;i++){
+   const y=lo+(hi-lo)*i/4,x=x0+(x1-x0)*i/4;
+   svg+=`<path d="M66,${py(y)}H337" stroke="#d7ded0"/><text x="59" y="${py(y)+4}" text-anchor="end">${fmt(y,4)}</text>`;
+   if(x0!==x1||i===0)svg+=`<text x="${px(x)}" y="200" text-anchor="middle">${fmt(x,2)}</text>`;
+ }
+ for(const [n,rows] of grouped){
+   const points=rows.filter(r=>r[ykey]!==null);
+   const draw=(key,dotted)=>`<polyline points="${points.map(r=>px(time(r))+","+py(r[key])).join(" ")}" fill="none" stroke="${colors[n]}" stroke-width="2.4" ${dotted?'stroke-dasharray="4 4"':''}/>`;
+   svg+=draw(ykey,false);
+   if(isCurvature)svg+=draw("ricci_reference",true);
+   svg+=points.map(r=>`<circle cx="${px(time(r))}" cy="${py(r[ykey])}" r="3" fill="${colors[n]}"/>`).join("");
+ }
+ $(id).innerHTML=svg+'<text x="199" y="220" text-anchor="middle">Ortogonal tid</text></svg>';
+}
+const abs=Math.abs;
+function render(){
+ const kind=$("kind").value,step=+$("step").value;
+ const f=data.series.filter(r=>r.case===kind&&r.h0===step);
+ const groups=[...new Set(f.map(r=>r.n))].map(n=>[n,f.filter(r=>r.n===n)]);
+ $("legend").innerHTML=groups.map(([n])=>`<span style="--series:${colors[n]}">n = ${n}</span>`).join("");
+ plot("energy",groups,"rho_volume");
+ plot("curvature",groups,"ricci",true);
+ plot("dimension",groups,"dim_L"+$("probe").value);
+ $("diagnostic").textContent=groups.map(([n,r])=>{
+   const last=r.at(-1);
+   return `n = ${n} · tidspunkt ${fmt(last.time)} · strut-egentid (sidste trin) ${fmt(last.strut_proper_time)} · Shannon ${fmt(last.site_entropy)} · lapse-rest ${last.lapse_residual.toExponential(2)}`;
+ }).join(" / ");
+ const issues=data.rejected.filter(r=>r.case===kind&&r.h0===step);
+ $("rejected").textContent=issues.length?"Stoppet ved første afviste plade: "+issues.map(r=>`n=${r.n}, ${r.reason}, ${r.rejected_residual?.toExponential(2)??"—"}`).join(" · "):"Alle viste plader bestod den reducerede variationskontrol.";
+}
+function choose(){
+ const series=data.series.filter(r=>r.case===$("kind").value);
+ const times=[...new Set(series.map(r=>r.h0))];
+ $("step").replaceChildren(...times.map(t=>new Option(fmt(t),t)));
+ render();
+}
+$("kind").addEventListener("change",choose);
+for(const id of ["step","probe"])$(id).addEventListener("change",render);
+choose();
+</script></body></html>

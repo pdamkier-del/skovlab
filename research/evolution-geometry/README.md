@@ -38,3 +38,7 @@ De store gitre bruger en frøfast stokastisk sporvurdering på de frosne grafer.
 ## V2 · Harmonisk Einstein–Klein–Gordon
 
 [Rapport, udledninger, rådata og offline-laboratorium](v2/README.md).
+
+### Implementeret V3-checkpoint
+
+[Fast-dimensionel Lorentzisk Regge-motor, verificeret homogen dynamik, rådata og HTML](v3/README.md).

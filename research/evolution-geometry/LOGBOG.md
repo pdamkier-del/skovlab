@@ -25,3 +25,7 @@
 ## PUK-forundersøgelse samme dag
 
 Se [PUK-logbogen](puk/LOGBOG.md) og [rapporten med de fire kandidater](puk/RAPPORT.md). Ét-bit-modellen bevarer H3-fænomenet i reduceret form. To gradmatchede arvelige grafer viser et kontrolleret fortegnsskift i H2. H1–H5 er fortsat hovedhypoteserne, inklusive negative fund og H5's optiske identifikationsproblem.
+
+## V3 · 26. november 2026
+
+[Logbog for Lorentzisk Regge, skalarkobling, afviste løsningsforsøg og overgangsproblemet](v3/LOGBOG.md).
