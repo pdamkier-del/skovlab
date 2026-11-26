@@ -1,5 +1,10 @@
 # Evolution og emergent rumtid
 
+## Aktuel forskningsretning · V3 (fastlåst 26. november 2026)
+
+**[Grundmodel V3 — diskret dynamisk rumtid](GRUNDMODEL_V3.md)** er den aktuelle autoritative konceptbeskrivelse og startpunkt for Codex. Knuder og dynamiske forbindelser udgør geometrien; identiske aktive akser bestemmer nabostruktur; Einstein–Hilbert/Regge + skalarfelt og PLA er fundamentet. Blandede lokale topdimensioners fælles virkning er endnu ikke udledt eller verificeret. Se også [samlet forskningsstatus](README_RESEARCH_STATUS_20261126.md) og [numeriske pilotforsøg](DISCRETE_FIELD_GR_PILOT_20261126.md). V1/V2 og tidligere resultater bevares.
+
+## Tidligere forskning og reproduktion
 [Dansk forskningsrapport](RAPPORT.md) · [Forskningslogbog](LOGBOG.md) · [H1–H5](HYPOTHESES.md) · [Rådata og figurer](results/)
 
 Rapporten sammenligner kurvatur og effektiv transportdimension på den eksisterende skovmotor og i en særskilt lokal selektionsmodel. [Masse, inerti, Lorentz-symmetri og feltkræfter](../fundamental-physics/matter/README.md) er fysiske referenceforsøg fra samme forskningsrunde.
